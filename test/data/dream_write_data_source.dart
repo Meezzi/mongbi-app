@@ -52,6 +52,39 @@ void main() {
       // Assert
       expect(dream, dummyDream);
     });
+
+    test('Return false if dream creation fails', () {
+      final dreamData = DreamDto(
+        id: 1,
+        createdAt: DateTime.now(),
+        uid: 2,
+        challenageId: 1,
+        content: 'Flying in the sky',
+        dreamKeywords: [],
+        dreamInterpretation: 'Dream interpretation',
+        psychologicalStateInterpretation:
+            'Interpretation of psychological state',
+        psychologicalStateKeywords: [],
+        mongbiComment: 'happy',
+        emotionCategory: 'sad',
+      );
+
+      final fakeResponse = Response(
+        requestOptions: RequestOptions(path: '/dreams'),
+        data: {'success': false, 'code': 400, 'message': '모든 필드는 필수입니다.'},
+        statusCode: 400,
+      );
+
+      when(
+        () => mockDio.post('/dreams', data: dummyDream),
+      ).thenAnswer((_) async => fakeResponse);
+
+      // Act
+      final dream = dreamDataSource.saveDream(dreamData);
+
+      // Assert
+      expect(dream, dummyDream);
+    });
   });
 }
 
