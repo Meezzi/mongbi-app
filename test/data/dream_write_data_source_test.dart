@@ -23,10 +23,11 @@ void main() {
       // Arrange
       final dreamData = DreamDto(
         id: 1,
-        createdAt: DateTime.now(),
+        createdAt: DateTime.parse('2025-06-03T23:52:56.000Z'),
         uid: 2,
-        challenageId: 1,
+        challengeId: 1,
         content: 'Flying in the sky',
+        score: 0,
         dreamKeywords: [],
         dreamInterpretation: 'Dream interpretation',
         psychologicalStateInterpretation:
@@ -56,10 +57,11 @@ void main() {
     test('Return false if dream creation fails', () {
       final dreamData = DreamDto(
         id: 1,
-        createdAt: DateTime.now(),
+        createdAt: DateTime.parse('2025-06-03T23:52:56.000Z'),
         uid: 2,
-        challenageId: 1,
+        challengeId: 1,
         content: 'Flying in the sky',
+        score: 0,
         dreamKeywords: [],
         dreamInterpretation: 'Dream interpretation',
         psychologicalStateInterpretation:
@@ -92,8 +94,9 @@ final dummyDream = {
   'id': 1,
   'dreamDate': '2025-06-03T23:52:56.000Z',
   'uid': 2,
-  'challangeId': 1,
+  'challengeId': 1,
   'dreamContent': 'Flying in the sky',
+  'score': 0,
   'dreamKeywords': [],
   'dreamInterpretation': 'Dream interpretation',
   'psychologicalStateInterpretation': 'Interpretation of psychological state',
