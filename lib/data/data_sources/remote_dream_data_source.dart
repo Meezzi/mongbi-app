@@ -7,11 +7,15 @@ class RemoteDreamDataSource {
   final Dio dio;
 
   Future<bool> saveDream(DreamDto dream) async {
-    final response = await dio.post('/dreams', data: dream.toJson());
-    if (response.statusCode == 201 && response.data['success'] == true) {
-      return true;
-    } else {
-      return false;
+    try {
+      final response = await dio.post('/dreams', data: dream.toJson());
+      if (response.statusCode == 201 && response.data['success'] == true) {
+        return true;
+      } else {
+        throw Exception(response.data['message'] ?? '알 수 없는 오류가 발생하였습니다.');
+      }
+    } on DioException catch (e) {
+      throw Exception(e.message ?? '네트워크 오류가 발생하였습니다.');
     }
   }
 }
