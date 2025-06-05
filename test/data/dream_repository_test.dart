@@ -21,6 +21,10 @@ void main() {
 
       // Act
       final response = await remoteDreamRepository.saveDream(dream: dream);
+
+      // Assert
+      expect(response, isTrue);
+      verify(() => dreamDataSource!.saveDream(any())).called(1);
     });
   });
 }
