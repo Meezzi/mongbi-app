@@ -18,6 +18,9 @@ void main() {
       when(
         () => dreamDataSource!.saveDream(any()),
       ).thenAnswer((_) async => true);
+
+      // Act
+      final response = await remoteDreamRepository.saveDream(dream: dream);
     });
   });
 }
