@@ -44,6 +44,35 @@ void main() {
 
       verify(() => dreamRepository!.saveDream(any())).called(1);
     });
+
+    test('should return true when dream is saved successfully', () async {
+      // Arrange
+      final dream = Dream(
+        id: 1,
+        createdAt: DateTime.parse('2025-06-03T23:52:56.000Z'),
+        uid: 2,
+        challengeId: 1,
+        content: 'Flying in the sky',
+        score: 0,
+        dreamKeywords: [],
+        dreamInterpretation: 'Dream interpretation',
+        psychologicalStateInterpretation:
+            'Interpretation of psychological state',
+        psychologicalStateKeywords: [],
+        mongbiComment: 'happy',
+        emotionCategory: 'sad',
+      );
+
+      when(
+        () => dreamRepository!.saveDream(dream),
+      ).thenThrow(Exception('테스트용 오류'));
+
+      // Act
+      final response = await dreamRepository!.saveDream(dream);
+
+      // Assert
+      expect(response, throwsA(isA<Exception>));
+    });
   });
 }
 
