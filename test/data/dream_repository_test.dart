@@ -12,7 +12,7 @@ void main() {
   RemoteDreamRepository? remoteDreamRepository;
 
   setUpAll(() {
-    registerFallbackValue(FakeDreamDto);
+    registerFallbackValue(FakeDreamDto());
   });
 
   group('Dream Repository SaveDream Test', () {
