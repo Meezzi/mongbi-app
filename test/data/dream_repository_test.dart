@@ -12,6 +12,8 @@ void main() {
       dreamDataSource = MockDreamDataSource();
       remoteDreamRepository = RemoteDreamRepository(dreamDataSource);
     });
+
+    test('Return true if dream creation is successful', () async {});
   });
 }
 
