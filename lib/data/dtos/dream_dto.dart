@@ -1,3 +1,5 @@
+import 'package:mongbi_app/domain/entities/dream.dart';
+
 class DreamDto {
   DreamDto({
     required this.id,
@@ -62,4 +64,21 @@ class DreamDto {
     'MONGBI_COMMENT': mongbiComment,
     'EMOTION_CATEGORY': emotionCategory,
   };
+
+  factory DreamDto.fromEntity(Dream dream) {
+    return DreamDto(
+      id: dream.id ?? 0,
+      createdAt: dream.createdAt,
+      uid: dream.uid,
+      challengeId: dream.challengeId,
+      content: dream.content,
+      score: dream.score,
+      dreamKeywords: dream.dreamKeywords,
+      dreamInterpretation: dream.dreamInterpretation,
+      psychologicalStateInterpretation: dream.psychologicalStateInterpretation,
+      psychologicalStateKeywords: dream.psychologicalStateKeywords,
+      mongbiComment: dream.mongbiComment,
+      emotionCategory: dream.emotionCategory,
+    );
+  }
 }
