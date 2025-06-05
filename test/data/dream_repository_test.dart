@@ -13,7 +13,12 @@ void main() {
       remoteDreamRepository = RemoteDreamRepository(dreamDataSource);
     });
 
-    test('Return true if dream creation is successful', () async {});
+    test('Return true if dream creation is successful', () async {
+      // Arrange
+      when(
+        () => dreamDataSource!.saveDream(any()),
+      ).thenAnswer((_) async => true);
+    });
   });
 }
 
