@@ -1,12 +1,19 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:mongbi_app/data/data_sources/dream_data_source.dart';
+import 'package:mongbi_app/data/dtos/dream_dto.dart';
 import 'package:mongbi_app/data/repositories/remote_dream_repository.dart';
 import 'package:mongbi_app/domain/entities/dream.dart';
+
+class FakeDreamDto extends Fake implements DreamDto {}
 
 void main() {
   DreamDataSource? dreamDataSource;
   RemoteDreamRepository? remoteDreamRepository;
+
+  setUpAll(() {
+    registerFallbackValue(FakeDreamDto);
+  });
 
   group('Dream Repository SaveDream Test', () {
     setUp(() {
