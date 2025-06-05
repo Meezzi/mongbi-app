@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:mongbi_app/data/data_sources/remote_dream_data_source.dart';
@@ -56,7 +55,8 @@ void main() {
       expect(dream, isTrue);
     });
 
-    test('Return false if dream creation fails', () {
+    test('Throws an Exception when dream creation fails', () async {
+      // Arrange
       final dreamData = DreamDto(
         id: 1,
         createdAt: DateTime.parse('2025-06-03T23:52:56.000Z'),
@@ -80,12 +80,12 @@ void main() {
       );
 
       when(
-        () => mockDio.post('/dreams', data: dummyDream),
+        () => mockDio.post('/dreams', data: any(named: 'data')),
       ).thenAnswer((_) async => fakeResponse);
 
       // Act & Assert
       expect(
-        () async => await dreamDataSource.saveDream(dreamData),
+        () async => await remoteDreamDataSource.saveDream(dreamData),
         throwsA(isA<Exception>()),
       );
     });
