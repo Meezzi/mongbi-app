@@ -1,11 +1,13 @@
 import 'package:dio/dio.dart';
+import 'package:mongbi_app/data/data_sources/dream_data_source.dart';
 import 'package:mongbi_app/data/dtos/dream_dto.dart';
 
-class RemoteDreamDataSource {
+class RemoteDreamDataSource implements DreamDataSource {
   RemoteDreamDataSource(this.dio);
 
   final Dio dio;
 
+  @override
   Future<bool> saveDream(DreamDto dream) async {
     try {
       final response = await dio.post('/dreams', data: dream.toJson());
