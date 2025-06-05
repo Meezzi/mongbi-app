@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:mongbi_app/data/data_sources/remote_dream_data_source.dart';
+import 'package:mongbi_app/data/dtos/dream_dto.dart';
 
 class MockDio extends Mock implements Dio {}
 
@@ -12,14 +14,14 @@ void main() {
   // 3. 저장이 완료되면 해당 꿈을 반환한다.
   group('DreamDataSource test', () {
     late MockDio mockDio;
-    late DreamDataSource dreamDataSource;
+    late RemoteDreamDataSource remoteDreamDataSource;
 
     setUp(() {
       mockDio = MockDio();
-      dreamDataSource = dreamDataSource(mockDio);
+      remoteDreamDataSource = RemoteDreamDataSource(mockDio);
     });
 
-    test('Return true if dream creation is successful', () {
+    test('Return true if dream creation is successful', () async {
       // Arrange
       final dreamData = DreamDto(
         id: 1,
@@ -48,7 +50,7 @@ void main() {
       ).thenAnswer((_) async => fakeResponse);
 
       // Act
-      final dream = dreamDataSource.saveDream(dreamData);
+      final dream = await remoteDreamDataSource.saveDream(dreamData);
 
       // Assert
       expect(dream, isTrue);
