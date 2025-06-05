@@ -39,7 +39,7 @@ void main() {
       // Arrange
       when(
         () => dreamDataSource!.saveDream(any()),
-      ).thenAnswer((_) async => false);
+      ).thenThrow(Exception('테스트용 오류'));
 
       // Act & Assert
       expect(
