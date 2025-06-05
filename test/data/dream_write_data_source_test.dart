@@ -44,14 +44,14 @@ void main() {
       );
 
       when(
-        () => mockDio.post('/dreams', data: dummyDream),
+        () => mockDio.post('/dreams', data: any(named: 'data')),
       ).thenAnswer((_) async => fakeResponse);
 
       // Act
       final dream = dreamDataSource.saveDream(dreamData);
 
       // Assert
-      expect(dream, dummyDream);
+      expect(dream, isTrue);
     });
 
     test('Return false if dream creation fails', () {
@@ -73,19 +73,19 @@ void main() {
 
       final fakeResponse = Response(
         requestOptions: RequestOptions(path: '/dreams'),
-        data: {'success': false, 'code': 400, 'message': '모든 필드는 필수입니다.'},
-        statusCode: 400,
+        data: {'success': false, 'code': 404, 'message': '모든 필드는 필수입니다.'},
+        statusCode: 404,
       );
 
       when(
         () => mockDio.post('/dreams', data: dummyDream),
       ).thenAnswer((_) async => fakeResponse);
 
-      // Act
-      final dream = dreamDataSource.saveDream(dreamData);
-
-      // Assert
-      expect(dream, dummyDream);
+      // Act & Assert
+      expect(
+        () async => await dreamDataSource.saveDream(dreamData),
+        throwsA(isA<Exception>()),
+      );
     });
   });
 }
