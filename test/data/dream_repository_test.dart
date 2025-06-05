@@ -26,6 +26,21 @@ void main() {
       expect(response, isTrue);
       verify(() => dreamDataSource!.saveDream(any())).called(1);
     });
+
+    test('Rreturn false if dream creation is failure', () async {
+      // Arrange
+      when(
+        () => dreamDataSource!.saveDream(any()),
+      ).thenAnswer((_) async => false);
+
+      // Act & Assert
+      expect(
+        () => remoteDreamRepository!.saveDream(dream),
+        throwsA(isA<Exception>()),
+      );
+
+      verify(() => dreamDataSource!.saveDream(any())).called(1);
+    });
   });
 }
 
