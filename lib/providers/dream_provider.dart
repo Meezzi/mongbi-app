@@ -20,7 +20,7 @@ final _dreamRepositoryProvider = Provider<DreamRepository>(
 
 // 꿈 해석 Provider
 final _dreamAnalysisDataSource = Provider<DreamAnalysisDataSource>(
-  (ref) => RemoteDreamAnalysisDataSourceImpl(
+  (ref) => RemoteDreamAnalysisDataSource(
     dio: ref.read(dioProvider),
     apiKey: dotenv.env['CLAUDE_API_KEY']!,
     baseUrl: dotenv.env['CLAUDE_URL']!,

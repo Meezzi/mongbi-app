@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:mongbi_app/data/data_sources/dream_analysis_data_source.dart';
 
-class RemoteDreamAnalysisDataSourceImpl implements DreamAnalysisDataSource {
-  RemoteDreamAnalysisDataSourceImpl({
+class RemoteDreamAnalysisDataSource implements DreamAnalysisDataSource {
+  RemoteDreamAnalysisDataSource({
     required this.dio,
     required this.apiKey,
     required this.baseUrl,

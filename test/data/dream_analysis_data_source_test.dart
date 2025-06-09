@@ -4,7 +4,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:mongbi_app/data/data_sources/remote_dream_analysis_data_source.dart';
 
 void main() {
-  late RemoteDreamAnalysisDataSourceImpl dataSource;
+  late RemoteDreamAnalysisDataSource dataSource;
   late MockDio mockDio;
 
   const apiKey = 'test-api-key';
@@ -14,7 +14,7 @@ void main() {
 
   setUp(() {
     mockDio = MockDio();
-    dataSource = RemoteDreamAnalysisDataSourceImpl(
+    dataSource = RemoteDreamAnalysisDataSource(
       dio: mockDio,
       apiKey: apiKey,
       baseUrl: baseUrl,
