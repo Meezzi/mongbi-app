@@ -54,6 +54,9 @@ void main() {
 
 class MockDreamDataSource extends Mock implements DreamDataSource {}
 
+class MockDreamAnalysisDataSource extends Mock
+    implements DreamAnalysisDataSource {}
+
 final dream = Dream(
   id: 1,
   createdAt: DateTime.parse('2025-06-03T23:52:56.000Z'),
