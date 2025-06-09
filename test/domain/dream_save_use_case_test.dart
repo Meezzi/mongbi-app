@@ -10,6 +10,10 @@ void main() {
   DreamRepository? dreamRepository;
   DreamSaveUseCase? dreamSaveUseCase;
 
+  setUpAll(() {
+    registerFallbackValue(FakeDream());
+  });
+
   group('Dream Save Usecase Test', () {
     setUp(() {
       dreamRepository = MockDreamRepository();
