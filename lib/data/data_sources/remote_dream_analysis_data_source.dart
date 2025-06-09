@@ -58,5 +58,12 @@ class RemoteDreamAnalysisDataSourceImpl {
       ),
       data: requestBody,
     );
+
+    if (response.statusCode == 200) {
+      final data = response.data;
+      final text = data['content'][0]['text'] as String;
+
+      return text;
+    }
   }
 }
