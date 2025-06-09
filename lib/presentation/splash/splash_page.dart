@@ -1,15 +1,46 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
-class SplashPage extends StatelessWidget {
+class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
 
   @override
+  State<SplashPage> createState() => _SplashPageState();
+}
+
+class _SplashPageState extends State<SplashPage> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<Offset> _floatingAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 100),
+    )..repeat(reverse: true);
+
+    _floatingAnimation = Tween<Offset>(
+      begin: const Offset(0, 0),
+      end: const Offset(0, 0.02), 
+    ).animate(CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeInOut,
+    ));
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       body: Stack(
         children: [
-          // 배경 그라데이션
           Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
@@ -31,39 +62,36 @@ class SplashPage extends StatelessWidget {
             width: double.infinity,
             height: double.infinity,
           ),
-
-          // 콘텐츠 배치
-          SafeArea(
+          Center(
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
-                const SizedBox(height: 40),
-                Column(
-                  children: const [
-                    Text(
-                      '안녕, 난 몽비!',
-                      style: TextStyle(
-                        fontSize: 24,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(height: 8),
-                    Text(
-                      '꿈을 먹는 도깨비다몽',
-                      style: TextStyle(fontSize: 18, color: Colors.white),
-                    ),
-                  ],
-                ),
-
-                const Spacer(),
-                Center(
-                  child: Image.asset(
-                    'assets/images/splash_mongbi.png',
-                    width: 312,
-                    height: 312,
+                const Text(
+                  '안녕, 난 몽비!',
+                  style: TextStyle(
+                    fontSize: 36,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-                const Spacer(flex: 2),
+                // const SizedBox(height: 4),
+                const Text(
+                  '꿈을 먹는 도깨비다몽',
+                  style: TextStyle(
+                    fontSize: 36,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: screenHeight * 0.035),
+                SlideTransition(
+                  position: _floatingAnimation,
+                  child: Image.asset(
+                    'assets/images/splash_mongbi.png',
+                    width: screenHeight * 0.38,
+                    height: screenHeight * 0.38,
+                  ),
+                ),
               ],
             ),
           ),
