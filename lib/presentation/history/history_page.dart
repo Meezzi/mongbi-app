@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/presentation/history/widgets/calendar.dart';
 import 'package:mongbi_app/presentation/history/widgets/calendar_drop_down_button.dart';
 import 'package:mongbi_app/presentation/history/widgets/history_list.dart';
-import 'package:table_calendar/table_calendar.dart';
 
 class HistoryPage extends StatefulWidget {
+  const HistoryPage({super.key});
+
   @override
   State<HistoryPage> createState() => _HistoryPageState();
 }
@@ -47,7 +47,6 @@ class _HistoryPageState extends State<HistoryPage> {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            // colors: [Color.fromARGB(255, 165, 17, 224), Color(0xffEAC9FA)],
             colors: [Color(0xffFDF8FF), Color(0xffEAC9FA)],
           ),
         ),

@@ -41,13 +41,9 @@ class Calendar extends ConsumerWidget {
             day == calendarState.selectedDay;
       },
       onDaySelected: (selectedDay, focusedDay) {
-        print('❤️날짜 선택 - selectedDay : $selectedDay');
-        print('❤️날짜 선택 - focusedDay : $focusedDay');
         calendarVm.onDaySelected(selectedDay, focusedDay);
       },
       onPageChanged: (focusedDay) {
-        print('❤️페이지 이동');
-        print(focusedDay);
         calendarVm.onPageChanged(focusedDay);
       },
       calendarStyle: CalendarStyle(
@@ -91,7 +87,6 @@ class Calendar extends ConsumerWidget {
           );
         },
         // 선택된 날짜의 스타일 커스텀
-        // ✅✅ TableCalendar.selectedDayPredicate 속성이 있어야만 동작
         selectedBuilder: (context, day, focusedDay) {
           return Container(
             width: double.infinity,

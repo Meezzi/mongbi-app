@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:intl/intl.dart';
+import 'package:mongbi_app/core/date_formatter.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/presentation/history/view_models/calendar_view_model.dart';
 
@@ -12,9 +12,7 @@ class CalendarDropDownButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final calendarState = ref.watch(calendarViewModelProvider);
     final calendarVm = ref.read(calendarViewModelProvider.notifier);
-    print('✅버튼');
-    print(calendarState.toString());
-    print('✅버튼');
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16),
       child: Row(
@@ -34,11 +32,11 @@ class CalendarDropDownButton extends ConsumerWidget {
               final date = DateTime(year, month, day);
 
               return DropdownMenuItem(
-                value: DateFormat('yyyy년 MM월').format(date),
+                value: DateFormatter.formatYearMonth(date),
                 onTap: () {
                   calendarVm.onChangedCalendar(date);
                 },
-                child: Text(DateFormat('yyyy년 MM월').format(date)),
+                child: Text(DateFormatter.formatYearMonth(date)),
               );
             }),
             onChanged: (value) {
