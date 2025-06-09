@@ -64,6 +64,10 @@ class RemoteDreamAnalysisDataSourceImpl {
       final text = data['content'][0]['text'] as String;
 
       return text;
+    } else {
+      throw Exception(
+        'Claude API 호출 실패: ${response.statusCode} ${response.statusMessage}',
+      );
     }
   }
 }
