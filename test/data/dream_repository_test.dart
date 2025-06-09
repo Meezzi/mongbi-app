@@ -10,6 +10,7 @@ class FakeDreamDto extends Fake implements DreamDto {}
 void main() {
   DreamDataSource? dreamDataSource;
   RemoteDreamRepository? remoteDreamRepository;
+  MockDreamAnalysisDataSource? dreamAnalysisDataSource;
 
   setUpAll(() {
     registerFallbackValue(FakeDreamDto());
@@ -18,7 +19,11 @@ void main() {
   group('Dream Repository SaveDream Test', () {
     setUp(() {
       dreamDataSource = MockDreamDataSource();
-      remoteDreamRepository = RemoteDreamRepository(dreamDataSource!);
+      dreamAnalysisDataSource = MockDreamAnalysisDataSource();
+      remoteDreamRepository = RemoteDreamRepository(
+        dreamDataSource!,
+        dreamAnalysisDataSource!,
+      );
     });
 
     test('Return true if dream creation is successful', () async {
