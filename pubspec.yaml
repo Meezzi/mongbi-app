@@ -68,6 +68,9 @@ flutter:
   assets:
     - assets/
     - assets/images/mongbi.png
+    - assets/images/apple_login.svg
+    - assets/images/google_login.svg
+    - assets/images/kakao_login.svg
     - assets/icons/
     - .env
   #   - images/a_dot_ham.jpeg

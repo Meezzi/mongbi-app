@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mongbi_app/presentation/auth/widgets/apple_login_button_widget.dart';
+import 'package:mongbi_app/presentation/auth/widgets/google_login_button_widget.dart';
+import 'package:mongbi_app/presentation/auth/widgets/kakao_login_button_widget.dart';
 import 'package:mongbi_app/presentation/auth/widgets/mongbi_image_widget.dart';
 import 'package:mongbi_app/presentation/auth/widgets/text_widgets.dart'; // 이걸로 수정
 
@@ -15,11 +18,21 @@ class SocialLoginPage extends StatelessWidget {
           children: [
             CustomText(text: '반가워몽!', type: TextType.title),
             CustomText(text: '몽비랑 같이 꿈보러갈래?', type: TextType.title),
-            SizedBox(height: 28),
+            SizedBox(height: 62),
             MongbiCharacter(size: 288),
             SizedBox(height: 62),
             CustomText(text: '간편 로그인', type: TextType.login_info),
             SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                AppleLoginButton(onTap: () {}),
+                SizedBox(width: 24),
+                KakaoLoginButton(onTap: () {}),
+                SizedBox(width: 24),
+                GoogleLoginButton(onTap: () {}),
+              ],
+            ),
           ],
         ),
       ),
