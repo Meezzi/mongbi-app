@@ -1,12 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:mongbi_app/data/data_sources/remote_dream_analysis_data_source.dart';
 
 void main() {
   late RemoteDreamAnalysisDataSourceImpl dataSource;
   late MockDio mockDio;
 
   const apiKey = 'test-api-key';
+  const baseUrl = '';
   const dreamContent = '꿈에서 용이 나왔어요.';
   const dreamScore = 4;
 
@@ -15,6 +17,7 @@ void main() {
     dataSource = RemoteDreamAnalysisDataSourceImpl(
       dio: mockDio,
       apiKey: apiKey,
+      baseUrl: baseUrl,
     );
   });
 
