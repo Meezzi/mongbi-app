@@ -24,3 +24,4 @@ class User {
     required this.userIdState,
   });
 }
+

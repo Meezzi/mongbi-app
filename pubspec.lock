@@ -568,4 +568,3 @@ packages:
 sdks:
   dart: ">=3.7.2 <4.0.0"
   flutter: ">=3.27.0"
-  flutter: ">=3.27.0"
