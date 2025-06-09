@@ -88,6 +88,22 @@ void main() {
         () => dreamAnalysisDataSource!.analyzeDream(dreamContent, dreamScore),
       ).called(1);
     });
+
+    test('DreamAnalysisDataSource에서 오류가 전달되면 호출한 곳에 오류를 전달한다.', () async {
+      // Arrange
+      final dreamContent = '';
+      final dreamScore = 4;
+
+      when(
+        () => dreamAnalysisDataSource!.analyzeDream(dreamContent, dreamScore),
+      ).thenThrow(Exception());
+
+      // Act & Assert
+      expect(
+        () => dreamAnalysisDataSource!.analyzeDream(dreamContent, dreamScore),
+        throwsA(isA<Exception>()),
+      );
+    });
   });
 }
 
