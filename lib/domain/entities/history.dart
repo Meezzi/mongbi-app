@@ -5,10 +5,11 @@ class History {
     required this.dreamTag,
     required this.dreamKeywords,
     required this.dreamInterpretation,
-    required this.psychologicalStatelnterpretation,
-    required this.psychologicalstateKeywords,
+    required this.psychologicalStateInterpretation,
+    required this.psychologicalStateKeywords,
     required this.mongbiComment,
     required this.emotionCategory,
+    required this.dreamRegDate,
   });
 
   final String dreamContent;
@@ -16,8 +17,9 @@ class History {
   final String dreamTag;
   final List<String> dreamKeywords;
   final String dreamInterpretation;
-  final String psychologicalStatelnterpretation;
-  final List<String> psychologicalstateKeywords;
+  final String psychologicalStateInterpretation;
+  final List<String> psychologicalStateKeywords;
   final String mongbiComment;
   final String emotionCategory;
+  final String dreamRegDate;
 }
