@@ -3,15 +3,9 @@ import 'package:mongbi_app/data/data_sources/history_data_source.dart';
 import 'package:mongbi_app/data/dtos/history_dto.dart';
 
 class HistoryDataSourceImpl implements HistoryDataSource {
-  HistoryDataSourceImpl(Dio dio) {
-    _dio = dio;
-    _dio.options = BaseOptions(
-      baseUrl: 'https://mongbe.store',
-      validateStatus: (status) => true,
-    );
-  }
+  HistoryDataSourceImpl(this._dio);
 
-  late Dio _dio;
+  final Dio _dio;
 
   @override
   Future<List<HistoryDto>> feachUserDreamsHistory() async {

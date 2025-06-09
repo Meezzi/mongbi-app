@@ -10,7 +10,6 @@ import 'package:mongbi_app/data/dtos/history_dto.dart';
 class MockDio extends Mock implements Dio {}
 
 void main() {
-  // green, refactor
   MockDio? mockDio;
   HistoryDataSource? historyDataSourceImpl;
 
@@ -19,11 +18,6 @@ void main() {
     historyDataSourceImpl = HistoryDataSourceImpl(mockDio!);
   });
   test('HistoryDataSource test', () async {
-    // red
-    // final historyDataSource = HistoryDataSource();
-    // final historyDtoList = historyDataSource.fetchAllHistory();
-    // expect(historyDtoList, isA<List<HistoryDto>>());
-
     // json이 이런 형태인 이유는
     // fetchAllHistory 내부에서 ['result']로 값을 받기 때문
     final json = '''
@@ -61,7 +55,8 @@ void main() {
       return response;
     });
 
-    final hisotoryDtoList = await historyDataSourceImpl!.fetchAllHistory();
+    final hisotoryDtoList =
+        await historyDataSourceImpl!.feachUserDreamsHistory();
 
     expect(hisotoryDtoList, isA<List<HistoryDto>>());
     expect(hisotoryDtoList.first.dreamContent, '꿈1');
