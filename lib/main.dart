@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:mongbi_app/presentation/history/history_page.dart';
 
-Future<void> main() async {
+void main() async {
   await dotenv.load(fileName: '.env');
   
-  runApp(const MyApp());
+  // 캘린더 한글화
+  await initializeDateFormatting();
+
+  runApp(ProviderScope(child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -12,6 +18,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp();
+    return MaterialApp(
+      theme: ThemeData(fontFamily: 'NanumSquareRound'),
+      home: HistoryPage(),
+    );
   }
 }
