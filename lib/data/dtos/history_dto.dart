@@ -17,7 +17,8 @@ class HistoryDto {
     dreamTag: json['DREAM_TAG'],
     dreamKeywords: List<String>.from(json['DREAM_KEYWORDS'].map((x) => x)),
     dreamInterpretation: json['DREAM_INTERPRETATION'],
-    psychologicalStatelnterpretation: json['PSYCHOLOGICAL_STATELNTERPRETATION'],
+    psychologicalStatelnterpretation:
+        json['PSYCHOLOGICAL_STATE_INTERPRETATION'],
     psychologicalstateKeywords: List<String>.from(
       json['PSYCHOLOGICALSTATE_KEYWORDS'].map((x) => x),
     ),
