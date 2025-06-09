@@ -69,7 +69,10 @@ flutter:
     - assets/
     - assets/icons/
     - .env
-    - assets/images
+    - assets/
+    - assets/images/splash_bg.svg
+    - assets/images/splash_mongbi.svg
+    - assets/images/star.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
