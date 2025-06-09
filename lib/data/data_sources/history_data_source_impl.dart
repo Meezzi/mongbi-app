@@ -14,20 +14,18 @@ class HistoryDataSourceImpl implements HistoryDataSource {
   late Dio _dio;
 
   @override
-  Future<List<HistoryDto>> fetchAllHistory() async {
+  Future<List<HistoryDto>> feachUserDreamsHistory() async {
     try {
       final response = await _dio.get('');
 
-      if (response.statusCode == 200) {
-        print(response);
+      if (response.statusCode == 201 && response.data['success'] == true) {
         final results = List.from(response.data['results']);
         final historyList = results.map((e) => HistoryDto.fromJson(e)).toList();
         return historyList;
+      } else {
+        throw Exception(response.data['message'] ?? '알 수 없는 오류가 발생하였습니다.');
       }
-      return [];
-    } catch (e, s) {
-      print(e);
-      print(s);
+    } catch (e) {
       return [];
     }
   }

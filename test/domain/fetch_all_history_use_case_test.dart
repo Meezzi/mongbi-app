@@ -2,37 +2,19 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:mongbi_app/domain/entities/history.dart';
 import 'package:mongbi_app/domain/repositories/history_repository.dart';
-import 'package:mongbi_app/domain/use_cases/fetch_all_history_use_case.dart';
-
-// class MockHistoryRepository implements HistoryRepository {
-//   @override
-//   Future<List<History>> fetchAllHistory() async {
-// return Future.value([
-//   History(dreamContent: '좋은 꿈'),
-//   History(dreamContent: '나쁜 꿈'),
-// ]);
-//   }
-// }
+import 'package:mongbi_app/domain/use_cases/fetch_user_dreams_history_use_case.dart';
 
 class MockHistoryRepository extends Mock implements HistoryRepository {}
 
 void main() {
-  test('FetchAllHistoryUseCase test', () async {
-    // red, green
-    // arrange
-    // final fetchAllHistoryUseCase = FetchAllHistoryUseCase();
-    // act
-    // final history = fetchAllHistoryUseCase.execute();
-    // assert
-    // expect(history, isA<Future<List<History>>>());
-
-    // refactor
-    // arrange
+  test('FetchUserDreamsHistoryUseCase test', () async {
     final mockRepository = MockHistoryRepository();
-    final fetchAllHistoryUseCase = FetchAllHistoryUseCase(mockRepository);
+    final fetchAllHistoryUseCase = FetchUserDreamsHistoryUseCase(
+      mockRepository,
+    );
 
     when(() {
-      return mockRepository.fetchAllHistory();
+      return mockRepository.feachUserDreamsHistory();
     }).thenAnswer((invocation) async {
       return [
         History(
@@ -48,9 +30,9 @@ void main() {
         ),
       ];
     });
-    // // act
+
     final history = await fetchAllHistoryUseCase.execute();
-    // assert
+
     expect(history, isA<List<History>>());
     expect(history.first.dreamContent, '꿈1');
   });
