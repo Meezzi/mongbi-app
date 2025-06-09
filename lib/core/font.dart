@@ -88,10 +88,10 @@ class Font {
     fontSize: 24,
     height: 32 / 24,
   );
-  static final title32 = TextStyle(
+  static final title28 = TextStyle(
     color: defaultColor,
     fontWeight: FontWeight.w800,
-    fontSize: 32,
-    height: 36 / 32,
+    fontSize: 28,
+    height: 32 / 28,
   );
 }
