@@ -20,7 +20,7 @@ class CustomText extends StatelessWidget {
 
     switch (type) {
       case TextType.title:
-        style = Font.title16.copyWith(color: Color(0xFF1A181B));
+        style = Font.title20.copyWith(color: Color(0xFF1A181B));
         break;
       case TextType.login_info:
         style = Font.subTitle16.copyWith(color: Color(0xFFA6A1AA));
