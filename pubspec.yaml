@@ -41,6 +41,7 @@ dependencies:
   flutter_svg: ^2.1.0
   assorted_layout_widgets: ^11.0.0
   flutter_dotenv: ^5.2.1
+  shared_preferences: ^2.5.3
 
 dev_dependencies:
   flutter_test:
