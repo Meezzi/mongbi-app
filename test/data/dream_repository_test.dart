@@ -55,6 +55,40 @@ void main() {
       verify(() => dreamDataSource!.saveDream(any())).called(1);
     });
   });
+
+  group('analyzeDream 테스트', () {
+    setUp(() {
+      dreamDataSource = MockDreamDataSource();
+      dreamAnalysisDataSource = MockDreamAnalysisDataSource();
+      remoteDreamRepository = RemoteDreamRepository(
+        dreamDataSource!,
+        dreamAnalysisDataSource!,
+      );
+    });
+
+    test('DreamAnalysisDataSource에서 결과를 받아서 반환해야 한다', () async {
+      // Arrange
+      final dreamContent = '';
+      final dreamScore = 4;
+
+      when(
+        () => dreamAnalysisDataSource!.analyzeDream(dreamContent, dreamScore),
+      ).thenAnswer((_) async => '꿈 해석이다몽');
+
+      // Act
+      final response = await remoteDreamRepository!.analyzeDream(
+        dreamContent,
+        dreamScore,
+      );
+
+      // Assert
+      expect(response, '꿈 해석이다몽');
+
+      verify(
+        () => dreamAnalysisDataSource!.analyzeDream(dreamContent, dreamScore),
+      ).called(1);
+    });
+  });
 }
 
 class MockDreamDataSource extends Mock implements DreamDataSource {}
