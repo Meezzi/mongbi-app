@@ -73,11 +73,11 @@ void main() {
         () => dreamRepository!.saveDream(dream),
       ).thenThrow(Exception('테스트용 오류'));
 
-      // Act
-      final response = await dreamRepository!.saveDream(dream);
-
-      // Assert
-      expect(response, throwsA(isA<Exception>));
+      // Act & Assert
+      expect(
+        () async => await dreamSaveUseCase!.saveDream(dream),
+        throwsA(isA<Exception>()),
+      );
     });
   });
 }
