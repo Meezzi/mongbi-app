@@ -4,6 +4,8 @@ import 'package:mongbi_app/domain/entities/dream.dart';
 import 'package:mongbi_app/domain/repositories/dream_repository.dart';
 import 'package:mongbi_app/domain/use_cases/dream_save_use_case.dart';
 
+class FakeDream extends Fake implements Dream {}
+
 void main() {
   DreamRepository? dreamRepository;
   DreamSaveUseCase? dreamSaveUseCase;
