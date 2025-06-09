@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:mongbi_app/data/data_sources/dream_analysis_data_source.dart';
-import 'package:mongbi_app/data/data_sources/dream_data_source.dart';
+import 'package:mongbi_app/data/data_sources/dream_save_data_source.dart';
 import 'package:mongbi_app/data/dtos/dream_dto.dart';
 import 'package:mongbi_app/data/repositories/remote_dream_repository.dart';
 import 'package:mongbi_app/domain/entities/dream.dart';
@@ -9,7 +9,7 @@ import 'package:mongbi_app/domain/entities/dream.dart';
 class FakeDreamDto extends Fake implements DreamDto {}
 
 void main() {
-  DreamDataSource? dreamDataSource;
+  DreamSaveDataSource? dreamSaveDataSource;
   RemoteDreamRepository? remoteDreamRepository;
   MockDreamAnalysisDataSource? dreamAnalysisDataSource;
 
@@ -19,10 +19,10 @@ void main() {
 
   group('Dream Repository SaveDream Test', () {
     setUp(() {
-      dreamDataSource = MockDreamDataSource();
+      dreamSaveDataSource = MockDreamDataSource();
       dreamAnalysisDataSource = MockDreamAnalysisDataSource();
       remoteDreamRepository = RemoteDreamRepository(
-        dreamDataSource!,
+        dreamSaveDataSource!,
         dreamAnalysisDataSource!,
       );
     });
@@ -30,7 +30,7 @@ void main() {
     test('Return true if dream creation is successful', () async {
       // Arrange
       when(
-        () => dreamDataSource!.saveDream(any()),
+        () => dreamSaveDataSource!.saveDream(any()),
       ).thenAnswer((_) async => true);
 
       // Act
@@ -38,13 +38,13 @@ void main() {
 
       // Assert
       expect(response, isTrue);
-      verify(() => dreamDataSource!.saveDream(any())).called(1);
+      verify(() => dreamSaveDataSource!.saveDream(any())).called(1);
     });
 
     test('Rreturn false if dream creation is failure', () async {
       // Arrange
       when(
-        () => dreamDataSource!.saveDream(any()),
+        () => dreamSaveDataSource!.saveDream(any()),
       ).thenThrow(Exception('테스트용 오류'));
 
       // Act & Assert
@@ -53,16 +53,16 @@ void main() {
         throwsA(isA<Exception>()),
       );
 
-      verify(() => dreamDataSource!.saveDream(any())).called(1);
+      verify(() => dreamSaveDataSource!.saveDream(any())).called(1);
     });
   });
 
   group('analyzeDream 테스트', () {
     setUp(() {
-      dreamDataSource = MockDreamDataSource();
+      dreamSaveDataSource = MockDreamDataSource();
       dreamAnalysisDataSource = MockDreamAnalysisDataSource();
       remoteDreamRepository = RemoteDreamRepository(
-        dreamDataSource!,
+        dreamSaveDataSource!,
         dreamAnalysisDataSource!,
       );
     });
@@ -108,7 +108,7 @@ void main() {
   });
 }
 
-class MockDreamDataSource extends Mock implements DreamDataSource {}
+class MockDreamDataSource extends Mock implements DreamSaveDataSource {}
 
 class MockDreamAnalysisDataSource extends Mock
     implements DreamAnalysisDataSource {}

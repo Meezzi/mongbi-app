@@ -1,5 +1,5 @@
 import 'package:mongbi_app/data/dtos/dream_dto.dart';
 
-abstract interface class DreamDataSource {
+abstract interface class DreamSaveDataSource {
   Future<bool> saveDream(DreamDto dream);
 }
