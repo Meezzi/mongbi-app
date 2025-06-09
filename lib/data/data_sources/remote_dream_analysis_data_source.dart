@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:mongbi_app/data/data_sources/dream_analysis_data_source.dart';
 
-class RemoteDreamAnalysisDataSourceImpl {
+class RemoteDreamAnalysisDataSourceImpl implements DreamAnalysisDataSource {
   RemoteDreamAnalysisDataSourceImpl({
     required this.dio,
     required this.apiKey,
@@ -11,6 +12,7 @@ class RemoteDreamAnalysisDataSourceImpl {
   final String apiKey;
   final String baseUrl;
 
+  @override
   Future<String> analyzeDream(String dreamContent, int dreamScore) async {
     try {
       final prompt = '''
