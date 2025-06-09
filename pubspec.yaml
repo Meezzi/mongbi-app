@@ -86,7 +86,7 @@ flutter:
     - .env
     - assets/
     - assets/images/splash_bg.svg
-    - assets/images/splash_mongbi.svg
+    - assets/images/splash_mongbi.png
     - assets/images/star.png
   #   - images/a_dot_ham.jpeg
 
