@@ -12,7 +12,8 @@ class RemoteDreamAnalysisDataSourceImpl {
   final String baseUrl;
 
   Future<String> analyzeDream(String dreamContent, int dreamScore) async {
-    final prompt = '''
+    try {
+      final prompt = '''
 너는 사용자의 꿈을 먹는 친근한 도깨비 몽비야! 꿈을 맛있게 먹고 해석해주는 전문가지!
 
 📝 분석할 꿈:
@@ -39,35 +40,46 @@ class RemoteDreamAnalysisDataSourceImpl {
 * 친근하고 재미있게 반말로 대화하듯 써줘
 ''';
 
-    final requestBody = {
-      'model': 'claude-3-5-sonnet-20241022',
-      'max_tokens': 4024,
-      'messages': [
-        {'role': 'user', 'content': prompt},
-      ],
-    };
+      final requestBody = {
+        'model': 'claude-3-5-sonnet-20241022',
+        'max_tokens': 4024,
+        'messages': [
+          {'role': 'user', 'content': prompt},
+        ],
+      };
 
-    final response = await dio.post(
-      baseUrl,
-      options: Options(
-        headers: {
-          'x-api-key': apiKey,
-          'anthropic-version': '2023-06-01',
-          'Content-Type': 'application/json',
-        },
-      ),
-      data: requestBody,
-    );
-
-    if (response.statusCode == 200) {
-      final data = response.data;
-      final text = data['content'][0]['text'] as String;
-
-      return text;
-    } else {
-      throw Exception(
-        'Claude API 호출 실패: ${response.statusCode} ${response.statusMessage}',
+      final response = await dio.post(
+        baseUrl,
+        options: Options(
+          headers: {
+            'x-api-key': apiKey,
+            'anthropic-version': '2023-06-01',
+            'Content-Type': 'application/json',
+          },
+        ),
+        data: requestBody,
       );
+
+      if (response.statusCode == 200) {
+        final data = response.data;
+        final text = data['content'][0]['text'] as String;
+
+        return text;
+      } else {
+        throw Exception(
+          'Claude API 호출 실패: ${response.statusCode} ${response.statusMessage}',
+        );
+      }
+    } on DioException catch (e) {
+      if (e.response?.statusCode == 401) {
+        throw Exception('API Key가 잘못되었습니다. 다시 확인해주세요.');
+      } else if (e.response?.statusCode == 404) {
+        throw Exception('API 엔드포인트를 찾을 수 없습니다. URL 또는 모델명을 확인해주세요.');
+      }
+
+      throw Exception('네트워크 오류: ${e.message}');
+    } catch (e) {
+      throw Exception('알 수 없는 오류: $e');
     }
   }
 }
