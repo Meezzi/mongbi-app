@@ -1,30 +1,70 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
+import 'package:mongbi_app/core/font.dart';
+import 'package:mongbi_app/presentation/history/widgets/calendar.dart';
+import 'package:mongbi_app/presentation/history/widgets/calendar_drop_down_button.dart';
+import 'package:mongbi_app/presentation/history/widgets/history_list.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-class HistoryPage extends StatelessWidget {
+class HistoryPage extends StatefulWidget {
+  @override
+  State<HistoryPage> createState() => _HistoryPageState();
+}
+
+class _HistoryPageState extends State<HistoryPage> {
+  final double horizontalPadding = 24;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // 이거 동작 안하는 것 같은데?
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent, // 배경 투명
+        statusBarIconBrightness: Brightness.dark, // 아이콘 색: 어두운 색 (검정)
+        statusBarBrightness: Brightness.light, // iOS용 설정
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    // 480
+    // 768
+    // 1280
+    // 반응형이 비율인지 크기별인지
+
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
         centerTitle: false,
-        title: Text(
-          '몽비의 꿈 기록',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-        ),
+        title: Text('모몽의 꿈 기록', style: Font.title20),
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 24),
-        child: Container(
-          color: Colors.amberAccent,
-          child: TableCalendar(
-            locale: 'ko_KR',
-            headerStyle: HeaderStyle(
-              titleCentered: true,
-              formatButtonVisible: false,
-            ),
-            focusedDay: DateTime.now(),
-            firstDay: DateTime.utc(DateTime.now().year, 1, 31),
-            lastDay: DateTime.utc(DateTime.now().year, 12, 31),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            // colors: [Color.fromARGB(255, 165, 17, 224), Color(0xffEAC9FA)],
+            colors: [Color(0xffFDF8FF), Color(0xffEAC9FA)],
+          ),
+        ),
+        child: SafeArea(
+          child: ListView(
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+                child: Column(
+                  children: [
+                    CalendarDropDownButton(),
+                    Calendar(horizontalPadding: horizontalPadding),
+                  ],
+                ),
+              ),
+              HistoryList(horizontalPadding: horizontalPadding),
+            ],
           ),
         ),
       ),
