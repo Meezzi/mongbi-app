@@ -17,6 +17,39 @@ void main() {
       apiKey: apiKey,
     );
   });
+
+  group('Dream Analysis DataSource 테스트', () {
+    test('성공적으로 응답을 받으면 해석 텍스트를 반환한다', () async {
+      // Arrange
+      const expectedText = '꿈 해석 결과입니다.';
+
+      final mockResponseData = {
+        'content': [
+          {'text': expectedText},
+        ],
+      };
+
+      when(
+        () => mockDio.post(
+          any(),
+          options: any(named: 'options'),
+          data: any(named: 'data'),
+        ),
+      ).thenAnswer(
+        (_) async => Response(
+          requestOptions: RequestOptions(path: ''),
+          statusCode: 200,
+          data: mockResponseData,
+        ),
+      );
+
+      // Act
+      final result = await dataSource.analyzeDream(dreamContent, dreamScore);
+
+      // Assert
+      expect(result, expectedText);
+    });
+  });
 }
 
 class MockDio extends Mock implements Dio {}
