@@ -25,8 +25,8 @@ class _SplashPageState extends State<SplashPage>
 
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 100),
-    )..repeat(reverse: true);
+      duration: const Duration(seconds: 800),
+    )..repeat(reverse: false);
 
     _floatingAnimation = Tween<Offset>(
       begin: const Offset(0, 0),
@@ -43,7 +43,6 @@ class _SplashPageState extends State<SplashPage>
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
-
     return Scaffold(
       body: Stack(
         children: [
