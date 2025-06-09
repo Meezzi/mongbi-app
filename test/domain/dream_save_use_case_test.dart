@@ -37,7 +37,7 @@ void main() {
       ).thenAnswer((_) async => true);
 
       // Act
-      final response = await dreamSaveUseCase.saveDream(dream);
+      final response = await dreamSaveUseCase!.saveDream(dream);
 
       // Assert
       expect(response, isTrue);
