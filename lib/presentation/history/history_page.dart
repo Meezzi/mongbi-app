@@ -14,47 +14,66 @@ class HistoryPage extends StatefulWidget {
 
 class _HistoryPageState extends State<HistoryPage> {
   final double horizontalPadding = 24;
-
-  @override
-  void initState() {
-    super.initState();
-
-    // 이거 동작 안하는 것 같은데?
-    SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent, // 배경 투명
-        statusBarIconBrightness: Brightness.dark, // 아이콘 색: 어두운 색 (검정)
-        statusBarBrightness: Brightness.light, // iOS용 설정
-      ),
-    );
-  }
+  final historyKey = GlobalKey();
+  late Offset historyPosition;
+  late EdgeInsets devicePaddig;
+  late double appBarHeight;
+  bool isActive = false;
 
   @override
   Widget build(BuildContext context) {
-    // 480
-    // 768
-    // 1280
-    // 반응형이 비율인지 크기별인지
-
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        centerTitle: false,
-        title: Text('모몽의 꿈 기록', style: Font.title20),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(kToolbarHeight),
+        child: AnimatedContainer(
+          duration: Duration(milliseconds: 200),
+          color: isActive ? Color(0xFF3B136B) : Color(0xffFCF6FF),
+          child: AppBar(
+            systemOverlayStyle:
+                isActive
+                    ? SystemUiOverlayStyle.light
+                    : SystemUiOverlayStyle.dark,
+            backgroundColor: Colors.transparent,
+            centerTitle: false,
+            titleSpacing: horizontalPadding,
+            title: AnimatedDefaultTextStyle(
+              duration: Duration(milliseconds: 200),
+              style: Font.title20.copyWith(
+                color: isActive ? Colors.white : Color(0xff1A181B),
+              ),
+              child: Text('모몽의 꿈 기록'),
+            ),
+          ),
+        ),
       ),
-      body: Container(
+      body: AnimatedContainer(
+        duration: Duration(milliseconds: 200),
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Color(0xffFDF8FF), Color(0xffEAC9FA)],
+            colors:
+                isActive
+                    ? [Color(0xFF3B136B), Color(0xFF3B136B)]
+                    : [Color(0xffFDF8FF), Color(0xffEAC9FA)],
           ),
         ),
-        child: SafeArea(
+        child: NotificationListener(
+          onNotification: (notification) {
+            if (notification is ScrollUpdateNotification) {
+              onScroll();
+            }
+            return false;
+          },
           child: ListView(
+            padding: EdgeInsets.zero,
             children: [
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+                padding: EdgeInsets.only(
+                  left: horizontalPadding,
+                  right: horizontalPadding,
+                  bottom: horizontalPadding,
+                ),
                 child: Column(
                   children: [
                     CalendarDropDownButton(),
@@ -62,11 +81,32 @@ class _HistoryPageState extends State<HistoryPage> {
                   ],
                 ),
               ),
-              HistoryList(horizontalPadding: horizontalPadding),
+              HistoryList(
+                key: historyKey,
+                horizontalPadding: horizontalPadding,
+              ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  void onScroll() {
+    final historyContext = historyKey.currentContext;
+    if (historyContext != null) {
+      final box = historyContext.findRenderObject() as RenderBox;
+      final position = box.localToGlobal(Offset.zero);
+      final devicePadding = MediaQuery.of(context).padding;
+      final appBarHeight = AppBar().preferredSize.height;
+      final triggerHeight = appBarHeight + devicePadding.top;
+      final nextValue = triggerHeight >= position.dy;
+
+      if (isActive != nextValue) {
+        setState(() {
+          isActive = nextValue;
+        });
+      }
+    }
   }
 }

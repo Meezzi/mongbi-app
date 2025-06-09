@@ -11,7 +11,6 @@ class HistoryList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
-      margin: EdgeInsets.only(top: horizontalPadding),
       padding: EdgeInsets.all(horizontalPadding),
       decoration: BoxDecoration(
         color: Color(0xFF3B136B),
@@ -28,6 +27,10 @@ class HistoryList extends ConsumerWidget {
             style: Font.subTitle14.copyWith(color: Colors.white),
           ),
           SizedBox(height: horizontalPadding),
+          HistoryItem(),
+          HistoryItem(),
+          HistoryItem(),
+          HistoryItem(),
           HistoryItem(),
           HistoryItem(),
         ],
