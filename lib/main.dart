@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mongbi_app/presentation/history/history_page.dart';
 
@@ -6,7 +7,7 @@ void main() async {
   // 캘린더 한글화
   await initializeDateFormatting();
 
-  runApp(const MyApp());
+  runApp(ProviderScope(child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
