@@ -49,6 +49,39 @@ void main() {
       // Assert
       expect(result, expectedText);
     });
+
+    test('에러 응답 코드가 오면 Exception을 던진다', () async {
+      // Arrange
+      when(
+        () => mockDio.post(
+          any(),
+          options: any(named: 'options'),
+          data: any(named: 'data'),
+        ),
+      ).thenThrow(
+        DioException(
+          requestOptions: RequestOptions(path: ''),
+          response: Response(
+            requestOptions: RequestOptions(path: ''),
+            statusCode: 401,
+            data: {'message': 'Unauthorized'},
+          ),
+          type: DioExceptionType.badResponse,
+        ),
+      );
+
+      // Act & Assert
+      expect(
+        () => dataSource.analyzeDream(dreamContent, dreamScore),
+        throwsA(
+          isA<Exception>().having(
+            (e) => e.toString(),
+            'description',
+            contains('API Key가 잘못되었습니다'),
+          ),
+        ),
+      );
+    });
   });
 }
 
