@@ -34,3 +34,8 @@ final _dreamRepositoryProvider = Provider<DreamRepository>(
     ref.read(_dreamAnalysisDataSource),
   ),
 );
+
+final dreamWriteViewModelProvider =
+    NotifierProvider<DreamWriteViewModel, DreamWriteState>(
+      () => DreamWriteViewModel(),
+    );
