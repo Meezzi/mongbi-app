@@ -35,7 +35,9 @@ class RemoteDreamRepository implements DreamRepository {
           (responseMap['dreamKeywords'] as List<dynamic>)
               .map((e) => e as String)
               .toList(),
+      dreamSubTitle: responseMap['dreamSubTitle'] as String,
       dreamInterpretation: responseMap['dreamInterpretation'] as String,
+      psychologicalSubTitle: responseMap['psychologicalSubTitle'] as String,
       psychologicalStateInterpretation:
           responseMap['psychologicalStateInterpretation'] as String,
       psychologicalStateKeywords:
