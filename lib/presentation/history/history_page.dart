@@ -5,9 +5,8 @@ import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/core/get_widget_info.dart';
 import 'package:mongbi_app/presentation/history/history_key/history_key.dart';
 import 'package:mongbi_app/presentation/history/widgets/calendar.dart';
-import 'package:mongbi_app/presentation/history/widgets/calendar_drop_down_button.dart';
+import 'package:mongbi_app/presentation/history/widgets/calendar_change_button.dart';
 import 'package:mongbi_app/presentation/history/widgets/history_list.dart';
-import 'package:mongbi_app/presentation/history/widgets/month_bottom_sheet.dart';
 import 'package:mongbi_app/providers/history_provider.dart';
 
 class HistoryPage extends ConsumerStatefulWidget {
@@ -109,19 +108,7 @@ class _HistoryPageState extends ConsumerState<HistoryPage> {
                       ),
                       child: Column(
                         children: [
-                          GestureDetector(
-                            onTap: () {
-                              showModalBottomSheet(
-                                isScrollControlled: true,
-                                context: context,
-                                builder: (context) {
-                                  return Wrap(children: [MonthBottomSheet()]);
-                                },
-                              );
-                            },
-                            child: Text('달 바텀 시트 버튼'),
-                          ),
-                          CalendarDropDownButton(),
+                          CalendarChangeButton(),
                           Calendar(horizontalPadding: horizontalPadding),
                         ],
                       ),

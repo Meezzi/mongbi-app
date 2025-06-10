@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mongbi_app/core/font.dart';
-import 'package:mongbi_app/core/get_responsive_ratio.dart';
+import 'package:mongbi_app/core/get_responsive_ratio_by_width.dart';
 import 'package:mongbi_app/presentation/history/models/calendar_model.dart';
 import 'package:mongbi_app/providers/history_provider.dart';
 
@@ -146,6 +146,10 @@ class _MonthBottomSheetState extends ConsumerState<MonthBottomSheet> {
                             // 선택한 년과 월로 재설정
                             selectedDate = DateTime(year, month);
                           });
+                          ref
+                              .read(calendarViewModelProvider.notifier)
+                              .onChangedCalendar(DateTime(year, month));
+                          Navigator.pop(context);
                         },
                         child: Container(
                           width: getResponsiveRatioByWidth(context, 48),
@@ -180,7 +184,7 @@ class _MonthBottomSheetState extends ConsumerState<MonthBottomSheet> {
   void goToPage(int newPageIndex) {
     pageController.animateToPage(
       newPageIndex,
-      duration: const Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 600),
       curve: Curves.ease,
     );
     setState(() {

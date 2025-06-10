@@ -12,10 +12,6 @@ class CalendarViewModel extends AutoDisposeNotifier<CalendarModel> {
     state = state.copyWith(focusedDay: date);
   }
 
-  void onChangeDropDownValue(dynamic value) {
-    state = state.copyWith(dropDownvalue: value);
-  }
-
   void onDaySelected(DateTime selectedDay, DateTime focusedDay) {
     final historyVm = ref.read(historyViewModelProvider.notifier);
     final searchedHistory = historyVm.searchDateTime(selectedDay);
