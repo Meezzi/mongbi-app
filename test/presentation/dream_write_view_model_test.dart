@@ -29,17 +29,19 @@ void main() {
 
   final dream = Dream(
     id: 1,
-    createdAt: DateTime.now(),
-    uid: 1,
+    createdAt: DateTime.parse('2025-06-03T23:52:56.000Z'),
+    uid: 2,
     challengeId: 1,
-    content: 'Test content',
-    score: 5,
+    content: 'Flying in the sky',
+    score: 0,
     dreamKeywords: [],
-    dreamInterpretation: 'Interpretation',
-    psychologicalStateInterpretation: 'State Interpretation',
+    dreamSubTitle: '',
+    dreamInterpretation: 'Dream interpretation',
+    psychologicalSubTitle: '',
+    psychologicalStateInterpretation: 'Interpretation of psychological state',
     psychologicalStateKeywords: [],
-    mongbiComment: 'Advice',
-    dreamCategory: 'Category',
+    mongbiComment: 'happy',
+    dreamCategory: 'sad',
   );
 
   group('DreamWriteViewModel Test', () {
