@@ -9,7 +9,7 @@ class CalendarViewModel extends AutoDisposeNotifier<CalendarModel> {
   }
 
   void onChangedCalendar(DateTime date) {
-    state = state.copyWith(focusedDay: date);
+    state = CalendarModel(focusedDay: date);
   }
 
   void onDaySelected(DateTime selectedDay, DateTime focusedDay) {
