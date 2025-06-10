@@ -1,3 +1,3 @@
 abstract interface class DreamAnalysisDataSource {
-  Future<String> analyzeDream(String dreamContent, int dreamScore);
+  Future<Map<String, dynamic>> analyzeDream(String dreamContent, int dreamScore);
 }
