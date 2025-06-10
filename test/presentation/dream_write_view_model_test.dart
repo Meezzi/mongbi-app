@@ -16,7 +16,7 @@ void main() {
 
     container = ProviderContainer(
       overrides: [
-        analyzDreamUseCaseProvider.overrideWithValue(mockAnalyzeDreamUseCase),
+        analyzeDreamUseCaseProvider.overrideWithValue(mockAnalyzeDreamUseCase),
       ],
     );
 
