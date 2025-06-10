@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mongbi_app/presentation/dream/models/dream_write_state.dart';
+import 'package:mongbi_app/providers/dream_provider.dart';
 
 class DreamWriteViewModel extends Notifier<DreamWriteState> {
   @override
@@ -28,7 +29,10 @@ class DreamWriteViewModel extends Notifier<DreamWriteState> {
     if (state.selectedIndex == -1) {
       return false;
     }
-    // TODO: 꿈 해석 로직
+
+    ref
+        .read(analyzeDreamUseCaseProvider)
+        .execute(state.dreamContent, state.selectedIndex);
 
     return true;
   }
