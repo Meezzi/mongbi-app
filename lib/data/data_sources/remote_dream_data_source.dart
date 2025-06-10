@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
-import 'package:mongbi_app/data/data_sources/dream_data_source.dart';
+import 'package:mongbi_app/data/data_sources/dream_save_data_source.dart';
 import 'package:mongbi_app/data/dtos/dream_dto.dart';
 
-class RemoteDreamDataSource implements DreamDataSource {
+class RemoteDreamDataSource implements DreamSaveDataSource {
   RemoteDreamDataSource(this.dio);
 
   final Dio dio;

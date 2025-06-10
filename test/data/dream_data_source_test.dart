@@ -23,19 +23,19 @@ void main() {
     test('Return true if dream creation is successful', () async {
       // Arrange
       final dreamData = DreamDto(
-        id: 1,
-        createdAt: DateTime.parse('2025-06-03T23:52:56.000Z'),
-        uid: 2,
-        challengeId: 1,
-        content: 'Flying in the sky',
-        score: 0,
+        dreamIdx: 1,
+        dreamRegDate: DateTime.parse('2025-06-03T23:52:56.000Z'),
+        userIdx: 2,
+        challengeIdx: 1,
+        dreamContent: 'Flying in the sky',
+        dreamScore: 0,
         dreamKeywords: [],
         dreamInterpretation: 'Dream interpretation',
         psychologicalStateInterpretation:
             'Interpretation of psychological state',
         psychologicalStateKeywords: [],
         mongbiComment: 'happy',
-        emotionCategory: 'sad',
+        dreamCategory: 'sad',
       );
 
       final fakeResponse = Response(
@@ -58,19 +58,19 @@ void main() {
     test('Throws an Exception when dream creation fails', () async {
       // Arrange
       final dreamData = DreamDto(
-        id: 1,
-        createdAt: DateTime.parse('2025-06-03T23:52:56.000Z'),
-        uid: 2,
-        challengeId: 1,
-        content: 'Flying in the sky',
-        score: 0,
+        dreamIdx: 1,
+        dreamRegDate: DateTime.parse('2025-06-03T23:52:56.000Z'),
+        userIdx: 2,
+        challengeIdx: 1,
+        dreamContent: 'Flying in the sky',
+        dreamScore: 0,
         dreamKeywords: [],
         dreamInterpretation: 'Dream interpretation',
         psychologicalStateInterpretation:
             'Interpretation of psychological state',
         psychologicalStateKeywords: [],
         mongbiComment: 'happy',
-        emotionCategory: 'sad',
+        dreamCategory: 'sad',
       );
 
       final fakeResponse = Response(

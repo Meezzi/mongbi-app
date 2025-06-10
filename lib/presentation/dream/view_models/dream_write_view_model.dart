@@ -1,8 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mongbi_app/presentation/dream/models/dream_write_state.dart';
+import 'package:mongbi_app/providers/dream_provider.dart';
 
-class DreamWriteViewModel extends StateNotifier<DreamWriteState> {
-  DreamWriteViewModel() : super(DreamWriteState());
+class DreamWriteViewModel extends Notifier<DreamWriteState> {
+  @override
+  DreamWriteState build() {
+    return DreamWriteState();
+  }
 
   void setDreamContent(String content) {
     state = state.copyWith(dreamContent: content);
@@ -26,9 +30,10 @@ class DreamWriteViewModel extends StateNotifier<DreamWriteState> {
       return false;
     }
 
-    // TODO: 꿈 해석 로직
+    ref
+        .read(analyzeDreamUseCaseProvider)
+        .execute(state.dreamContent, state.selectedIndex);
 
     return true;
   }
 }
-
