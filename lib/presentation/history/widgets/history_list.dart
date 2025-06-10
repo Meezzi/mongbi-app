@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mongbi_app/core/date_formatter.dart';
-import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/core/get_widget_info.dart';
 import 'package:mongbi_app/presentation/history/history_key/history_key.dart';
-import 'package:mongbi_app/presentation/history/models/calendar_model.dart';
-import 'package:mongbi_app/presentation/history/widgets/history_item.dart';
+import 'package:mongbi_app/presentation/history/widgets/history_notice.dart';
 import 'package:mongbi_app/providers/history_provider.dart';
 
 class HistoryList extends ConsumerStatefulWidget {
@@ -64,60 +61,11 @@ class _HistoryListState extends ConsumerState<HistoryList> {
           topRight: Radius.circular(24),
         ),
       ),
-      child: historyWidget(calendarState),
+      child: HistoryNotice(
+        calendarState: calendarState,
+        expandPaddingValue: expandPaddingValue ?? 0,
+        horizontalPadding: widget.horizontalPadding,
+      ),
     );
-  }
-
-  Widget historyWidget(CalendarModel calendarState) {
-    String noticeText;
-
-    // 날짜 미선택 또는 기록 없음
-    if (calendarState.selectedDay == null) {
-      noticeText = '원하는 날짜를 선택해야 한다몽';
-      return Container(
-        padding: EdgeInsets.only(bottom: expandPaddingValue ?? 0),
-        child: Center(
-          child: Text(
-            noticeText,
-            style: Font.title14.copyWith(color: Color(0xFFB273FF)),
-          ),
-        ),
-      );
-    } else if (calendarState.searchedHistory.isEmpty) {
-      noticeText = '앗, 나한테 들려준 꿈이 없다몽';
-      return Container(
-        padding: EdgeInsets.only(bottom: expandPaddingValue ?? 0),
-        child: Center(
-          child: Text(
-            noticeText,
-            style: Font.title14.copyWith(color: Color(0xFFB273FF)),
-          ),
-        ),
-      );
-    } else {
-      final history = calendarState.searchedHistory.first;
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            DateFormatter.formatYearMonthDayWeek(calendarState.selectedDay!),
-            style: Font.subTitle14.copyWith(color: Colors.white),
-          ),
-          SizedBox(height: widget.horizontalPadding),
-          HistoryItem(label: '내가 꾼 꿈', content: history.dreamContent),
-          HistoryItem(
-            label: '몽비의 꿈 해석',
-            content: history.dreamInterpretation,
-            tagList: history.dreamKeywords,
-          ),
-          HistoryItem(
-            label: '몽비의 심리 해석',
-            content: history.psychologicalStateInterpretation,
-            tagList: history.psychologicalStateKeywords,
-          ),
-          HistoryItem(label: '몽비의 한마디', content: history.mongbiComment),
-        ],
-      );
-    }
   }
 }
