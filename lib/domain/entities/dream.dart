@@ -11,7 +11,7 @@ class Dream {
     required this.psychologicalStateInterpretation,
     required this.psychologicalStateKeywords,
     required this.mongbiComment,
-    required this.emotionCategory,
+    required this.dreamCategory,
   });
 
   int? id;
@@ -25,5 +25,5 @@ class Dream {
   final String psychologicalStateInterpretation;
   final List<String> psychologicalStateKeywords;
   final String mongbiComment;
-  final String emotionCategory;
+  final String dreamCategory;
 }
