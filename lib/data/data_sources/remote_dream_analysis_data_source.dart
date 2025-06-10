@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:mongbi_app/data/data_sources/dream_analysis_data_source.dart';
 
@@ -13,7 +14,10 @@ class RemoteDreamAnalysisDataSource implements DreamAnalysisDataSource {
   final String baseUrl;
 
   @override
-  Future<String> analyzeDream(String dreamContent, int dreamScore) async {
+  Future<Map<String, dynamic>> analyzeDream(
+    String dreamContent,
+    int dreamScore,
+  ) async {
     try {
       final prompt = '''
 너는 사용자의 꿈을 먹는 친근한 도깨비 몽비야! 꿈을 맛있게 먹고 해석해주는 전문가지!
@@ -39,7 +43,20 @@ class RemoteDreamAnalysisDataSource implements DreamAnalysisDataSource {
 💡 **몽비의 조언**
 따뜻하고 실용적인 조언 한마디!
 
+🎈 **꿈 유형**
+길몽, 일상몽, 악몽 중 한 가지 유형을 골라줘.
+
 * 친근하고 재미있게 반말로 대화하듯 써줘
+반드시 JSON만 출력해! 아무 설명이나 인삿말도 넣지마!
+답변 형식 (JSON):
+{
+  "dreamKeywords": ["string", "string"],
+  "psychologicalKeywords": ["string", "string"],
+  "dreamInterpretation": "string",
+  "psychologicalStateInterpretation": "string",
+  "mongbiComment": "string",
+  "dreamCategory": "string"
+}
 ''';
 
       final requestBody = {
@@ -63,10 +80,11 @@ class RemoteDreamAnalysisDataSource implements DreamAnalysisDataSource {
       );
 
       if (response.statusCode == 200) {
-        final data = response.data;
-        final text = data['content'][0]['text'] as String;
+        final text = response.data['content'][0]['text'] as String;
 
-        return text;
+        // 응답받은 꿈 해석 JSON String을 파싱해서 Map으로 변환
+        final jsonResponse = jsonDecode(text) as Map<String, dynamic>;
+        return jsonResponse;
       } else {
         throw Exception(
           'Claude API 호출 실패: ${response.statusCode} ${response.statusMessage}',
