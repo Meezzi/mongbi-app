@@ -72,9 +72,18 @@ void main() {
       final dreamContent = '';
       final dreamScore = 4;
 
+      final fakeAnalysisResult = {
+        'dreamKeywords': ['keyword1', 'keyword2'],
+        'psychologicalKeywords': ['state1', 'state2'],
+        'dreamInterpretation': '해몽',
+        'psychologicalStateInterpretation': '심리 해석',
+        'mongbiComment': '몽비의 조언',
+        'dreamCategory': '길몽',
+      };
+
       when(
         () => dreamAnalysisDataSource!.analyzeDream(dreamContent, dreamScore),
-      ).thenAnswer((_) async => '꿈 해석이다몽');
+      ).thenAnswer((_) async => fakeAnalysisResult);
 
       // Act
       final response = await remoteDreamRepository!.analyzeDream(
@@ -83,8 +92,8 @@ void main() {
       );
 
       // Assert
-      expect(response, '꿈 해석이다몽');
-
+      expect(response.dreamInterpretation, '해몽');
+      expect(response.psychologicalStateInterpretation, '심리 해석');
       verify(
         () => dreamAnalysisDataSource!.analyzeDream(dreamContent, dreamScore),
       ).called(1);
@@ -101,7 +110,7 @@ void main() {
 
       // Act & Assert
       expect(
-        () => dreamAnalysisDataSource!.analyzeDream(dreamContent, dreamScore),
+        () => remoteDreamRepository!.analyzeDream(dreamContent, dreamScore),
         throwsA(isA<Exception>()),
       );
     });
@@ -125,5 +134,5 @@ final dream = Dream(
   psychologicalStateInterpretation: 'Interpretation of psychological state',
   psychologicalStateKeywords: [],
   mongbiComment: 'happy',
-  emotionCategory: 'sad',
+  dreamCategory: 'sad',
 );
