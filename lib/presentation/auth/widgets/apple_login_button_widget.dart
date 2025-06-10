@@ -19,7 +19,7 @@ class AppleLoginButton extends StatelessWidget {
         ),
         child: Center(
           child: SvgPicture.asset(
-            'assets/images/apple_login.svg', // 흰색 애플 로고 이미지 경로
+            'assets/images/apple_login.svg',
             fit: BoxFit.contain,
           ),
         ),
