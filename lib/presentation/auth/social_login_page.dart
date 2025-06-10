@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mongbi_app/presentation/auth/viewmodels/auth_view_model.dart';
 import 'package:mongbi_app/presentation/auth/widgets/apple_login_button_widget.dart';
 import 'package:mongbi_app/presentation/auth/widgets/google_login_button_widget.dart';
 import 'package:mongbi_app/presentation/auth/widgets/kakao_login_button_widget.dart';
@@ -40,7 +41,20 @@ class SocialLoginPage extends StatelessWidget {
                 const SizedBox(width: 24),
                 _SocialLoginItem(
                   showRecentBubble: lastLoginProvider == "google",
-                  child: GoogleLoginButton(onTap: () {}),
+                  child: GoogleLoginButton(
+                    onTap: () async {
+                      final viewModel =
+                          AuthViewModel(); // Provider 쓸 경우 context.read<AuthViewModel>()
+                      try {
+                        await viewModel
+                            .loginWithGoogle(); // UseCase → Repository → Remote 호출
+                        // 로그인 성공 후 페이지 이동 or 토스트
+                      } catch (e) {
+                        // 에러 처리
+                        print('로그인 실패: $e');
+                      }
+                    },
+                  ),
                 ),
               ],
             ),
