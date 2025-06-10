@@ -78,14 +78,9 @@ class _DreamWritePageState extends ConsumerState<DreamWritePage> {
                       // 제출 버튼 위젯
                       SubmitDreamButton(
                         onSubmit: () {
-                          final notifier = ref.read(
-                            dreamWriteViewModelProvider.notifier,
-                          );
-                          final errorMessage = notifier.submitDream();
-
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text(errorMessage as String)),
-                          );
+                          ref
+                              .read(dreamWriteViewModelProvider.notifier)
+                              .submitDream();
                         },
                       ),
                     ],
