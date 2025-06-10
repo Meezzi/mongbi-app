@@ -1,7 +1,7 @@
-import 'dart:convert';
 import 'package:dio/dio.dart';
 import '../../domain/entities/user.dart';
 import '../../domain/repositories/auth_repository.dart';
+import '../dtos/user_dto.dart';
 
 class RemoteGoogleAuthDataSource implements AuthRepository {
   final Dio dio;
@@ -12,12 +12,13 @@ class RemoteGoogleAuthDataSource implements AuthRepository {
   Future<User> loginWithGoogle(String idToken) async {
     try {
       final response = await dio.post(
-        '/auth/google',
+        '/users/google-login', //
         data: {'idToken': idToken},
       );
 
       if (response.statusCode == 201 && response.data['user'] != null) {
-        return User.fromJson(response.data['user']);
+        final userDto = UserDto.fromJson(response.data['user']);
+        return userDto.toEntity();
       } else {
         throw Exception(response.data['message'] ?? '로그인 실패');
       }
