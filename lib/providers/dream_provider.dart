@@ -6,6 +6,7 @@ import 'package:mongbi_app/data/data_sources/remote_dream_analysis_data_source.d
 import 'package:mongbi_app/data/data_sources/remote_dream_data_source.dart';
 import 'package:mongbi_app/data/repositories/remote_dream_repository.dart';
 import 'package:mongbi_app/domain/repositories/dream_repository.dart';
+import 'package:mongbi_app/domain/use_cases/analyze_dream_use_case.dart';
 import 'package:mongbi_app/presentation/dream/models/dream_write_state.dart';
 import 'package:mongbi_app/presentation/dream/view_models/dream_write_view_model.dart';
 import 'package:mongbi_app/providers/core_providers.dart';
@@ -23,10 +24,9 @@ final _dreamAnalysisDataSource = Provider<DreamAnalysisDataSource>(
   ),
 );
 
-final dreamWriteViewModelProvider =
-    StateNotifierProvider<DreamWriteViewModel, DreamWriteState>(
-      (ref) => DreamWriteViewModel(),
-    );
+final analyzeDreamUseCaseProvider = Provider<AnalyzeDreamUseCase>(
+  (ref) => AnalyzeDreamUseCase(ref.read(_dreamRepositoryProvider)),
+);
 
 final _dreamRepositoryProvider = Provider<DreamRepository>(
   (ref) => RemoteDreamRepository(
