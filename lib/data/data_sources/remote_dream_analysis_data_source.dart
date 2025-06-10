@@ -34,8 +34,16 @@ class RemoteDreamAnalysisDataSource implements DreamAnalysisDataSource {
 💭 **심리 상태 키워드**  
 - 현재 심리상태 키워드 3-5개 나열
 
+🪄 **꿈 해석 소제목**
+- 꿈 해석에 대한 소제목을 10글자 이내로, 대화체로, 친근하게 만들어줘.
+- 예: "금빛 용이 나오는 꿈이라...", "이런 꿈 꾼 적 있어?"
+
 ✨ **꿈의 해석**
 꿈 속 각 요소들의 상징적 의미를 구체적으로 설명하고, 전체적인 해몽을 자세히 풀어서 알려줘.
+
+🔧 **심리 해석 소제목**
+- 심리 해석에 대한 소제목을 10글자 이내로, 대화체로, 친근하게 만들어줘.
+- 예: "요즘 무언가 인정받고 싶어?", "마음이 답답했구나!"
 
 🧠 **심리 상태 해석**
 현재 마음 상태와 꿈과의 연관성을 자세히 분석해줘.
@@ -52,7 +60,9 @@ class RemoteDreamAnalysisDataSource implements DreamAnalysisDataSource {
 {
   "dreamKeywords": ["string", "string"],
   "psychologicalKeywords": ["string", "string"],
+  "dreamSubTitle": "string",
   "dreamInterpretation": "string",
+  "psychologicalSubTitle": "string",
   "psychologicalStateInterpretation": "string",
   "mongbiComment": "string",
   "dreamCategory": "string"
