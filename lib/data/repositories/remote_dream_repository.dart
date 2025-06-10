@@ -17,7 +17,35 @@ class RemoteDreamRepository implements DreamRepository {
   }
 
   @override
-  Future<String> analyzeDream(String dreamContent, int dreamScore) async {
-    return await dreamAnalysisDataSource.analyzeDream(dreamContent, dreamScore);
+  Future<Dream> analyzeDream(String dreamContent, int dreamScore) async {
+    final responseMap = await dreamAnalysisDataSource.analyzeDream(
+      dreamContent,
+      dreamScore,
+    );
+
+    // JSON 형태를 Dream으로 변경
+    final dream = Dream(
+      id: null, // TODO: 저장한 후, Dream Id로 저장
+      createdAt: DateTime.now(),
+      uid: 1, // TODO: 사용자 id로 변경
+      challengeId: 0, // TODO: 사용자가 선택한 챌린지 id로 변경
+      content: dreamContent,
+      score: dreamScore,
+      dreamKeywords:
+          (responseMap['dreamKeywords'] as List<dynamic>)
+              .map((e) => e as String)
+              .toList(),
+      dreamInterpretation: responseMap['dreamInterpretation'] as String,
+      psychologicalStateInterpretation:
+          responseMap['psychologicalStateInterpretation'] as String,
+      psychologicalStateKeywords:
+          (responseMap['psychologicalKeywords'] as List<dynamic>)
+              .map((e) => e as String)
+              .toList(),
+      mongbiComment: responseMap['mongbiComment'] as String,
+      dreamCategory: responseMap['dreamCategory'] as String,
+    );
+
+    return dream;
   }
 }
