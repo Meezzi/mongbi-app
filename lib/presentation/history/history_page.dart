@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/core/get_widget_info.dart';
 import 'package:mongbi_app/presentation/history/history_key/history_key.dart';
-import 'package:mongbi_app/presentation/history/widgets/calendar.dart';
-import 'package:mongbi_app/presentation/history/widgets/calendar_change_button.dart';
-import 'package:mongbi_app/presentation/history/widgets/history_list.dart';
+import 'package:mongbi_app/presentation/history/widgets/history_app_bar.dart';
+import 'package:mongbi_app/presentation/history/widgets/history_body.dart';
 import 'package:mongbi_app/providers/history_provider.dart';
 
 class HistoryPage extends ConsumerStatefulWidget {
@@ -44,26 +41,9 @@ class _HistoryPageState extends ConsumerState<HistoryPage> {
       appBar: PreferredSize(
         key: appBarKey,
         preferredSize: Size.fromHeight(kToolbarHeight),
-        child: AnimatedContainer(
-          duration: Duration(milliseconds: 200),
-          color: isActive ? Color(0xFF3B136B) : Color(0xffFCF6FF),
-          child: AppBar(
-            systemOverlayStyle:
-                isActive
-                    ? SystemUiOverlayStyle.light
-                    : SystemUiOverlayStyle.dark,
-            backgroundColor: Colors.transparent,
-            centerTitle: false,
-            titleSpacing: horizontalPadding,
-            title: AnimatedDefaultTextStyle(
-              duration: Duration(milliseconds: 200),
-              style: Font.title20.copyWith(
-                color: isActive ? Colors.white : Color(0xff1A181B),
-              ),
-              // TODO : 나중에 사용자 닉네임으로 변경
-              child: Text('모몽의 꿈 기록'),
-            ),
-          ),
+        child: HistoryAppBar(
+          isActive: isActive,
+          horizontalPadding: horizontalPadding,
         ),
       ),
       body: historyAsync.when(
@@ -71,56 +51,11 @@ class _HistoryPageState extends ConsumerState<HistoryPage> {
           return Center(child: CircularProgressIndicator());
         },
         data: (data) {
-          return AnimatedContainer(
-            height: double.infinity,
-            duration: Duration(milliseconds: 200),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors:
-                    isActive
-                        ? [Color(0xFF3B136B), Color(0xFF3B136B)]
-                        : [Color(0xffFDF8FF), Color(0xffEAC9FA)],
-              ),
-            ),
-            child: NotificationListener(
-              onNotification: (notification) {
-                if (notification is ScrollUpdateNotification) {
-                  onScroll();
-                }
-                return false;
-              },
-              child: SingleChildScrollView(
-                physics:
-                    calendarState.searchedHistory.isEmpty
-                        ? NeverScrollableScrollPhysics()
-                        : AlwaysScrollableScrollPhysics(),
-                padding: EdgeInsets.zero,
-                child: Column(
-                  children: [
-                    Padding(
-                      key: calendarKey,
-                      padding: EdgeInsets.only(
-                        left: horizontalPadding,
-                        right: horizontalPadding,
-                        bottom: horizontalPadding,
-                      ),
-                      child: Column(
-                        children: [
-                          CalendarChangeButton(),
-                          Calendar(horizontalPadding: horizontalPadding),
-                        ],
-                      ),
-                    ),
-                    HistoryList(
-                      key: historyKey,
-                      horizontalPadding: horizontalPadding,
-                    ),
-                  ],
-                ),
-              ),
-            ),
+          return HistoryBody(
+            isActive: isActive,
+            onScroll: onScroll,
+            calendarState: calendarState,
+            horizontalPadding: horizontalPadding,
           );
         },
         error: (error, stackTrace) {
