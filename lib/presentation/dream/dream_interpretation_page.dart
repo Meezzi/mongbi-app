@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/presentation/dream/widgets/custom_button.dart';
 import 'package:mongbi_app/presentation/dream/widgets/dream_section_card.dart';
 import 'package:mongbi_app/presentation/dream/widgets/mongbi_comment_card.dart';
 import 'package:mongbi_app/providers/dream_provider.dart';
 
-class DreamInterpretationPage extends ConsumerWidget {
+class DreamInterpretationPage extends ConsumerStatefulWidget {
   const DreamInterpretationPage({super.key});
 
   @override
-  Widget build(BuildContext context, ref) {
+  ConsumerState<DreamInterpretationPage> createState() =>
+      _DreamInterpretationPageState();
+}
+
+class _DreamInterpretationPageState
+    extends ConsumerState<DreamInterpretationPage> {
+  @override
+  Widget build(BuildContext context) {
     final dream = ref.watch(dreamInterpretationViewModelProvider);
 
     return Scaffold(
@@ -42,10 +50,35 @@ class DreamInterpretationPage extends ConsumerWidget {
                 SizedBox(height: 24),
                 CustomButton(
                   text: '다음',
-                  onSubmit: () {
-                    // TODO: 다음 화면으로 이동
+                  onSubmit: () async {
+                    final navigator = GoRouter.of(context);
+                    final scaffoldMessenger = ScaffoldMessenger.of(context);
+
+                    try {
+                      final isSuccess =
+                          await ref
+                              .read(
+                                dreamInterpretationViewModelProvider.notifier,
+                              )
+                              .saveDream();
+
+                      if (isSuccess) {
+                        // TODO: 홈 화면으로 이동
+                      } else {
+                        scaffoldMessenger.showSnackBar(
+                          const SnackBar(
+                            content: Text('꿈 저장에 실패했어요. 다시 시도해 주세요.'),
+                          ),
+                        );
+                      }
+                    } catch (e) {
+                      scaffoldMessenger.showSnackBar(
+                        SnackBar(content: Text('오류가 발생했어요: $e')),
+                      );
+                    }
                   },
                 ),
+
                 SizedBox(height: 24),
               ],
             ),
