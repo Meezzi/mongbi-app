@@ -63,6 +63,13 @@ class _MonthBottomSheetState extends ConsumerState<MonthBottomSheet> {
       width: double.infinity,
       height: getResponsiveRatioByWidth(context, 282),
       padding: EdgeInsets.only(top: 24, bottom: 24 + 34, left: 24, right: 24),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(24),
+          topRight: Radius.circular(24),
+        ),
+      ),
       child: Column(
         children: [
           CalendarBottomSheetYearSelector(
