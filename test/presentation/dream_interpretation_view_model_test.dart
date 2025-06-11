@@ -2,25 +2,25 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:mongbi_app/domain/entities/dream.dart';
-import 'package:mongbi_app/domain/repositories/dream_repository.dart';
+import 'package:mongbi_app/domain/use_cases/dream_save_use_case.dart';
 import 'package:mongbi_app/presentation/dream/view_models/dream_interpretation_view_model.dart';
 import 'package:mongbi_app/providers/dream_provider.dart';
 
 void main() {
   late ProviderContainer container;
   late DreamInterpretationViewModel viewModel;
-  late MockDreamRepository mockDreamRepository;
+  late MockDreamSaveUseCase mockDreamSaveUseCase;
 
   setUpAll(() {
     registerFallbackValue(FakeDream());
   });
 
   setUp(() {
-    mockDreamRepository = MockDreamRepository();
+    mockDreamSaveUseCase = MockDreamSaveUseCase();
 
     container = ProviderContainer(
       overrides: [
-        dreamRepositoryProvider.overrideWithValue(mockDreamRepository),
+        saveDreamUseCaseProvider.overrideWithValue(mockDreamSaveUseCase),
       ],
     );
 
@@ -35,7 +35,7 @@ void main() {
     test('saveDream이 성공하면 true 반환', () async {
       // Arrange
       when(
-        () => mockDreamRepository.saveDream(any()),
+        () => mockDreamSaveUseCase.saveDream(any()),
       ).thenAnswer((_) async => true);
 
       viewModel.setDream(
@@ -61,13 +61,13 @@ void main() {
 
       // Assert
       expect(result, true);
-      verify(() => mockDreamRepository.saveDream(any())).called(1);
+      verify(() => mockDreamSaveUseCase.saveDream(any())).called(1);
     });
 
     test('saveDream이 실패하면 false 반환', () async {
       // Arrange
       when(
-        () => mockDreamRepository.saveDream(any()),
+        () => mockDreamSaveUseCase.saveDream(any()),
       ).thenAnswer((_) async => false);
 
       viewModel.setDream(
@@ -93,11 +93,11 @@ void main() {
 
       // Assert
       expect(result, false);
-      verify(() => mockDreamRepository.saveDream(any())).called(1);
+      verify(() => mockDreamSaveUseCase.saveDream(any())).called(1);
     });
   });
 }
 
-class MockDreamRepository extends Mock implements DreamRepository {}
+class MockDreamSaveUseCase extends Mock implements DreamSaveUseCase {}
 
 class FakeDream extends Fake implements Dream {}
