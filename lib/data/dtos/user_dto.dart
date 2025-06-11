@@ -1,5 +1,5 @@
-// data/dtos/user_dto.dart
-import '../../domain/entities/user.dart';
+// user_dto.dart
+import 'package:mongbi_app/domain/entities/user.dart';
 
 class UserDto {
   final int userIdx;
@@ -43,31 +43,18 @@ class UserDto {
     );
   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      'USER_IDX': userIdx,
-      'USER_NAME': userName,
-      'USER_NICKNAME': userNickname,
-      'USER_TYPE': userType,
-      'USER_SOCIAL_TYPE': userSocialType,
-      'USER_SOCIAL_ID': userSocialId,
-      'USER_SOCIAL_UUID': userSocialUuid,
-      'USER_REG_DATE': userRegDate.toIso8601String(),
-      'USER_LAST_LOGIN_DATE': userLastLoginDate?.toIso8601String(),
-      'USER_ID_STATE': userIdState,
-    };
+  User toEntity() {
+    return User(
+      userIdx: userIdx,
+      userName: userName,
+      userNickname: userNickname,
+      userType: userType,
+      userSocialType: userSocialType,
+      userSocialId: userSocialId,
+      userSocialUuid: userSocialUuid,
+      userRegDate: userRegDate,
+      userLastLoginDate: userLastLoginDate,
+      userIdState: userIdState,
+    );
   }
-
-  User toEntity() => User(
-        userIdx: userIdx,
-        userName: userName,
-        userNickname: userNickname,
-        userType: userType,
-        userSocialType: userSocialType,
-        userSocialId: userSocialId,
-        userSocialUuid: userSocialUuid,
-        userRegDate: userRegDate,
-        userLastLoginDate: userLastLoginDate,
-        userIdState: userIdState,
-      );
 }

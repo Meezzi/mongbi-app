@@ -43,6 +43,8 @@ dependencies:
   flutter_dotenv: ^5.2.1
   google_sign_in: ^6.3.0
   flutter_naver_login: ^2.1.1
+  shared_preferences: ^2.5.3
+  kakao_flutter_sdk: ^1.9.7+3
 
 dev_dependencies:
   flutter_test:
