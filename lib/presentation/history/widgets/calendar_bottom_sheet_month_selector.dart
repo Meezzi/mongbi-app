@@ -26,6 +26,7 @@ class CalendarBottomSheetMonthSelector extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final calendarVm = ref.read(calendarViewModelProvider.notifier);
+    final now = DateTime.now();
 
     return Expanded(
       child: PageView.builder(
@@ -37,6 +38,7 @@ class CalendarBottomSheetMonthSelector extends ConsumerWidget {
         },
         itemBuilder: (context, pageIndex) {
           final year = maxYear - pageIndex;
+          final isCurrentYear = year == now.year;
 
           return GridView.builder(
             physics: NeverScrollableScrollPhysics(),
@@ -51,32 +53,42 @@ class CalendarBottomSheetMonthSelector extends ConsumerWidget {
               final month = index + 1;
               final isActive =
                   (selectedDate.year == year) && (selectedDate.month == month);
+              final isFutureMonth = isCurrentYear && month > now.month;
 
               return Center(
                 child: GestureDetector(
-                  onTap: () {
-                    // 바텀시트 내에서 현재 선택된 날짜를 표시하기 위한 메서드
-                    onSelectDate(year: year, month: month);
+                  onTap:
+                      isFutureMonth
+                          ? null
+                          : () async {
+                            // 바텀시트 내에서 현재 선택된 날짜를 표시하기 위한 메서드
+                            onSelectDate(year: year, month: month);
+                            await Future.delayed(Duration(milliseconds: 100));
 
-                    // 현재 선택된 날짜를 상태로 저장
-                    calendarVm.onChangedCalendar(DateTime(year, month));
+                            // 현재 선택된 날짜를 상태로 저장
+                            calendarVm.onChangedCalendar(DateTime(year, month));
 
-                    // 바텀시트 종료
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    width: getResponsiveRatioByWidth(context, 48),
-                    height: getResponsiveRatioByWidth(context, 48),
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: isActive ? Color(0xFF8C2EFF) : null,
-                      shape: BoxShape.circle,
-                    ),
-                    child: Text(
-                      '$month월',
-                      style: Font.title16.copyWith(
-                        color: isActive ? Colors.white : null,
-                        fontSize: getResponsiveRatioByWidth(context, 16),
+                            // 바텀시트 종료
+                            if (context.mounted) {
+                              Navigator.pop(context);
+                            }
+                          },
+                  child: Opacity(
+                    opacity: isFutureMonth ? 0.3 : 1,
+                    child: Container(
+                      width: getResponsiveRatioByWidth(context, 48),
+                      height: getResponsiveRatioByWidth(context, 48),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: isActive ? Color(0xFF8C2EFF) : null,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Text(
+                        '$month월',
+                        style: Font.title16.copyWith(
+                          color: isActive ? Colors.white : null,
+                          fontSize: getResponsiveRatioByWidth(context, 16),
+                        ),
                       ),
                     ),
                   ),
