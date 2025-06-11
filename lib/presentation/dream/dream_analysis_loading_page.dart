@@ -1,9 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/presentation/auth/widgets/mongbi_image_widget.dart';
+import 'package:mongbi_app/providers/dream_provider.dart';
 
-class DreamAnalysisLoadingPage extends StatelessWidget {
+class DreamAnalysisLoadingPage extends ConsumerStatefulWidget {
   const DreamAnalysisLoadingPage({super.key});
+
+  @override
+  ConsumerState<DreamAnalysisLoadingPage> createState() =>
+      _DreamAnalysisLoadingPageState();
+}
+
+class _DreamAnalysisLoadingPageState
+    extends ConsumerState<DreamAnalysisLoadingPage> {
+  @override
+  void initState() {
+    super.initState();
+
+    _analyzeDream();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,5 +56,21 @@ class DreamAnalysisLoadingPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _analyzeDream() async {
+    try {
+      await ref.read(dreamWriteViewModelProvider.notifier).submitDream();
+      if (mounted) {
+        context.go('/dream_analysis_result');
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('꿈 해석 중 오류가 발생했어요: $e')));
+        context.pop();
+      }
+    }
   }
 }
