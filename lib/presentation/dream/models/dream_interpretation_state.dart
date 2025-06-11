@@ -7,6 +7,7 @@ class DreamInterpretationState {
     this.psychologicalStateInterpretation = '',
     this.psychologicalStateKeywords = const [],
     this.mongbiComment = '',
+    this.dreamCategory = '',
   });
 
   final String dreamSubTitle;
@@ -16,4 +17,5 @@ class DreamInterpretationState {
   final String psychologicalStateInterpretation;
   final List<String> psychologicalStateKeywords;
   final String mongbiComment;
+  final String dreamCategory;
 }
