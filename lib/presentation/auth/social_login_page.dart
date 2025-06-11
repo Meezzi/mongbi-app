@@ -4,10 +4,20 @@ import 'package:mongbi_app/presentation/auth/widgets/google_login_button_widget.
 import 'package:mongbi_app/presentation/auth/widgets/kakao_login_button_widget.dart';
 import 'package:mongbi_app/presentation/auth/widgets/last_login_state_weiget.dart';
 import 'package:mongbi_app/presentation/auth/widgets/mongbi_image_widget.dart';
-import 'package:mongbi_app/presentation/auth/widgets/text_widgets.dart'; // 이걸로 수정
+import 'package:mongbi_app/presentation/auth/widgets/text_widgets.dart';
+import 'package:mongbi_app/presentation/terms/widgets/terms_bottom_sheet_layout_widget.dart'; // 이걸로 수정
 
 class SocialLoginPage extends StatelessWidget {
   const SocialLoginPage({super.key});
+  
+  void _onLoginSuccess(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (_) => const TermsBottomSheet(), // <- 여기에 위에서 만든 바텀시트
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
