@@ -40,9 +40,10 @@ class DreamSectionCard extends StatelessWidget {
               SizedBox(height: 16),
               SizedBox(
                 height: 34,
-                child: ListView.builder(
+                child: ListView.separated(
                   itemCount: keywords.length,
                   scrollDirection: Axis.horizontal,
+                  separatorBuilder: (context, index) => SizedBox(width: 8),
                   itemBuilder:
                       (context, index) => Container(
                         padding: EdgeInsets.all(8),
@@ -51,7 +52,7 @@ class DreamSectionCard extends StatelessWidget {
                           borderRadius: BorderRadius.circular(999),
                         ),
                         child: Text(
-                          keywords[index],
+                          '#${keywords[index]}',
                           style: Font.body12.copyWith(color: Colors.grey[600]),
                         ),
                       ),
