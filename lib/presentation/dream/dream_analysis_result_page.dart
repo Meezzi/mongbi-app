@@ -1,9 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/presentation/auth/widgets/mongbi_image_widget.dart';
 
-class DreamAnalysisResultPage extends StatelessWidget {
+class DreamAnalysisResultPage extends StatefulWidget {
   const DreamAnalysisResultPage({super.key});
+
+  @override
+  State<DreamAnalysisResultPage> createState() =>
+      _DreamAnalysisResultPageState();
+}
+
+class _DreamAnalysisResultPageState extends State<DreamAnalysisResultPage> {
+  @override
+  void initState() {
+    super.initState();
+
+    Future.delayed(const Duration(seconds: 1), () {
+      if (mounted) {
+        context.go('/dream_interpretation');
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
