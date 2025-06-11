@@ -42,6 +42,7 @@ dependencies:
   assorted_layout_widgets: ^11.0.0
   flutter_dotenv: ^5.2.1
   google_sign_in: ^6.3.0
+  flutter_naver_login: ^2.1.1
 
 dev_dependencies:
   flutter_test:
@@ -70,7 +71,7 @@ flutter:
     - assets/
     - assets/images/mongbi.png
     - assets/images/apple_login.svg
-    - assets/images/google_login.svg
+    - assets/images/naver_login.svg
     - assets/images/kakao_login.svg
     - assets/icons/
     - .env

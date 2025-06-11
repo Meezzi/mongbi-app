@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mongbi_app/data/data_sources/naver_auth_data_source.dart';
+import 'package:mongbi_app/data/repositories/auth_repository_impl.dart';
+import 'package:mongbi_app/domain/use_cases/login_with_naver.dart';
 import 'package:mongbi_app/presentation/auth/viewmodels/auth_view_model.dart';
 import 'package:mongbi_app/presentation/auth/widgets/apple_login_button_widget.dart';
-import 'package:mongbi_app/presentation/auth/widgets/google_login_button_widget.dart';
+import 'package:mongbi_app/presentation/auth/widgets/naver_login_button_widget.dart';
 import 'package:mongbi_app/presentation/auth/widgets/kakao_login_button_widget.dart';
 import 'package:mongbi_app/presentation/auth/widgets/last_login_state_weiget.dart';
 import 'package:mongbi_app/presentation/auth/widgets/mongbi_image_widget.dart';
@@ -40,18 +43,23 @@ class SocialLoginPage extends StatelessWidget {
                 ),
                 const SizedBox(width: 24),
                 _SocialLoginItem(
-                  showRecentBubble: lastLoginProvider == "google",
-                  child: GoogleLoginButton(
+                  showRecentBubble: lastLoginProvider == "naver",
+                  child: NaverLoginButton(
                     onTap: () async {
-                      final viewModel =
-                          AuthViewModel(); // Provider 쓸 경우 context.read<AuthViewModel>()
+                      final viewModel = AuthViewModel(
+                        LoginWithNaver(
+                          AuthRepositoryImpl(NaverAuthDataSource()),
+                        ),
+                      );
+
                       try {
-                        await viewModel
-                            .loginWithGoogle(); // UseCase → Repository → Remote 호출
-                        // 로그인 성공 후 페이지 이동 or 토스트
+                        await viewModel.loginWithNaver();
+                        final user = viewModel.user;
+                        print('✅ 로그인 성공: ${user?.userName}');
+                        // TODO: 상태 저장, 화면 이동 등 추가 작업
                       } catch (e) {
-                        // 에러 처리
-                        print('로그인 실패: $e');
+                        print('🧨 네이버 로그인 실패: $e');
+                        // TODO: 사용자에게 에러 토스트 표시 등
                       }
                     },
                   ),
