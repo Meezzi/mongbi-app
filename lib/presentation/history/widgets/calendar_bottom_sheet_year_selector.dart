@@ -31,14 +31,14 @@ class CalendarBottomSheetYearSelector extends StatelessWidget {
               onPageChangeByIcon(currentPageIndex + 1);
             }
           },
-          child:
-              currentPageIndex == (maxYear - minYear)
-                  ? SizedBox()
-                  : SvgPicture.asset(
-                    'assets/icons/chevron-left.svg',
-                    fit: BoxFit.cover,
-                    width: getResponsiveRatioByWidth(context, 24),
-                  ),
+          child: Opacity(
+            opacity: currentPageIndex == (maxYear - minYear) ? 0.3 : 1,
+            child: SvgPicture.asset(
+              'assets/icons/chevron-left.svg',
+              fit: BoxFit.cover,
+              width: getResponsiveRatioByWidth(context, 24),
+            ),
+          ),
         ),
         Text(
           '$selectedYear년',
@@ -53,14 +53,14 @@ class CalendarBottomSheetYearSelector extends StatelessWidget {
               onPageChangeByIcon(currentPageIndex - 1);
             }
           },
-          child:
-              currentPageIndex == 0
-                  ? SizedBox()
-                  : SvgPicture.asset(
-                    'assets/icons/chevron-right.svg',
-                    fit: BoxFit.cover,
-                    width: getResponsiveRatioByWidth(context, 24),
-                  ),
+          child: Opacity(
+            opacity: currentPageIndex == 0 ? 0.3 : 1,
+            child: SvgPicture.asset(
+              'assets/icons/chevron-right.svg',
+              fit: BoxFit.cover,
+              width: getResponsiveRatioByWidth(context, 24),
+            ),
+          ),
         ),
       ],
     );
