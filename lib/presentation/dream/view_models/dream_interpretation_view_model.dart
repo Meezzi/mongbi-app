@@ -39,7 +39,6 @@ class DreamInterpretationViewModel extends Notifier<DreamInterpretationState> {
       dreamCategory: state.dreamCategory,
     );
 
-    final repository = ref.read(dreamRepositoryProvider);
-    return await repository.saveDream(dreamEntity);
+    return await ref.read(saveDreamUseCaseProvider).saveDream(dreamEntity);
   }
 }
