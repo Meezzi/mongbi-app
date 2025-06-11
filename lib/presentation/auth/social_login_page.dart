@@ -47,7 +47,19 @@ class SocialLoginPage extends ConsumerWidget {
                       const SizedBox(width: 24),
                       _SocialLoginItem(
                         showRecentBubble: lastLoginProvider == "kakao",
-                        child: KakaoLoginButton(onTap: () {}),
+                        child: KakaoLoginButton(
+                          onTap: () async {
+                            final authViewModel = ref.read(
+                              authViewModelProvider.notifier,
+                            );
+                            try {
+                              await authViewModel.loginWithKakao();
+                              print('✅ 로그인 성공');
+                            } catch (e) {
+                              print('🧨 로그인 실패: $e');
+                            }
+                          },
+                        ),
                       ),
                       const SizedBox(width: 24),
                       _SocialLoginItem(

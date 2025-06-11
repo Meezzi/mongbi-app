@@ -81,7 +81,11 @@
 		<string>몽비</string>
 		<key>naverServiceAppUrlScheme</key>
 		<string>https://naver.com</string>
-
+		<key>LSApplicationQueriesSchemes</key>
+		<array>
+			<!-- 카카오톡으로 로그인 -->
+			<string>kakaokompassauth</string>
+		</array>
 
 	<true/>
 </dict>
