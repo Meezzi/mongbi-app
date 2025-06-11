@@ -20,13 +20,12 @@ void main() {
         History(
           dreamContent: '꿈1',
           dreamScore: 1,
-          dreamTag: '꿈1',
           dreamKeywords: ['꿈1'],
           dreamInterpretation: '꿈1',
-          psychologicalStatelnterpretation: '꿈1',
-          psychologicalstateKeywords: ['꿈1'],
+          psychologicalStateInterpretation: '꿈1',
+          psychologicalStateKeywords: ['꿈1'],
           mongbiComment: '꿈1',
-          emotionCategory: '꿈1',
+          dreamRegDate: DateTime.now(),
         ),
       ];
     });

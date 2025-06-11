@@ -1,72 +1,80 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:mongbi_app/core/font.dart';
-import 'package:mongbi_app/presentation/history/widgets/calendar.dart';
-import 'package:mongbi_app/presentation/history/widgets/calendar_drop_down_button.dart';
-import 'package:mongbi_app/presentation/history/widgets/history_list.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mongbi_app/core/get_widget_info.dart';
+import 'package:mongbi_app/presentation/history/history_key/history_key.dart';
+import 'package:mongbi_app/presentation/history/widgets/history_app_bar.dart';
+import 'package:mongbi_app/presentation/history/widgets/history_body.dart';
+import 'package:mongbi_app/providers/history_provider.dart';
 
-class HistoryPage extends StatefulWidget {
+class HistoryPage extends ConsumerStatefulWidget {
   const HistoryPage({super.key});
 
   @override
-  State<HistoryPage> createState() => _HistoryPageState();
+  ConsumerState<HistoryPage> createState() => _HistoryPageState();
 }
 
-class _HistoryPageState extends State<HistoryPage> {
+class _HistoryPageState extends ConsumerState<HistoryPage> {
   final double horizontalPadding = 24;
+
+  late final Size deviceSize;
+  late final EdgeInsets devicePadding;
+  late final double appBarHeight;
+  late bool isActive = false;
 
   @override
   void initState() {
     super.initState();
 
-    // 이거 동작 안하는 것 같은데?
-    SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent, // 배경 투명
-        statusBarIconBrightness: Brightness.dark, // 아이콘 색: 어두운 색 (검정)
-        statusBarBrightness: Brightness.light, // iOS용 설정
-      ),
-    );
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      deviceSize = MediaQuery.of(context).size;
+      devicePadding = MediaQuery.of(context).padding;
+      appBarHeight = AppBar().preferredSize.height;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    // 480
-    // 768
-    // 1280
-    // 반응형이 비율인지 크기별인지
+    final historyAsync = ref.watch(historyViewModelProvider);
+    final calendarState = ref.watch(calendarViewModelProvider);
 
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        centerTitle: false,
-        title: Text('모몽의 꿈 기록', style: Font.title20),
+      appBar: PreferredSize(
+        key: appBarKey,
+        preferredSize: Size.fromHeight(kToolbarHeight),
+        child: HistoryAppBar(
+          isActive: isActive,
+          horizontalPadding: horizontalPadding,
+        ),
       ),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Color(0xffFDF8FF), Color(0xffEAC9FA)],
-          ),
-        ),
-        child: SafeArea(
-          child: ListView(
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
-                child: Column(
-                  children: [
-                    CalendarDropDownButton(),
-                    Calendar(horizontalPadding: horizontalPadding),
-                  ],
-                ),
-              ),
-              HistoryList(horizontalPadding: horizontalPadding),
-            ],
-          ),
-        ),
+      body: historyAsync.when(
+        loading: () {
+          return Center(child: CircularProgressIndicator());
+        },
+        data: (data) {
+          return HistoryBody(
+            isActive: isActive,
+            onScroll: onScroll,
+            calendarState: calendarState,
+            horizontalPadding: horizontalPadding,
+          );
+        },
+        error: (error, stackTrace) {
+          return Center(child: Text('예기치 못한 오류가 발생했습니다.'));
+        },
       ),
     );
+  }
+
+  void onScroll() {
+    final box = getWidgetInfo(historyKey);
+    final position = box!.localToGlobal(Offset.zero);
+    final triggerHeight = appBarHeight + devicePadding.top;
+    final nextValue = triggerHeight >= position.dy;
+
+    if (isActive != nextValue) {
+      setState(() {
+        isActive = nextValue;
+      });
+    }
   }
 }

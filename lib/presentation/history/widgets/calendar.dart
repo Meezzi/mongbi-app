@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:mongbi_app/core/font.dart';
-import 'package:mongbi_app/presentation/history/view_models/calendar_view_model.dart';
+import 'package:mongbi_app/presentation/history/widgets/calendar_cell.dart';
+import 'package:mongbi_app/providers/history_provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class Calendar extends ConsumerWidget {
@@ -30,12 +30,12 @@ class Calendar extends ConsumerWidget {
         weekdayStyle: Font.subTitle14,
         weekendStyle: Font.subTitle14,
       ),
-      headerVisible: false, // 기본 헤더 숨김!
+      headerVisible: false,
       pageAnimationEnabled: false,
       availableGestures: AvailableGestures.none,
       focusedDay: calendarState.focusedDay,
-      firstDay: DateTime.utc(DateTime.now().year, 1, 1),
-      lastDay: DateTime.utc(DateTime.now().year, 12, 31),
+      firstDay: calendarState.minDateTime,
+      lastDay: calendarState.maxDateTime,
       selectedDayPredicate: (day) {
         return calendarState.selectedDay != null &&
             day == calendarState.selectedDay;
@@ -53,65 +53,19 @@ class Calendar extends ConsumerWidget {
       ),
       calendarBuilders: CalendarBuilders(
         defaultBuilder: (context, day, focusedDay) {
-          return Container(
-            width: double.infinity,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-
-              children: [
-                Container(
-                  width: circleWidth,
-                  height: circleWidth,
-                  decoration: BoxDecoration(
-                    color: Color(0xFFFAFAFA),
-                    shape: BoxShape.circle,
-                  ),
-                  child:
-                      day.day <= 5
-                          ? SvgPicture.asset(
-                            'assets/icons/good.svg',
-                            fit: BoxFit.cover,
-                          )
-                          : null,
-                ),
-                SizedBox(height: 4),
-                Text(
-                  '${day.day}',
-                  style: Font.subTitle14.copyWith(
-                    fontSize: fontViewWidth,
-                    color: Color(0xFFB273FF),
-                  ),
-                ),
-              ],
-            ),
+          return CalendarCell(
+            day: day,
+            type: 'default',
+            circleWidth: circleWidth,
+            fontViewWidth: fontViewWidth,
           );
         },
-        // 선택된 날짜의 스타일 커스텀
         selectedBuilder: (context, day, focusedDay) {
-          return Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: Colors.redAccent,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  width: circleWidth,
-                  height: circleWidth,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.circle,
-                  ),
-                ),
-                SizedBox(height: 4),
-                Text(
-                  '${day.day}',
-                  style: Font.subTitle14.copyWith(fontSize: fontViewWidth),
-                ),
-              ],
-            ),
+          return CalendarCell(
+            day: day,
+            type: 'seleted',
+            circleWidth: circleWidth,
+            fontViewWidth: fontViewWidth,
           );
         },
       ),

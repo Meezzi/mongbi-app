@@ -1,29 +1,36 @@
-import 'package:mongbi_app/core/date_formatter.dart';
+import 'package:mongbi_app/domain/entities/history.dart';
 
 class CalendarModel {
   CalendarModel({
     DateTime? focusedDay,
     this.selectedDay,
-    String? dropDownvalue,
+    List<History>? searchedHistory,
   }) {
     this.focusedDay = focusedDay ?? DateTime.now();
-    this.dropDownvalue =
-        dropDownvalue ?? DateFormatter.formatYearMonth(DateTime.now());
+    this.searchedHistory = searchedHistory ?? [];
   }
 
-  late DateTime focusedDay;
+  // 이 값으로 최소 이전 년도를 정함(ex. 2025-5=2020)
+  int minYearValue = 5;
+  late DateTime minDateTime = DateTime.utc(
+    DateTime.now().year - minYearValue,
+    1,
+    1,
+  );
+  DateTime maxDateTime = DateTime.utc(DateTime.now().year, 12, 31);
   DateTime? selectedDay;
-  late String dropDownvalue;
+  late DateTime focusedDay;
+  late List<History> searchedHistory;
 
   CalendarModel copyWith({
     DateTime? focusedDay,
     DateTime? selectedDay,
-    String? dropDownvalue,
+    List<History>? searchedHistory,
   }) {
     return CalendarModel(
       focusedDay: focusedDay ?? this.focusedDay,
       selectedDay: selectedDay ?? this.selectedDay,
-      dropDownvalue: dropDownvalue ?? this.dropDownvalue,
+      searchedHistory: searchedHistory ?? this.searchedHistory,
     );
   }
 
@@ -32,7 +39,7 @@ class CalendarModel {
     return '''{
       focusedDay: $focusedDay, 
       selectedDay: $selectedDay,
-      dropDownvalue: $dropDownvalue
+      searchedHistory: $searchedHistory
     }''';
   }
 }
