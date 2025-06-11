@@ -50,7 +50,7 @@ class SocialLoginPage extends StatelessWidget {
                 const SizedBox(width: 24),
                 _SocialLoginItem(
                   showRecentBubble: lastLoginProvider == "google",
-                  child: GoogleLoginButton(onTap: () {}),
+                  child: GoogleLoginButton(onTap: () => _onLoginSuccess(context)),
                 ),
               ],
             ),
