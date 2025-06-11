@@ -22,8 +22,6 @@ class Calendar extends ConsumerWidget {
     final double daysOfWeekHeight = cellHeight * 0.56;
     final double fontViewWidth = deviceSize.width * 0.038;
 
-    print(calendarState.maxDateTime);
-
     return TableCalendar(
       locale: 'ko_KR',
       rowHeight: cellHeight,
