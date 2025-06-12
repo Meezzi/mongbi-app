@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/core/get_responsive_ratio_by_width.dart';
+import 'package:mongbi_app/presentation/terms/terms_inner_page.dart';
 import 'package:mongbi_app/presentation/terms/widgets/terms_custom_checkbox.widget.dart';
 
 class TermsAgreementTile extends StatelessWidget {
@@ -32,19 +33,17 @@ class TermsAgreementTile extends StatelessWidget {
                   14,
                   24,
                   12,
-                ) // ✅ 전체 동의 전용 padding
-                : const EdgeInsets.fromLTRB(24, 24, 24, 6), // ✅ 나머지 항목 padding
+                )
+                : const EdgeInsets.fromLTRB(24, 24, 24, 6), 
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // 체크박스
             CustomCheckbox(
               isChecked: isChecked,
               onTap: () => onChanged(!isChecked),
             ),
             const SizedBox(width: 4),
 
-            // 텍스트 + (필수/선택)
             Expanded(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -88,14 +87,17 @@ class TermsAgreementTile extends StatelessWidget {
                 ],
               ),
             ),
-
-            // 아이콘
             if (!isAllAgree)
               Padding(
                 padding: const EdgeInsets.only(left: 8),
                 child: GestureDetector(
                   onTap: () {
-                    // TODO: 웹뷰 연결
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const TermsDetailPage(),
+                      ),
+                    );
                   },
                   child: SvgPicture.asset(
                     'assets/icons/chevron_right.svg',
