@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mongbi_app/presentation/auth/social_login_page.dart';
 import 'package:mongbi_app/presentation/profile/profile_setting_page.dart';
+import 'package:mongbi_app/core/router.dart';
 
 void main() async {
   await dotenv.load(fileName: '.env');
@@ -19,7 +20,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
+      routerConfig: router,
       theme: ThemeData(fontFamily: 'NanumSquareRound'),
       home: NicknameInputPage(),
     );
