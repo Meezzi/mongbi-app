@@ -1,32 +1,36 @@
-import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mongbi_app/data/dtos/terms_aggrement_dto.dart';
+import 'package:mongbi_app/domain/entities/terms.dart';
+import 'package:mongbi_app/domain/repositories/terms_repository.dart';
+import 'package:mongbi_app/domain/use_cases/agree_to_terms_usecase.dart';
 import 'package:mongbi_app/domain/use_cases/fetch_terms_use_case.dart';
-import '../../../domain/entities/terms.dart';
+import 'package:mongbi_app/providers/terms_provider.dart';
 
-class TermsViewModel extends ChangeNotifier {
-  final GetLatestTerms useCase;
+class TermsState {
+  final List<Terms> terms;
 
-  TermsViewModel(this.useCase) {
-    fetchTerms();
+  const TermsState({required this.terms});
+
+  TermsState copyWith({List<Terms>? terms}) {
+    return TermsState(terms: terms ?? this.terms);
   }
+}
+class TermsViewModel extends StateNotifier<TermsState> {
+  final GetLatestTerms _getLatestTermsUseCase;
+  final AgreeToTermsUseCase _agreeToTermsUseCase;
 
-  List<Terms> _terms = [];
-  List<Terms> get terms => _terms;
-
-  bool _isLoading = false;
-  bool get isLoading => _isLoading;
+  TermsViewModel(this._getLatestTermsUseCase, this._agreeToTermsUseCase)
+      : super(const TermsState(terms: [])); // ✅ const 생성자
 
   Future<void> fetchTerms() async {
-    _isLoading = true;
-    _terms = await useCase();
-    notifyListeners();
+    final termsList = await _getLatestTermsUseCase();
+    state = state.copyWith(terms: termsList);
+  }
 
-    try {
-      _terms = await useCase();
-    } catch (_) {
-      _terms = [];
-    } finally {
-      _isLoading = false;
-      notifyListeners();
-    }
+  Future<void> submitAgreements({
+    required int userIdx,
+    required List<AgreementDto> agreements,
+  }) async {
+    await _agreeToTermsUseCase(userIdx: userIdx, agreements: agreements);
   }
 }

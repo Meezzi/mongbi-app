@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mongbi_app/data/dtos/terms_aggrement_dto.dart';
 import 'package:mongbi_app/domain/entities/terms.dart';
 import 'package:mongbi_app/presentation/terms/widgets/terms_button_widget.dart';
 import 'package:mongbi_app/presentation/terms/widgets/terms_checkbox_widget.dart';
@@ -21,7 +22,7 @@ class _TermsBottomSheetState extends ConsumerState<TermsBottomSheet> {
   void initState() {
     super.initState();
     Future.microtask(() async {
-      await ref.read(termsViewModelProvider).fetchTerms();
+      await ref.read(termsViewModelProvider.notifier).fetchTerms();
       final terms = ref.read(termsViewModelProvider).terms;
       setState(() {
         isCheckedList = List.filled(terms.length, false);
@@ -65,12 +66,13 @@ class _TermsBottomSheetState extends ConsumerState<TermsBottomSheet> {
       return const Center(child: CircularProgressIndicator());
     }
 
-    final mandatoryIndexes = terms
-        .asMap()
-        .entries
-        .where((e) => e.value.requirement == 'MANDATORY') // <- 필수 여부 체크
-        .map((e) => e.key)
-        .toList();
+    final mandatoryIndexes =
+        terms
+            .asMap()
+            .entries
+            .where((e) => e.value.requirement == 'MANDATORY') // <- 필수 여부 체크
+            .map((e) => e.key)
+            .toList();
 
     final isEssentialChecked = mandatoryIndexes.every((i) => isCheckedList[i]);
 
@@ -95,7 +97,13 @@ class _TermsBottomSheetState extends ConsumerState<TermsBottomSheet> {
               borderRadius: BorderRadius.circular(24),
             ),
             child: TermsAgreementTile(
-              term: Terms(id: -1, name: '약관 전체 동의', type: '', requirement: '', content: ''),
+              term: Terms(
+                id: -1,
+                name: '약관 전체 동의',
+                type: '',
+                requirement: '',
+                content: '',
+              ),
               isAllAgree: true,
               isChecked: isAllChecked,
               onChanged: toggleAllAgree,
@@ -124,8 +132,31 @@ class _TermsBottomSheetState extends ConsumerState<TermsBottomSheet> {
 
           ConfirmButton(
             isEnabled: isEssentialChecked,
-            onPressed: () {
-              // 필수 항목 동의 완료 후 처리
+            onPressed: () async {
+              final userIdx = 1; // TODO: 로그인 연동 시 사용자 ID로 대체
+
+              final agreements =
+                  terms.asMap().entries.map((entry) {
+                    final i = entry.key;
+                    final term = entry.value;
+                    return AgreementDto(
+                      termsId: term.id,
+                      agreed: isCheckedList[i] ? 'Y' : 'N',
+                    );
+                  }).toList();
+
+              try {
+                await ref
+                    .read(termsViewModelProvider.notifier)
+                    .submitAgreements(userIdx: userIdx, agreements: agreements);
+                Navigator.of(context).pop(); // 약관 동의 완료 후 닫기
+              } catch (e) {
+                print('에러에러에러$e');
+                ScaffoldMessenger.of(context).showSnackBar(
+                  
+                  const SnackBar(content: Text('약관 동의 중 오류가 발생했습니다.')),
+                );
+              }
             },
           ),
         ],
