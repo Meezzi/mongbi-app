@@ -3,6 +3,7 @@ import 'package:mongbi_app/core/get_responsive_ratio_by_width.dart';
 import 'package:mongbi_app/core/get_widget_info.dart';
 import 'package:mongbi_app/presentation/statistics/statistics_key/statistics_key.dart';
 import 'package:mongbi_app/presentation/statistics/widgets/dream_frequency_card.dart';
+import 'package:mongbi_app/presentation/statistics/widgets/dream_mood_distribution.dart';
 import 'package:mongbi_app/presentation/statistics/widgets/dream_type_mood_state.dart';
 import 'package:mongbi_app/presentation/statistics/widgets/gift_frequency_card.dart';
 import 'package:mongbi_app/presentation/statistics/widgets/month_year_picker.dart';
@@ -79,7 +80,7 @@ class _MonthStatisticsState extends State<MonthStatistics> {
                     ],
                   ),
                 ),
-
+                DreamMoodDistribution(),
                 DreamTypeMoodState(),
               ],
             ),
