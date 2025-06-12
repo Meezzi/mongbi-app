@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/presentation/dream/widgets/custom_button.dart';
 import 'package:mongbi_app/presentation/dream/widgets/dream_section_card.dart';
 import 'package:mongbi_app/presentation/dream/widgets/mongbi_comment_card.dart';
@@ -51,7 +50,6 @@ class _DreamInterpretationPageState
                 CustomButton(
                   text: '다음',
                   onSubmit: () async {
-                    final navigator = GoRouter.of(context);
                     final scaffoldMessenger = ScaffoldMessenger.of(context);
 
                     try {
