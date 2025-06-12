@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mongbi_app/presentation/terms/widgets/terms_button_widget.dart';
 import 'package:mongbi_app/presentation/terms/widgets/terms_checkbox_widget.dart';
 import 'package:mongbi_app/presentation/terms/widgets/terms_text_widget.dart';
+
 class TermsBottomSheet extends StatefulWidget {
   const TermsBottomSheet({super.key});
 
@@ -29,6 +30,8 @@ class _TermsBottomSheetState extends State<TermsBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
+    final bool isEssentialChecked = isCheckedList[0] && isCheckedList[1];
+
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: const BoxDecoration(
@@ -40,14 +43,20 @@ class _TermsBottomSheetState extends State<TermsBottomSheet> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const TermsHeaderText(),
-          const SizedBox(height: 20),
-          TermsAgreementTile(
-            title: '약관 전체 동의',
-            isAllAgree: true,
-            isChecked: isAllChecked,
-            onChanged: toggleAllAgree,
+          const SizedBox(height: 15),
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 4),
+            decoration: BoxDecoration(
+              color: const Color(0xFFFAFAFA), // ← 전체 동의 배경색
+              borderRadius: BorderRadius.circular(24),
+            ),
+            child: TermsAgreementTile(
+              title: '약관 전체 동의',
+              isAllAgree: true,
+              isChecked: isAllChecked,
+              onChanged: toggleAllAgree,
+            ),
           ),
-          const Divider(),
           TermsAgreementTile(
             title: '서비스 이용 약관 동의',
             isRequired: true,
@@ -66,7 +75,12 @@ class _TermsBottomSheetState extends State<TermsBottomSheet> {
             onChanged: (val) => toggleSingle(2, val),
           ),
           const SizedBox(height: 24),
-          ConfirmButton(),
+          ConfirmButton(
+            isEnabled: isEssentialChecked,
+            onPressed: () {
+              // 필수 항목 체크 완료 후 처리
+            },
+          ),
         ],
       ),
     );
