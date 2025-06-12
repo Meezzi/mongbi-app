@@ -26,12 +26,15 @@ final termsRepositoryProvider = Provider<TermsRepository>(
 final getLatestTermsUseCaseProvider = Provider<GetLatestTerms>(
   (ref) => GetLatestTerms(ref.read(termsRepositoryProvider)),
 );
+
 final userTermsRepositoryProvider = Provider<TermsRepository>(
   (ref) => TermsRepositoryImpl(ref.read(userTermsDataSourceProvider)),
 );
+
 final agreeToTermsUseCaseProvider = Provider<AgreeToTermsUseCase>(
   (ref) => AgreeToTermsUseCase(ref.read(userTermsRepositoryProvider)),
 );
+
 final termsViewModelProvider =
     StateNotifierProvider<TermsViewModel, TermsState>((ref) {
       return TermsViewModel(
