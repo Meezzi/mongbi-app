@@ -48,28 +48,7 @@ class _DreamInterpretationPageState
                   comment: dream.mongbiComment,
                 ),
                 SizedBox(height: 24),
-                CustomButton(
-                  text: '다음',
-                  onSubmit: () async {
-                    try {
-                      final isSuccess =
-                          await ref
-                              .read(
-                                dreamInterpretationViewModelProvider.notifier,
-                              )
-                              .saveDream();
-
-                      if (isSuccess) {
-                        // TODO: 홈 화면으로 이동
-                      } else {
-                        showSnackBar('꿈 저장에 실패했어요. 다시 시도해 주세요.');
-                      }
-                    } catch (e) {
-                      showSnackBar('오류가 발생했어요: $e');
-                    }
-                  },
-                ),
-
+                CustomButton(text: '다음', onSubmit: _onSubmitDream),
                 SizedBox(height: 24),
               ],
             ),
@@ -83,5 +62,22 @@ class _DreamInterpretationPageState
     ScaffoldMessenger.of(
       context,
     ).showSnackBar(SnackBar(content: Text(message, style: Font.body14)));
+  }
+
+  void _onSubmitDream() async {
+    try {
+      final isSuccess =
+          await ref
+              .read(dreamInterpretationViewModelProvider.notifier)
+              .saveDream();
+
+      if (isSuccess) {
+        // TODO: 홈 화면으로 이동
+      } else {
+        showSnackBar('꿈 저장에 실패했어요. 다시 시도해 주세요.');
+      }
+    } catch (e) {
+      showSnackBar('오류가 발생했어요: $e');
+    }
   }
 }
