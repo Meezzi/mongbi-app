@@ -42,6 +42,7 @@ dependencies:
   assorted_layout_widgets: ^11.0.0
   flutter_dotenv: ^5.2.1
   shared_preferences: ^2.5.3
+  go_router: ^15.1.3
 
 dev_dependencies:
   flutter_test:

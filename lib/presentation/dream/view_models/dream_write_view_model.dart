@@ -20,20 +20,13 @@ class DreamWriteViewModel extends Notifier<DreamWriteState> {
     state = state.copyWith(isFocused: focused);
   }
 
-  bool submitDream() {
-    // 텍스트 필드 내용이 10글자 미만인 경우
-    if (state.dreamContent.trim().length < 10) {
-      return false;
-    }
-    // 감정이 선택되지 않은 경우
-    if (state.selectedIndex == -1) {
-      return false;
-    }
+  Future<void> submitDream() async {
+    if (state.dreamContent.trim().length < 10) return;
+    if (state.selectedIndex == -1) return;
 
-    ref
+    final dream = await ref
         .read(analyzeDreamUseCaseProvider)
         .execute(state.dreamContent, state.selectedIndex);
-
-    return true;
+    ref.read(dreamInterpretationViewModelProvider.notifier).setDream(dream);
   }
 }
