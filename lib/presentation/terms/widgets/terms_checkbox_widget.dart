@@ -1,27 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/core/get_responsive_ratio_by_width.dart';
+import 'package:mongbi_app/presentation/terms/widgets/terms_custom_checkbox.widget.dart'; // 커스텀 체크박스 임포트
 
 class TermsAgreementTile extends StatelessWidget {
   final String title;
   final bool isRequired;
   final bool isAllAgree;
+  final bool isChecked;
+  final ValueChanged<bool> onChanged;
 
   const TermsAgreementTile({
     super.key,
     required this.title,
     this.isRequired = false,
     this.isAllAgree = false,
+    required this.isChecked,
+    required this.onChanged,
   });
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       contentPadding: EdgeInsets.zero,
-      horizontalTitleGap: 0.5, // ← 기본값은 16.0, 줄이면 간격도 좁아짐
-      leading: Checkbox(
-        value: true, // 상태 관리 필요
-        onChanged: (_) {},
+      horizontalTitleGap: 12,
+      leading: CustomCheckbox(
+        isChecked: isChecked,
+        onTap: () => onChanged(!isChecked),
       ),
       title: Row(
         children: [
@@ -32,27 +38,37 @@ class TermsAgreementTile extends StatelessWidget {
                     ? Font.title16.copyWith(
                       fontSize: getResponsiveRatioByWidth(context, 16),
                       color: const Color(0xFF1A181B),
-                    ) // 전체 동의일 때
+                    )
                     : Font.body16.copyWith(
                       fontSize: getResponsiveRatioByWidth(context, 16),
                       color: const Color(0xFF1A181B),
-                    ), // 나머지
+                    ),
           ),
           if (!isAllAgree)
             if (isRequired)
               const Text(' (필수)', style: TextStyle(color: Color(0xFF8C2EFF)))
             else
-              const Text(' (선택)', style: TextStyle(color:  Color(0xFF1A181B))),
+              const Text(' (선택)', style: TextStyle(color: Color(0xFF1A181B))),
         ],
       ),
-
       trailing:
           !isAllAgree
-              ? const Icon(Icons.chevron_right, color: Colors.grey)
+              ? GestureDetector(
+                onTap: () {
+                },
+                child: SvgPicture.asset(
+                  'assets/icons/chevron_right.svg',
+                  width: 20,
+                  height: 20,
+                  colorFilter: const ColorFilter.mode(
+                    Colors.grey,
+                    BlendMode.srcIn,
+                  ),
+                ),
+              )
               : null,
-      onTap: () {
-        // 상세보기 페이지로 이동
-      },
+
+      onTap: () => onChanged(!isChecked),
     );
   }
 }

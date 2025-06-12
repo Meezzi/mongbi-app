@@ -72,6 +72,10 @@ flutter:
     - assets/images/apple_login.svg
     - assets/images/google_login.svg
     - assets/images/kakao_login.svg
+    - assets/icons/checkbox_unchecked.svg
+    - assets/icons/checkbox_checked.svg
+    - assets/icons/chevron_right.svg
+    
     - assets/icons/
     - .env
   #   - images/a_dot_ham.jpeg
