@@ -9,13 +9,14 @@ class TermsBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      padding: const EdgeInsets.all(24),
       decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const TermsHeaderText(),
           const SizedBox(height: 20),
@@ -35,10 +36,6 @@ class TermsBottomSheet extends StatelessWidget {
           ),
           const TermsAgreementTile(
             title: '마케팅 및 이벤트성 알림 동의',
-            isRequired: false,
-          ),
-          const TermsAgreementTile(
-            title: '심야 시간 알림 동의',
             isRequired: false,
           ),
           const SizedBox(height: 24),
