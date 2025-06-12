@@ -1,14 +1,32 @@
 import 'package:go_router/go_router.dart';
+import 'package:mongbi_app/core/main_scaffold.dart';
 import 'package:mongbi_app/presentation/auth/social_login_page.dart';
 import 'package:mongbi_app/presentation/dream/dream_analysis_loading_page.dart';
 import 'package:mongbi_app/presentation/dream/dream_analysis_result_page.dart';
 import 'package:mongbi_app/presentation/dream/dream_interpretation_page.dart';
 import 'package:mongbi_app/presentation/dream/dream_write_page.dart';
+import 'package:mongbi_app/presentation/history/history_page.dart';
+import 'package:mongbi_app/presentation/home/home_page.dart';
 
 final GoRouter router = GoRouter(
   initialLocation: '/',
   routes: [
-    GoRoute(path: '/', builder: (context, state) => SocialLoginPage()),
+    GoRoute(path: '/', redirect: (_, __) => '/home'),
+
+    ShellRoute(
+      builder: (context, state, child) {
+        return MainScaffold(child: child);
+      },
+      routes: [
+        GoRoute(path: '/home', builder: (context, state) => const HomePage()),
+        GoRoute(
+          path: '/history',
+          builder: (context, state) => const HistoryPage(),
+        ),
+        // TODO: 통계 화면, 프로필 화면으로 이동
+      ],
+    ),
+
     GoRoute(
       path: '/social_login',
       builder: (context, state) => SocialLoginPage(),
