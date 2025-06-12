@@ -1,0 +1,104 @@
+import 'package:flutter/material.dart';
+import 'package:mongbi_app/core/get_responsive_ratio_by_width.dart';
+import 'package:mongbi_app/core/get_widget_info.dart';
+import 'package:mongbi_app/presentation/statistics/statistics_key/statistics_key.dart';
+import 'package:mongbi_app/presentation/statistics/widgets/dream_frequency_card.dart';
+import 'package:mongbi_app/presentation/statistics/widgets/dream_type_mood_state.dart';
+import 'package:mongbi_app/presentation/statistics/widgets/gift_frequency_card.dart';
+import 'package:mongbi_app/presentation/statistics/widgets/month_year_picker.dart';
+import 'package:mongbi_app/presentation/statistics/widgets/month_year_picker_button.dart';
+
+class MonthStatistics extends StatefulWidget {
+  const MonthStatistics({super.key, required this.horizontalPadding});
+
+  final double horizontalPadding;
+
+  @override
+  State<MonthStatistics> createState() => _MonthStatisticsState();
+}
+
+class _MonthStatisticsState extends State<MonthStatistics> {
+  double? monthPickerButtonPosition;
+  bool isShow = false;
+  final ScrollController scrollController = ScrollController();
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      final monthPickerButtonInfo = getWidgetInfo(monthPickerButton);
+      final monthButtonHeight = monthPickerButtonInfo!.size.height;
+      monthPickerButtonPosition = monthButtonHeight;
+    });
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO : 현재 달, 또는 선택한 달
+    final now = DateTime(2025, 6);
+    final afterOneMonth = DateTime(now.year, now.month + 1);
+    final totlaDays =
+        DateTime(
+          afterOneMonth.year,
+          afterOneMonth.month,
+          afterOneMonth.day - 1,
+        ).day;
+
+    return ListView(
+      padding: EdgeInsets.only(
+        left: widget.horizontalPadding,
+        right: widget.horizontalPadding,
+        bottom: 95,
+      ),
+      children: [
+        Stack(
+          children: [
+            Column(
+              children: [
+                MonthYearPickerButton(
+                  showMonthPickerModal: showMonthPickerModal,
+                ),
+
+                Padding(
+                  padding: EdgeInsets.only(
+                    top: getResponsiveRatioByWidth(context, 16),
+                  ),
+                  child: Row(
+                    children: [
+                      DreamFrequencyCard(frequency: 15, totalDays: totlaDays),
+                      SizedBox(width: getResponsiveRatioByWidth(context, 16)),
+                      GiftFrequencyCard(frequency: 95),
+                    ],
+                  ),
+                ),
+
+                DreamTypeMoodState(),
+              ],
+            ),
+
+            MonthYearPicker(
+              scrollController: scrollController,
+              monthPickerButtonPosition: monthPickerButtonPosition ?? 0,
+              showMonthPickerModal: showMonthPickerModal,
+              isShow: isShow,
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  void showMonthPickerModal() {
+    setState(() {
+      isShow = !isShow;
+    });
+  }
+}
