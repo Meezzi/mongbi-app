@@ -2,39 +2,38 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/core/get_responsive_ratio_by_width.dart';
+import 'package:mongbi_app/domain/entities/terms.dart';
 import 'package:mongbi_app/presentation/terms/terms_inner_page.dart';
 import 'package:mongbi_app/presentation/terms/widgets/terms_custom_checkbox.widget.dart';
 
 class TermsAgreementTile extends StatelessWidget {
-  final String title;
-  final bool isRequired;
+  final Terms term; // ✅ 약관 엔티티 전체
   final bool isAllAgree;
   final bool isChecked;
+  final bool isRequired;
   final ValueChanged<bool> onChanged;
 
   const TermsAgreementTile({
     super.key,
-    required this.title,
-    this.isRequired = false,
+    required this.term,
     this.isAllAgree = false,
     required this.isChecked,
+    this.isRequired = false,
     required this.onChanged,
   });
+
   @override
   Widget build(BuildContext context) {
+    final title = term.name ?? '';
+
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () => onChanged(!isChecked),
       child: Padding(
         padding:
             isAllAgree
-                ? const EdgeInsets.fromLTRB(
-                  24,
-                  14,
-                  24,
-                  12,
-                )
-                : const EdgeInsets.fromLTRB(24, 24, 24, 6), 
+                ? const EdgeInsets.fromLTRB(24, 14, 24, 12)
+                : const EdgeInsets.fromLTRB(24, 24, 24, 6),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -43,10 +42,8 @@ class TermsAgreementTile extends StatelessWidget {
               onTap: () => onChanged(!isChecked),
             ),
             const SizedBox(width: 4),
-
             Expanded(
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Flexible(
@@ -95,7 +92,7 @@ class TermsAgreementTile extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const TermsDetailPage(),
+                        builder: (_) => TermsDetailPage(termsList: [term]),
                       ),
                     );
                   },
