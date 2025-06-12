@@ -40,14 +40,7 @@ class _NicknameInputPageState extends State<NicknameInputPage> {
               onChanged: (value) => setState(() => nickname = value),
               nickname: nickname,
             ),
-            const SizedBox(height: 8),
-            Align(
-              alignment: Alignment.centerRight,
-              child: Text(
-                '${nickname.length}/10',
-                style: const TextStyle(color: Colors.grey),
-              ),
-            ),
+            
             const Spacer(),
             NicknameSubmitButton(
               enabled: isButtonEnabled,
