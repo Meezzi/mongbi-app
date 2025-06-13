@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mongbi_app/core/font.dart';
-import 'package:mongbi_app/core/font.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -72,18 +71,14 @@ class _SplashPageState extends State<SplashPage>
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Text(
+                Text(
                   '안녕, 난 몽비!',
-                  style: TextStyle(
-                    fontSize: 36,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: Font.title24.copyWith(color: Colors.white),
                 ),
                 // const SizedBox(height: 4),
-                Text(
+                 Text(
                   '꿈을 먹는 도깨비다몽',
-                  style: Font.title28.copyWith(color: Colors.white),
+                  style: Font.title24.copyWith(color: Colors.white),
                 ),
                 SizedBox(height: screenHeight * 0.035),
                 SlideTransition(
