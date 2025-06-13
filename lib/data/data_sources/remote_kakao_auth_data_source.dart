@@ -5,9 +5,9 @@ import 'package:mongbi_app/data/dtos/user_dto.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class RemoteKakaoAuthDataSource {
-  final Dio dio;
 
   RemoteKakaoAuthDataSource(this.dio);
+  final Dio dio;
 
   Future<LoginResponseDto> login(String accessToken) async {
     try {

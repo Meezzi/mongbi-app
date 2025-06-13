@@ -4,13 +4,13 @@ import 'package:mongbi_app/domain/entities/user.dart';
 import 'package:mongbi_app/domain/repositories/auth_repository.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
-  final RemoteNaverAuthDataSource naverDataSource;
-  final RemoteKakaoAuthDataSource kakaoDataSource;
 
   AuthRepositoryImpl({
     required this.naverDataSource,
     required this.kakaoDataSource,
   });
+  final RemoteNaverAuthDataSource naverDataSource;
+  final RemoteKakaoAuthDataSource kakaoDataSource;
 
   @override
   Future<User> loginWithNaver() async {

@@ -2,29 +2,6 @@
 import 'package:mongbi_app/domain/entities/user.dart';
 
 class UserDto {
-  final int userIdx;
-  final String userName;
-  final String? userNickname;
-  final String userType;
-  final String userSocialType;
-  final String userSocialId;
-  final String userSocialUuid;
-  final DateTime userRegDate;
-  final DateTime? userLastLoginDate;
-  final String userIdState;
-
-  UserDto({
-    required this.userIdx,
-    required this.userName,
-    this.userNickname,
-    required this.userType,
-    required this.userSocialType,
-    required this.userSocialId,
-    required this.userSocialUuid,
-    required this.userRegDate,
-    this.userLastLoginDate,
-    required this.userIdState,
-  });
 
   factory UserDto.fromJson(Map<String, dynamic> json) {
     return UserDto(
@@ -42,6 +19,29 @@ class UserDto {
       userIdState: json['USER_ID_STATE'],
     );
   }
+
+  UserDto({
+    required this.userIdx,
+    required this.userName,
+    this.userNickname,
+    required this.userType,
+    required this.userSocialType,
+    required this.userSocialId,
+    required this.userSocialUuid,
+    required this.userRegDate,
+    this.userLastLoginDate,
+    required this.userIdState,
+  });
+  final int userIdx;
+  final String userName;
+  final String? userNickname;
+  final String userType;
+  final String userSocialType;
+  final String userSocialId;
+  final String userSocialUuid;
+  final DateTime userRegDate;
+  final DateTime? userLastLoginDate;
+  final String userIdState;
 
   User toEntity() {
     return User(

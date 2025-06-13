@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mongbi_app/data/data_sources/remote_naver_auth_data_source.dart';
 import 'package:mongbi_app/data/data_sources/remote_kakao_auth_data_source.dart';
+import 'package:mongbi_app/data/data_sources/remote_naver_auth_data_source.dart';
 import 'package:mongbi_app/data/repositories/auth_repository_impl.dart';
 import 'package:mongbi_app/domain/entities/user.dart';
 import 'package:mongbi_app/domain/repositories/auth_repository.dart';

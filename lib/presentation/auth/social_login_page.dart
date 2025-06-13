@@ -1,19 +1,13 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mongbi_app/data/data_sources/remote_naver_auth_data_source.dart';
-import 'package:mongbi_app/data/repositories/auth_repository_impl.dart';
-import 'package:mongbi_app/domain/use_cases/login_with_naver.dart';
-import 'package:mongbi_app/presentation/auth/viewmodels/auth_view_model.dart';
 import 'package:mongbi_app/presentation/auth/widgets/apple_login_button_widget.dart';
-import 'package:mongbi_app/presentation/auth/widgets/naver_login_button_widget.dart';
 import 'package:mongbi_app/presentation/auth/widgets/kakao_login_button_widget.dart';
 import 'package:mongbi_app/presentation/auth/widgets/last_login_state_weiget.dart';
 import 'package:mongbi_app/presentation/auth/widgets/mongbi_image_widget.dart';
+import 'package:mongbi_app/presentation/auth/widgets/naver_login_button_widget.dart';
 import 'package:mongbi_app/presentation/auth/widgets/text_widgets.dart';
 import 'package:mongbi_app/providers/auth_provider.dart'; // 이걸로 수정
 import 'package:mongbi_app/providers/last_login_provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SocialLoginPage extends ConsumerWidget {
   const SocialLoginPage({super.key});

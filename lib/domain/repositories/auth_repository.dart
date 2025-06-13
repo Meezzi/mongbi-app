@@ -1,4 +1,4 @@
-import '../entities/user.dart';
+import 'package:mongbi_app/domain/entities/user.dart';
 
 abstract class AuthRepository {
   Future<User> loginWithNaver();

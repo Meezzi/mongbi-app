@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class NaverLoginButton extends StatelessWidget {
-  final VoidCallback? onTap;
 
   const NaverLoginButton({super.key, this.onTap});
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {

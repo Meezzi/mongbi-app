@@ -1,15 +1,5 @@
 // domain/entities/user.dart
 class User {
-  final int userIdx;
-  final String userName;
-  final String? userNickname;
-  final String userType;
-  final String userSocialType;
-  final String userSocialId;
-  final String userSocialUuid;
-  final DateTime userRegDate;
-  final DateTime? userLastLoginDate;
-  final String userIdState;
 
   const User({
     required this.userIdx,
@@ -23,5 +13,15 @@ class User {
     this.userLastLoginDate,
     required this.userIdState,
   });
+  final int userIdx;
+  final String userName;
+  final String? userNickname;
+  final String userType;
+  final String userSocialType;
+  final String userSocialId;
+  final String userSocialUuid;
+  final DateTime userRegDate;
+  final DateTime? userLastLoginDate;
+  final String userIdState;
 }
 

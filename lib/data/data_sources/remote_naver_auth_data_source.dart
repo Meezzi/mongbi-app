@@ -1,22 +1,18 @@
-import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter_naver_login/flutter_naver_login.dart';
-import 'package:flutter_naver_login/interface/types/naver_login_status.dart';
 import 'package:mongbi_app/data/dtos/login_response_dto.dart';
 import 'package:mongbi_app/data/dtos/user_dto.dart';
-import 'package:mongbi_app/domain/entities/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class RemoteNaverAuthDataSource {
-  final Dio dio;
 
   RemoteNaverAuthDataSource(this.dio);
+  final Dio dio;
 
   Future<LoginResponseDto> login() async {
     String jwt = '';
     UserDto? userDto;
     try {
-      final loginResult = await FlutterNaverLogin.logIn();
     } catch (e) {}
 
     try {
