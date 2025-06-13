@@ -8,7 +8,7 @@ import 'package:mongbi_app/presentation/dream/dream_interpretation_page.dart';
 import 'package:mongbi_app/presentation/dream/dream_write_page.dart';
 import 'package:mongbi_app/presentation/history/history_page.dart';
 import 'package:mongbi_app/presentation/home/home_page.dart';
-import 'package:mongbi_app/presentation/profile/nickname_input_page.dart';
+import 'package:mongbi_app/presentation/setting/nickname_input_page.dart';
 import 'package:mongbi_app/presentation/splash/splash_page.dart';
 import 'package:mongbi_app/presentation/statistics/statistics_page.dart';
 
