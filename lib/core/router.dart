@@ -7,6 +7,7 @@ import 'package:mongbi_app/presentation/dream/dream_interpretation_page.dart';
 import 'package:mongbi_app/presentation/dream/dream_write_page.dart';
 import 'package:mongbi_app/presentation/history/history_page.dart';
 import 'package:mongbi_app/presentation/home/home_page.dart';
+import 'package:mongbi_app/presentation/profile/profile_setting_page.dart';
 
 final GoRouter router = GoRouter(
   initialLocation: '/',
@@ -30,6 +31,10 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/social_login',
       builder: (context, state) => SocialLoginPage(),
+    ),
+    GoRoute(
+      path: '/nickname_input',
+      builder: (context, state) => NicknameInputPage(),
     ),
     GoRoute(
       path: '/dream_write',
