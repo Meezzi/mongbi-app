@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mongbi_app/core/font.dart';
+import 'package:mongbi_app/core/font.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -25,8 +26,8 @@ class _SplashPageState extends State<SplashPage>
 
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 100),
-    )..repeat(reverse: true);
+      duration: const Duration(seconds: 800),
+    )..repeat(reverse: false);
 
     _floatingAnimation = Tween<Offset>(
       begin: const Offset(0, 0),
@@ -43,7 +44,6 @@ class _SplashPageState extends State<SplashPage>
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
-
     return Scaffold(
       body: Stack(
         children: [
@@ -72,13 +72,18 @@ class _SplashPageState extends State<SplashPage>
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(
+                const Text(
                   '안녕, 난 몽비!',
-                  style: Font.title24.copyWith(color: Colors.white),
+                  style: TextStyle(
+                    fontSize: 36,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-                 Text(
+                // const SizedBox(height: 4),
+                Text(
                   '꿈을 먹는 도깨비다몽',
-                  style: Font.title24.copyWith(color: Colors.white),
+                  style: Font.title28.copyWith(color: Colors.white),
                 ),
                 SizedBox(height: screenHeight * 0.035),
                 SlideTransition(
