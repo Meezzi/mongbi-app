@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/presentation/statistics/widgets/dream_mood_distribution_percent.dart';
+import 'package:mongbi_app/presentation/statistics/widgets/dream_mood_distribution_pie_chart.dart';
 
 class DreamMoodDistribution extends StatelessWidget {
   const DreamMoodDistribution({super.key});
@@ -40,7 +41,7 @@ class DreamMoodDistribution extends StatelessWidget {
                 width: double.maxFinite,
                 child: Row(
                   children: [
-                    Expanded(child: Container(height: 100, color: Colors.blue)),
+                    DreamMoodDistributionPieChart(),
                     SizedBox(width: 40),
                     Padding(
                       padding: const EdgeInsets.only(right: 21),
