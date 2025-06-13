@@ -11,7 +11,7 @@ class NickNameSettingDataSourceImpl implements NickNameSettingDataSource {
     required int userId,
     required String nickname,
   }) async {
-    final response = await dio.patch(
+    final response = await dio.put(
       '/users/$userId/nickname',
       data: {'nickname': nickname},
     );

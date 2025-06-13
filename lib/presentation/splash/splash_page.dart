@@ -25,19 +25,13 @@ class _SplashPageState extends State<SplashPage>
         aggreedState = prefs.getBool('isaggreed') ?? false;
         loginState = prefs.getBool('isLogined') ?? false;
 
-        if(loginState)
-        {
+        if (loginState) {
           context.go('/home');
-        }
-        else if(loginState == true && !aggreedState)
-        {
-            //홈 화면으로 이동후 바텀 시트 출력되게  
-        }
-        else
-        {
+        } else if (loginState == true && !aggreedState) {
+          //홈 화면으로 이동후 바텀 시트 출력되게
+        } else {
           context.go('/social_login');
         }
-
       }
     });
   }
