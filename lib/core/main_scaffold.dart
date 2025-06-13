@@ -15,7 +15,7 @@ class MainScaffold extends StatelessWidget {
     int selectedIndex = switch (location) {
       _ when location.startsWith('/history') => 1,
       _ when location.startsWith('/statistics') => 2,
-      _ when location.startsWith('/mypage') => 3,
+      _ when location.startsWith('/setting') => 3,
       _ => 0,
     };
 
@@ -79,7 +79,7 @@ class MainScaffold extends StatelessWidget {
               3,
               selectedIndex == 3,
               'user',
-              '/mypage',
+              '/setting',
               isHistory,
             ),
           ],
