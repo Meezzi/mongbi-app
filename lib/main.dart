@@ -6,6 +6,9 @@ import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:mongbi_app/core/router.dart';
 import 'package:mongbi_app/providers/background_music_provider.dart';
 
+
+
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -13,15 +16,13 @@ void main() async {
 
   // 캘린더 한글화
   await initializeDateFormatting();
-  WidgetsFlutterBinding.ensureInitialized();
 
-  // runApp() 호출 전 Flutter SDK 초기화
   KakaoSdk.init(
     nativeAppKey: dotenv.env['KAKAO_NATIVE_APP_KEY'],
     javaScriptAppKey: dotenv.env['KAKAO_JAVA_SCRIPT_APP_KEY'],
   );
-  
-  runApp(ProviderScope(child: const MyApp()));
+
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends ConsumerStatefulWidget {
