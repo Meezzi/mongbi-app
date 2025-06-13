@@ -31,8 +31,6 @@ class RemoteNaverAuthDataSource {
       if (response.statusCode == 201 && response.data['token'] != null) {
         jwt = response.data['token'];
         userDto = UserDto.fromJson(response.data['user']);
-        final prefs = await SharedPreferences.getInstance();
-        await prefs.setString('jwt_token', jwt);
       } else {}
     } catch (e) {
       //TODO 오류처리 추후 예정

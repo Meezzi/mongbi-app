@@ -50,7 +50,9 @@ class SocialLoginPage extends ConsumerWidget {
                             try {
                               await authViewModel.loginWithKakao();
                             } catch (e) {
-                              //TODO 오류 사용자에게 표시 스낵바
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('카카오 로그인 실패')),
+                              );
                             }
                           },
                         ),
@@ -73,7 +75,9 @@ class SocialLoginPage extends ConsumerWidget {
                             try {
                               await authViewModel.loginWithNaver();
                             } catch (e) {
-                              //TODO 오류 사용자에게 표시 스낵바
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('네이버 로그인 실패')),
+                              );
                             }
                           },
                         ),
