@@ -4,8 +4,6 @@ import 'package:mongbi_app/presentation/auth/widgets/apple_login_button_widget.d
 import 'package:mongbi_app/presentation/auth/widgets/kakao_login_button_widget.dart';
 import 'package:mongbi_app/presentation/auth/widgets/last_login_state_weiget.dart';
 import 'package:mongbi_app/presentation/auth/widgets/mongbi_image_widget.dart';
-import 'package:mongbi_app/presentation/auth/widgets/text_widgets.dart';
-import 'package:mongbi_app/presentation/terms/widgets/terms_bottom_sheet_layout_widget.dart';
 import 'package:mongbi_app/presentation/auth/widgets/naver_login_button_widget.dart';
 import 'package:mongbi_app/presentation/auth/widgets/text_widgets.dart';
 import 'package:mongbi_app/providers/auth_provider.dart';
@@ -13,15 +11,6 @@ import 'package:mongbi_app/providers/last_login_provider.dart';
 
 class SocialLoginPage extends ConsumerWidget {
   const SocialLoginPage({super.key});
-  
-  void _onLoginSuccess(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      builder: (_) => const TermsBottomSheet(),
-    );
-  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

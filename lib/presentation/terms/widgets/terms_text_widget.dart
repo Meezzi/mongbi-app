@@ -8,7 +8,7 @@ class TermsHeaderText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start, // ← 이 줄 주석 해제
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           '몽비 이용을 위한\n이용약관 동의가 필요해몽',

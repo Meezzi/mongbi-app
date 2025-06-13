@@ -2,9 +2,8 @@ import 'package:mongbi_app/data/dtos/terms_aggrement_dto.dart';
 import 'package:mongbi_app/domain/repositories/terms_repository.dart';
 
 class AgreeToTermsUseCase {
-  final TermsRepository repository;
-
   AgreeToTermsUseCase(this.repository);
+  final TermsRepository repository;
 
   Future<void> call({
     required int userIdx,

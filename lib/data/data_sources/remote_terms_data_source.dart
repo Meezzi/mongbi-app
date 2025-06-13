@@ -3,9 +3,8 @@ import 'package:mongbi_app/data/dtos/terms_aggrement_dto.dart';
 import 'package:mongbi_app/data/dtos/terms_dto.dart';
 import 'package:mongbi_app/domain/entities/terms.dart';
 
-class TermsRemoteDataSource {
-
-  TermsRemoteDataSource(this.dio);
+class RemoteTermsDataSource {
+  RemoteTermsDataSource(this.dio);
   final Dio dio;
 
   Future<List<Terms>> fetchLatestTerms() async {

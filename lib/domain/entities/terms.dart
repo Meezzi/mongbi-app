@@ -1,10 +1,4 @@
 class Terms {
-  final int id;
-  final String name;
-  final String type;
-  final String requirement;
-  final String content;
-
   Terms({
     required this.id,
     required this.name,
@@ -12,4 +6,10 @@ class Terms {
     required this.requirement,
     required this.content,
   });
+  
+  final int id;
+  final String name;
+  final String type;
+  final String requirement;
+  final String content;
 }
