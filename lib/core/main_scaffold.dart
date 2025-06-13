@@ -23,8 +23,8 @@ class MainScaffold extends StatelessWidget {
 
     return Scaffold(
       appBar: _buildAppBar(location),
-      extendBody: true,
-      extendBodyBehindAppBar: true,
+      extendBody: location.startsWith('/home') ? true : false,
+      extendBodyBehindAppBar: location.startsWith('/home') ? true : false,
       body: child,
       bottomNavigationBar: BottomAppBar(
         color: isHistory ? const Color(0xFF3B136B) : Colors.white,
@@ -105,6 +105,15 @@ class MainScaffold extends StatelessWidget {
             icon: SvgPicture.asset('assets/icons/bell.svg'),
           ),
         ],
+      );
+    }
+
+    if (location.startsWith('/statistics')) {
+      return AppBar(
+        backgroundColor: Colors.white,
+        titleSpacing: 24,
+        centerTitle: false,
+        title: Text('모몽의 꿈 통계', style: Font.title20),
       );
     }
 
