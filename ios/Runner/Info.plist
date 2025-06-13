@@ -41,9 +41,52 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+        		<string>com.googleusercontent.apps.39071088784-0b15ml3kplm7ktt3b64119o845f1mfvg.apps.googleusercontent.com</string>
+			</array>
+		</dict>
+	</array>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
+		<key>CFBundleURLTypes</key>
+		<array>
+			<dict>
+				<key>CFBundleTypeRole</key>
+				<string>Editor</string>
+				<key>CFBundleURLSchemes</key>
+				<array>
+					<string>kakao native app key</string>
+				</array>
+			</dict>
+			<dict>
+				<key>CFBundleTypeRole</key>
+				<string>Editor</string>
+				<key>CFBundleURLSchemes</key>
+				<array>
+					<string>tempApp</string>
+				</array>
+			</dict>
+		</array>
+		<key>naverConsumerKey</key>
+		<string>WuKeh8DsHsIkhnG6ooUA</string>
+		<key>naverConsumerSecret</key>
+		<string>NKBmoq6NDU</string>
+		<key>naverServiceAppName</key>
+		<string>몽비</string>
+		<key>naverServiceAppUrlScheme</key>
+		<string>https://naver.com</string>
+		<key>LSApplicationQueriesSchemes</key>
+		<array>
+			<!-- 카카오톡으로 로그인 -->
+			<string>kakaokompassauth</string>
+		</array>
+
 	<true/>
 </dict>
 </plist>

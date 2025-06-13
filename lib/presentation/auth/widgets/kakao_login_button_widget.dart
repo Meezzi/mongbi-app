@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class KakaoLoginButton extends StatelessWidget {
-  final VoidCallback? onTap;
 
   const KakaoLoginButton({super.key, this.onTap});
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {

@@ -41,8 +41,13 @@ dependencies:
   flutter_svg: ^2.1.0
   assorted_layout_widgets: ^11.0.0
   flutter_dotenv: ^5.2.1
+  google_sign_in: ^6.3.0
+  flutter_naver_login: ^2.1.1
   shared_preferences: ^2.5.3
+  kakao_flutter_sdk: ^1.9.7+3
   go_router: ^15.1.3
+  kakao_flutter_sdk_user: ^1.9.7+3
+
 
 dev_dependencies:
   flutter_test:
@@ -71,7 +76,7 @@ flutter:
     - assets/
     - assets/images/mongbi.png
     - assets/images/apple_login.svg
-    - assets/images/google_login.svg
+    - assets/images/naver_login.svg
     - assets/images/kakao_login.svg
     - assets/images/home_cloude.svg
     - assets/images/home_star.png
