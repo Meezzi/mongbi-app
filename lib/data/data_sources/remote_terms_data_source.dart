@@ -1,12 +1,14 @@
 import 'package:dio/dio.dart';
+import 'package:mongbi_app/data/data_sources/terms_data_soure.dart';
 import 'package:mongbi_app/data/dtos/terms_aggrement_dto.dart';
 import 'package:mongbi_app/data/dtos/terms_dto.dart';
 import 'package:mongbi_app/domain/entities/terms.dart';
 
-class RemoteTermsDataSource {
+class RemoteTermsDataSource implements TermsDataSource {
   RemoteTermsDataSource(this.dio);
   final Dio dio;
 
+  @override
   Future<List<Terms>> fetchLatestTerms() async {
     final response = await dio.get('/api/terms/latest-terms');
     final dataList = response.data as List;
@@ -14,7 +16,8 @@ class RemoteTermsDataSource {
     return dataList.map((e) => TermsDto.fromJson(e).toEntity()).toList();
   }
 
-  Future<void> postBulkAgreements({
+  @override
+  Future<void> postUserAgreements({
     required int userIdx,
     required List<AgreementDto> agreements,
   }) async {

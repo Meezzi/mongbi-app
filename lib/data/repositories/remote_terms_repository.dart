@@ -29,6 +29,6 @@ class RemoteTermsRepository implements TermsRepository {
     required int userIdx,
     required List<AgreementDto> agreements,
   }) {
-    return remote.postBulkAgreements(userIdx: userIdx, agreements: agreements);
+    return remote.postUserAgreements(userIdx: userIdx, agreements: agreements);
   }
 }

@@ -6,6 +6,7 @@ import 'package:mongbi_app/presentation/auth/widgets/last_login_state_weiget.dar
 import 'package:mongbi_app/presentation/auth/widgets/mongbi_image_widget.dart';
 import 'package:mongbi_app/presentation/auth/widgets/naver_login_button_widget.dart';
 import 'package:mongbi_app/presentation/auth/widgets/text_widgets.dart';
+import 'package:mongbi_app/presentation/terms/widgets/terms_bottom_sheet_layout_widget.dart';
 import 'package:mongbi_app/providers/auth_provider.dart';
 import 'package:mongbi_app/providers/last_login_provider.dart';
 
@@ -59,6 +60,13 @@ class SocialLoginPage extends ConsumerWidget {
                         showRecentBubble: lastLoginProvider == "naver",
                         child: NaverLoginButton(
                           onTap: () async {
+                            await showModalBottomSheet(
+                              context: context,
+                              isScrollControlled: true,
+                              backgroundColor:
+                                  Colors.transparent, // 바깥 배경 둥글기 유지
+                              builder: (_) => const TermsBottomSheet(),
+                            );
                             final authViewModel = ref.read(
                               authViewModelProvider.notifier,
                             );

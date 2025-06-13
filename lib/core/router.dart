@@ -12,7 +12,7 @@ import 'package:mongbi_app/presentation/profile/profile_setting_page.dart';
 final GoRouter router = GoRouter(
   initialLocation: '/',
   routes: [
-    GoRoute(path: '/', redirect: (_, __) => '/home'),
+    GoRoute(path: '/', redirect: (_, __) => '/social_login'),
 
     ShellRoute(
       builder: (context, state, child) {
