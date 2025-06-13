@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mongbi_app/core/font.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -7,13 +8,21 @@ class SplashPage extends StatefulWidget {
   State<SplashPage> createState() => _SplashPageState();
 }
 
-class _SplashPageState extends State<SplashPage> with SingleTickerProviderStateMixin {
+class _SplashPageState extends State<SplashPage>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<Offset> _floatingAnimation;
 
   @override
   void initState() {
     super.initState();
+
+    Future.delayed(const Duration(seconds: 3), () {
+      if (mounted) {
+        context.go('/social_login');
+      }
+    });
+
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 100),
@@ -21,11 +30,8 @@ class _SplashPageState extends State<SplashPage> with SingleTickerProviderStateM
 
     _floatingAnimation = Tween<Offset>(
       begin: const Offset(0, 0),
-      end: const Offset(0, 0.02), 
-    ).animate(CurvedAnimation(
-      parent: _controller,
-      curve: Curves.easeInOut,
-    ));
+      end: const Offset(0, 0.02),
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
   }
 
   @override
@@ -66,22 +72,13 @@ class _SplashPageState extends State<SplashPage> with SingleTickerProviderStateM
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Text(
+                Text(
                   '안녕, 난 몽비!',
-                  style: TextStyle(
-                    fontSize: 36,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: Font.title24.copyWith(color: Colors.white),
                 ),
-                // const SizedBox(height: 4),
-                const Text(
+                 Text(
                   '꿈을 먹는 도깨비다몽',
-                  style: TextStyle(
-                    fontSize: 36,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: Font.title24.copyWith(color: Colors.white),
                 ),
                 SizedBox(height: screenHeight * 0.035),
                 SlideTransition(
