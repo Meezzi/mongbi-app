@@ -26,12 +26,12 @@ class _SplashPageState extends State<SplashPage>
 
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(microseconds: 800),
-    )..repeat(reverse: false);
+      duration: const Duration(milliseconds: 1400),
+    )..repeat(reverse: true);
 
     _floatingAnimation = Tween<Offset>(
       begin: const Offset(0, 0),
-      end: const Offset(0, 0.02),
+      end: const Offset(0, -0.02),
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
   }
 
