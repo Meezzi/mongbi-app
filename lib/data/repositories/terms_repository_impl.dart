@@ -1,13 +1,13 @@
 import 'package:mongbi_app/data/data_sources/remote_terms_data_source.dart';
 import 'package:mongbi_app/data/dtos/terms_aggrement_dto.dart';
 
-import '../../domain/entities/terms.dart';
-import '../../domain/repositories/terms_repository.dart';
+import 'package:mongbi_app/domain/entities/terms.dart';
+import 'package:mongbi_app/domain/repositories/terms_repository.dart';
 
 class TermsRepositoryImpl implements TermsRepository {
-  final TermsRemoteDataSource remote;
 
   TermsRepositoryImpl(this.remote);
+  final TermsRemoteDataSource remote;
 
   @override
   Future<List<Terms>> getLatestTerms() async {

@@ -22,8 +22,7 @@ class RemoteDreamRepository implements DreamRepository {
       dreamContent,
       dreamScore,
     );
-
-    // JSON 형태를 Dream으로 변경
+    
     final dream = Dream(
       id: null, // TODO: 저장한 후, Dream Id로 저장
       createdAt: DateTime.now(),

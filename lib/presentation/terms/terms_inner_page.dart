@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:mongbi_app/domain/entities/terms.dart';
 
 class TermsDetailPage extends StatelessWidget {
-  final List<Terms> termsList;
 
   const TermsDetailPage({super.key, required this.termsList});
+  final List<Terms> termsList;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,6 @@ class TermsDetailPage extends StatelessWidget {
               Text(termsList.map((t) => '• ${t.name}').join('\n')),
               const SizedBox(height: 24),
 
-              // 실제 약관 본문들 렌더링
               ...termsList.map(
                 (term) => Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

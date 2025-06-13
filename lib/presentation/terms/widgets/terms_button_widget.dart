@@ -22,8 +22,8 @@ class ConfirmButton extends StatelessWidget {
         style: ButtonStyle(
           backgroundColor: WidgetStateProperty.resolveWith<Color>(
             (states) => states.contains(WidgetState.disabled)
-                ? const Color(0x60F5F4F5) // 비활성화 색상
-                : const Color(0xFF8C2EFF), // 활성화 색상
+                ? const Color(0x60F5F4F5)
+                : const Color(0xFF8C2EFF),
           ),
           foregroundColor: WidgetStateProperty.resolveWith<Color>(
             (states) => states.contains(WidgetState.disabled)

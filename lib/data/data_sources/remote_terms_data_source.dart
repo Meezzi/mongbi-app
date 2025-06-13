@@ -4,9 +4,9 @@ import 'package:mongbi_app/data/dtos/terms_dto.dart';
 import 'package:mongbi_app/domain/entities/terms.dart';
 
 class TermsRemoteDataSource {
-  final Dio dio;
 
   TermsRemoteDataSource(this.dio);
+  final Dio dio;
 
   Future<List<Terms>> fetchLatestTerms() async {
     final response = await dio.get('/api/terms/latest-terms');

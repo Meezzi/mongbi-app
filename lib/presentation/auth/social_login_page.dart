@@ -5,7 +5,7 @@ import 'package:mongbi_app/presentation/auth/widgets/kakao_login_button_widget.d
 import 'package:mongbi_app/presentation/auth/widgets/last_login_state_weiget.dart';
 import 'package:mongbi_app/presentation/auth/widgets/mongbi_image_widget.dart';
 import 'package:mongbi_app/presentation/auth/widgets/text_widgets.dart';
-import 'package:mongbi_app/presentation/terms/widgets/terms_bottom_sheet_layout_widget.dart'; // 이걸로 수정
+import 'package:mongbi_app/presentation/terms/widgets/terms_bottom_sheet_layout_widget.dart';
 
 class SocialLoginPage extends StatelessWidget {
   const SocialLoginPage({super.key});
@@ -15,13 +15,13 @@ class SocialLoginPage extends StatelessWidget {
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      builder: (_) => const TermsBottomSheet(), // <- 여기에 위에서 만든 바텀시트
+      builder: (_) => const TermsBottomSheet(),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final String lastLoginProvider = "kakao"; //임시 나중에 쉐어드프리퍼런스로 불러올 예정
+    final String lastLoginProvider = 'kakao';
     return Scaffold(
       backgroundColor: Color(0xFFFAFAFA),
       body: Center(
@@ -39,17 +39,17 @@ class SocialLoginPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 _SocialLoginItem(
-                  showRecentBubble: lastLoginProvider == "apple",
+                  showRecentBubble: lastLoginProvider == 'apple',
                   child: AppleLoginButton(onTap: () {}),
                 ),
                 const SizedBox(width: 24),
                 _SocialLoginItem(
-                  showRecentBubble: lastLoginProvider == "kakao",
+                  showRecentBubble: lastLoginProvider == 'kakao',
                   child: KakaoLoginButton(onTap: () {}),
                 ),
                 const SizedBox(width: 24),
                 _SocialLoginItem(
-                  showRecentBubble: lastLoginProvider == "google",
+                  showRecentBubble: lastLoginProvider == 'google',
                   child: GoogleLoginButton(onTap: () => _onLoginSuccess(context)),
                 ),
               ],

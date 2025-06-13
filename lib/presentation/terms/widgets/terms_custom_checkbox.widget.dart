@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class CustomCheckbox extends StatelessWidget {
-  final bool isChecked;
-  final VoidCallback onTap;
 
   const CustomCheckbox({
     super.key,
     required this.isChecked,
     required this.onTap,
   });
+  final bool isChecked;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {

@@ -70,7 +70,7 @@ class _TermsBottomSheetState extends ConsumerState<TermsBottomSheet> {
         terms
             .asMap()
             .entries
-            .where((e) => e.value.requirement == 'MANDATORY') // <- 필수 여부 체크
+            .where((e) => e.value.requirement == 'MANDATORY')
             .map((e) => e.key)
             .toList();
 
@@ -126,7 +126,7 @@ class _TermsBottomSheetState extends ConsumerState<TermsBottomSheet> {
               isChecked: isCheckedList[i],
               onChanged: (val) => toggleSingle(i, val),
             );
-          }).toList(),
+          }),
 
           const SizedBox(height: 24),
 
@@ -149,13 +149,15 @@ class _TermsBottomSheetState extends ConsumerState<TermsBottomSheet> {
                 await ref
                     .read(termsViewModelProvider.notifier)
                     .submitAgreements(userIdx: userIdx, agreements: agreements);
-                Navigator.of(context).pop(); // 약관 동의 완료 후 닫기
+                if (mounted) {
+                  context.go('/nickname_input');
+                }
               } catch (e) {
-                print('에러에러에러$e');
-                ScaffoldMessenger.of(context).showSnackBar(
-                  
-                  const SnackBar(content: Text('약관 동의 중 오류가 발생했습니다.')),
-                );
+                if (mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('약관 동의 중 오류가 발생했습니다.')),
+                  );
+                }
               }
             },
           ),

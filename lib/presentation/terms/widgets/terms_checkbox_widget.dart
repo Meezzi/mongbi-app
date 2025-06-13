@@ -7,11 +7,6 @@ import 'package:mongbi_app/presentation/terms/terms_inner_page.dart';
 import 'package:mongbi_app/presentation/terms/widgets/terms_custom_checkbox.widget.dart';
 
 class TermsAgreementTile extends StatelessWidget {
-  final Terms term; // ✅ 약관 엔티티 전체
-  final bool isAllAgree;
-  final bool isChecked;
-  final bool isRequired;
-  final ValueChanged<bool> onChanged;
 
   const TermsAgreementTile({
     super.key,
@@ -21,6 +16,11 @@ class TermsAgreementTile extends StatelessWidget {
     this.isRequired = false,
     required this.onChanged,
   });
+  final Terms term;
+  final bool isAllAgree;
+  final bool isChecked;
+  final bool isRequired;
+  final ValueChanged<bool> onChanged;
 
   @override
   Widget build(BuildContext context) {
