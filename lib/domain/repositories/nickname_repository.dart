@@ -1,17 +1,15 @@
-import 'package:mongbi_app/data/data_sources/remote_nickname_setting_data_source.dart';
+import 'package:mongbi_app/data/data_sources/nickname_setting_data_source.dart';
+import 'package:mongbi_app/data/repositories/remote_nickname_setting_repository.dart';
 import 'package:mongbi_app/domain/entities/user.dart';
 
-abstract interface class UserRepository {
-  Future<User> updateNickname(int userId, String nickname);
-}
+class NickNameSettingRepositoryImpl implements NickNameSettingRepository {
 
-class UserRepositoryImpl implements UserRepository {
-
-  UserRepositoryImpl(this.remoteDataSource);
-  final UserRemoteDataSource remoteDataSource;
+  NickNameSettingRepositoryImpl(this.dataSource);
+  final NickNameSettingDataSource dataSource;
 
   @override
-  Future<User> updateNickname(int userId, String nickname) {
-    return remoteDataSource.updateNickname(userId: userId, nickname: nickname);
+  Future<User> updateNickname(int userId, String nickname) async {
+    final dto = await dataSource.nickNameSetting(userId: userId, nickname: nickname);
+    return dto.toEntity();
   }
 }

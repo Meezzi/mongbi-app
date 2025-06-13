@@ -1,10 +1,11 @@
+import 'package:mongbi_app/data/repositories/remote_nickname_setting_repository.dart';
 import 'package:mongbi_app/domain/entities/user.dart';
-import 'package:mongbi_app/domain/repositories/nickname_repository.dart';
+
 
 class UpdateNicknameUseCase {
 
   UpdateNicknameUseCase(this.repository);
-  final UserRepository repository;
+  final NickNameSettingRepository repository;
 
   Future<User> call({required int userId, required String nickname}) {
     return repository.updateNickname(userId, nickname);
