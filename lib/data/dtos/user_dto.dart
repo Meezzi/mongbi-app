@@ -1,4 +1,3 @@
-// user_dto.dart
 import 'package:mongbi_app/domain/entities/user.dart';
 
 class UserDto {
