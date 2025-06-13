@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mongbi_app/core/font.dart';
 
-class MoodStateInfoButton extends StatelessWidget {
-  MoodStateInfoButton({super.key});
-
-  final OverlayPortalController overlayPortalController =
-      OverlayPortalController();
+class MoodStateInfoModal {
+  OverlayEntry? _overlayEntry;
 
   final iconPathList = [
     'assets/icons/very_bad.svg',
@@ -16,16 +13,12 @@ class MoodStateInfoButton extends StatelessWidget {
     'assets/icons/very_good.svg',
   ];
 
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        overlayPortalController.show();
-      },
-      child: OverlayPortal(
-        controller: overlayPortalController,
-        overlayChildBuilder: (context) {
-          return Container(
+  void show(BuildContext context) {
+    if (_overlayEntry != null) return; // 이미 띄워져 있으면 무시
+
+    _overlayEntry = OverlayEntry(
+      builder:
+          (context) => Container(
             alignment: Alignment.center,
             padding: const EdgeInsets.symmetric(horizontal: 24),
             decoration: BoxDecoration(color: Color(0xB2000000)),
@@ -44,7 +37,7 @@ class MoodStateInfoButton extends StatelessWidget {
                       Text('꿈 유형별 기분 상태', style: Font.title14),
                       GestureDetector(
                         onTap: () {
-                          overlayPortalController.hide();
+                          hide();
                         },
                         child: SvgPicture.asset(
                           'assets/icons/cancel.svg',
@@ -101,15 +94,15 @@ class MoodStateInfoButton extends StatelessWidget {
                 ],
               ),
             ),
-          );
-        },
-        child: SvgPicture.asset(
-          'assets/icons/info.svg',
-          fit: BoxFit.cover,
-          width: 20,
-        ),
-      ),
+          ),
     );
+
+    Overlay.of(context, rootOverlay: true).insert(_overlayEntry!);
+  }
+
+  void hide() {
+    _overlayEntry?.remove();
+    _overlayEntry = null;
   }
 
   Widget frequencyWidget(String text, Color color) {

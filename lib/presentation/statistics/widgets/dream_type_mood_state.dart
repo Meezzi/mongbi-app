@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/presentation/statistics/widgets/dream_type_mood_state_row.dart';
-import 'package:mongbi_app/presentation/statistics/widgets/mood_state_info_button.dart';
+import 'package:mongbi_app/presentation/statistics/widgets/mood_state_info_modal.dart';
 
 class DreamTypeMoodState extends StatelessWidget {
-  const DreamTypeMoodState({super.key});
+  DreamTypeMoodState({super.key});
+
+  final infoModal = MoodStateInfoModal();
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +39,16 @@ class DreamTypeMoodState extends StatelessWidget {
                 children: [
                   Text('꿈 유형별 기분 상태', style: Font.title14),
                   SizedBox(width: 4),
-                  MoodStateInfoButton(),
+                  GestureDetector(
+                    onTap: () {
+                      infoModal.show(context);
+                    },
+                    child: SvgPicture.asset(
+                      'assets/icons/info.svg',
+                      fit: BoxFit.cover,
+                      width: 20,
+                    ),
+                  ),
                 ],
               ),
             ),
