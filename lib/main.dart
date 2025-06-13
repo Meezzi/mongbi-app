@@ -31,17 +31,32 @@ class MyApp extends ConsumerStatefulWidget {
   ConsumerState<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends ConsumerState<MyApp> {
+class _MyAppState extends ConsumerState<MyApp> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     ref.read(backgroundMusicProvider).playBgm();
   }
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     ref.read(backgroundMusicProvider).dispose();
     super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    final bgm = ref.read(backgroundMusicProvider);
+
+    if (state == AppLifecycleState.paused ||
+        state == AppLifecycleState.inactive ||
+        state == AppLifecycleState.detached) {
+      bgm.fadeOutAndPause();
+    } else if (state == AppLifecycleState.resumed) {
+      bgm.resumeBgm();
+    }
   }
 
   @override
