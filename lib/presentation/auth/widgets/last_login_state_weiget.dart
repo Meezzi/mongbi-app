@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:mongbi_app/core/font.dart';
 
 class RecentLoginBubble extends StatelessWidget {
-  final String message;
 
   const RecentLoginBubble({super.key, this.message = '최근에 로그인 했어요 :)'});
+  final String message;
 
   @override
   Widget build(BuildContext context) {

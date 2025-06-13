@@ -41,7 +41,13 @@ dependencies:
   flutter_svg: ^2.1.0
   assorted_layout_widgets: ^11.0.0
   flutter_dotenv: ^5.2.1
+  google_sign_in: ^6.3.0
+  flutter_naver_login: ^2.1.1
   shared_preferences: ^2.5.3
+  kakao_flutter_sdk: ^1.9.7+3
+  go_router: ^15.1.3
+  kakao_flutter_sdk_user: ^1.9.7+3
+  audioplayers: ^6.4.0
 
 dev_dependencies:
   flutter_test:
@@ -70,13 +76,16 @@ flutter:
     - assets/
     - assets/images/mongbi.png
     - assets/images/apple_login.svg
-    - assets/images/google_login.svg
+    - assets/images/naver_login.svg
     - assets/images/kakao_login.svg
     - assets/icons/checkbox_unchecked.svg
     - assets/icons/checkbox_checked.svg
     - assets/icons/chevron_right.svg
-    
+    - assets/images/home_cloude.svg
+    - assets/images/home_star.png
     - assets/icons/
+    - assets/audio/
+    - assets/audio/background_music.mp3
     - .env
   #   - images/a_dot_ham.jpeg
 

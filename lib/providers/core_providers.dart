@@ -9,4 +9,14 @@ final dioProvider = Provider<Dio>(
 final admindioProvider = Provider<Dio>(
   (ref) => Dio(BaseOptions(baseUrl: dotenv.env['ADMIN_MONGBI_BASE_URL']!)),
 );
+  (ref) => Dio(
+    BaseOptions(
+      baseUrl: dotenv.env['MONGBI_BASE_URL']!,
+      headers: {
+        'Authorization': 'Bearer ${dotenv.env['BEARER_KEY']}',
+        'Content-Type': 'application/json',
+      },
+    ),
+  ),
+);
 

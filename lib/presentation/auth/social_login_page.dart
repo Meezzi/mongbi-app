@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mongbi_app/presentation/auth/widgets/apple_login_button_widget.dart';
-import 'package:mongbi_app/presentation/auth/widgets/google_login_button_widget.dart';
 import 'package:mongbi_app/presentation/auth/widgets/kakao_login_button_widget.dart';
 import 'package:mongbi_app/presentation/auth/widgets/last_login_state_weiget.dart';
 import 'package:mongbi_app/presentation/auth/widgets/mongbi_image_widget.dart';
 import 'package:mongbi_app/presentation/auth/widgets/text_widgets.dart';
 import 'package:mongbi_app/presentation/terms/widgets/terms_bottom_sheet_layout_widget.dart';
+import 'package:mongbi_app/presentation/auth/widgets/naver_login_button_widget.dart';
+import 'package:mongbi_app/presentation/auth/widgets/text_widgets.dart';
+import 'package:mongbi_app/providers/auth_provider.dart';
+import 'package:mongbi_app/providers/last_login_provider.dart';
 
-class SocialLoginPage extends StatelessWidget {
+class SocialLoginPage extends ConsumerWidget {
   const SocialLoginPage({super.key});
   
   void _onLoginSuccess(BuildContext context) {
@@ -20,42 +24,70 @@ class SocialLoginPage extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
-    final String lastLoginProvider = 'kakao';
+  Widget build(BuildContext context, WidgetRef ref) {
+    final asyncLastProvider = ref.watch(lastLoginProviderProvider);
+
     return Scaffold(
-      backgroundColor: Color(0xFFFAFAFA),
-      body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            CustomText(text: '반가워몽!', type: TextType.title),
-            CustomText(text: '몽비랑 같이 꿈 보러 갈래?', type: TextType.title),
-            SizedBox(height: 62),
-            MongbiCharacter(size: 288),
-            SizedBox(height: 62),
-            CustomText(text: '간편 로그인', type: TextType.login_info),
-            SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _SocialLoginItem(
-                  showRecentBubble: lastLoginProvider == 'apple',
-                  child: AppleLoginButton(onTap: () {}),
-                ),
-                const SizedBox(width: 24),
-                _SocialLoginItem(
-                  showRecentBubble: lastLoginProvider == 'kakao',
-                  child: KakaoLoginButton(onTap: () {}),
-                ),
-                const SizedBox(width: 24),
-                _SocialLoginItem(
-                  showRecentBubble: lastLoginProvider == 'google',
-                  child: GoogleLoginButton(onTap: () => _onLoginSuccess(context)),
-                ),
-              ],
+      backgroundColor: const Color(0xFFFAFAFA),
+      body: asyncLastProvider.when(
+        data:
+            (lastLoginProvider) => Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  CustomText(text: '반가워몽!', type: TextType.title),
+                  CustomText(text: '몽비랑 같이 꿈 보러 갈래?', type: TextType.title),
+                  const SizedBox(height: 62),
+                  const MongbiCharacter(size: 288),
+                  const SizedBox(height: 62),
+                  CustomText(text: '간편 로그인', type: TextType.login_info),
+                  const SizedBox(height: 16),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      _SocialLoginItem(
+                        showRecentBubble: lastLoginProvider == "apple",
+                        child: AppleLoginButton(onTap: () {}),
+                      ),
+                      const SizedBox(width: 24),
+                      _SocialLoginItem(
+                        showRecentBubble: lastLoginProvider == "kakao",
+                        child: KakaoLoginButton(
+                          onTap: () async {
+                            final authViewModel = ref.read(
+                              authViewModelProvider.notifier,
+                            );
+                            try {
+                              await authViewModel.loginWithKakao();
+                            } catch (e) {
+                              //TODO 오류 사용자에게 표시 스낵바
+                            }
+                          },
+                        ),
+                      ),
+                      const SizedBox(width: 24),
+                      _SocialLoginItem(
+                        showRecentBubble: lastLoginProvider == "naver",
+                        child: NaverLoginButton(
+                          onTap: () async {
+                            final authViewModel = ref.read(
+                              authViewModelProvider.notifier,
+                            );
+                            try {
+                              await authViewModel.loginWithNaver();
+                            } catch (e) {
+                              //TODO 오류 사용자에게 표시 스낵바
+                            }
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ],
-        ),
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (e, _) => Center(child: Text('에러 발생: $e')),
       ),
     );
   }
