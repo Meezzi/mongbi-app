@@ -8,11 +8,12 @@ import 'package:mongbi_app/presentation/dream/dream_write_page.dart';
 import 'package:mongbi_app/presentation/history/history_page.dart';
 import 'package:mongbi_app/presentation/home/home_page.dart';
 import 'package:mongbi_app/presentation/profile/profile_setting_page.dart';
+import 'package:mongbi_app/presentation/splash/splash_page.dart';
 
 final GoRouter router = GoRouter(
   initialLocation: '/',
   routes: [
-    GoRoute(path: '/', redirect: (_, __) => '/home'),
+    GoRoute(path: '/', redirect: (_, __) => '/splash'),
 
     ShellRoute(
       builder: (context, state, child) {
@@ -27,7 +28,10 @@ final GoRouter router = GoRouter(
         // TODO: 통계 화면, 프로필 화면으로 이동
       ],
     ),
-
+    GoRoute(
+      path: '/splash',
+      builder: (context, state) => SplashPage(),
+    ),
     GoRoute(
       path: '/social_login',
       builder: (context, state) => SocialLoginPage(),
