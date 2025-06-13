@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mongbi_app/data/data_sources/remote_kakao_auth_data_source.dart';
 import 'package:mongbi_app/data/data_sources/remote_naver_auth_data_source.dart';
-import 'package:mongbi_app/data/repositories/auth_repository_impl.dart';
+import 'package:mongbi_app/data/repositories/remote_auth_repository.dart';
 import 'package:mongbi_app/domain/entities/user.dart';
 import 'package:mongbi_app/domain/repositories/auth_repository.dart';
 import 'package:mongbi_app/domain/use_cases/login_with_kakao.dart';
@@ -19,7 +19,7 @@ final remoteKakaoAuthDataSourceProvider = Provider<RemoteKakaoAuthDataSource>(
 
 
 final authRepositoryProvider = Provider<AuthRepository>(
-  (ref) => AuthRepositoryImpl(
+  (ref) => RemoteAuthRepository(
     naverDataSource: ref.read(remoteNaverAuthDataSourceProvider),
     kakaoDataSource: ref.read(remoteKakaoAuthDataSourceProvider),
   ),

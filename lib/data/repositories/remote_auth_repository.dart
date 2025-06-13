@@ -3,9 +3,9 @@ import 'package:mongbi_app/data/data_sources/remote_naver_auth_data_source.dart'
 import 'package:mongbi_app/domain/entities/user.dart';
 import 'package:mongbi_app/domain/repositories/auth_repository.dart';
 
-class AuthRepositoryImpl implements AuthRepository {
+class RemoteAuthRepository implements AuthRepository {
 
-  AuthRepositoryImpl({
+  RemoteAuthRepository({
     required this.naverDataSource,
     required this.kakaoDataSource,
   });
