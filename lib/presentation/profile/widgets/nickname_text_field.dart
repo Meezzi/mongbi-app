@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:mongbi_app/core/font.dart';
 
 class NicknameTextField extends StatefulWidget {
-  final TextEditingController controller;
-  final void Function(String) onChanged;
-  final String nickname;
-
   const NicknameTextField({
     super.key,
     required this.controller,
     required this.onChanged,
     required this.nickname,
   });
+
+  final TextEditingController controller;
+  final void Function(String) onChanged;
+  final String nickname;
 
   @override
   State<NicknameTextField> createState() => _NicknameTextFieldState();
@@ -61,7 +61,7 @@ class _NicknameTextFieldState extends State<NicknameTextField> {
             focusNode: _focusNode,
             controller: widget.controller,
             maxLength: 5,
-            decoration:  InputDecoration(
+            decoration: InputDecoration(
               border: InputBorder.none,
               hintText: '사용할 별명을 적어주세요',
               counterText: '',
