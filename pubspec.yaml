@@ -84,7 +84,6 @@ flutter:
     - assets/audio/
     - assets/audio/background_music.mp3
     - .env
-    - assets/
     - assets/images/splash_bg.svg
     - assets/images/splash_mongbi.png
     - assets/images/star.png
