@@ -22,7 +22,6 @@ class RemoteNaverAuthDataSource {
       }
 
       final accessToken = tokenResult.accessToken;
-      print(accessToken);
       // 3. 서버에 accessToken 전송
       final response = await dio.post(
         '/users/naver-login',

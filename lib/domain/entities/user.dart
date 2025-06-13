@@ -1,4 +1,4 @@
-// domain/entities/user.dart
+
 class User {
 
   const User({

@@ -48,9 +48,7 @@ class SocialLoginPage extends ConsumerWidget {
                             );
                             try {
                               await authViewModel.loginWithKakao();
-                              print('✅ 로그인 성공');
                             } catch (e) {
-                              print('🧨 로그인 실패: $e');
                             }
                           },
                         ),
@@ -65,9 +63,7 @@ class SocialLoginPage extends ConsumerWidget {
                             );
                             try {
                               await authViewModel.loginWithNaver();
-                              print('✅ 로그인 성공');
                             } catch (e) {
-                              print('🧨 로그인 실패: $e');
                             }
                           },
                         ),
