@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/date_symbol_data_local.dart';
+<<<<<<< HEAD
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:mongbi_app/core/router.dart';
 import 'package:mongbi_app/providers/background_music_provider.dart';
+=======
+import 'package:mongbi_app/presentation/splash/splash_page.dart';
+>>>>>>> 3a7d90218c3b208182b2e8cdb17a163457222c4b
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -61,9 +65,15 @@ class _MyAppState extends ConsumerState<MyApp> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
+<<<<<<< HEAD
     return MaterialApp.router(
       routerConfig: router,
       theme: ThemeData(fontFamily: 'NanumSquareRound'),
+=======
+ return MaterialApp(
+      theme: ThemeData(fontFamily: 'NanumSquareRound'),
+      home: SplashPage(),
+>>>>>>> 3a7d90218c3b208182b2e8cdb17a163457222c4b
     );
   }
 }

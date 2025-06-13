@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/font.dart';
 
 class SplashPage extends StatefulWidget {
