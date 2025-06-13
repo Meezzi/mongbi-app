@@ -15,8 +15,8 @@ void main() async {
 
   // runApp() 호출 전 Flutter SDK 초기화
   KakaoSdk.init(
-    nativeAppKey: '323f653e5d7d80bf1551baeb82d49e23',
-    javaScriptAppKey: '5e37c7d2e75e4045e04162e2d401993b',
+    nativeAppKey: dotenv.env['KAKAO_NATIVE_APP_KEY'],
+    javaScriptAppKey: dotenv.env['KAKAO_JAVA_SCRIPT_APP_KEY'],
   );
   
   runApp(ProviderScope(child: const MyApp()));
