@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mongbi_app/presentation/profile/widgets/nickname_submit_button.dart';
 import 'package:mongbi_app/presentation/profile/widgets/nickname_text_field.dart';
 import 'package:mongbi_app/presentation/profile/widgets/nickname_title.dart';
+import 'package:mongbi_app/providers/nickname_provider.dart';
 
-class NicknameInputPage extends StatefulWidget {
+class NicknameInputPage extends ConsumerStatefulWidget {
   const NicknameInputPage({super.key});
 
   @override
-  State<NicknameInputPage> createState() => _NicknameInputPageState();
+  ConsumerState<NicknameInputPage> createState() => _NicknameInputPageState();
 }
 
-class _NicknameInputPageState extends State<NicknameInputPage> {
+class _NicknameInputPageState extends ConsumerState<NicknameInputPage> {
   String nickname = '';
 
   @override
@@ -38,13 +40,31 @@ class _NicknameInputPageState extends State<NicknameInputPage> {
               onChanged: (value) => setState(() => nickname = value),
               nickname: nickname,
             ),
-            
             const Spacer(),
             NicknameSubmitButton(
               enabled: isButtonEnabled,
-              onTap: () {
-                if (isButtonEnabled) {
-                  // 제출 처리
+              onTap: () async {
+                if (!isButtonEnabled) return;
+
+                final userId = 1; // ✅ 실제 로그인된 유저 ID로 교체해야 함
+
+                try {
+                  await ref
+                      .read(nicknameViewModelProvider.notifier)
+                      .updateNickname(userId, nickname);
+
+                  if (mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('닉네임이 저장되었어요!')),
+                    );
+                    Navigator.pop(context);
+                  }
+                } catch (e) {
+                  if (mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('닉네임 저장 실패: $e')),
+                    );
+                  }
                 }
               },
             ),
