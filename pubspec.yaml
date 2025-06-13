@@ -78,6 +78,9 @@ flutter:
     - assets/images/apple_login.svg
     - assets/images/naver_login.svg
     - assets/images/kakao_login.svg
+    - assets/icons/checkbox_unchecked.svg
+    - assets/icons/checkbox_checked.svg
+    - assets/icons/chevron_right.svg
     - assets/images/home_cloude.svg
     - assets/images/home_star.png
     - assets/icons/
