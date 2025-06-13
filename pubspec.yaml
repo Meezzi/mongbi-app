@@ -45,6 +45,8 @@ dependencies:
   flutter_naver_login: ^2.1.1
   shared_preferences: ^2.5.3
   kakao_flutter_sdk: ^1.9.7+3
+  go_router: ^15.1.3
+
 
 dev_dependencies:
   flutter_test:
@@ -75,6 +77,8 @@ flutter:
     - assets/images/apple_login.svg
     - assets/images/naver_login.svg
     - assets/images/kakao_login.svg
+    - assets/images/home_cloude.svg
+    - assets/images/home_star.png
     - assets/icons/
     - .env
   #   - images/a_dot_ham.jpeg
