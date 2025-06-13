@@ -49,6 +49,7 @@ class SocialLoginPage extends ConsumerWidget {
                             try {
                               await authViewModel.loginWithKakao();
                             } catch (e) {
+                              //TODO 오류 사용자에게 표시 스낵바
                             }
                           },
                         ),
@@ -64,6 +65,7 @@ class SocialLoginPage extends ConsumerWidget {
                             try {
                               await authViewModel.loginWithNaver();
                             } catch (e) {
+                              //TODO 오류 사용자에게 표시 스낵바
                             }
                           },
                         ),
