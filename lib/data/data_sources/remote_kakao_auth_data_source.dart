@@ -5,7 +5,6 @@ import 'package:mongbi_app/data/dtos/user_dto.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class RemoteKakaoAuthDataSource {
-
   RemoteKakaoAuthDataSource(this.dio);
   final Dio dio;
 
@@ -28,7 +27,7 @@ class RemoteKakaoAuthDataSource {
       await prefs.setString('jwt_token', jwt);
 
       return LoginResponseDto(token: jwt, user: userDto);
-    } catch (e,s) {
+    } catch (e, s) {
       throw Exception('카카오 로그인 오류: $e \n $s');
     }
   }

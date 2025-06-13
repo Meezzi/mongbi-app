@@ -5,15 +5,15 @@ import 'package:mongbi_app/data/dtos/user_dto.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class RemoteNaverAuthDataSource {
-
   RemoteNaverAuthDataSource(this.dio);
   final Dio dio;
 
   Future<LoginResponseDto> login() async {
     String jwt = '';
     UserDto? userDto;
-    try {
-    } catch (e) {}
+    try {} catch (e) {
+      //TODO 오류처리 추후 예정
+    }
 
     try {
       final tokenResult = await FlutterNaverLogin.getCurrentAccessToken();
@@ -22,21 +22,21 @@ class RemoteNaverAuthDataSource {
       }
 
       final accessToken = tokenResult.accessToken;
-      // 3. 서버에 accessToken 전송
       final response = await dio.post(
         '/users/naver-login',
         data: {'access_token': accessToken},
         options: Options(headers: {'Content-Type': 'application/json'}),
       );
 
-      // 4. 서버 응답 확인
       if (response.statusCode == 201 && response.data['token'] != null) {
         jwt = response.data['token'];
         userDto = UserDto.fromJson(response.data['user']);
         final prefs = await SharedPreferences.getInstance();
         await prefs.setString('jwt_token', jwt);
       } else {}
-    } catch (e) {}
+    } catch (e) {
+      //TODO 오류처리 추후 예정
+    }
     return LoginResponseDto(token: jwt, user: userDto!);
   }
 }

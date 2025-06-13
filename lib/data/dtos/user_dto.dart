@@ -2,7 +2,6 @@
 import 'package:mongbi_app/domain/entities/user.dart';
 
 class UserDto {
-
   factory UserDto.fromJson(Map<String, dynamic> json) {
     return UserDto(
       userIdx: json['USER_IDX'],
@@ -13,9 +12,10 @@ class UserDto {
       userSocialId: json['USER_SOCIAL_ID'],
       userSocialUuid: json['USER_SOCIAL_UUID'],
       userRegDate: DateTime.parse(json['USER_REG_DATE']),
-      userLastLoginDate: json['USER_LAST_LOGIN_DATE'] != null
-          ? DateTime.parse(json['USER_LAST_LOGIN_DATE'])
-          : null,
+      userLastLoginDate:
+          json['USER_LAST_LOGIN_DATE'] != null
+              ? DateTime.parse(json['USER_LAST_LOGIN_DATE'])
+              : null,
       userIdState: json['USER_ID_STATE'],
     );
   }

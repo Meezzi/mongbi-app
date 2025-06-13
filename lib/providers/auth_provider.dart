@@ -9,29 +9,29 @@ import 'package:mongbi_app/domain/use_cases/login_with_naver.dart';
 import 'package:mongbi_app/presentation/auth/viewmodels/auth_view_model.dart';
 import 'package:mongbi_app/providers/core_providers.dart';
 
-final remoteNaverAuthDataSourceProvider = Provider<RemoteNaverAuthDataSource>(
+final _remoteNaverAuthDataSourceProvider = Provider<RemoteNaverAuthDataSource>(
   (ref) => RemoteNaverAuthDataSource(ref.read(dioProvider)),
 );
 
-final remoteKakaoAuthDataSourceProvider = Provider<RemoteKakaoAuthDataSource>(
+final _remoteKakaoAuthDataSourceProvider = Provider<RemoteKakaoAuthDataSource>(
   (ref) => RemoteKakaoAuthDataSource(ref.read(dioProvider)),
 );
 
-
-final authRepositoryProvider = Provider<AuthRepository>(
+final _authRepositoryProvider = Provider<AuthRepository>(
   (ref) => RemoteAuthRepository(
-    naverDataSource: ref.read(remoteNaverAuthDataSourceProvider),
-    kakaoDataSource: ref.read(remoteKakaoAuthDataSourceProvider),
+    naverDataSource: ref.read(_remoteNaverAuthDataSourceProvider),
+    kakaoDataSource: ref.read(_remoteKakaoAuthDataSourceProvider),
   ),
 );
 
 final loginWithNaverUseCaseProvider = Provider<LoginWithNaver>(
-  (ref) => LoginWithNaver(ref.read(authRepositoryProvider)),
+  (ref) => LoginWithNaver(ref.read(_authRepositoryProvider)),
 );
 
 final loginWithKakaoUseCaseProvider = Provider<LoginWithKakao>(
-  (ref) => LoginWithKakao(ref.read(authRepositoryProvider)),
+  (ref) => LoginWithKakao(ref.read(_authRepositoryProvider)),
 );
 
-final authViewModelProvider =
-    NotifierProvider<AuthViewModel, User?>(() => AuthViewModel());
+final authViewModelProvider = NotifierProvider<AuthViewModel, User?>(
+  () => AuthViewModel(),
+);

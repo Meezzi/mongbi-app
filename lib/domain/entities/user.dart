@@ -1,6 +1,4 @@
-
 class User {
-
   const User({
     required this.userIdx,
     required this.userName,
@@ -24,4 +22,3 @@ class User {
   final DateTime? userLastLoginDate;
   final String userIdState;
 }
-
