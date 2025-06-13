@@ -11,7 +11,6 @@ class NicknameInputPage extends StatefulWidget {
 }
 
 class _NicknameInputPageState extends State<NicknameInputPage> {
-  final TextEditingController _controller = TextEditingController();
   String nickname = '';
 
   @override
@@ -36,7 +35,6 @@ class _NicknameInputPageState extends State<NicknameInputPage> {
             const NicknameTitle(),
             const SizedBox(height: 32),
             NicknameTextField(
-              controller: _controller,
               onChanged: (value) => setState(() => nickname = value),
               nickname: nickname,
             ),

@@ -4,12 +4,10 @@ import 'package:mongbi_app/core/font.dart';
 class NicknameTextField extends StatefulWidget {
   const NicknameTextField({
     super.key,
-    required this.controller,
     required this.onChanged,
     required this.nickname,
   });
 
-  final TextEditingController controller;
   final void Function(String) onChanged;
   final String nickname;
 
@@ -18,9 +16,9 @@ class NicknameTextField extends StatefulWidget {
 }
 
 class _NicknameTextFieldState extends State<NicknameTextField> {
+  final TextEditingController _controller = TextEditingController();
   late FocusNode _focusNode;
   bool isFocused = false;
-
   @override
   void initState() {
     super.initState();
@@ -38,6 +36,7 @@ class _NicknameTextFieldState extends State<NicknameTextField> {
   void dispose() {
     _focusNode.removeListener(_onFocusChange);
     _focusNode.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
@@ -59,7 +58,7 @@ class _NicknameTextFieldState extends State<NicknameTextField> {
           child: TextField(
             style: Font.title16.copyWith(color: Color(0xFF1A181B)),
             focusNode: _focusNode,
-            controller: widget.controller,
+            controller: _controller,
             maxLength: 5,
             decoration: InputDecoration(
               border: InputBorder.none,
