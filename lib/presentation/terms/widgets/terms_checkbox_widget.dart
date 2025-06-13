@@ -7,7 +7,6 @@ import 'package:mongbi_app/presentation/terms/terms_inner_page.dart';
 import 'package:mongbi_app/presentation/terms/widgets/terms_custom_checkbox.widget.dart';
 
 class TermsAgreementTile extends StatelessWidget {
-
   const TermsAgreementTile({
     super.key,
     required this.term,
@@ -24,8 +23,7 @@ class TermsAgreementTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final title = term.name ?? '';
-
+    final title = term.name;
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () => onChanged(!isChecked),
