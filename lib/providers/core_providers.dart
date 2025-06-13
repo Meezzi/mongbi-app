@@ -3,17 +3,13 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mongbi_app/core/auth_interceptor.dart';
 
-<<<<<<< HEAD
 final adminDioProvider = Provider<Dio>(
   (ref) => Dio(BaseOptions(baseUrl: dotenv.env['ADMIN_MONGBI_BASE_URL']!)),
 );
 
-final dioProvider = Provider<Dio>(
-  (ref) => Dio(
-=======
+
 final dioProvider = Provider<Dio>((ref) {
   final dio = Dio(
->>>>>>> 778cb4c (fix: coreDioProvider 구조 변경)
     BaseOptions(
       baseUrl: dotenv.env['MONGBI_BASE_URL']!,
       headers: {'Content-Type': 'application/json'},
