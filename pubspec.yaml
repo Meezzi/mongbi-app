@@ -47,7 +47,7 @@ dependencies:
   kakao_flutter_sdk: ^1.9.7+3
   go_router: ^15.1.3
   kakao_flutter_sdk_user: ^1.9.7+3
-
+  audioplayers: ^6.4.0
 
 dev_dependencies:
   flutter_test:
@@ -81,6 +81,8 @@ flutter:
     - assets/images/home_cloude.svg
     - assets/images/home_star.png
     - assets/icons/
+    - assets/audio/
+    - assets/audio/background_music.mp3
     - .env
   #   - images/a_dot_ham.jpeg
 
