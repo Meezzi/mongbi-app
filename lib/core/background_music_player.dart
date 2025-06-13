@@ -11,7 +11,7 @@ class BackgroundMusicPlayer {
 
   void playBgm() async {
     await _player.setVolume(1.0);
-    // await _player.play(AssetSource('audio/background_music.mp3'));
+    await _player.play(AssetSource('audio/background_music.mp3'));
     _isPaused = false;
   }
 
