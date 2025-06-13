@@ -28,6 +28,7 @@ class AuthViewModel extends Notifier<User?> {
       state = result;
 
       final prefs = await SharedPreferences.getInstance();
+
       await prefs.setString('lastLoginType', 'naver');
     } catch (e) {
       rethrow;

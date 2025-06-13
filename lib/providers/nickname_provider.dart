@@ -25,7 +25,4 @@ final updateNicknameUseCaseProvider = Provider<UpdateNicknameUseCase>((ref) {
 });
 
 final nicknameViewModelProvider =
-    StateNotifierProvider<NicknameViewModel, AsyncValue<User?>>((ref) {
-  final useCase = ref.watch(updateNicknameUseCaseProvider);
-  return NicknameViewModel(useCase);
-});
+    NotifierProvider<NicknameViewModel, User?>(() => NicknameViewModel());

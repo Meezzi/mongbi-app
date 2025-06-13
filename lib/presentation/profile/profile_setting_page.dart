@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/presentation/profile/widgets/nickname_submit_button.dart';
 import 'package:mongbi_app/presentation/profile/widgets/nickname_text_field.dart';
 import 'package:mongbi_app/presentation/profile/widgets/nickname_title.dart';
 import 'package:mongbi_app/providers/nickname_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class NicknameInputPage extends ConsumerStatefulWidget {
   const NicknameInputPage({super.key});
@@ -46,24 +48,31 @@ class _NicknameInputPageState extends ConsumerState<NicknameInputPage> {
               onTap: () async {
                 if (!isButtonEnabled) return;
 
-                final userId = 1; // ✅ 실제 로그인된 유저 ID로 교체해야 함
-
                 try {
+                  final prefs = await SharedPreferences.getInstance();
+                  final userId = prefs.getInt('user_id');
+                  if (userId == null) {
+                    if (mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('로그인이 필요합니다.')),
+                      );
+                    }
+                    return;
+                  }
                   await ref
                       .read(nicknameViewModelProvider.notifier)
-                      .updateNickname(userId, nickname);
-
+                      .updateNickname(
+                        userId: userId,
+                        nickname: nickname,
+                      ); 
                   if (mounted) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('닉네임이 저장되었어요!')),
-                    );
-                    Navigator.pop(context);
+                    context.go('/home');
                   }
                 } catch (e) {
                   if (mounted) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('닉네임 저장 실패: $e')),
-                    );
+                    ScaffoldMessenger.of(
+                      context,
+                    ).showSnackBar(SnackBar(content: Text('닉네임 저장 실패: $e')));
                   }
                 }
               },

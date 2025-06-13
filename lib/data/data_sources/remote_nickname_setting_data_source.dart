@@ -11,11 +11,14 @@ class NickNameSettingDataSourceImpl implements NickNameSettingDataSource {
     required int userId,
     required String nickname,
   }) async {
-    final response = await dio.patch(
+    final response = await dio.put(
       '/users/$userId/nickname',
       data: {'nickname': nickname},
+      options: Options(
+        validateStatus: (_) => true, // ✅ 200이 아니어도 print는 실행됨
+      ),
     );
-
+    
     if (response.statusCode == 200 && response.data['user'] != null) {
       return UserDto.fromJson(response.data['user']);
     } else {

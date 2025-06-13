@@ -49,9 +49,16 @@ class SocialLoginPage extends ConsumerWidget {
                             );
                             try {
                               await authViewModel.loginWithKakao();
+                              await showModalBottomSheet(
+                                context: context,
+                                isScrollControlled: true,
+                                backgroundColor:
+                                    Colors.transparent, // 바깥 배경 둥글기 유지
+                                builder: (_) => const TermsBottomSheet(),
+                              );
                             } catch (e) {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('카카오 로그인 실패')),
+                                SnackBar(content: Text('카카오 로그인 실패 $e')),
                               );
                             }
                           },
@@ -62,21 +69,21 @@ class SocialLoginPage extends ConsumerWidget {
                         showRecentBubble: lastLoginProvider == 'naver',
                         child: NaverLoginButton(
                           onTap: () async {
-                            await showModalBottomSheet(
-                              context: context,
-                              isScrollControlled: true,
-                              backgroundColor:
-                                  Colors.transparent, // 바깥 배경 둥글기 유지
-                              builder: (_) => const TermsBottomSheet(),
-                            );
                             final authViewModel = ref.read(
                               authViewModelProvider.notifier,
                             );
                             try {
                               await authViewModel.loginWithNaver();
+                              await showModalBottomSheet(
+                                context: context,
+                                isScrollControlled: true,
+                                backgroundColor:
+                                    Colors.transparent, // 바깥 배경 둥글기 유지
+                                builder: (_) => const TermsBottomSheet(),
+                              );
                             } catch (e) {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('네이버 로그인 실패')),
+                                SnackBar(content: Text('네이버 로그인 실패 $e')),
                               );
                             }
                           },
