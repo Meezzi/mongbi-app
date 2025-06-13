@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/presentation/dream/widgets/dream_content_input.dart';
 import 'package:mongbi_app/presentation/dream/widgets/mood_selection_row.dart';
@@ -78,9 +79,7 @@ class _DreamWritePageState extends ConsumerState<DreamWritePage> {
                       // 제출 버튼 위젯
                       SubmitDreamButton(
                         onSubmit: () {
-                          ref
-                              .read(dreamWriteViewModelProvider.notifier)
-                              .submitDream();
+                          context.go('/dream_analysis_loading');
                         },
                       ),
                     ],
