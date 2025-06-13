@@ -6,6 +6,8 @@ import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:mongbi_app/core/router.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   await dotenv.load(fileName: '.env');
 
   // 캘린더 한글화
