@@ -46,11 +46,11 @@ class MonthYearPicker {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: RawScrollbar(
-                      controller: scrollController,
-                      thumbVisibility: true,
+                      // controller: scrollController,
+                      // thumbVisibility: true,
                       thumbColor: Color(0xFFD6D4D8),
-                      thickness: 6,
-                      mainAxisMargin: 11,
+                      // thickness: 6,
+                      // mainAxisMargin: 0,
                       crossAxisMargin: -8.5,
                       radius: Radius.circular(100),
                       child: ListView.builder(
@@ -65,6 +65,7 @@ class MonthYearPicker {
                             final isActive = selectedMonth == month;
                             final isLast = 12 - 1 == index;
                             return pickerContent(
+                              context: context,
                               content: '$month월',
                               isActive: isActive,
                               isLast: isLast,
@@ -77,6 +78,7 @@ class MonthYearPicker {
                             final isActive = selectedYear == year;
                             final isLast = 6 - 1 == index;
                             return pickerContent(
+                              context: context,
                               content: '$year년',
                               isActive: isActive,
                               isLast: isLast,
@@ -101,6 +103,7 @@ class MonthYearPicker {
   }
 
   Widget pickerContent({
+    required BuildContext context,
     required String content,
     required isActive,
     required isLast,
@@ -112,10 +115,13 @@ class MonthYearPicker {
       },
       child: Container(
         padding: EdgeInsets.only(
-          top: 8,
-          bottom: isLast ? 8 : 7,
-          left: 16,
-          right: 16,
+          top: getResponsiveRatioByWidth(context, 8),
+          bottom:
+              isLast
+                  ? getResponsiveRatioByWidth(context, 8)
+                  : getResponsiveRatioByWidth(context, 7),
+          left: getResponsiveRatioByWidth(context, 16),
+          right: getResponsiveRatioByWidth(context, 16),
         ),
         decoration: BoxDecoration(
           color: isActive ? Color(0xF5F5F4F5) : Colors.transparent,
@@ -124,7 +130,12 @@ class MonthYearPicker {
                   ? null
                   : Border(bottom: BorderSide(color: Color(0xF5F5F4F5))),
         ),
-        child: Text(content, style: Font.body14),
+        child: Text(
+          content,
+          style: Font.body14.copyWith(
+            fontSize: getResponsiveRatioByWidth(context, 14),
+          ),
+        ),
       ),
     );
   }
