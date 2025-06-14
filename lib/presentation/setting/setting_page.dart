@@ -8,13 +8,15 @@ import 'package:mongbi_app/presentation/setting/widgets/setting_section_card.dar
 import 'package:mongbi_app/presentation/setting/widgets/setting_toggle_switch.dart';
 import 'package:mongbi_app/presentation/setting/widgets/setting_user_info_header.dart';
 import 'package:mongbi_app/providers/auth_provider.dart';
+import 'package:mongbi_app/providers/setting_provider.dart';
 
 class SettingPage extends ConsumerWidget {
   const SettingPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    bool isBgmOn = false;
+    final isBgmOn = ref.watch(bgmProvider);
+    final bgmNotifier = ref.read(bgmProvider.notifier);
     final user = ref.read(authViewModelProvider);
 
     return ListView(
@@ -38,6 +40,7 @@ class SettingPage extends ConsumerWidget {
               isLast: false,
               trailing: ToggleSwitch(value: isBgmOn),
               onTap: () {
+                bgmNotifier.toggle();
                 // TODO: 배경음악 on/off
               },
             ),
