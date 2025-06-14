@@ -10,6 +10,7 @@ class AccountSettingPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('계정 설정', style: Font.title20),
+        titleSpacing: 0,
         backgroundColor: Color(0xFFFAFAFA),
       ),
       backgroundColor: Color(0xFFFAFAFA),
