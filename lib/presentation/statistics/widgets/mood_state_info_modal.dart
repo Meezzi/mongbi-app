@@ -20,84 +20,94 @@ class MoodStateInfoModal {
       builder:
           (context) => DefaultTextStyle(
             style: TextStyle(),
-            child: Container(
-              alignment: Alignment.center,
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              decoration: BoxDecoration(color: Color(0xB2000000)),
-              child: Container(
-                padding: const EdgeInsets.all(24),
-                decoration: BoxDecoration(
-                  color: Color(0xFFFAFAFA),
-                  borderRadius: BorderRadius.circular(16),
+            child: Stack(
+              children: [
+                GestureDetector(
+                  behavior: HitTestBehavior.translucent,
+                  onTap: () {
+                    hide();
+                  },
+                  child: Container(color: Color(0xB2000000)),
                 ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                Container(
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: Container(
+                    padding: const EdgeInsets.all(24),
+                    decoration: BoxDecoration(
+                      color: Color(0xFFFAFAFA),
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text('꿈 유형별 기분 상태', style: Font.title14),
-                        GestureDetector(
-                          onTap: () {
-                            hide();
-                          },
-                          child: SvgPicture.asset(
-                            'assets/icons/cancel.svg',
-                            fit: BoxFit.cover,
-                            width: 20,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('꿈 유형별 기분 상태', style: Font.title14),
+                            GestureDetector(
+                              onTap: () {
+                                hide();
+                              },
+                              child: SvgPicture.asset(
+                                'assets/icons/cancel.svg',
+                                fit: BoxFit.cover,
+                                width: 20,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 8),
+                        descriptionWidget('행', '꿈 유형 (길몽, 일상몽, 악몽)'),
+                        SizedBox(height: 16),
+                        descriptionWidget('열', '기분상태 (기분 이모티콘의 색상으로 표현함)'),
+                        SizedBox(height: 6),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 18),
+                          child: Row(
+                            children: [
+                              ...List.generate(iconPathList.length, (index) {
+                                bool isLast = iconPathList.length == index + 1;
+
+                                return Container(
+                                  padding:
+                                      isLast
+                                          ? null
+                                          : const EdgeInsets.only(right: 4),
+                                  child: SvgPicture.asset(
+                                    iconPathList[index],
+                                    fit: BoxFit.cover,
+                                    width: 20,
+                                  ),
+                                );
+                              }),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 16),
+                        descriptionWidget('칸', '기분 상태 빈도 (짙을수록 많이 해당됨)'),
+                        SizedBox(height: 6),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 18),
+                          child: Row(
+                            children: [
+                              frequencyWidget('1~2회', Color(0xFFDBBEFF)),
+                              SizedBox(width: 4),
+                              frequencyWidget('3~4회', Color(0xFFB273FF)),
+                              SizedBox(width: 4),
+                              frequencyWidget('5~6회', Color(0xFF8C2EFF)),
+                              SizedBox(width: 4),
+                              frequencyWidget('7~8회', Color(0xFF6321B5)),
+                              SizedBox(width: 4),
+                              frequencyWidget('9회~', Color(0xFF3B136B)),
+                            ],
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(height: 8),
-                    descriptionWidget('행', '꿈 유형 (길몽, 일상몽, 악몽)'),
-                    SizedBox(height: 16),
-                    descriptionWidget('열', '기분상태 (기분 이모티콘의 색상으로 표현함)'),
-                    SizedBox(height: 6),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 18),
-                      child: Row(
-                        children: [
-                          ...List.generate(iconPathList.length, (index) {
-                            bool isLast = iconPathList.length == index + 1;
-
-                            return Container(
-                              padding:
-                                  isLast
-                                      ? null
-                                      : const EdgeInsets.only(right: 4),
-                              child: SvgPicture.asset(
-                                iconPathList[index],
-                                fit: BoxFit.cover,
-                                width: 20,
-                              ),
-                            );
-                          }),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 16),
-                    descriptionWidget('칸', '기분 상태 빈도 (짙을수록 많이 해당됨)'),
-                    SizedBox(height: 6),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 18),
-                      child: Row(
-                        children: [
-                          frequencyWidget('1~2회', Color(0xFFDBBEFF)),
-                          SizedBox(width: 4),
-                          frequencyWidget('3~4회', Color(0xFFB273FF)),
-                          SizedBox(width: 4),
-                          frequencyWidget('5~6회', Color(0xFF8C2EFF)),
-                          SizedBox(width: 4),
-                          frequencyWidget('7~8회', Color(0xFF6321B5)),
-                          SizedBox(width: 4),
-                          frequencyWidget('9회~', Color(0xFF3B136B)),
-                        ],
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
+              ],
             ),
           ),
     );
