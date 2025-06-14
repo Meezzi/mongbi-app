@@ -25,7 +25,7 @@ class DreamWriteViewModel extends Notifier<DreamWriteState> {
     if (state.selectedIndex == -1) return;
 
     final dream = await ref
-        .read(analyzeDreamUseCaseProvider)
+        .read(analyzeAndSaveDreamUseCaseProvider)
         .execute(state.dreamContent, state.selectedIndex);
     ref.read(dreamInterpretationViewModelProvider.notifier).setDream(dream);
   }
