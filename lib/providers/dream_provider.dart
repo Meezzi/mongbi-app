@@ -33,6 +33,10 @@ final _dreamRepositoryProvider = Provider<DreamRepository>(
   ),
 );
 
+final analyzeDreamUseCaseProvider = Provider<AnalyzeDreamUseCase>(
+  (ref) => AnalyzeDreamUseCase(ref.read(_dreamRepositoryProvider)),
+);
+
 final analyzeAndSaveDreamUseCaseProvider = Provider<AnalyzeAndSaveDreamUseCase>(
   (ref) => AnalyzeAndSaveDreamUseCase(ref.read(_dreamRepositoryProvider)),
 );
