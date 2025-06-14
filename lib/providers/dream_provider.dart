@@ -6,8 +6,7 @@ import 'package:mongbi_app/data/data_sources/remote_dream_analysis_data_source.d
 import 'package:mongbi_app/data/data_sources/remote_dream_data_source.dart';
 import 'package:mongbi_app/data/repositories/remote_dream_repository.dart';
 import 'package:mongbi_app/domain/repositories/dream_repository.dart';
-import 'package:mongbi_app/domain/use_cases/analyze_dream_use_case.dart';
-import 'package:mongbi_app/domain/use_cases/dream_save_use_case.dart';
+import 'package:mongbi_app/domain/use_cases/analyze_and_save_dream_use_case.dart';
 import 'package:mongbi_app/presentation/dream/models/dream_interpretation_state.dart';
 import 'package:mongbi_app/presentation/dream/models/dream_write_state.dart';
 import 'package:mongbi_app/presentation/dream/view_models/dream_interpretation_view_model.dart';
@@ -34,12 +33,8 @@ final _dreamRepositoryProvider = Provider<DreamRepository>(
   ),
 );
 
-final analyzeDreamUseCaseProvider = Provider<AnalyzeDreamUseCase>(
-  (ref) => AnalyzeDreamUseCase(ref.read(_dreamRepositoryProvider)),
-);
-
-final saveDreamUseCaseProvider = Provider<DreamSaveUseCase>(
-  (ref) => DreamSaveUseCase(ref.read(_dreamRepositoryProvider)),
+final analyzeAndSaveDreamUseCaseProvider = Provider<AnalyzeAndSaveDreamUseCase>(
+  (ref) => AnalyzeAndSaveDreamUseCase(ref.read(_dreamRepositoryProvider)),
 );
 
 final dreamWriteViewModelProvider =
