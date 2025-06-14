@@ -9,29 +9,29 @@ import 'package:mongbi_app/presentation/statistics/widgets/gift_frequency_card.d
 import 'package:mongbi_app/presentation/statistics/widgets/month_year_picker_button.dart';
 import 'package:mongbi_app/presentation/statistics/widgets/psychology_keyword_chart.dart';
 
-class MonthStatistics extends StatefulWidget {
-  const MonthStatistics({super.key, required this.horizontalPadding});
+class YearStatistics extends StatefulWidget {
+  const YearStatistics({super.key, required this.horizontalPadding});
 
   final double horizontalPadding;
 
   @override
-  State<MonthStatistics> createState() => _MonthStatisticsState();
+  State<YearStatistics> createState() => _YearStatisticsState();
 }
 
-class _MonthStatisticsState extends State<MonthStatistics> {
-  bool isMonth = true;
-  double? monthPickerButtonPosition;
+class _YearStatisticsState extends State<YearStatistics> {
+  bool isMonth = false;
+  double? yearPickerButtonPosition;
   final ScrollController scrollController = ScrollController();
 
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      final monthPickerButtonInfo = getWidgetInfo(monthPickerButton);
-      final monthButtonPosition =
-          monthPickerButtonInfo!.localToGlobal(Offset.zero).dy;
-      final monthButtonHeight = monthPickerButtonInfo.size.height;
+      final yearPickerButtonInfo = getWidgetInfo(yearPickerButton);
+      final yearButtonPosition =
+          yearPickerButtonInfo!.localToGlobal(Offset.zero).dy;
+      final yearButtonHeight = yearPickerButtonInfo.size.height;
       setState(() {
-        monthPickerButtonPosition = monthButtonPosition + monthButtonHeight;
+        yearPickerButtonPosition = yearButtonPosition + yearButtonHeight;
       });
     });
 
@@ -71,7 +71,7 @@ class _MonthStatisticsState extends State<MonthStatistics> {
                 MonthYearPickerButton(
                   isMonth: isMonth,
                   scrollController: scrollController,
-                  pickerButtonPosition: monthPickerButtonPosition ?? 0,
+                  pickerButtonPosition: yearPickerButtonPosition ?? 0,
                   horizontalPadding: widget.horizontalPadding,
                 ),
 

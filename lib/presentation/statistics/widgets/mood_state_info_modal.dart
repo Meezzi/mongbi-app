@@ -13,7 +13,7 @@ class MoodStateInfoModal {
     'assets/icons/very_good.svg',
   ];
 
-  void show(BuildContext context) {
+  void show({required BuildContext context, required bool isMonth}) {
     if (_overlayEntry != null) return; // 이미 띄워져 있으면 무시
 
     _overlayEntry = OverlayEntry(
@@ -91,15 +91,30 @@ class MoodStateInfoModal {
                           padding: const EdgeInsets.only(left: 18),
                           child: Row(
                             children: [
-                              frequencyWidget('1~2회', Color(0xFFDBBEFF)),
+                              frequencyWidget(
+                                isMonth ? '1~2회' : '1~10회',
+                                Color(0xFFDBBEFF),
+                              ),
                               SizedBox(width: 4),
-                              frequencyWidget('3~4회', Color(0xFFB273FF)),
+                              frequencyWidget(
+                                isMonth ? '3~4회' : '11~20회',
+                                Color(0xFFB273FF),
+                              ),
                               SizedBox(width: 4),
-                              frequencyWidget('5~6회', Color(0xFF8C2EFF)),
+                              frequencyWidget(
+                                isMonth ? '5~6회' : '21~30회',
+                                Color(0xFF8C2EFF),
+                              ),
                               SizedBox(width: 4),
-                              frequencyWidget('7~8회', Color(0xFF6321B5)),
+                              frequencyWidget(
+                                isMonth ? '7~8회' : '31~40회',
+                                Color(0xFF6321B5),
+                              ),
                               SizedBox(width: 4),
-                              frequencyWidget('9회~', Color(0xFF3B136B)),
+                              frequencyWidget(
+                                isMonth ? '9회~' : '41회~',
+                                Color(0xFF3B136B),
+                              ),
                             ],
                           ),
                         ),
@@ -130,7 +145,7 @@ class MoodStateInfoModal {
       child: Text(
         text,
         style: Font.body12.copyWith(
-          color: text == '1~2회' ? null : Colors.white,
+          color: text == '1~2회' || text == '1~10회' ? null : Colors.white,
         ),
       ),
     );

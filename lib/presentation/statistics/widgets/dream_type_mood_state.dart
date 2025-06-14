@@ -6,9 +6,10 @@ import 'package:mongbi_app/presentation/statistics/widgets/dream_type_mood_state
 import 'package:mongbi_app/presentation/statistics/widgets/mood_state_info_modal.dart';
 
 class DreamTypeMoodState extends StatelessWidget {
-  DreamTypeMoodState({super.key});
+  DreamTypeMoodState({super.key, required this.isMonth});
 
   final infoModal = MoodStateInfoModal();
+  final bool isMonth;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class DreamTypeMoodState extends StatelessWidget {
           SizedBox(width: 4),
           GestureDetector(
             onTap: () {
-              infoModal.show(context);
+              infoModal.show(context: context, isMonth: isMonth);
             },
             child: SvgPicture.asset(
               'assets/icons/info.svg',

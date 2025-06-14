@@ -7,6 +7,7 @@ class MonthYearPicker {
 
   void show(
     BuildContext context, {
+    required bool isMonth,
     required double left,
     required double top,
     required ScrollController scrollController,
@@ -55,42 +56,33 @@ class MonthYearPicker {
                       child: ListView.builder(
                         controller: scrollController,
                         padding: const EdgeInsets.only(top: 8, bottom: 8),
+                        itemCount: isMonth ? 12 : 6,
                         itemBuilder: (context, index) {
-                          final month = index + 1;
-                          final selectedMonth = DateTime.now().month;
-                          final isActive = selectedMonth == month;
-
-                          return GestureDetector(
-                            onTap: () {
-                              print('$month월 터치');
-                              hide();
-                            },
-                            child: Container(
-                              padding: EdgeInsets.only(
-                                top: 8,
-                                bottom: month == 12 ? 8 : 7,
-                                left: 16,
-                                right: 16,
-                              ),
-                              decoration: BoxDecoration(
-                                color:
-                                    isActive
-                                        ? Color(0xF5F5F4F5)
-                                        : Colors.transparent,
-                                border:
-                                    month == 12
-                                        ? null
-                                        : Border(
-                                          bottom: BorderSide(
-                                            color: Color(0xF5F5F4F5),
-                                          ),
-                                        ),
-                              ),
-                              child: Text('$month월', style: Font.body14),
-                            ),
-                          );
+                          if (isMonth) {
+                            final month = index + 1;
+                            // TODO : 선택된 월로 할당하기
+                            final selectedMonth = DateTime.now().month;
+                            final isActive = selectedMonth == month;
+                            final isLast = 12 - 1 == index;
+                            return pickerContent(
+                              content: '$month월',
+                              isActive: isActive,
+                              isLast: isLast,
+                            );
+                          } else {
+                            final currntYear = DateTime.now().year;
+                            final year = currntYear - (5 - index);
+                            // TODO : 선택된 년으로 할당하기
+                            final selectedYear = DateTime.now().year;
+                            final isActive = selectedYear == year;
+                            final isLast = 6 - 1 == index;
+                            return pickerContent(
+                              content: '$year년',
+                              isActive: isActive,
+                              isLast: isLast,
+                            );
+                          }
                         },
-                        itemCount: 12,
                       ),
                     ),
                   ),
@@ -106,5 +98,34 @@ class MonthYearPicker {
   void hide() {
     _overlayEntry?.remove();
     _overlayEntry = null;
+  }
+
+  Widget pickerContent({
+    required String content,
+    required isActive,
+    required isLast,
+  }) {
+    return GestureDetector(
+      onTap: () {
+        print('$content 터치');
+        hide();
+      },
+      child: Container(
+        padding: EdgeInsets.only(
+          top: 8,
+          bottom: isLast ? 8 : 7,
+          left: 16,
+          right: 16,
+        ),
+        decoration: BoxDecoration(
+          color: isActive ? Color(0xF5F5F4F5) : Colors.transparent,
+          border:
+              isLast
+                  ? null
+                  : Border(bottom: BorderSide(color: Color(0xF5F5F4F5))),
+        ),
+        child: Text(content, style: Font.body14),
+      ),
+    );
   }
 }

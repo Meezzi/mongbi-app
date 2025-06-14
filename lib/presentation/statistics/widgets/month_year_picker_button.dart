@@ -9,40 +9,44 @@ import 'package:mongbi_app/presentation/statistics/widgets/month_year_picker.dar
 class MonthYearPickerButton extends StatelessWidget {
   MonthYearPickerButton({
     super.key,
+    required this.isMonth,
     required this.scrollController,
-    required this.monthPickerButtonPosition,
+    required this.pickerButtonPosition,
     required this.horizontalPadding,
-    required this.showMonthPickerModal,
-    required this.isShow,
   });
 
+  final bool isMonth;
   final ScrollController scrollController;
-  final double monthPickerButtonPosition;
+  final double pickerButtonPosition;
   final double horizontalPadding;
-  final VoidCallback showMonthPickerModal;
-  final bool isShow;
-  final monthYearPickerTest = MonthYearPicker();
+  final monthYearPickerModal = MonthYearPicker();
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      key: monthPickerButton,
+      key: isMonth ? monthPickerButton : yearPickerButton,
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: GestureDetector(
         onTap: () {
-          monthYearPickerTest.show(
+          monthYearPickerModal.show(
             context,
+            isMonth: isMonth,
             left: horizontalPadding,
-            top: monthPickerButtonPosition,
+            top: pickerButtonPosition,
             scrollController: scrollController,
           );
         },
         child: Row(
           children: [
             Text(
-              DateFormatter.formatMonth(
-                DateTime(DateTime.now().year, DateTime.now().month),
-              ),
+              // TODO : 월, 년 나눠서 할당
+              isMonth
+                  ? DateFormatter.formatMonth(
+                    DateTime(DateTime.now().year, DateTime.now().month),
+                  )
+                  : DateFormatter.formatYear(
+                    DateTime(DateTime.now().year, DateTime.now().month),
+                  ),
               style: Font.title16.copyWith(
                 fontSize: getResponsiveRatioByWidth(context, 16),
               ),
