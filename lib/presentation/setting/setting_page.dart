@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/presentation/setting/widgets/setting_rounded_list_tile_item.dart';
 import 'package:mongbi_app/presentation/setting/widgets/setting_section_card.dart';
@@ -26,7 +27,7 @@ class _SettingPageState extends State<SettingPage> {
           nickname: '모몽',
           loginType: '카카오',
           onTap: () {
-            // TODO: 별명 설정 화면으로 이동
+            context.push('/nickname_input');
           },
         ),
         SizedBox(height: 24),
