@@ -28,8 +28,8 @@ class MonthYearPicker {
                   child: Container(color: Colors.transparent),
                 ),
                 Positioned(
-                  left: getResponsiveRatioByWidth(context, left),
-                  top: getResponsiveRatioByWidth(context, top),
+                  left: left,
+                  top: top,
                   child: Container(
                     padding: EdgeInsets.only(right: 12),
                     width: getResponsiveRatioByWidth(context, 100),

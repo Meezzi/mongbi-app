@@ -25,7 +25,9 @@ class MonthYearPickerButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       key: isMonth ? monthPickerButton : yearPickerButton,
-      padding: const EdgeInsets.symmetric(vertical: 8),
+      padding: EdgeInsets.symmetric(
+        vertical: getResponsiveRatioByWidth(context, 8),
+      ),
       child: GestureDetector(
         onTap: () {
           monthYearPickerModal.show(
@@ -38,20 +40,23 @@ class MonthYearPickerButton extends StatelessWidget {
         },
         child: Row(
           children: [
-            Text(
-              // TODO : 월, 년 나눠서 할당
-              isMonth
-                  ? DateFormatter.formatMonth(
-                    DateTime(DateTime.now().year, DateTime.now().month),
-                  )
-                  : DateFormatter.formatYear(
-                    DateTime(DateTime.now().year, DateTime.now().month),
-                  ),
-              style: Font.title16.copyWith(
-                fontSize: getResponsiveRatioByWidth(context, 16),
+            Container(
+              color: Colors.transparent,
+              padding: const EdgeInsets.only(right: 4),
+              child: Text(
+                // TODO : 월, 년 나눠서 할당
+                isMonth
+                    ? DateFormatter.formatMonth(
+                      DateTime(DateTime.now().year, DateTime.now().month),
+                    )
+                    : DateFormatter.formatYear(
+                      DateTime(DateTime.now().year, DateTime.now().month),
+                    ),
+                style: Font.title16.copyWith(
+                  fontSize: getResponsiveRatioByWidth(context, 16),
+                ),
               ),
             ),
-            SizedBox(width: 4),
             SvgPicture.asset(
               'assets/icons/chevron-down.svg',
               fit: BoxFit.cover,
