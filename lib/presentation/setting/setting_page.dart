@@ -38,7 +38,7 @@ class _SettingPageState extends State<SettingPage> {
               title: '배경음악',
               isFirst: true,
               isLast: false,
-              trailing: ToggleSwitch(isBgmOn: isBgmOn),
+              trailing: ToggleSwitch(value: isBgmOn),
               onTap: () {
                 setState(() {
                   isBgmOn = !isBgmOn;

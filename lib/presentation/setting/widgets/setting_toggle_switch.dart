@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class ToggleSwitch extends StatelessWidget {
-  const ToggleSwitch({super.key, required this.isBgmOn});
+  const ToggleSwitch({super.key, required this.value});
 
-  final bool isBgmOn;
+  final bool value;
 
   @override
   Widget build(BuildContext context) {
@@ -13,11 +13,11 @@ class ToggleSwitch extends StatelessWidget {
       height: 28,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(999),
-        color: isBgmOn ? Color(0xFF8C2EFF) : Color(0xFFE6E4E7),
+        color: value ? Color(0xFF8C2EFF) : Color(0xFFE6E4E7),
       ),
       child: AnimatedAlign(
         duration: const Duration(milliseconds: 200),
-        alignment: isBgmOn ? Alignment.centerRight : Alignment.centerLeft,
+        alignment: value ? Alignment.centerRight : Alignment.centerLeft,
         child: Container(
           width: 24,
           height: 24,
