@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/presentation/setting/widgets/setting_rounded_list_tile_item.dart';
 import 'package:mongbi_app/presentation/setting/widgets/setting_toggle_switch.dart';
-import 'package:mongbi_app/providers/alarm_setting_provider.dart';
+import 'package:mongbi_app/providers/setting_provider.dart';
 
 class AlarmSettingPage extends ConsumerWidget {
   const AlarmSettingPage({super.key});
