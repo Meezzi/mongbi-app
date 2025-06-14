@@ -19,7 +19,6 @@ final _dreamDataSourceProvider = Provider<DreamSaveDataSource>(
   (ref) => RemoteDreamDataSource(ref.read(dioProvider)),
 );
 
-// 꿈 해석 Provider
 final _dreamAnalysisDataSource = Provider<DreamAnalysisDataSource>(
   (ref) => RemoteDreamAnalysisDataSource(
     dio: ref.read(dioProvider),
@@ -35,16 +34,19 @@ final _dreamRepositoryProvider = Provider<DreamRepository>(
   ),
 );
 
-final analyzeDreamUseCaseProvider = Provider<AnalyzeDreamUseCase>(
+final _analyzeDreamUseCaseProvider = Provider<AnalyzeDreamUseCase>(
   (ref) => AnalyzeDreamUseCase(ref.read(_dreamRepositoryProvider)),
 );
 
-final saveDreamUseCaseProvider = Provider<SaveDreamUseCase>(
+final _saveDreamUseCaseProvider = Provider<SaveDreamUseCase>(
   (ref) => SaveDreamUseCase(ref.read(_dreamRepositoryProvider)),
 );
 
 final analyzeAndSaveDreamUseCaseProvider = Provider<AnalyzeAndSaveDreamUseCase>(
-  (ref) => AnalyzeAndSaveDreamUseCase(ref.read(_dreamRepositoryProvider)),
+  (ref) => AnalyzeAndSaveDreamUseCase(
+    ref.read(_analyzeDreamUseCaseProvider),
+    ref.read(_saveDreamUseCaseProvider),
+  ),
 );
 
 final dreamWriteViewModelProvider =
