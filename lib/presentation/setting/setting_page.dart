@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/font.dart';
@@ -6,26 +7,23 @@ import 'package:mongbi_app/presentation/setting/widgets/setting_rounded_list_til
 import 'package:mongbi_app/presentation/setting/widgets/setting_section_card.dart';
 import 'package:mongbi_app/presentation/setting/widgets/setting_toggle_switch.dart';
 import 'package:mongbi_app/presentation/setting/widgets/setting_user_info_header.dart';
+import 'package:mongbi_app/providers/auth_provider.dart';
 
-class SettingPage extends StatefulWidget {
+class SettingPage extends ConsumerWidget {
   const SettingPage({super.key});
 
   @override
-  State<SettingPage> createState() => _SettingPageState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    bool isBgmOn = false;
+    final user = ref.read(authViewModelProvider);
 
-class _SettingPageState extends State<SettingPage> {
-  bool isBgmOn = false;
-
-  @override
-  Widget build(BuildContext context) {
     return ListView(
       padding: EdgeInsets.symmetric(horizontal: 24),
       children: [
         UserInfoHeader(
-          // TODO: 로그인 사용자의 닉네임과 로그인 타입으로 수정
-          nickname: '모몽',
-          loginType: '카카오',
+          // TODO: 로그인 기능 완료 후 확인 필요
+          nickname: user!.userNickname!,
+          loginType: user.userSocialType,
           onTap: () {
             context.push('/nickname_input');
           },
@@ -40,9 +38,6 @@ class _SettingPageState extends State<SettingPage> {
               isLast: false,
               trailing: ToggleSwitch(value: isBgmOn),
               onTap: () {
-                setState(() {
-                  isBgmOn = !isBgmOn;
-                });
                 // TODO: 배경음악 on/off
               },
             ),
