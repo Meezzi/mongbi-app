@@ -8,6 +8,7 @@ import 'package:mongbi_app/presentation/statistics/widgets/dream_type_mood_state
 import 'package:mongbi_app/presentation/statistics/widgets/gift_frequency_card.dart';
 import 'package:mongbi_app/presentation/statistics/widgets/month_year_picker.dart';
 import 'package:mongbi_app/presentation/statistics/widgets/month_year_picker_button.dart';
+import 'package:mongbi_app/presentation/statistics/widgets/psychology_keyword_chart.dart';
 
 class MonthStatistics extends StatefulWidget {
   const MonthStatistics({super.key, required this.horizontalPadding});
@@ -82,6 +83,9 @@ class _MonthStatisticsState extends State<MonthStatistics> {
                 ),
                 DreamMoodDistribution(),
                 DreamTypeMoodState(),
+                PsychologyKeywordChart(
+                  keywordList: ['1순위', '2순위', '3순위', '4순위', '5순위'] ?? [],
+                ),
               ],
             ),
 
