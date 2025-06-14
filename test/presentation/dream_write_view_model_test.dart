@@ -2,21 +2,23 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:mongbi_app/domain/entities/dream.dart';
-import 'package:mongbi_app/domain/use_cases/analyze_dream_use_case.dart';
+import 'package:mongbi_app/domain/use_cases/analyze_and_save_dream_use_case.dart';
 import 'package:mongbi_app/presentation/dream/view_models/dream_write_view_model.dart';
 import 'package:mongbi_app/providers/dream_provider.dart';
 
 void main() {
   late ProviderContainer container;
   late DreamWriteViewModel viewModel;
-  late MockAnalyzeDreamUseCase mockAnalyzeDreamUseCase;
+  late MockAnalyzeAndSaveDreamUseCase mockAnalyzeAndSaveDreamUseCase;
 
   setUp(() {
-    mockAnalyzeDreamUseCase = MockAnalyzeDreamUseCase();
+    mockAnalyzeAndSaveDreamUseCase = MockAnalyzeAndSaveDreamUseCase();
 
     container = ProviderContainer(
       overrides: [
-        analyzeDreamUseCaseProvider.overrideWithValue(mockAnalyzeDreamUseCase),
+        analyzeAndSaveDreamUseCaseProvider.overrideWithValue(
+          mockAnalyzeAndSaveDreamUseCase,
+        ),
       ],
     );
 
@@ -82,7 +84,7 @@ void main() {
 
       // Assert
       expect(result, isFalse);
-      verifyNever(() => mockAnalyzeDreamUseCase.execute(any(), any()));
+      verifyNever(() => mockAnalyzeAndSaveDreamUseCase.execute(any(), any()));
     });
 
     test('꿈을 작성하고, 이모티콘을 선택한 경우 true 반환', () {
@@ -91,7 +93,7 @@ void main() {
       viewModel.setSelectedIndex(1);
 
       when(
-        () => mockAnalyzeDreamUseCase.execute(any(), any()),
+        () => mockAnalyzeAndSaveDreamUseCase.execute(any(), any()),
       ).thenAnswer((_) async => dream);
 
       // Act
@@ -100,10 +102,11 @@ void main() {
       // Assert
       expect(result, isTrue);
       verify(
-        () => mockAnalyzeDreamUseCase.execute('Test content', 1),
+        () => mockAnalyzeAndSaveDreamUseCase.execute('Test content', 1),
       ).called(1);
     });
   });
 }
 
-class MockAnalyzeDreamUseCase extends Mock implements AnalyzeDreamUseCase {}
+class MockAnalyzeAndSaveDreamUseCase extends Mock
+    implements AnalyzeAndSaveDreamUseCase {}
