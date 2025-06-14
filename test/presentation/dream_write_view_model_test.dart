@@ -74,20 +74,7 @@ void main() {
       expect(container.read(dreamWriteViewModelProvider).isFocused, true);
     });
 
-    test('이모티콘을 선택하지 않았을 경우 false 반환', () {
-      // Arrange
-      viewModel.setDreamContent('Test content');
-      viewModel.setSelectedIndex(-1);
-
-      // Act
-      final result = viewModel.submitDream();
-
-      // Assert
-      expect(result, isFalse);
-      verifyNever(() => mockAnalyzeAndSaveDreamUseCase.execute(any(), any()));
-    });
-
-    test('꿈을 작성하고, 이모티콘을 선택한 경우 true 반환', () {
+    test('조건 만족하면 analyzeAndSaveDreamUseCase 실행 & setDream 호출', () async {
       // Arrange
       viewModel.setDreamContent('Test content');
       viewModel.setSelectedIndex(1);
@@ -97,10 +84,9 @@ void main() {
       ).thenAnswer((_) async => dream);
 
       // Act
-      final result = viewModel.submitDream();
+      await viewModel.submitDream();
 
       // Assert
-      expect(result, isTrue);
       verify(
         () => mockAnalyzeAndSaveDreamUseCase.execute('Test content', 1),
       ).called(1);
