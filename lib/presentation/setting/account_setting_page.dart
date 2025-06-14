@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/presentation/setting/widgets/setting_rounded_list_tile_item.dart';
+import 'package:mongbi_app/providers/auth_provider.dart';
 
-class AccountSettingPage extends StatelessWidget {
+class AccountSettingPage extends ConsumerWidget {
   const AccountSettingPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.read(authViewModelProvider);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('계정 설정', style: Font.title20),
@@ -27,7 +31,7 @@ class AccountSettingPage extends StatelessWidget {
                 SizedBox(height: 16),
                 Text('mongbi2025@mongbi.com', style: Font.body16),
                 Text(
-                  '카카오로 가입한 계정이에요',
+                  '${user!.userSocialType}로 가입한 계정이에요',
                   style: Font.body12.copyWith(color: Color(0xFF76717A)),
                 ),
               ],
