@@ -51,7 +51,7 @@ class _SettingPageState extends State<SettingPage> {
               isFirst: false,
               isLast: false,
               onTap: () {
-                // TODO: 계정 설정 화면으로 이동
+                context.push('/account_setting');
               },
             ),
             RoundedListTileItem(
