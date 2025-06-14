@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mongbi_app/core/font.dart';
+import 'package:mongbi_app/core/get_responsive_ratio_by_width.dart';
 
 class DreamTypeMoodStateRow extends StatelessWidget {
   const DreamTypeMoodStateRow({
@@ -30,7 +31,14 @@ class DreamTypeMoodStateRow extends StatelessWidget {
           flex: 825,
           child:
               _isString(label)
-                  ? Center(child: Text(label!, style: Font.subTitle12))
+                  ? Center(
+                    child: Text(
+                      label!,
+                      style: Font.subTitle12.copyWith(
+                        fontSize: getResponsiveRatioByWidth(context, 12),
+                      ),
+                    ),
+                  )
                   : SizedBox(),
         ),
         SizedBox(width: 8),
@@ -38,7 +46,10 @@ class DreamTypeMoodStateRow extends StatelessWidget {
         Expanded(
           flex: 1000,
           child: Container(
-            height: _isString(label) ? 24 : 16,
+            height:
+                _isString(label)
+                    ? getResponsiveRatioByWidth(context, 24)
+                    : getResponsiveRatioByWidth(context, 16),
             decoration: BoxDecoration(
               color:
                   _isString(label)
@@ -54,7 +65,10 @@ class DreamTypeMoodStateRow extends StatelessWidget {
         Expanded(
           flex: 1000,
           child: Container(
-            height: _isString(label) ? 24 : 16,
+            height:
+                _isString(label)
+                    ? getResponsiveRatioByWidth(context, 24)
+                    : getResponsiveRatioByWidth(context, 16),
             decoration: BoxDecoration(
               color:
                   _isString(label)
@@ -70,7 +84,10 @@ class DreamTypeMoodStateRow extends StatelessWidget {
         Expanded(
           flex: 1000,
           child: Container(
-            height: _isString(label) ? 24 : 16,
+            height:
+                _isString(label)
+                    ? getResponsiveRatioByWidth(context, 24)
+                    : getResponsiveRatioByWidth(context, 16),
             decoration: BoxDecoration(
               color:
                   _isString(label)
@@ -86,7 +103,10 @@ class DreamTypeMoodStateRow extends StatelessWidget {
         Expanded(
           flex: 1000,
           child: Container(
-            height: _isString(label) ? 24 : 16,
+            height:
+                _isString(label)
+                    ? getResponsiveRatioByWidth(context, 24)
+                    : getResponsiveRatioByWidth(context, 16),
             decoration: BoxDecoration(
               color:
                   _isString(label)
@@ -102,7 +122,10 @@ class DreamTypeMoodStateRow extends StatelessWidget {
         Expanded(
           flex: 1000,
           child: Container(
-            height: _isString(label) ? 24 : 16,
+            height:
+                _isString(label)
+                    ? getResponsiveRatioByWidth(context, 24)
+                    : getResponsiveRatioByWidth(context, 16),
             decoration: BoxDecoration(
               color:
                   _isString(label)

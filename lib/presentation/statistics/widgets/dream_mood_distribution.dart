@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mongbi_app/core/font.dart';
+import 'package:mongbi_app/core/get_responsive_ratio_by_width.dart';
 import 'package:mongbi_app/presentation/statistics/widgets/common_box.dart';
 import 'package:mongbi_app/presentation/statistics/widgets/dream_mood_distribution_percent.dart';
 import 'package:mongbi_app/presentation/statistics/widgets/dream_mood_distribution_pie_chart.dart';
@@ -10,16 +11,23 @@ class DreamMoodDistribution extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CommonBox(
-      title: Text('꿈을 꾼 후의 기분 분포도', style: Font.title14),
+      title: Text(
+        '꿈을 꾼 후의 기분 분포도',
+        style: Font.title14.copyWith(
+          fontSize: getResponsiveRatioByWidth(context, 14),
+        ),
+      ),
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
+          padding: EdgeInsets.symmetric(
+            horizontal: getResponsiveRatioByWidth(context, 24),
+          ),
           child: SizedBox(
             width: double.maxFinite,
             child: Row(
               children: [
                 DreamMoodDistributionPieChart(),
-                SizedBox(width: 40),
+                SizedBox(width: getResponsiveRatioByWidth(context, 40)),
                 Padding(
                   padding: const EdgeInsets.only(right: 21),
                   child: Column(
@@ -28,16 +36,16 @@ class DreamMoodDistribution extends StatelessWidget {
                         type: 'very_good',
                         percent: 30,
                       ),
-                      SizedBox(height: 8),
+                      SizedBox(height: getResponsiveRatioByWidth(context, 8)),
                       DreamMoodDistributionPercent(type: 'good', percent: 30),
-                      SizedBox(height: 8),
+                      SizedBox(height: getResponsiveRatioByWidth(context, 8)),
                       DreamMoodDistributionPercent(
                         type: 'ordinary',
                         percent: 30,
                       ),
-                      SizedBox(height: 8),
+                      SizedBox(height: getResponsiveRatioByWidth(context, 8)),
                       DreamMoodDistributionPercent(type: 'bad', percent: 30),
-                      SizedBox(height: 8),
+                      SizedBox(height: getResponsiveRatioByWidth(context, 8)),
                       DreamMoodDistributionPercent(
                         type: 'very_bad',
                         percent: 40,

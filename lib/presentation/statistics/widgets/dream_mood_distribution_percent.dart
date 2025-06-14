@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mongbi_app/core/font.dart';
+import 'package:mongbi_app/core/get_responsive_ratio_by_width.dart';
 
 class DreamMoodDistributionPercent extends StatelessWidget {
   DreamMoodDistributionPercent({
@@ -23,11 +24,18 @@ class DreamMoodDistributionPercent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        SvgPicture.asset(iconMap[type]!, fit: BoxFit.cover, width: 24),
-        SizedBox(width: 8),
+        SvgPicture.asset(
+          iconMap[type]!,
+          fit: BoxFit.cover,
+          width: getResponsiveRatioByWidth(context, 24),
+        ),
+        SizedBox(width: getResponsiveRatioByWidth(context, 8)),
         Text(
           '$percent%',
-          style: Font.subTitle12.copyWith(color: Color(0xFFA6A1AA)),
+          style: Font.subTitle12.copyWith(
+            color: Color(0xFFA6A1AA),
+            fontSize: getResponsiveRatioByWidth(context, 12),
+          ),
         ),
       ],
     );

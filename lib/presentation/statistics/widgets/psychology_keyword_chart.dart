@@ -50,21 +50,28 @@ class PsychologyKeywordChart extends StatelessWidget {
     ];
 
     return CommonBox(
-      title: Text('몽비가 분석해준 심리 키워드', style: Font.title14),
+      title: Text(
+        '몽비가 분석해준 심리 키워드',
+        style: Font.title14.copyWith(
+          fontSize: getResponsiveRatioByWidth(context, 14),
+        ),
+      ),
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
+          padding: EdgeInsets.symmetric(
+            horizontal: getResponsiveRatioByWidth(context, 24),
+          ),
           child: SizedBox(
             width: double.maxFinite,
-            height: 308,
+            height: getResponsiveRatioByWidth(context, 308),
             child: ScatterChart(
               ScatterChartData(
                 // 자체적으로 Positioned처럼 동작
                 // 인덱스가 클수록 다른 위젯 위에 쌓일 수 있다
                 scatterSpots: List.generate(kwLength, (index) {
                   return ScatterSpot(
-                    xList[index],
-                    yList[index],
+                    getResponsiveRatioByWidth(context, xList[index]),
+                    getResponsiveRatioByWidth(context, yList[index]),
                     dotPainter: CustomFlDotPainter(
                       radius: radiusList[index],
                       color: colorList[index],
@@ -84,9 +91,9 @@ class PsychologyKeywordChart extends StatelessWidget {
                   // 각 축 별로 라벨 보이기 여부를 설정할 수 있음
                 ),
                 minX: 0,
-                maxX: 10,
+                maxX: getResponsiveRatioByWidth(context, 10),
                 minY: 0,
-                maxY: 10,
+                maxY: getResponsiveRatioByWidth(context, 10),
               ),
             ),
           ),
