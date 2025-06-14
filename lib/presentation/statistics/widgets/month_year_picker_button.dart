@@ -4,11 +4,24 @@ import 'package:mongbi_app/core/date_formatter.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/core/get_responsive_ratio_by_width.dart';
 import 'package:mongbi_app/presentation/statistics/statistics_key/statistics_key.dart';
+import 'package:mongbi_app/presentation/statistics/widgets/month_year_picker.dart';
 
 class MonthYearPickerButton extends StatelessWidget {
-  const MonthYearPickerButton({super.key, required this.showMonthPickerModal});
+  MonthYearPickerButton({
+    super.key,
+    required this.scrollController,
+    required this.monthPickerButtonPosition,
+    required this.horizontalPadding,
+    required this.showMonthPickerModal,
+    required this.isShow,
+  });
 
+  final ScrollController scrollController;
+  final double monthPickerButtonPosition;
+  final double horizontalPadding;
   final VoidCallback showMonthPickerModal;
+  final bool isShow;
+  final monthYearPickerTest = MonthYearPicker();
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +30,12 @@ class MonthYearPickerButton extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: GestureDetector(
         onTap: () {
-          showMonthPickerModal();
+          monthYearPickerTest.show(
+            context,
+            left: horizontalPadding,
+            top: monthPickerButtonPosition,
+            scrollController: scrollController,
+          );
         },
         child: Row(
           children: [
