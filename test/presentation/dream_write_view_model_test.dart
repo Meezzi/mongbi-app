@@ -2,21 +2,23 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:mongbi_app/domain/entities/dream.dart';
-import 'package:mongbi_app/domain/use_cases/analyze_dream_use_case.dart';
+import 'package:mongbi_app/domain/use_cases/analyze_and_save_dream_use_case.dart';
 import 'package:mongbi_app/presentation/dream/view_models/dream_write_view_model.dart';
 import 'package:mongbi_app/providers/dream_provider.dart';
 
 void main() {
   late ProviderContainer container;
   late DreamWriteViewModel viewModel;
-  late MockAnalyzeDreamUseCase mockAnalyzeDreamUseCase;
+  late MockAnalyzeAndSaveDreamUseCase mockAnalyzeAndSaveDreamUseCase;
 
   setUp(() {
-    mockAnalyzeDreamUseCase = MockAnalyzeDreamUseCase();
+    mockAnalyzeAndSaveDreamUseCase = MockAnalyzeAndSaveDreamUseCase();
 
     container = ProviderContainer(
       overrides: [
-        analyzeDreamUseCaseProvider.overrideWithValue(mockAnalyzeDreamUseCase),
+        analyzeAndSaveDreamUseCaseProvider.overrideWithValue(
+          mockAnalyzeAndSaveDreamUseCase,
+        ),
       ],
     );
 
@@ -72,38 +74,25 @@ void main() {
       expect(container.read(dreamWriteViewModelProvider).isFocused, true);
     });
 
-    test('이모티콘을 선택하지 않았을 경우 false 반환', () {
-      // Arrange
-      viewModel.setDreamContent('Test content');
-      viewModel.setSelectedIndex(-1);
-
-      // Act
-      final result = viewModel.submitDream();
-
-      // Assert
-      expect(result, isFalse);
-      verifyNever(() => mockAnalyzeDreamUseCase.execute(any(), any()));
-    });
-
-    test('꿈을 작성하고, 이모티콘을 선택한 경우 true 반환', () {
+    test('조건 만족하면 analyzeAndSaveDreamUseCase 실행 & setDream 호출', () async {
       // Arrange
       viewModel.setDreamContent('Test content');
       viewModel.setSelectedIndex(1);
 
       when(
-        () => mockAnalyzeDreamUseCase.execute(any(), any()),
+        () => mockAnalyzeAndSaveDreamUseCase.execute(any(), any()),
       ).thenAnswer((_) async => dream);
 
       // Act
-      final result = viewModel.submitDream();
+      await viewModel.submitDream();
 
       // Assert
-      expect(result, isTrue);
       verify(
-        () => mockAnalyzeDreamUseCase.execute('Test content', 1),
+        () => mockAnalyzeAndSaveDreamUseCase.execute('Test content', 1),
       ).called(1);
     });
   });
 }
 
-class MockAnalyzeDreamUseCase extends Mock implements AnalyzeDreamUseCase {}
+class MockAnalyzeAndSaveDreamUseCase extends Mock
+    implements AnalyzeAndSaveDreamUseCase {}
