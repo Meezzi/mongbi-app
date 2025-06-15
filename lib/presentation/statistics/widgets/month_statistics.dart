@@ -90,8 +90,8 @@ class _MonthStatisticsState extends State<MonthStatistics> {
                 DreamMoodDistribution(),
                 DreamTypeMoodState(isMonth: isMonth),
                 PsychologyKeywordChart(
-                  // TODO : 데이터 변수 들어가야 함
-                  keywordList: ['1순위', '2순위', '3순위', '4순위', '5순위'] ?? [],
+                  // TODO : 데이터 변수 들어가야 함. 데이터가 null이면 무조건 빈 배열([]) 할당하기
+                  keywordList: ['1순위', '2순위', '3순위', '4순위', '5순위'],
                 ),
               ],
             ),
