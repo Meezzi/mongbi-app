@@ -1,0 +1,43 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:mongbi_app/core/font.dart';
+import 'package:mongbi_app/core/get_responsive_ratio_by_width.dart';
+
+class DreamMoodDistributionPercent extends StatelessWidget {
+  DreamMoodDistributionPercent({
+    super.key,
+    required this.type,
+    required this.percent,
+  });
+
+  final String type;
+  final int percent;
+  final Map<String, String> iconMap = {
+    'very_good': 'assets/icons/very_good.svg',
+    'good': 'assets/icons/good.svg',
+    'ordinary': 'assets/icons/ordinary.svg',
+    'bad': 'assets/icons/bad.svg',
+    'very_bad': 'assets/icons/very_bad.svg',
+  };
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        SvgPicture.asset(
+          iconMap[type]!,
+          fit: BoxFit.cover,
+          width: getResponsiveRatioByWidth(context, 24),
+        ),
+        SizedBox(width: getResponsiveRatioByWidth(context, 8)),
+        Text(
+          '$percent%',
+          style: Font.subTitle12.copyWith(
+            color: Color(0xFFA6A1AA),
+            fontSize: getResponsiveRatioByWidth(context, 12),
+          ),
+        ),
+      ],
+    );
+  }
+}
