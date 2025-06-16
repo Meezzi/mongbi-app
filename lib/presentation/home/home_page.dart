@@ -8,6 +8,8 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Container(
       width: double.infinity,
       height: double.infinity,
@@ -56,8 +58,8 @@ class HomePage extends StatelessWidget {
                       CustomSpeechBubble(text: '킁킁... 좋은 꿈 냄새 난다몽'),
                       Image.asset(
                         'assets/images/splash_mongbi.png',
-                        width: 288,
-                        height: 288,
+                        width: screenHeight * 0.28,
+                        height: screenHeight * 0.28,
                       ),
                     ],
                   ),
