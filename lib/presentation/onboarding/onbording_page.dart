@@ -58,7 +58,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
   @override
   Widget build(BuildContext context) {
     final _ = onboardingData[_currentPage];
-
+    bool isLastPage = _currentPage == onboardingData.length - 1;
     return Scaffold(
       body: SafeArea(
         child: Stack(
@@ -89,7 +89,14 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 );
               },
             ),
-            Positioned(top: 16, right: 16, child: SkipButton(onTap: _onSkip)),
+            Positioned(
+              top: 16,
+              right: 16,
+              child: SkipButton(
+                onTap: _onSkip,
+                text: isLastPage ? '끝내기' : '건너뛰기',
+              ),
+            ),
             Positioned(
               bottom: 40,
               left: 0,
