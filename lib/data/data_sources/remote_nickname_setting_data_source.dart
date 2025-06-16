@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:mongbi_app/data/data_sources/nickname_setting_data_source.dart';
 import 'package:mongbi_app/data/dtos/user_dto.dart';
 
-class RemoteNickNameSettingDataSource implements NickNameSettingDataSource {
+class RemoteNickNameSettingDataSource implements NicknameSettingDataSource {
   RemoteNickNameSettingDataSource(this.dio);
   final Dio dio;
 
