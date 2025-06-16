@@ -12,10 +12,6 @@ class RemoteNaverAuthDataSource {
     String jwt = '';
     UserDto? userDto;
     try {
-      final loginResult = await FlutterNaverLogin.logIn();
-    } catch (e) {}
-
-    try {
       final tokenResult = await FlutterNaverLogin.getCurrentAccessToken();
       if (!tokenResult.isValid()) {
         throw Exception('유효하지 않은 accessToken');
