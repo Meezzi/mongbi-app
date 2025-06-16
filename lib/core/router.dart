@@ -9,15 +9,11 @@ import 'package:mongbi_app/presentation/dream/dream_intro_page.dart';
 import 'package:mongbi_app/presentation/dream/dream_write_page.dart';
 import 'package:mongbi_app/presentation/history/history_page.dart';
 import 'package:mongbi_app/presentation/home/home_page.dart';
-<<<<<<< HEAD
+import 'package:mongbi_app/presentation/remind/remind_time_time_setting_page.dart';
 import 'package:mongbi_app/presentation/setting/alarm_setting_page.dart';
 import 'package:mongbi_app/presentation/setting/nickname_input_page.dart';
 import 'package:mongbi_app/presentation/setting/profile_setting_page.dart';
 import 'package:mongbi_app/presentation/setting/setting_page.dart';
-=======
-import 'package:mongbi_app/presentation/profile/profile_setting_page.dart';
-import 'package:mongbi_app/presentation/remind/remind_time_setting_page.dart';
->>>>>>> 588d28a (feat: 리마인드 셋  페이지 구현 및 이미지 추가)
 import 'package:mongbi_app/presentation/splash/splash_page.dart';
 import 'package:mongbi_app/presentation/statistics/statistics_page.dart';
 
@@ -53,18 +49,18 @@ final GoRouter router = GoRouter(
       builder: (context, state) => NicknameInputPage(),
     ),
     GoRoute(
-<<<<<<< HEAD
       path: '/dream_intro',
       pageBuilder:
           (context, state) => buildFadeTransitionPage(
             key: state.pageKey,
             child: DreamIntroPage(),
           ),
-=======
-      path: '/remindtime_setting',
-      builder: (context, state) => RemindTimeSettingPage(),
->>>>>>> 588d28a (feat: 리마인드 셋  페이지 구현 및 이미지 추가)
     ),
+    GoRoute(
+      path: '/remindtime_time_setting',
+      builder: (context, state) => RemindTimePickerPage(),
+    ),
+    
     GoRoute(
       path: '/dream_write',
       pageBuilder:
