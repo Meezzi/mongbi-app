@@ -8,14 +8,17 @@ class BgmState extends Notifier<bool> {
   @override
   bool build() {
     _loadPersistedState();
-    return true;
+    return false;
   }
 
   void _loadPersistedState() async {
     final prefs = await SharedPreferences.getInstance();
     final saved = prefs.getBool(_bgmKey);
-    if (saved != null && saved != state) {
-      state = saved;
+
+    state = saved ?? true;
+
+    if (state) {
+      await ref.read(backgroundMusicProvider).playBgm();
     }
   }
 
