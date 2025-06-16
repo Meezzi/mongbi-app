@@ -31,7 +31,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
       'title': '감정에 따라,',
       'description': '몽비가 나만의 작은 챌린지를\n추천해줘요.',
     },
-        {
+    {
       'image': 'assets/images/screen4.webp',
       'title': '시간이 지나면,',
       'description': '내 꿈과 감정의 흐름으 한눈에\n볼 수 있어요.',
@@ -39,7 +39,6 @@ class _OnboardingPageState extends State<OnboardingPage> {
   ];
 
   void _onSkip() {
-    // 예: 홈 화면으로 이동
     Navigator.pushReplacementNamed(context, '/home');
   }
 
@@ -90,11 +89,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 );
               },
             ),
-            Positioned(
-              top: 16,
-              right: 16,
-              child: SkipButton(onTap: _onSkip),
-            ),
+            Positioned(top: 16, right: 16, child: SkipButton(onTap: _onSkip)),
             Positioned(
               bottom: 40,
               left: 0,
