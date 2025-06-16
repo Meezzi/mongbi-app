@@ -7,6 +7,7 @@ import 'package:mongbi_app/presentation/remind/view_model/remind_time_setting_vi
 import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_button_widget.dart';
 import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_text_widget.dart';
 import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_widget.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class RemindTimePickerPage extends StatefulWidget {
@@ -18,6 +19,21 @@ class RemindTimePickerPage extends StatefulWidget {
 
 class _RemindTimePickerPageState extends State<RemindTimePickerPage> {
   TimeOfDay selectedTime = const TimeOfDay(hour: 8, minute: 0);
+
+  @override
+  void initState() {
+    super.initState();
+    // 앱 최초 진입 시 알림 권한 요청
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final granted =
+          await NotificationService().requestNotificationPermission();
+      if (!granted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('알림 권한이 거부되었습니다. 설정에서 허용해주세요.')),
+        );
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +98,6 @@ class _RemindTimePickerPageState extends State<RemindTimePickerPage> {
                 ),
               ),
             ),
-
             Positioned(
               bottom: 32,
               left: 24,
@@ -90,11 +105,22 @@ class _RemindTimePickerPageState extends State<RemindTimePickerPage> {
               child: RemindTimeSettingButtonWidget(
                 onTap: () async {
                   try {
+                    print('⏱️ 현재 시각: ${DateTime.now()}');
+                    print('🔍 예약할 시간: ${selectedTime.format(context)}');
+
+                    final exactAlarmStatus =
+                        await Permission.scheduleExactAlarm.status;
+                    final batteryOptStatus =
+                        await Permission.ignoreBatteryOptimizations.status;
+
+                    print('✅ 정확 알람 권한 상태: $exactAlarmStatus');
+                    print('⚡️ 배터리 최적화 예외 상태: $batteryOptStatus');
+
                     await NotificationService().scheduleDailyReminder(
                       selectedTime,
                     );
-                    // 알림 등록 성공 후 다음 화면 이동 등 로직
                     await NotificationService().showInstantNotification();
+
                     print('💚 알림 등록 성공');
                     context.go('/home');
                   } catch (e) {
@@ -102,15 +128,13 @@ class _RemindTimePickerPageState extends State<RemindTimePickerPage> {
                         e.code == 'exact_alarms_not_permitted') {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                          content: Text('정확한 알람 권한이 필요해요! 설정에서 권한을 허용해주세요.'),
+                          content: Text('정확한 알람 권한이 필요해요! 설정에서 허용해주세요.'),
                         ),
                       );
-
-                      // 설정으로 이동
                       await NotificationService()
                           .openExactAlarmSettingsIfNeeded();
                     } else {
-                      print('알림 등록 실패: $e');
+                      print('❌ 알림 등록 실패: $e');
                     }
                   }
                 },
