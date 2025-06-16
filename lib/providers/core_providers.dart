@@ -7,7 +7,6 @@ final adminDioProvider = Provider<Dio>(
   (ref) => Dio(BaseOptions(baseUrl: dotenv.env['ADMIN_MONGBI_BASE_URL']!)),
 );
 
-
 final dioProvider = Provider<Dio>((ref) {
   final dio = Dio(
     BaseOptions(
@@ -15,7 +14,6 @@ final dioProvider = Provider<Dio>((ref) {
       headers: {'Content-Type': 'application/json'},
     ),
   );
-
   dio.interceptors.add(AuthInterceptor());
 
   return dio;
