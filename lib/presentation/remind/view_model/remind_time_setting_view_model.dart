@@ -18,7 +18,7 @@ class NotificationService {
   Future<void> init() async {
     print('[🔔 알림 초기화] 초기화 시작');
     tz.initializeTimeZones();
-
+    tz.setLocalLocation(tz.getLocation('Asia/Seoul'));
     const androidInit = AndroidInitializationSettings('@mipmap/ic_launcher');
     const iosInit = DarwinInitializationSettings();
     const initSettings = InitializationSettings(
