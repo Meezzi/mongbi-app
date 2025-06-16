@@ -115,9 +115,7 @@ class _RemindTimePickerPageState extends State<RemindTimePickerPage> {
                     print('✅ 정확 알람 권한 상태: $exactAlarmStatus');
                     print('⚡️ 배터리 최적화 예외 상태: $batteryOptStatus');
 
-                    await NotificationService().scheduleDailyReminder(
-                      selectedTime,
-                    );
+
                     await NotificationService().showInstantNotification();
 
                     print('💚 알림 등록 성공');
