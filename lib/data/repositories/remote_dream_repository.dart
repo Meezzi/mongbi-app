@@ -24,9 +24,9 @@ class RemoteDreamRepository implements DreamRepository {
     );
     // JSON 형태를 Dream으로 변경
     final dream = Dream(
-      // id: null, // TODO: 저장한 후, Dream Id로 저장
+      id: null, // TODO: 저장한 후, Dream Id로 저장
       createdAt: DateTime.now(),
-      uid: 13, // TODO: 사용자 id로 변경
+      uid: 1, // TODO: 사용자 id로 변경
       challengeId: 0, // TODO: 사용자가 선택한 챌린지 id로 변경
       content: dreamContent,
       score: dreamScore,
@@ -46,8 +46,6 @@ class RemoteDreamRepository implements DreamRepository {
       mongbiComment: responseMap['mongbiComment'] as String,
       dreamCategory: responseMap['dreamCategory'] as String,
     );
-
-    print('꿈 내역$dream');
     return dream;
   }
 }
