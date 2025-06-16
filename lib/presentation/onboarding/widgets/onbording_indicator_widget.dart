@@ -1,14 +1,6 @@
 import 'package:flutter/material.dart';
 
 class ExpandingDotsIndicator extends StatelessWidget {
-  final int currentPage;
-  final int count;
-  final double dotHeight;
-  final double dotWidth;
-  final double expandedDotWidth;
-  final Color activeColor;
-  final Color inactiveColor;
-  final Duration animationDuration;
 
   const ExpandingDotsIndicator({
     super.key,
@@ -21,6 +13,14 @@ class ExpandingDotsIndicator extends StatelessWidget {
     this.inactiveColor = const Color(0xFFD6D4D8),
     this.animationDuration = const Duration(milliseconds: 300),
   });
+  final int currentPage;
+  final int count;
+  final double dotHeight;
+  final double dotWidth;
+  final double expandedDotWidth;
+  final Color activeColor;
+  final Color inactiveColor;
+  final Duration animationDuration;
 
   @override
   Widget build(BuildContext context) {
