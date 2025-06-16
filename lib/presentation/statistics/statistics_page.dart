@@ -31,6 +31,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
             // 탭바뷰가 화면을 꽉 채우게 Expanded로 랩핑
             Expanded(
               child: TabBarView(
+                physics: NeverScrollableScrollPhysics(),
                 children: [
                   // 월 통계
                   MonthStatistics(horizontalPadding: horizontalPadding),
