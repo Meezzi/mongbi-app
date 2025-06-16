@@ -27,8 +27,7 @@ class NotificationService {
 
     await flutterLocalNotificationsPlugin.initialize(
       initSettings,
-      onDidReceiveNotificationResponse: (details) {
-      },
+      onDidReceiveNotificationResponse: (details) {},
     );
   }
 
@@ -51,7 +50,6 @@ class NotificationService {
     final status = await Permission.notification.request();
     return status.isGranted;
   }
-
 
   Future<void> scheduleDailyReminder(TimeOfDay time) async {
     final now = DateTime.now();
