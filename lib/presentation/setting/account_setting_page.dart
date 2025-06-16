@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/presentation/setting/widgets/setting_rounded_list_tile_item.dart';
 import 'package:mongbi_app/providers/auth_provider.dart';
@@ -22,7 +24,9 @@ class AccountSettingPage extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           InkWell(
-            onTap: () {},
+            onTap: () {
+              context.push('/nickname_input');
+            },
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
               child: Row(
@@ -34,6 +38,14 @@ class AccountSettingPage extends ConsumerWidget {
                   Text(
                     user!.userNickname ?? '',
                     style: Font.body16.copyWith(color: Color(0xFF8C2EFF)),
+                  ),
+                  Spacer(),
+                  SvgPicture.asset(
+                    'assets/icons/chevron-right.svg',
+                    colorFilter: ColorFilter.mode(
+                      Color(0xFFA6A1AA),
+                      BlendMode.srcIn,
+                    ),
                   ),
                 ],
               ),
