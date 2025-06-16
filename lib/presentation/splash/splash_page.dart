@@ -68,7 +68,11 @@ class _SplashPageState extends State<SplashPage>
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  '안녕, 난 몽비!\n꿈을 먹는 도깨비다몽',
+                  '안녕, 난 몽비!',
+                  style: Font.title24.copyWith(color: Colors.white),
+                ),
+                Text(
+                  '꿈을 먹는 도깨비다몽',
                   style: Font.title24.copyWith(color: Colors.white),
                 ),
                 SizedBox(height: screenHeight * 0.035),
