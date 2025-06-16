@@ -1,77 +1,131 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/presentation/remind/view_model/remind_time_setting_view_model.dart';
 import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_button_widget.dart';
-import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_image_widget.dart';
 import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_text_widget.dart';
+import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_widget.dart';
+import 'package:permission_handler/permission_handler.dart';
 
-class RemindTimeSettingPage extends StatelessWidget {
-  const RemindTimeSettingPage({super.key});
+class RemindTimePickerPage extends StatefulWidget {
+  const RemindTimePickerPage({super.key});
+
+  @override
+  State<RemindTimePickerPage> createState() => _RemindTimePickerPageState();
+}
+
+class _RemindTimePickerPageState extends State<RemindTimePickerPage> {
+  TimeOfDay selectedTime = const TimeOfDay(hour: 8, minute: 0);
+
+  @override
+  void initState() {
+    super.initState();
+    // 앱 최초 진입 시 알림 권한 요청
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final granted =
+          await NotificationService().requestNotificationPermission();
+      if (!granted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('알림 권한이 거부되었습니다. 설정에서 허용해주세요.')),
+        );
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFFAFAFA),
       appBar: AppBar(
+        backgroundColor: const Color(0xFFFAFAFA),
+        surfaceTintColor: Colors.transparent,
+        elevation: 0,
         leading: Padding(
           padding: const EdgeInsets.only(left: 24, top: 16),
           child: IconButton(
-            icon: SvgPicture.asset(
-              'assets/icons/back-arrow.svg',
-              width: 24,
-              height: 24,
-            ),
-            onPressed: () => context.go('/home'),
+            icon: SvgPicture.asset('assets/icons/back-arrow.svg'),
+            onPressed: () => Navigator.pop(context),
             splashRadius: 20,
           ),
         ),
-        elevation: 0,
-        backgroundColor: Colors.transparent,
         foregroundColor: Colors.black,
         toolbarHeight: 56,
         titleSpacing: 0,
       ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Column(
-            children: [
-              const Spacer(),
-              const OnboardingText(
-                text: '몽비가 알림을 보내줄까몽?',
-                type: RemindTimeSettingTextType.title,
+        child: Stack(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Column(
+                children: [
+                  const SizedBox(height: 72),
+                  const OnboardingText(
+                    text: '몽비와 함께할 시간을 알려줘!',
+                    type: RemindTimeSettingTextType.title,
+                  ),
+                  const SizedBox(height: 8),
+                  const OnboardingText(
+                    text: '원하는 리마인드 시간을\n설정해주세요.',
+                    type: RemindTimeSettingTextType.description,
+                    align: TextAlign.center,
+                  ),
+                  const SizedBox(height: 89),
+                  SizedBox(
+                    height: 188,
+                    child: CustomTimePicker(
+                      onChanged: (time, amPm) {
+                        selectedTime = time;
+                      },
+                    ),
+                  ),
+                ],
               ),
-              const OnboardingText(
-                text: '매일 몽비와 함께 할 수 있도록',
-                type: RemindTimeSettingTextType.description,
+            ),
+            Positioned(
+              bottom: 108,
+              left: 0,
+              right: 0,
+              child: Center(
+                child: Text(
+                  '나중에 다시 설정할 수 있어요',
+                  style: Font.subTitle14.copyWith(
+                    color: const Color(0xFFA6A1AA),
+                  ),
+                ),
               ),
-              const OnboardingText(
-                text: '알림을 보내드릴게요.',
-                type: RemindTimeSettingTextType.description,
-              ),
-              const SizedBox(height: 48),
-              const RemindTimeSettingImageWidget(
-                assetPath: 'assets/images/remind_bell.webp',
-              ),
-              const Spacer(),
-              RemindTimeSettingButtonWidget(
+            ),
+            Positioned(
+              bottom: 32,
+              left: 24,
+              right: 24,
+              child: RemindTimeSettingButtonWidget(
                 onTap: () async {
-                  final notificationService = NotificationService();
-                  final granted = await notificationService.requestNotificationPermission();
-                  if (granted) {
-                    context.go('/remindtime_time_setting');
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('알림 권한을 허용해야 다음 단계로 진행할 수 있어요.'),
-                      ),
+                  try {
+                    await NotificationService().scheduleDailyReminder(
+                      selectedTime,
                     );
+                    context.go('/home');
+                  } catch (e) {
+                    if (e is PlatformException &&
+                        e.code == 'exact_alarms_not_permitted') {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('정확한 알람 권한이 필요해요! 설정에서 허용해주세요.'),
+                        ),
+                      );
+                      await NotificationService()
+                          .openExactAlarmSettingsIfNeeded();
+                    } else {
+                     
+                    }
                   }
                 },
               ),
-              const SizedBox(height: 32),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
