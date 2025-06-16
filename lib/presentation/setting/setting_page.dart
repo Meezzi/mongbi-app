@@ -27,7 +27,7 @@ class SettingPage extends ConsumerWidget {
           nickname: user!.userNickname!,
           loginType: user.userSocialType,
           onTap: () {
-            context.push('/nickname_input');
+            context.push('/profile_setting');
           },
         ),
         SizedBox(height: 24),
