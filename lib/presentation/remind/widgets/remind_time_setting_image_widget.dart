@@ -5,8 +5,8 @@ class OnboardingExitImage extends StatelessWidget {
   const OnboardingExitImage({
     super.key,
     required this.assetPath,
-    this.width = 288,
-    this.height = 288,
+    this.width = 280,
+    this.height = 280,
   });
   final String assetPath;
   final double width;
