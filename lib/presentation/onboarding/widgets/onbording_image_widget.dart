@@ -5,7 +5,7 @@ class OnboardingImage extends StatelessWidget {
   const OnboardingImage({
     super.key,
     required this.assetPath,
-    this.width = 266,
+    this.width = 280,
     this.height = 950,
   });
   final String assetPath;
