@@ -91,6 +91,8 @@ flutter:
     - assets/images/splash_bg.svg
     - assets/images/splash_mongbi.png
     - assets/images/star.png
+    - assets/images/remind_bell.webp
+    - assets/icons/back-arrow.svg
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
