@@ -2,9 +2,9 @@ import 'package:mongbi_app/data/data_sources/nickname_setting_data_source.dart';
 import 'package:mongbi_app/data/repositories/remote_nickname_setting_repository.dart';
 import 'package:mongbi_app/domain/entities/user.dart';
 
-class NickNameSettingRepositoryImpl implements NickNameSettingRepository {
+class RemoteNickNameSettingRepository implements NickNameSettingRepository {
 
-  NickNameSettingRepositoryImpl(this.dataSource);
+  RemoteNickNameSettingRepository(this.dataSource);
   final NickNameSettingDataSource dataSource;
 
   @override

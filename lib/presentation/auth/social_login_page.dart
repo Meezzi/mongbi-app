@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mongbi_app/presentation/auth/widgets/apple_login_button_widget.dart';
 import 'package:mongbi_app/presentation/auth/widgets/kakao_login_button_widget.dart';
 import 'package:mongbi_app/presentation/auth/widgets/last_login_state_weiget.dart';
 import 'package:mongbi_app/presentation/auth/widgets/mongbi_image_widget.dart';
