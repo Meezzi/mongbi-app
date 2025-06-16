@@ -23,7 +23,7 @@ class RemindTimeSettingButtonWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(40),
           ),
           child: Text(
-            '알겠어',
+            '정했어',
             textAlign: TextAlign.center,
             style: Font.title18.copyWith(
               color: Colors.white,
