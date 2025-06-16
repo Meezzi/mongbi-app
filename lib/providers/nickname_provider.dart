@@ -9,7 +9,7 @@ import 'package:mongbi_app/presentation/profile/view_models/nickname_setting_vie
 import 'package:mongbi_app/providers/core_providers.dart';
 
 final _nicknameSettingDataSourceProvider = Provider<NicknameSettingDataSource>(
-  (ref) => RemoteNickNameSettingDataSource(ref.read(dioProvider)),
+  (ref) => RemoteNicknameSettingDataSource(ref.read(dioProvider)),
 );
 
 

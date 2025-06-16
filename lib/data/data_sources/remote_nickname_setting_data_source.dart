@@ -2,12 +2,12 @@ import 'package:dio/dio.dart';
 import 'package:mongbi_app/data/data_sources/nickname_setting_data_source.dart';
 import 'package:mongbi_app/data/dtos/user_dto.dart';
 
-class RemoteNickNameSettingDataSource implements NicknameSettingDataSource {
-  RemoteNickNameSettingDataSource(this.dio);
+class RemoteNicknameSettingDataSource implements NicknameSettingDataSource {
+  RemoteNicknameSettingDataSource(this.dio);
   final Dio dio;
 
   @override
-  Future<UserDto> nickNameSetting({
+  Future<UserDto> updateNickname({
     required int userId,
     required String nickname,
   }) async {

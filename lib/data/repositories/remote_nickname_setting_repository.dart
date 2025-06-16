@@ -8,7 +8,7 @@ class RemoteNicknameSettingRepository implements NicknameSettingRepository {
 
   @override
   Future<User> updateNickname(int userId, String nickname) async {
-    final dto = await dataSource.nickNameSetting(
+    final dto = await dataSource.updateNickname(
       userId: userId,
       nickname: nickname,
     );
