@@ -34,7 +34,7 @@ final GoRouter router = GoRouter(
           path: '/statistics',
           builder: (context, state) => const StatisticsPage(),
         ),
-        // TODO: 통계 화면, 프로필 화면으로 이동
+        GoRoute(path: '/setting', builder: (context, state) => SettingPage()),
       ],
     ),
     GoRoute(path: '/splash', builder: (context, state) => SplashPage()),
