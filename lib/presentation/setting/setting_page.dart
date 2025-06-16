@@ -40,8 +40,11 @@ class SettingPage extends ConsumerWidget {
               isLast: false,
               trailing: ToggleSwitch(value: isBgmOn),
               onTap: () {
-                bgmNotifier.toggle();
-                // TODO: 배경음악 on/off
+                if (isBgmOn) {
+                  bgmNotifier.turnOff();
+                } else {
+                  bgmNotifier.turnOn();
+                }
               },
             ),
             RoundedListTileItem(
