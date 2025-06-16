@@ -37,17 +37,11 @@ class NotificationService {
     await flutterLocalNotificationsPlugin.initialize(
       initSettings,
       onDidReceiveNotificationResponse: (details) {
-<<<<<<< HEAD
         // 예: context.go('/remind');
-=======
-        // 알림 클릭 시 동작 (예: 라우팅)
-        // navigatorKey.currentState?.pushNamed('/remind');
->>>>>>> a0bfb6b (feat: 권한 추가 및 뷰모델 기능 추가)
       },
     );
   }
 
-<<<<<<< HEAD
   Future<void> openExactAlarmSettingsIfNeeded() async {
     if (Platform.isAndroid) {
       final intent = AndroidIntent(
@@ -57,9 +51,6 @@ class NotificationService {
     }
   }
 
-=======
-  /// 알림 권한 요청 (iOS + Android)
->>>>>>> a0bfb6b (feat: 권한 추가 및 뷰모델 기능 추가)
   Future<bool> requestNotificationPermission() async {
     await flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<
@@ -71,7 +62,6 @@ class NotificationService {
     return status.isGranted;
   }
 
-<<<<<<< HEAD
   Future<void> showInstantNotification() async {
     await flutterLocalNotificationsPlugin.show(
       0,
@@ -90,9 +80,6 @@ class NotificationService {
     );
   }
 
-=======
-  /// 매일 특정 시간에 알림 예약
->>>>>>> a0bfb6b (feat: 권한 추가 및 뷰모델 기능 추가)
   Future<void> scheduleDailyReminder(TimeOfDay time) async {
     final now = DateTime.now();
     final scheduledTime = DateTime(
@@ -103,7 +90,6 @@ class NotificationService {
       time.minute,
     );
 
-<<<<<<< HEAD
     final tzTime = _nextInstanceOfTime(scheduledTime);
 
     const androidDetails = AndroidNotificationDetails(
@@ -134,29 +120,6 @@ class NotificationService {
     );
   }
 
-=======
-    await flutterLocalNotificationsPlugin.zonedSchedule(
-      0,
-      '몽비가 인사드려요!',
-      '설정하신 리마인드 시간이예요 🌙',
-      _nextInstanceOfTime(scheduledTime),
-      const NotificationDetails(
-        android: AndroidNotificationDetails(
-          'daily_reminder',
-          'Daily Reminder',
-          channelDescription: '몽비 리마인드 알림 채널',
-          importance: Importance.max,
-          priority: Priority.high,
-        ),
-        iOS: DarwinNotificationDetails(),
-      ),
-      matchDateTimeComponents: DateTimeComponents.time,
-      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle, // ✅ 필수
-    );
-  }
-
-  /// 다음 알림 시간 계산 (지났으면 내일로)
->>>>>>> a0bfb6b (feat: 권한 추가 및 뷰모델 기능 추가)
   tz.TZDateTime _nextInstanceOfTime(DateTime dateTime) {
     final tzNow = tz.TZDateTime.now(tz.local);
     var scheduled = tz.TZDateTime(
@@ -167,17 +130,11 @@ class NotificationService {
       dateTime.hour,
       dateTime.minute,
     );
-<<<<<<< HEAD
 
     if (scheduled.isBefore(tzNow)) {
       scheduled = scheduled.add(const Duration(days: 1));
     }
 
-=======
-    if (scheduled.isBefore(tzNow)) {
-      scheduled = scheduled.add(const Duration(days: 1));
-    }
->>>>>>> a0bfb6b (feat: 권한 추가 및 뷰모델 기능 추가)
     return scheduled;
   }
 }
