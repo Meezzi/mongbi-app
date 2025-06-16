@@ -8,12 +8,12 @@ class BgmState extends Notifier<bool> {
   }
 
   Future<void> turnOn() async {
-    ref.read(backgroundMusicProvider).playBgm();
     state = true;
+    ref.read(backgroundMusicProvider).playBgm();
   }
 
   Future<void> turnOff() async {
-    await ref.read(backgroundMusicProvider).fadeOutAndPause();
     state = false;
+    await ref.read(backgroundMusicProvider).fadeOutAndPause();
   }
 }
