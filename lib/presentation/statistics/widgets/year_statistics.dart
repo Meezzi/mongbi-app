@@ -6,6 +6,7 @@ import 'package:mongbi_app/presentation/statistics/widgets/dream_frequency_card.
 import 'package:mongbi_app/presentation/statistics/widgets/dream_mood_distribution.dart';
 import 'package:mongbi_app/presentation/statistics/widgets/dream_type_mood_state.dart';
 import 'package:mongbi_app/presentation/statistics/widgets/gift_frequency_card.dart';
+import 'package:mongbi_app/presentation/statistics/widgets/month_year_picker.dart';
 import 'package:mongbi_app/presentation/statistics/widgets/month_year_picker_button.dart';
 import 'package:mongbi_app/presentation/statistics/widgets/psychology_keyword_chart.dart';
 
@@ -75,6 +76,14 @@ class _YearStatisticsState extends State<YearStatistics> {
                   horizontalPadding: widget.horizontalPadding,
                 ),
 
+                MonthYearPicker(
+                  key: isMonth ? monthPickerKey : yearPickerKey,
+                  isMonth: isMonth,
+                  scrollController: scrollController,
+                  top: yearPickerButtonPosition ?? 0,
+                  left: widget.horizontalPadding,
+                ),
+
                 Padding(
                   padding: EdgeInsets.only(
                     top: getResponsiveRatioByWidth(context, 16),
@@ -90,8 +99,8 @@ class _YearStatisticsState extends State<YearStatistics> {
                 DreamMoodDistribution(),
                 DreamTypeMoodState(isMonth: isMonth),
                 PsychologyKeywordChart(
-                  // TODO : 데이터 변수 들어가야 함
-                  keywordList: ['1순위', '2순위', '3순위', '4순위', '5순위'] ?? [],
+                  // TODO : 데이터 변수 들어가야 함, null ?? [] 필수
+                  keywordList: ['1순위', '2순위', '3순위', '4순위', '5순위'],
                 ),
               ],
             ),

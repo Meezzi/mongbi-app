@@ -6,6 +6,7 @@ import 'package:mongbi_app/presentation/statistics/widgets/dream_frequency_card.
 import 'package:mongbi_app/presentation/statistics/widgets/dream_mood_distribution.dart';
 import 'package:mongbi_app/presentation/statistics/widgets/dream_type_mood_state.dart';
 import 'package:mongbi_app/presentation/statistics/widgets/gift_frequency_card.dart';
+import 'package:mongbi_app/presentation/statistics/widgets/month_year_picker.dart';
 import 'package:mongbi_app/presentation/statistics/widgets/month_year_picker_button.dart';
 import 'package:mongbi_app/presentation/statistics/widgets/psychology_keyword_chart.dart';
 
@@ -73,6 +74,14 @@ class _MonthStatisticsState extends State<MonthStatistics> {
                   scrollController: scrollController,
                   pickerButtonPosition: monthPickerButtonPosition ?? 0,
                   horizontalPadding: widget.horizontalPadding,
+                ),
+
+                MonthYearPicker(
+                  key: isMonth ? monthPickerKey : yearPickerKey,
+                  isMonth: isMonth,
+                  scrollController: scrollController,
+                  left: widget.horizontalPadding,
+                  top: monthPickerButtonPosition ?? 0,
                 ),
 
                 Padding(
