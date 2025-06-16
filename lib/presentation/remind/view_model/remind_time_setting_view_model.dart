@@ -28,7 +28,6 @@ class NotificationService {
     await flutterLocalNotificationsPlugin.initialize(
       initSettings,
       onDidReceiveNotificationResponse: (details) {
-        // 예: context.go('/remind');
       },
     );
   }
@@ -72,8 +71,9 @@ class NotificationService {
       channelDescription: '몽비 리마인드 알림 채널',
       importance: Importance.max,
       priority: Priority.high,
+      icon: 'ic_mongbi_icon',
       styleInformation: BigTextStyleInformation(
-        '설정하신 리마인드 시간이예요 🌙',
+        '잘잤어? 꿈을 꿨다면 나에게 나에게 말해줘몽!',
         contentTitle: '<b>몽비</b>',
         htmlFormatContent: true,
         htmlFormatContentTitle: true,
@@ -83,7 +83,7 @@ class NotificationService {
     await flutterLocalNotificationsPlugin.zonedSchedule(
       0,
       '몽비',
-      '설정하신 리마인드 시간이예요 🌙',
+      '잘잤어? 꿈을 꿨다면 나에게 나에게 말해줘몽!',
       tzTime,
       const NotificationDetails(
         android: androidDetails,
