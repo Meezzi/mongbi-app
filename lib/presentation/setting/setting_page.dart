@@ -45,14 +45,6 @@ class SettingPage extends ConsumerWidget {
               },
             ),
             RoundedListTileItem(
-              title: '계정 설정',
-              isFirst: false,
-              isLast: false,
-              onTap: () {
-                context.push('/account_setting');
-              },
-            ),
-            RoundedListTileItem(
               title: '알림 설정',
               isFirst: false,
               isLast: false,
