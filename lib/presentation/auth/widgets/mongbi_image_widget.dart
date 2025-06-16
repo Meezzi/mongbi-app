@@ -8,10 +8,11 @@ class MongbiCharacter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Image.asset(
-      'assets/images/mongbi.png',
+      'assets/images/mongbi.webp',
       width: size,
       height: size,
       fit: BoxFit.contain,
     );
   }
 }
+                          

@@ -42,7 +42,7 @@ class HomePage extends StatelessWidget {
             right: 0,
             left: 0,
             child: Image.asset(
-              'assets/images/home_star.png',
+              'assets/images/home_star.webp',
               fit: BoxFit.contain,
             ),
           ),
@@ -57,7 +57,7 @@ class HomePage extends StatelessWidget {
                     children: [
                       CustomSpeechBubble(text: '킁킁... 좋은 꿈 냄새 난다몽'),
                       Image.asset(
-                        'assets/images/splash_mongbi.png',
+                        'assets/images/mongbi.webp',
                         width: screenHeight * 0.28,
                         height: screenHeight * 0.28,
                       ),

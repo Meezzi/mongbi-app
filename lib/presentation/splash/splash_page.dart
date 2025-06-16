@@ -58,7 +58,7 @@ class _SplashPageState extends State<SplashPage>
             ),
           ),
           Image.asset(
-            'assets/images/star.png',
+            'assets/images/star.webp',
             fit: BoxFit.cover,
             width: double.infinity,
             height: double.infinity,
@@ -78,7 +78,7 @@ class _SplashPageState extends State<SplashPage>
                 SizedBox(height: screenHeight * 0.035),
                 FloatingAnimationWidget(
                   child: Image.asset(
-                    'assets/images/splash_mongbi.png',
+                    'assets/images/splash_mongbi.webp',
                     width: screenHeight * 0.38,
                     height: screenHeight * 0.38,
                   ),
