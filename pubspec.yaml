@@ -91,6 +91,10 @@ flutter:
     - assets/images/splash_bg.svg
     - assets/images/splash_mongbi.png
     - assets/images/star.png
+    - assets/images/screen1.webp
+    - assets/images/screen2.webp
+    - assets/images/screen3.webp
+    - assets/images/screen4.webp
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
