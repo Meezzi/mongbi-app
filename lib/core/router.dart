@@ -49,18 +49,9 @@ final GoRouter router = GoRouter(
       builder: (context, state) => NicknameInputPage(),
     ),
     GoRoute(
-      path: '/dream_intro',
-      pageBuilder:
-          (context, state) => buildFadeTransitionPage(
-            key: state.pageKey,
-            child: DreamIntroPage(),
-          ),
+      path: '/remindtime_setting',
+      builder: (context, state) => RemindTimeSettingPage(),
     ),
-    GoRoute(
-      path: '/remindtime_time_setting',
-      builder: (context, state) => RemindTimePickerPage(),
-    ),
-    
     GoRoute(
       path: '/dream_write',
       pageBuilder:
