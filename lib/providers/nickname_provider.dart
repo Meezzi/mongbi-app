@@ -4,7 +4,7 @@ import 'package:mongbi_app/data/data_sources/remote_nickname_setting_data_source
 import 'package:mongbi_app/data/repositories/remote_nickname_setting_repository.dart';
 import 'package:mongbi_app/domain/entities/user.dart';
 import 'package:mongbi_app/domain/repositories/nickname_repository.dart';
-import 'package:mongbi_app/domain/use_cases/nickname_setting.dart';
+import 'package:mongbi_app/domain/use_cases/nickname_setting_use_case.dart';
 import 'package:mongbi_app/presentation/profile/view_models/nickname_setting_view_model.dart';
 import 'package:mongbi_app/providers/core_providers.dart';
 

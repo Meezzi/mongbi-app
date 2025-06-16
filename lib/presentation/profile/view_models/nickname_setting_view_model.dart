@@ -1,14 +1,14 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mongbi_app/domain/entities/user.dart';
-import 'package:mongbi_app/domain/use_cases/nickname_setting.dart';
+import 'package:mongbi_app/domain/use_cases/nickname_setting_use_case.dart';
 import 'package:mongbi_app/providers/nickname_provider.dart';
 
 class NicknameViewModel extends Notifier<User?> {
-  late final UpdateNicknameUseCase _updateNicknameUseCase;
+  // late final UpdateNicknameUseCase _updateNicknameUseCase;
 
   @override
   User? build() {
-    _updateNicknameUseCase = ref.read(updateNicknameUseCaseProvider);
+    // _updateNicknameUseCase = ref.read(updateNicknameUseCaseProvider);
     return null;
   }
 
@@ -21,7 +21,7 @@ class NicknameViewModel extends Notifier<User?> {
   }) async {
     _isLoading = true;
     try {
-      final user = await _updateNicknameUseCase(
+      final user = await ref.read(updateNicknameUseCaseProvider)(
         userId: userId,
         nickname: nickname,
       );
