@@ -15,6 +15,15 @@ class RemoteStatisticsDataSource implements StatisticsDataSource {
           dateTime.month.toString().length < 2
               ? dateTime.month.toString().padLeft(2, '0')
               : dateTime.month.toString();
+
+      Map<String, String> keyChanges = {
+        '1': 'VERY_BAD',
+        '2': 'BAD',
+        '3': 'ORDINARY',
+        '4': 'GOOD',
+        '5': 'VERY_GOOD',
+      };
+
       // TODO : userIdx로 변경하기
       // TODO : idToken 유저 엔티티에서 받아오기
       final response = await dio.get(
@@ -24,12 +33,33 @@ class RemoteStatisticsDataSource implements StatisticsDataSource {
         // ),
       );
 
-      print('✅');
-      print(response);
-      print('✅');
-
       if (response.data['code'] == 201 && response.data['success']) {
         final results = response.data['data'];
+        final distributionMap = results['DISTRIBUTION'];
+        final moodStateMap = results['MOOD_STATE'];
+
+        // results['DISTRIBUTION']의 key의 이름만 변경
+        // results['DISTRIBUTION']['1'] => results['DISTRIBUTION']['VERY_BAD']
+        for (var oldKey in keyChanges.keys) {
+          var value = distributionMap[oldKey];
+          distributionMap.remove(oldKey);
+          distributionMap[keyChanges[oldKey]!] = value;
+        }
+
+        // results['MOOD_STATE']의 'GOOD_DREAM'의 key의 이름만 변경
+        // results['MOOD_STATE']['GOOD_DREAM']['1'] => results['MOOD_STATE']['GOOD_DREAM']['VERY_BAD']
+        for (var dreamType in moodStateMap.keys) {
+          var distributionMap = moodStateMap[dreamType]!;
+
+          for (var oldKey in keyChanges.keys) {
+            if (distributionMap.containsKey(oldKey)) {
+              var value = distributionMap[oldKey];
+              distributionMap.remove(oldKey);
+              distributionMap[keyChanges[oldKey]!] = value!;
+            }
+          }
+        }
+
         final statisticsDto = StatisticsDto.fromJson(results);
         return statisticsDto;
       } else {
