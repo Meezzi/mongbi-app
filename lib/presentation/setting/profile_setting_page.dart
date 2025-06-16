@@ -6,8 +6,8 @@ import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/presentation/setting/widgets/setting_rounded_list_tile_item.dart';
 import 'package:mongbi_app/providers/auth_provider.dart';
 
-class AccountSettingPage extends ConsumerWidget {
-  const AccountSettingPage({super.key});
+class ProfileSettingPage extends ConsumerWidget {
+  const ProfileSettingPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

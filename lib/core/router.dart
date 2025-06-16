@@ -8,9 +8,9 @@ import 'package:mongbi_app/presentation/dream/dream_interpretation_page.dart';
 import 'package:mongbi_app/presentation/dream/dream_write_page.dart';
 import 'package:mongbi_app/presentation/history/history_page.dart';
 import 'package:mongbi_app/presentation/home/home_page.dart';
-import 'package:mongbi_app/presentation/setting/account_setting_page.dart';
 import 'package:mongbi_app/presentation/setting/alarm_setting_page.dart';
 import 'package:mongbi_app/presentation/setting/nickname_input_page.dart';
+import 'package:mongbi_app/presentation/setting/profile_setting_page.dart';
 import 'package:mongbi_app/presentation/setting/setting_page.dart';
 import 'package:mongbi_app/presentation/splash/splash_page.dart';
 import 'package:mongbi_app/presentation/statistics/statistics_page.dart';
@@ -75,8 +75,8 @@ final GoRouter router = GoRouter(
       builder: (context, state) => DreamInterpretationPage(),
     ),
     GoRoute(
-      path: '/account_setting',
-      builder: (context, state) => AccountSettingPage(),
+      path: '/profile_setting',
+      builder: (context, state) => ProfileSettingPage(),
     ),
     GoRoute(
       path: '/alarm_setting',
