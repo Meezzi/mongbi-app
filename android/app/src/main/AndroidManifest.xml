@@ -2,7 +2,7 @@
 <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:label="mongbi_app"
+        android:label="몽비"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
 
