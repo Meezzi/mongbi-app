@@ -9,6 +9,7 @@ import 'package:mongbi_app/presentation/dream/dream_intro_page.dart';
 import 'package:mongbi_app/presentation/dream/dream_write_page.dart';
 import 'package:mongbi_app/presentation/history/history_page.dart';
 import 'package:mongbi_app/presentation/home/home_page.dart';
+import 'package:mongbi_app/presentation/remind/remind_time_setting_page.dart';
 import 'package:mongbi_app/presentation/remind/remind_time_time_setting_page.dart';
 import 'package:mongbi_app/presentation/setting/alarm_setting_page.dart';
 import 'package:mongbi_app/presentation/setting/nickname_input_page.dart';
@@ -52,6 +53,11 @@ final GoRouter router = GoRouter(
       path: '/remindtime_setting',
       builder: (context, state) => RemindTimeSettingPage(),
     ),
+    GoRoute(
+      path: '/remindtime_time_setting',
+      builder: (context, state) => RemindTimePickerPage(),
+    ),
+    
     GoRoute(
       path: '/dream_write',
       pageBuilder:

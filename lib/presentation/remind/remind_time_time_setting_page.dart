@@ -8,7 +8,6 @@ import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_butto
 import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_text_widget.dart';
 import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_widget.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class RemindTimePickerPage extends StatefulWidget {
   const RemindTimePickerPage({super.key});
