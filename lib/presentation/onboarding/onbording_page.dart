@@ -71,18 +71,26 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 24.0),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      OnboardingImage(assetPath: item['image']),
-                      const SizedBox(height: 32),
+                      const SizedBox(height: 90), // 상단 여백
+                      ExpandingDotsIndicator(
+                        currentPage: _currentPage,
+                        count: onboardingData.length,
+                      ),
+                      const SizedBox(height: 24),
                       OnboardingText(
                         text: item['title'],
                         type: OnboardingTextType.title,
                       ),
-                      const SizedBox(height: 16),
+                      const SizedBox(height: 8),
                       OnboardingText(
                         text: item['description'],
                         type: OnboardingTextType.description,
+                      ),
+                      const SizedBox(height: 80),
+                      Expanded(
+                        child: OnboardingImage(assetPath: item['image']),
                       ),
                     ],
                   ),
@@ -97,17 +105,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 text: isLastPage ? '끝내기' : '건너뛰기',
               ),
             ),
-            Positioned(
-              bottom: 40,
-              left: 0,
-              right: 0,
-              child: Center(
-                child: ExpandingDotsIndicator(
-                  currentPage: _currentPage,
-                  count: onboardingData.length,
-                ),
-              ),
-            ),
+            
           ],
         ),
       ),

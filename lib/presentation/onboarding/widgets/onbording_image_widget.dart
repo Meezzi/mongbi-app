@@ -6,7 +6,7 @@ class OnboardingImage extends StatelessWidget {
     super.key,
     required this.assetPath,
     this.width = 266,
-    this.height = 576,
+    this.height = 950,
   });
   final String assetPath;
   final double width;
