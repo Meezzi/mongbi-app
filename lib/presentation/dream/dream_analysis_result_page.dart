@@ -50,7 +50,7 @@ class _DreamAnalysisResultPageState extends State<DreamAnalysisResultPage> {
                 const SizedBox(height: 40),
                 FloatingAnimationWidget(
                   child: Image.asset(
-                    'assets/images/splash_mongbi.png',
+                    'assets/images/splash_mongbi.webp',
                     width: screenHeight * 0.28,
                     height: screenHeight * 0.28,
                   ),
