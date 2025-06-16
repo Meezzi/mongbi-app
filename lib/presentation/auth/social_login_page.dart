@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mongbi_app/presentation/auth/widgets/apple_login_button_widget.dart';
 import 'package:mongbi_app/presentation/auth/widgets/kakao_login_button_widget.dart';
 import 'package:mongbi_app/presentation/auth/widgets/last_login_state_weiget.dart';
 import 'package:mongbi_app/presentation/auth/widgets/mongbi_image_widget.dart';
@@ -35,13 +34,13 @@ class SocialLoginPage extends ConsumerWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      // _SocialLoginItem(
+                      //   showRecentBubble: lastLoginProvider == 'apple',
+                      //   child: AppleLoginButton(onTap: () {}),
+                      // ),
+                      // const SizedBox(width: 24),
                       _SocialLoginItem(
-                        showRecentBubble: lastLoginProvider == "apple",
-                        child: AppleLoginButton(onTap: () {}),
-                      ),
-                      const SizedBox(width: 24),
-                      _SocialLoginItem(
-                        showRecentBubble: lastLoginProvider == "kakao",
+                        showRecentBubble: lastLoginProvider == 'kakao',
                         child: KakaoLoginButton(
                           onTap: () async {
                             final authViewModel = ref.read(
@@ -49,31 +48,42 @@ class SocialLoginPage extends ConsumerWidget {
                             );
                             try {
                               await authViewModel.loginWithKakao();
+                              await showModalBottomSheet(
+                                context: context,
+                                isScrollControlled: true,
+                                backgroundColor:
+                                    Colors.transparent, // 바깥 배경 둥글기 유지
+                                builder: (_) => const TermsBottomSheet(),
+                              );
                             } catch (e) {
-                              //TODO 오류 사용자에게 표시 스낵바
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('카카오 로그인 실패 $e')),
+                              );
                             }
                           },
                         ),
                       ),
                       const SizedBox(width: 24),
                       _SocialLoginItem(
-                        showRecentBubble: lastLoginProvider == "naver",
+                        showRecentBubble: lastLoginProvider == 'naver',
                         child: NaverLoginButton(
                           onTap: () async {
-                            await showModalBottomSheet(
-                              context: context,
-                              isScrollControlled: true,
-                              backgroundColor:
-                                  Colors.transparent, // 바깥 배경 둥글기 유지
-                              builder: (_) => const TermsBottomSheet(),
-                            );
                             final authViewModel = ref.read(
                               authViewModelProvider.notifier,
                             );
                             try {
                               await authViewModel.loginWithNaver();
+                              await showModalBottomSheet(
+                                context: context,
+                                isScrollControlled: true,
+                                backgroundColor:
+                                    Colors.transparent, // 바깥 배경 둥글기 유지
+                                builder: (_) => const TermsBottomSheet(),
+                              );
                             } catch (e) {
-                              //TODO 오류 사용자에게 표시 스낵바
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('네이버 로그인 실패 $e')),
+                              );
                             }
                           },
                         ),

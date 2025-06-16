@@ -22,10 +22,12 @@ class RemoteKakaoAuthDataSource {
 
       final jwt = response.data['token'];
       final userDto = UserDto.fromJson(response.data['user']);
-
+      final userMap = response.data['user'];
+      final int userIdx = userMap['USER_IDX'];
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('jwt_token', jwt);
-
+      await prefs.setInt('user_id', userIdx);
+      await prefs.setBool('isLogined', true);
       return LoginResponseDto(token: jwt, user: userDto);
     } catch (e, s) {
       throw Exception('카카오 로그인 오류: $e \n $s');

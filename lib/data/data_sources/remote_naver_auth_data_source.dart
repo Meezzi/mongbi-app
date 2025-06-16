@@ -11,10 +11,6 @@ class RemoteNaverAuthDataSource {
   Future<LoginResponseDto> login() async {
     String jwt = '';
     UserDto? userDto;
-    try {} catch (e) {
-      //TODO 오류처리 추후 예정
-    }
-
     try {
       final tokenResult = await FlutterNaverLogin.getCurrentAccessToken();
       if (!tokenResult.isValid()) {
@@ -30,13 +26,14 @@ class RemoteNaverAuthDataSource {
 
       if (response.statusCode == 201 && response.data['token'] != null) {
         jwt = response.data['token'];
-        userDto = UserDto.fromJson(response.data['user']);
+        final userMap = response.data['user'];
+        final int userIdx = userMap['USER_IDX'];
         final prefs = await SharedPreferences.getInstance();
-        await prefs.setString('jwt_token', jwt);
+        await prefs.setBool('isLogined', true);
+        await prefs.setInt('user_id', userIdx);
+        userDto = UserDto.fromJson(response.data['user']);
       } else {}
-    } catch (e) {
-      //TODO 오류처리 추후 예정
-    }
+    } catch (e) {}
     return LoginResponseDto(token: jwt, user: userDto!);
   }
 }

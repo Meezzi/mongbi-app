@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/presentation/common/floating_animation_widget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -16,9 +17,21 @@ class _SplashPageState extends State<SplashPage>
   void initState() {
     super.initState();
 
-    Future.delayed(const Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 3), () async {
       if (mounted) {
-        context.go('/social_login');
+        late final bool aggreedState;
+        late final bool loginState;
+        final prefs = await SharedPreferences.getInstance();
+        aggreedState = prefs.getBool('isaggreed') ?? false;
+        loginState = prefs.getBool('isLogined') ?? false;
+
+        if (loginState) {
+          context.go('/home');
+        } else if (loginState == true && !aggreedState) {
+          //홈 화면으로 이동후 바텀 시트 출력되게
+        } else {
+          context.go('/social_login');
+        }
       }
     });
   }
@@ -55,7 +68,11 @@ class _SplashPageState extends State<SplashPage>
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  '안녕, 난 몽비!\n꿈을 먹는 도깨비다몽',
+                  '안녕, 난 몽비!',
+                  style: Font.title24.copyWith(color: Colors.white),
+                ),
+                Text(
+                  '꿈을 먹는 도깨비다몽',
                   style: Font.title24.copyWith(color: Colors.white),
                 ),
                 SizedBox(height: screenHeight * 0.035),

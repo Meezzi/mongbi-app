@@ -5,23 +5,23 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:mongbi_app/core/router.dart';
 import 'package:mongbi_app/providers/background_music_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.clear(); // 앱 시작 시 모든 SharedPreferences 삭제
   await dotenv.load(fileName: '.env');
-
+  // FlutterNaverLogin.logOut();
   // 캘린더 한글화
   await initializeDateFormatting();
-  WidgetsFlutterBinding.ensureInitialized();
 
-  // runApp() 호출 전 Flutter SDK 초기화
   KakaoSdk.init(
     nativeAppKey: dotenv.env['KAKAO_NATIVE_APP_KEY'],
     javaScriptAppKey: dotenv.env['KAKAO_JAVA_SCRIPT_APP_KEY'],
   );
-  
-  runApp(ProviderScope(child: const MyApp()));
+
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends ConsumerStatefulWidget {

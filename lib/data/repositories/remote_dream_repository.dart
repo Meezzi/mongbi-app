@@ -46,7 +46,6 @@ class RemoteDreamRepository implements DreamRepository {
       mongbiComment: responseMap['mongbiComment'] as String,
       dreamCategory: responseMap['dreamCategory'] as String,
     );
-
     return dream;
   }
 }
