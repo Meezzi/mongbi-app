@@ -35,11 +35,11 @@ class SocialLoginPage extends ConsumerWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      _SocialLoginItem(
-                        showRecentBubble: lastLoginProvider == 'apple',
-                        child: AppleLoginButton(onTap: () {}),
-                      ),
-                      const SizedBox(width: 24),
+                      // _SocialLoginItem(
+                      //   showRecentBubble: lastLoginProvider == 'apple',
+                      //   child: AppleLoginButton(onTap: () {}),
+                      // ),
+                      // const SizedBox(width: 24),
                       _SocialLoginItem(
                         showRecentBubble: lastLoginProvider == 'kakao',
                         child: KakaoLoginButton(

@@ -40,7 +40,7 @@ class NicknameSubmitButton extends StatelessWidget {
             '이렇게 불러줘',
             textAlign: TextAlign.center,
             style: Font.title18.copyWith(
-              color: Color.fromARGB(255, 255, 255, 255),
+              color: enabled ? Color(0xFFFFFFFF) : const Color(0xFFD6D4D8),
             ),
           ),
         ),
