@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/font.dart';
+import 'package:mongbi_app/presentation/common/floating_animation_widget.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -11,9 +12,6 @@ class SplashPage extends StatefulWidget {
 
 class _SplashPageState extends State<SplashPage>
     with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<Offset> _floatingAnimation;
-
   @override
   void initState() {
     super.initState();
@@ -23,22 +21,6 @@ class _SplashPageState extends State<SplashPage>
         context.go('/social_login');
       }
     });
-
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 1400),
-    )..repeat(reverse: true);
-
-    _floatingAnimation = Tween<Offset>(
-      begin: const Offset(0, 0),
-      end: const Offset(0, -0.02),
-    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
   }
 
   @override
@@ -77,8 +59,7 @@ class _SplashPageState extends State<SplashPage>
                   style: Font.title24.copyWith(color: Colors.white),
                 ),
                 SizedBox(height: screenHeight * 0.035),
-                SlideTransition(
-                  position: _floatingAnimation,
+                FloatingAnimationWidget(
                   child: Image.asset(
                     'assets/images/splash_mongbi.png',
                     width: screenHeight * 0.38,
