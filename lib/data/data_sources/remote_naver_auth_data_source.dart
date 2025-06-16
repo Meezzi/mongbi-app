@@ -18,15 +18,12 @@ class RemoteNaverAuthDataSource {
       }
 
       final accessToken = tokenResult.accessToken;
-
-      // 3. 서버에 accessToken 전송
       final response = await dio.post(
         '/users/naver-login',
         data: {'access_token': accessToken},
         options: Options(headers: {'Content-Type': 'application/json'}),
       );
 
-      // 4. 서버 응답 확인
       if (response.statusCode == 201 && response.data['token'] != null) {
         jwt = response.data['token'];
         final userMap = response.data['user'];
