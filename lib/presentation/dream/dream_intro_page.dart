@@ -17,7 +17,7 @@ class _DreamAnalysisResultPageState extends State<DreamIntroPage> {
 
     Future.delayed(const Duration(milliseconds: 1500), () {
       if (mounted) {
-        context.go('/dream_write');
+        context.pushReplacement('/dream_write');
       }
     });
   }
