@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:mongbi_app/core/custom_transition_page.dart';
 import 'package:mongbi_app/core/main_scaffold.dart';
 import 'package:mongbi_app/presentation/auth/social_login_page.dart';
 import 'package:mongbi_app/presentation/dream/dream_analysis_loading_page.dart';
@@ -44,15 +45,27 @@ final GoRouter router = GoRouter(
     ),
     GoRoute(
       path: '/dream_write',
-      builder: (context, state) => DreamWritePage(),
+      pageBuilder:
+          (context, state) => buildFadeTransitionPage(
+            key: state.pageKey,
+            child: DreamWritePage(),
+          ),
     ),
     GoRoute(
       path: '/dream_analysis_loading',
-      builder: (context, state) => DreamAnalysisLoadingPage(),
+      pageBuilder:
+          (context, state) => buildFadeTransitionPage(
+            key: state.pageKey,
+            child: DreamAnalysisLoadingPage(),
+          ),
     ),
     GoRoute(
       path: '/dream_analysis_result',
-      builder: (context, state) => DreamAnalysisResultPage(),
+      pageBuilder:
+          (context, state) => buildFadeTransitionPage(
+            key: state.pageKey,
+            child: DreamAnalysisResultPage(),
+          ),
     ),
     GoRoute(
       path: '/dream_interpretation',
