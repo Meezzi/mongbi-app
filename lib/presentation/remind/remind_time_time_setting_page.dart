@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/font.dart';
+import 'package:mongbi_app/presentation/remind/view_model/remind_time_setting_view_model.dart';
 import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_button_widget.dart';
 import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_text_widget.dart';
 import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_widget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RemindTimePickerPage extends StatefulWidget {
   const RemindTimePickerPage({super.key});
@@ -72,18 +76,43 @@ class _RemindTimePickerPageState extends State<RemindTimePickerPage> {
               child: Center(
                 child: Text(
                   '나중에 다시 설정할 수 있어요',
-                  style: Font.subTitle14.copyWith(color: const Color(0xFFA6A1AA)),
+                  style: Font.subTitle14.copyWith(
+                    color: const Color(0xFFA6A1AA),
+                  ),
                 ),
               ),
             ),
-            
+
             Positioned(
               bottom: 32,
               left: 24,
               right: 24,
               child: RemindTimeSettingButtonWidget(
-                onTap: () {
-                  // 저장 또는 다음 화면 이동 로직
+                onTap: () async {
+                  try {
+                    await NotificationService().scheduleDailyReminder(
+                      selectedTime,
+                    );
+                    // 알림 등록 성공 후 다음 화면 이동 등 로직
+                    await NotificationService().showInstantNotification();
+                    print('💚 알림 등록 성공');
+                    context.go('/home');
+                  } catch (e) {
+                    if (e is PlatformException &&
+                        e.code == 'exact_alarms_not_permitted') {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('정확한 알람 권한이 필요해요! 설정에서 권한을 허용해주세요.'),
+                        ),
+                      );
+
+                      // 설정으로 이동
+                      await NotificationService()
+                          .openExactAlarmSettingsIfNeeded();
+                    } else {
+                      print('알림 등록 실패: $e');
+                    }
+                  }
                 },
               ),
             ),
