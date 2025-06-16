@@ -1,52 +1,54 @@
 import 'package:flutter/material.dart';
-import 'package:mongbi_app/presentation/auth/widgets/text_widgets.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/presentation/onboarding/widgets/onbording_exit_button_widget.dart';
 import 'package:mongbi_app/presentation/onboarding/widgets/onbording_exit_image_widget.dart';
+import 'package:mongbi_app/presentation/onboarding/widgets/onbording_exit_text_widget.dart';
 
-class OnboardingFinalPage extends StatelessWidget {
-  const OnboardingFinalPage({super.key});
+class OnboardingExitPage extends StatelessWidget {
+  const OnboardingExitPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 24,top: 16),
+          child: IconButton(
+            icon: SvgPicture.asset(
+              'assets/icons/back-arrow.svg',
+              width: 24,
+              height: 24,
+            ),
+            onPressed: () => context.go('/home'),
+            splashRadius: 20,
+          ),
+        ),
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        foregroundColor: Colors.black,
+        toolbarHeight: 56, 
+        titleSpacing: 0,
+      ),
       body: SafeArea(
-        child: Stack(
-          children: [
-            Positioned(
-              top: 16,
-              left: 16,
-              child: IconButton(
-                icon: const Icon(Icons.arrow_back_ios_new),
-                onPressed: () => Navigator.pop(context),
-              ),
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const SizedBox(height: 64),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 24),
-                  child: CustomText(
-                    text: '그럼, 몽비와 함께\n꿈을 만나러 가볼까요?',
-                  ),
-                ),
-                const SizedBox(height: 40),
-                const OnboardingExitImage(
-                  assetPath: 'assets/images/character_mongbi.png',
-                ),
-              ],
-            ),
-            Positioned(
-              left: 24,
-              right: 24,
-              bottom: 32,
-              child: OnbordingExitButtonWidget(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: Column(
+            children: [
+              const Spacer(),
+              const CustomText(text: '그럼, 몽비와 함께'),
+              const CustomText(text: '꿈을 만나러 가볼까요?'),
+              const SizedBox(height: 40),
+              const OnboardingExitImage(assetPath: 'assets/images/mongbi.png'),
+              const Spacer(),
+              OnbordingExitButtonWidget(
                 onTap: () {
-                  Navigator.pushReplacementNamed(context, '/home');
+                  context.go('/onbording_exit');
                 },
               ),
-            ),
-          ],
+              const SizedBox(height: 32),
+            ],
+          ),
         ),
       ),
     );
