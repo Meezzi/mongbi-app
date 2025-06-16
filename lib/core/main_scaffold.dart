@@ -15,7 +15,7 @@ class MainScaffold extends StatelessWidget {
     int selectedIndex = switch (location) {
       _ when location.startsWith('/history') => 1,
       _ when location.startsWith('/statistics') => 2,
-      _ when location.startsWith('/mypage') => 3,
+      _ when location.startsWith('/setting') => 3,
       _ => 0,
     };
 
@@ -27,7 +27,7 @@ class MainScaffold extends StatelessWidget {
       extendBodyBehindAppBar: location.startsWith('/home') ? true : false,
       body: child,
       bottomNavigationBar: BottomAppBar(
-        color: isHistory ? const Color(0xFF3B136B) : Colors.white,
+        color: _buildBottomAppBarColor(location),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -79,13 +79,27 @@ class MainScaffold extends StatelessWidget {
               3,
               selectedIndex == 3,
               'user',
-              '/mypage',
+              '/setting',
               isHistory,
             ),
           ],
         ),
       ),
     );
+  }
+
+  Color _buildBottomAppBarColor(String location) {
+    switch (location) {
+      case '/home':
+      case '/statistics':
+        return Colors.white;
+      case '/history':
+        return Color(0xFF3B136B);
+      case '/setting':
+        return Color(0xFFFCF6FF);
+      default:
+        return Colors.white;
+    }
   }
 
   AppBar? _buildAppBar(String location) {
@@ -96,6 +110,7 @@ class MainScaffold extends StatelessWidget {
           style: Font.title24.copyWith(color: Colors.white),
         ),
         backgroundColor: Colors.transparent,
+        titleSpacing: 24,
         elevation: 0,
         actions: [
           IconButton(
@@ -106,14 +121,20 @@ class MainScaffold extends StatelessWidget {
           ),
         ],
       );
-    }
-
-    if (location.startsWith('/statistics')) {
+    } else if (location.startsWith('/statistics')) {
       return AppBar(
         backgroundColor: Colors.white,
         titleSpacing: 24,
         centerTitle: false,
         title: Text('모몽의 꿈 통계', style: Font.title20),
+      );
+    } else if (location.startsWith('/setting')) {
+      return AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        titleSpacing: 24,
+        title: Text('마이페이지', style: Font.title20),
+        centerTitle: false,
       );
     }
 

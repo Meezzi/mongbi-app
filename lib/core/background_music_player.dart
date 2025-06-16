@@ -7,46 +7,60 @@ class BackgroundMusicPlayer {
   }
 
   final AudioPlayer _player;
-  bool _isPaused = false;
+  bool _isPaused = true;
+  bool _isFadingOut = false;
 
-  void playBgm() async {
+  Future<void> playBgm() async {
+    if (_isFadingOut) _isFadingOut = false;
+    if (!_isPaused) return;
+
+    _isPaused = false;
     await _player.setVolume(1.0);
     await _player.play(AssetSource('audio/background_music.mp3'));
-    _isPaused = false;
   }
 
-  void resumeBgm() async {
-    if (_isPaused) {
-      try {
-        await _player.resume();
-        _isPaused = false;
-      } catch (e) {
-        playBgm();
-      }
+  Future<void> resumeBgm() async {
+    if (_isFadingOut || !_isPaused) return;
+
+    try {
+      await _player.resume();
+      _isPaused = false;
+    } catch (_) {
+      await playBgm();
     }
-  }
-
-  void dispose() {
-    _player.dispose();
   }
 
   Future<void> fadeOutAndPause({
     Duration duration = const Duration(seconds: 1),
   }) async {
-    if (_isPaused) return;
+    if (_isPaused || _isFadingOut) return;
 
+    _isFadingOut = true;
     const int steps = 20;
     final double stepSize = 1.0 / steps;
-    final int stepDuration = duration.inMilliseconds ~/ steps;
+    final int stepDelay = duration.inMilliseconds ~/ steps;
 
     for (int i = 0; i <= steps; i++) {
-      final volume = 1.0 - (i * stepSize);
-      await _player.setVolume(volume.clamp(0.0, 1.0));
-      await Future.delayed(Duration(milliseconds: stepDuration));
+      if (!_isFadingOut) {
+        await _player.setVolume(1.0);
+        return;
+      }
+
+      final volume = (1.0 - i * stepSize).clamp(0.0, 1.0);
+      await _player.setVolume(volume);
+      await Future.delayed(Duration(milliseconds: stepDelay));
     }
 
-    await _player.pause();
-    _isPaused = true;
-    await _player.setVolume(1.0);
+    if (_isFadingOut) {
+      await _player.pause();
+      _isPaused = true;
+      await _player.setVolume(1.0);
+    }
+
+    _isFadingOut = false;
+  }
+
+  void dispose() {
+    _player.dispose();
   }
 }

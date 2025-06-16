@@ -8,7 +8,10 @@ import 'package:mongbi_app/presentation/dream/dream_interpretation_page.dart';
 import 'package:mongbi_app/presentation/dream/dream_write_page.dart';
 import 'package:mongbi_app/presentation/history/history_page.dart';
 import 'package:mongbi_app/presentation/home/home_page.dart';
-import 'package:mongbi_app/presentation/profile/profile_setting_page.dart';
+import 'package:mongbi_app/presentation/setting/alarm_setting_page.dart';
+import 'package:mongbi_app/presentation/setting/nickname_input_page.dart';
+import 'package:mongbi_app/presentation/setting/profile_setting_page.dart';
+import 'package:mongbi_app/presentation/setting/setting_page.dart';
 import 'package:mongbi_app/presentation/splash/splash_page.dart';
 import 'package:mongbi_app/presentation/statistics/statistics_page.dart';
 
@@ -31,7 +34,7 @@ final GoRouter router = GoRouter(
           path: '/statistics',
           builder: (context, state) => const StatisticsPage(),
         ),
-        // TODO: 통계 화면, 프로필 화면으로 이동
+        GoRoute(path: '/setting', builder: (context, state) => SettingPage()),
       ],
     ),
     GoRoute(path: '/splash', builder: (context, state) => SplashPage()),
@@ -70,6 +73,14 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/dream_interpretation',
       builder: (context, state) => DreamInterpretationPage(),
+    ),
+    GoRoute(
+      path: '/profile_setting',
+      builder: (context, state) => ProfileSettingPage(),
+    ),
+    GoRoute(
+      path: '/alarm_setting',
+      builder: (context, state) => AlarmSettingPage(),
     ),
   ],
 );

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mongbi_app/presentation/profile/widgets/nickname_submit_button.dart';
-import 'package:mongbi_app/presentation/profile/widgets/nickname_text_field.dart';
-import 'package:mongbi_app/presentation/profile/widgets/nickname_title.dart';
+import 'package:mongbi_app/presentation/setting/widgets/nickname_submit_button.dart';
+import 'package:mongbi_app/presentation/setting/widgets/nickname_text_field.dart';
+import 'package:mongbi_app/presentation/setting/widgets/nickname_title.dart';
 import 'package:mongbi_app/providers/nickname_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
