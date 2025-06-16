@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mongbi_app/presentation/remind/view_model/remind_time_setting_view_model.dart';
 import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_button_widget.dart';
 import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_image_widget.dart';
 import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_text_widget.dart';
@@ -54,8 +55,18 @@ class RemindTimeSettingPage extends StatelessWidget {
               ),
               const Spacer(),
               RemindTimeSettingButtonWidget(
-                onTap: () {
-                  context.go('/onbording_exit');
+                onTap: () async {
+                  final granted = await requestNotificationPermission();
+                  if (granted) {
+                    context.go('/onbording_exit');
+                  } else {
+                    // 권한 거부 안내
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('알림 권한을 허용해야 다음 단계로 진행할 수 있어요.'),
+                      ),
+                    );
+                  }
                 },
               ),
               const SizedBox(height: 32),
