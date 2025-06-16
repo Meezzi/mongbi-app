@@ -25,33 +25,33 @@ void main() {
     "MONTH": "2025-06",
     "FREQUENCY": 20,
     "DISTRIBUTION": {
-      "VERY_BAD": 10,
-      "BAD": 10,
-      "ORDINARY": 30,
-      "GOOD": 0,
-      "VERY_GOOD": 50
+      "1": 10,
+      "2": 10,
+      "3": 30,
+      "4": 0,
+      "5": 50
     },
     "MOOD_STATE": {
       "GOOD_DREAM": {
-        "VERY_BAD": 0,
-        "BAD": 3,
-        "ORDINARY": 4,
-        "GOOD": 2,
-        "VERY_GOOD": 7
+        "1": 0,
+        "2": 3,
+        "3": 4,
+        "4": 2,
+        "5": 7
       },
       "ORDINARY_DREAM": {
-        "VERY_BAD": 1,
-        "BAD": 3,
-        "ORDINARY": 0,
-        "GOOD": 2,
-        "VERY_GOOD": 7
+        "1": 1,
+        "2": 3,
+        "3": 0,
+        "4": 2,
+        "5": 7
       },
       "BAD_DREAM": {
-        "VERY_BAD": 1,
-        "BAD": 3,
-        "ORDINARY": 4,
-        "GOOD": 2,
-        "VERY_GOOD": 0
+        "1": 1,
+        "2": 3,
+        "3": 4,
+        "4": 2,
+        "5": 0
       }
     },
     "KEYWORDS": [
