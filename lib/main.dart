@@ -5,6 +5,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:mongbi_app/core/router.dart';
 import 'package:mongbi_app/providers/background_music_provider.dart';
+import 'package:mongbi_app/providers/setting_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,7 +35,11 @@ class _MyAppState extends ConsumerState<MyApp> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    ref.read(backgroundMusicProvider).playBgm();
+
+    final isBgmOn = ref.read(bgmProvider);
+    if (isBgmOn) {
+      ref.read(backgroundMusicProvider).playBgm();
+    }
   }
 
   @override
