@@ -12,7 +12,7 @@ void main() async {
   final prefs = await SharedPreferences.getInstance();
   await prefs.clear(); // 앱 시작 시 모든 SharedPreferences 삭제
   await dotenv.load(fileName: '.env');
-
+  // FlutterNaverLogin.logOut();
   // 캘린더 한글화
   await initializeDateFormatting();
 
