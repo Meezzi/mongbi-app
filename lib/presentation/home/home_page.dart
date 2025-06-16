@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mongbi_app/presentation/auth/widgets/mongbi_image_widget.dart';
+import 'package:mongbi_app/presentation/common/floating_animation_widget.dart';
 import 'package:mongbi_app/presentation/home/widgets/speech_bubble.dart';
 
 class HomePage extends StatelessWidget {
@@ -50,8 +50,18 @@ class HomePage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                CustomSpeechBubble(text: '킁킁... 좋은 꿈 냄새 난다몽'),
-                MongbiCharacter(size: 288),
+                FloatingAnimationWidget(
+                  child: Column(
+                    children: [
+                      CustomSpeechBubble(text: '킁킁... 좋은 꿈 냄새 난다몽'),
+                      Image.asset(
+                        'assets/images/splash_mongbi.png',
+                        width: 288,
+                        height: 288,
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
