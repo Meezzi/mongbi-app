@@ -60,6 +60,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
     final _ = onboardingData[_currentPage];
     bool isLastPage = _currentPage == onboardingData.length - 1;
     return Scaffold(
+      backgroundColor: Color(0xFFFAFAFA),
       body: SafeArea(
         child: Stack(
           children: [
@@ -73,7 +74,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      const SizedBox(height: 90), // 상단 여백
+                      const SizedBox(height: 150), // 상단 여백
                       ExpandingDotsIndicator(
                         currentPage: _currentPage,
                         count: onboardingData.length,
@@ -105,7 +106,27 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 text: isLastPage ? '끝내기' : '건너뛰기',
               ),
             ),
-            
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: 0,
+              child: IgnorePointer(
+                child: Container(
+                  height: 145,
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Color(0x00FAFAFA),
+                        Color(0xFFFAFAFA), 
+                      ],
+                      stops: [0.0, 0.81],
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
