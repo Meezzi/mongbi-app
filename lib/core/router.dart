@@ -5,6 +5,7 @@ import 'package:mongbi_app/presentation/auth/social_login_page.dart';
 import 'package:mongbi_app/presentation/dream/dream_analysis_loading_page.dart';
 import 'package:mongbi_app/presentation/dream/dream_analysis_result_page.dart';
 import 'package:mongbi_app/presentation/dream/dream_interpretation_page.dart';
+import 'package:mongbi_app/presentation/dream/dream_intro_page.dart';
 import 'package:mongbi_app/presentation/dream/dream_write_page.dart';
 import 'package:mongbi_app/presentation/history/history_page.dart';
 import 'package:mongbi_app/presentation/home/home_page.dart';
@@ -45,6 +46,14 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/nickname_input',
       builder: (context, state) => NicknameInputPage(),
+    ),
+    GoRoute(
+      path: '/dream_intro',
+      pageBuilder:
+          (context, state) => buildFadeTransitionPage(
+            key: state.pageKey,
+            child: DreamIntroPage(),
+          ),
     ),
     GoRoute(
       path: '/dream_write',
