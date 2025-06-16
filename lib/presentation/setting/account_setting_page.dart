@@ -13,7 +13,7 @@ class AccountSettingPage extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('계정 설정', style: Font.title20),
+        title: Text('프로필 설정', style: Font.title20),
         titleSpacing: 0,
         backgroundColor: Color(0xFFFAFAFA),
       ),
@@ -21,20 +21,22 @@ class AccountSettingPage extends ConsumerWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // TODO: 사용자의 이메일과 로그인 타입
-                Text('계정 정보', style: Font.body16),
-                SizedBox(height: 16),
-                Text('mongbi2025@mongbi.com', style: Font.body16),
-                Text(
-                  '${user!.userSocialType}로 가입한 계정이에요',
-                  style: Font.body12.copyWith(color: Color(0xFF76717A)),
-                ),
-              ],
+          InkWell(
+            onTap: () {},
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // TODO: 사용자 별명
+                  Text('별명 설정', style: Font.body16),
+                  SizedBox(width: 8),
+                  Text(
+                    user!.userNickname ?? '',
+                    style: Font.body16.copyWith(color: Color(0xFF8C2EFF)),
+                  ),
+                ],
+              ),
             ),
           ),
 
