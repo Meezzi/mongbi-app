@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/font.dart';
-import 'package:mongbi_app/presentation/auth/widgets/mongbi_image_widget.dart';
+import 'package:mongbi_app/presentation/common/floating_animation_widget.dart';
 
 class DreamAnalysisResultPage extends StatefulWidget {
   const DreamAnalysisResultPage({super.key});
@@ -25,17 +25,15 @@ class _DreamAnalysisResultPageState extends State<DreamAnalysisResultPage> {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [
-              Color(0xFFFFFDFF),
-              Color(0xFFEFD3FF),
-              Color(0xFFD1FFFD),
-            ],
+            colors: [Color(0xFFFFFDFF), Color(0xFFEFD3FF), Color(0xFFD1FFFD)],
             stops: [0.0, 0.5, 1.0],
           ),
         ),
@@ -50,7 +48,13 @@ class _DreamAnalysisResultPageState extends State<DreamAnalysisResultPage> {
                   style: Font.title20,
                 ),
                 const SizedBox(height: 40),
-                MongbiCharacter(size: 288),
+                FloatingAnimationWidget(
+                  child: Image.asset(
+                    'assets/images/splash_mongbi.png',
+                    width: screenHeight * 0.28,
+                    height: screenHeight * 0.28,
+                  ),
+                ),
               ],
             ),
           ),

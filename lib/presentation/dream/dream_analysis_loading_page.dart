@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/font.dart';
-import 'package:mongbi_app/presentation/auth/widgets/mongbi_image_widget.dart';
+import 'package:mongbi_app/presentation/common/floating_animation_widget.dart';
 import 'package:mongbi_app/providers/dream_provider.dart';
 
 class DreamAnalysisLoadingPage extends ConsumerStatefulWidget {
@@ -24,6 +24,8 @@ class _DreamAnalysisLoadingPageState
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -49,7 +51,13 @@ class _DreamAnalysisLoadingPageState
                   style: Font.title20,
                 ),
                 const SizedBox(height: 40),
-                MongbiCharacter(size: 288),
+                FloatingAnimationWidget(
+                  child: Image.asset(
+                    'assets/images/splash_mongbi.png',
+                    width: screenHeight * 0.28,
+                    height: screenHeight * 0.28,
+                  ),
+                ),
               ],
             ),
           ),
