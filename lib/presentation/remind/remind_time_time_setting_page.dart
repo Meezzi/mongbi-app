@@ -7,6 +7,7 @@ import 'package:mongbi_app/presentation/remind/view_model/remind_time_setting_vi
 import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_button_widget.dart';
 import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_text_widget.dart';
 import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_widget.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class RemindTimePickerPage extends StatefulWidget {
@@ -104,6 +105,17 @@ class _RemindTimePickerPageState extends State<RemindTimePickerPage> {
               child: RemindTimeSettingButtonWidget(
                 onTap: () async {
                   try {
+                    print('⏱️ 현재 시각: ${DateTime.now()}');
+                    print('🔍 예약할 시간: ${selectedTime.format(context)}');
+
+                    final exactAlarmStatus =
+                        await Permission.scheduleExactAlarm.status;
+                    final batteryOptStatus =
+                        await Permission.ignoreBatteryOptimizations.status;
+
+                    print('✅ 정확 알람 권한 상태: $exactAlarmStatus');
+                    print('⚡️ 배터리 최적화 예외 상태: $batteryOptStatus');
+
                     await NotificationService().scheduleDailyReminder(
                       selectedTime,
                     );
