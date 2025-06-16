@@ -58,7 +58,7 @@ class RemindTimeSettingPage extends StatelessWidget {
                 onTap: () async {
                   final granted = await requestNotificationPermission();
                   if (granted) {
-                    context.go('/onbording_exit');
+                    context.go('/remindtime_time_setting');
                   } else {
                     // 권한 거부 안내
                     ScaffoldMessenger.of(context).showSnackBar(
