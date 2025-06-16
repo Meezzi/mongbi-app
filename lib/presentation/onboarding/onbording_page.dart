@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/presentation/onboarding/widgets/onbording_image_widget.dart';
 import 'package:mongbi_app/presentation/onboarding/widgets/onbording_indicator_widget.dart';
 import 'package:mongbi_app/presentation/onboarding/widgets/onbording_skip_button_widget.dart';
@@ -39,7 +40,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
   ];
 
   void _onSkip() {
-    Navigator.pushReplacementNamed(context, '/home');
+    context.go('/onbording_exit');
   }
 
   @override
