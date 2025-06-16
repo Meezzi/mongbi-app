@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-class OnboardingExitImage extends StatelessWidget {
+class RemindTimeSettingImageWidget extends StatelessWidget {
 
-  const OnboardingExitImage({
+  const RemindTimeSettingImageWidget({
     super.key,
     required this.assetPath,
     this.width = 280,
