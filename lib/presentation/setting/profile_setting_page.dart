@@ -3,8 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/font.dart';
+import 'package:mongbi_app/presentation/setting/widgets/logout_confirm_dialog.dart';
 import 'package:mongbi_app/presentation/setting/widgets/setting_rounded_list_tile_item.dart';
 import 'package:mongbi_app/providers/auth_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileSettingPage extends ConsumerWidget {
   const ProfileSettingPage({super.key});
@@ -58,9 +60,42 @@ class ProfileSettingPage extends ConsumerWidget {
             isFirst: false,
             isLast: false,
             onTap: () {
-              // TODO: 로그아웃 로직
+              showDialog(
+                context: context,
+                barrierDismissible: true,
+                builder:
+                    (context) => LogoutConfirmDialog(
+                      onConfirm: () async {
+                        final prefs = await SharedPreferences.getInstance();
+                        final loginType = prefs.getString('lastLoginType');
+
+                        bool success = false;
+                        if (loginType == 'naver') {
+                          success =
+                              await ref
+                                  .read(authViewModelProvider.notifier)
+                                  .logoutWithNaver();
+                        } else if (loginType == 'kakao') {
+                          success =
+                              await ref
+                                  .read(authViewModelProvider.notifier)
+                                  .logoutWithKakao();
+                        }
+
+                        if (success && context.mounted) {
+                          context.go('/social_login');
+                        } else {
+                          Navigator.pop(context);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('로그아웃에 실패했습니다.')),
+                          );
+                        }
+                      },
+                    ),
+              );
             },
           ),
+
           RoundedListTileItem(
             title: '계정 탈퇴',
             isFirst: false,
