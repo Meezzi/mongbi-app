@@ -27,9 +27,11 @@ class MainScaffold extends StatelessWidget {
       extendBodyBehindAppBar: location.startsWith('/home') ? true : false,
       body: child,
       bottomNavigationBar: BottomAppBar(
+        height: 56,
+        padding: EdgeInsets.symmetric(horizontal: 24),
         color: _buildBottomAppBarColor(location),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             _buildTab(
               context,
@@ -57,9 +59,10 @@ class MainScaffold extends StatelessWidget {
                   gradient: LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
+                    stops: isHistory? [0.1, 1.0] : [0, 1.0],
                     colors:
                         isHistory
-                            ? [Color(0xFFC77DFF), Color(0xFF9B30FF)]
+                            ? [Color(0xFFEAC9FA), Color(0xFF8C2EFF)]
                             : [Color(0xFF8C2EFF), Color(0xFF3B136B)],
                   ),
                 ),
