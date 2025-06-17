@@ -50,7 +50,8 @@ class SocialLoginPage extends ConsumerWidget {
                               await authViewModel.loginWithKakao();
                               await showModalBottomSheet(
                                 context: context,
-                                isScrollControlled: true,
+                                isScrollControlled: false,
+                                isDismissible: false,
                                 backgroundColor:
                                     Colors.transparent, // 바깥 배경 둥글기 유지
                                 builder: (_) => const TermsBottomSheet(),
@@ -75,7 +76,8 @@ class SocialLoginPage extends ConsumerWidget {
                               await authViewModel.loginWithNaver();
                               await showModalBottomSheet(
                                 context: context,
-                                isScrollControlled: true,
+                                isScrollControlled: false,
+                                isDismissible: false,
                                 backgroundColor:
                                     Colors.transparent, // 바깥 배경 둥글기 유지
                                 builder: (_) => const TermsBottomSheet(),
