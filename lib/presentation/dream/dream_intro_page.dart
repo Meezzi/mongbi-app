@@ -3,22 +3,21 @@ import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/presentation/common/floating_animation_widget.dart';
 
-class DreamAnalysisResultPage extends StatefulWidget {
-  const DreamAnalysisResultPage({super.key});
+class DreamIntroPage extends StatefulWidget {
+  const DreamIntroPage({super.key});
 
   @override
-  State<DreamAnalysisResultPage> createState() =>
-      _DreamAnalysisResultPageState();
+  State<DreamIntroPage> createState() => _DreamAnalysisResultPageState();
 }
 
-class _DreamAnalysisResultPageState extends State<DreamAnalysisResultPage> {
+class _DreamAnalysisResultPageState extends State<DreamIntroPage> {
   @override
   void initState() {
     super.initState();
 
-    Future.delayed(const Duration(seconds: 1), () {
+    Future.delayed(const Duration(milliseconds: 1500), () {
       if (mounted) {
-        context.go('/dream_interpretation');
+        context.pushReplacement('/dream_write');
       }
     });
   }
@@ -43,7 +42,7 @@ class _DreamAnalysisResultPageState extends State<DreamAnalysisResultPage> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  '다됐다몽!\n',
+                  '오늘은 어떤 꿈을 꿨몽?\n',
                   textAlign: TextAlign.center,
                   style: Font.title20,
                 ),

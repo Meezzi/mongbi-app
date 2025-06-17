@@ -48,7 +48,7 @@ class MainScaffold extends StatelessWidget {
               isHistory,
             ),
             GestureDetector(
-              onTap: () => context.push('/dream_write'),
+              onTap: () => context.push('/dream_intro'),
               child: Container(
                 width: 48,
                 height: 48,
