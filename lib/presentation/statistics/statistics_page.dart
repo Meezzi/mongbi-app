@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mongbi_app/core/font.dart';
+import 'package:mongbi_app/core/get_responsive_ratio_by_width.dart';
 import 'package:mongbi_app/presentation/statistics/widgets/month_statistics.dart';
 import 'package:mongbi_app/presentation/statistics/widgets/tab_bar_title.dart';
 import 'package:mongbi_app/presentation/statistics/widgets/year_statistics.dart';
@@ -16,6 +17,10 @@ class _StatisticsPageState extends State<StatisticsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final double tabBarHeight =
+        getResponsiveRatioByWidth(context, 48) + // TabBar 높이
+        getResponsiveRatioByWidth(context, 8) * 2; // Padding Vertical
+
     return Stack(
       children: [
         Container(
@@ -50,6 +55,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
                     pinned: true,
                     delegate: _SliverTabBarDelegate(
                       TabBarTitle(horizontalPadding: horizontalPadding),
+                      tabBarHeight,
                     ),
                   ),
                 ];
@@ -69,14 +75,15 @@ class _StatisticsPageState extends State<StatisticsPage> {
 }
 
 class _SliverTabBarDelegate extends SliverPersistentHeaderDelegate {
-  _SliverTabBarDelegate(this.tabBar);
+  _SliverTabBarDelegate(this.tabBar, this.height);
 
-  final PreferredSizeWidget tabBar;
+  final Widget tabBar;
+  final double height;
 
   @override
-  double get minExtent => tabBar.preferredSize.height;
+  double get minExtent => height;
   @override
-  double get maxExtent => tabBar.preferredSize.height;
+  double get maxExtent => height;
 
   @override
   Widget build(

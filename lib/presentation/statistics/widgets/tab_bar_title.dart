@@ -4,13 +4,10 @@ import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/core/get_responsive_ratio_by_width.dart';
 import 'package:mongbi_app/providers/statistics_provider.dart';
 
-class TabBarTitle extends StatelessWidget implements PreferredSizeWidget {
+class TabBarTitle extends StatelessWidget {
   const TabBarTitle({super.key, required this.horizontalPadding});
 
   final double horizontalPadding;
-
-  @override
-  Size get preferredSize => const Size.fromHeight(70); // 원하는 높이로 조절
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +29,7 @@ class TabBarTitle extends StatelessWidget implements PreferredSizeWidget {
 
             return TabBar(
               onTap: (value) {
+                ScaffoldMessenger.of(context).hideCurrentSnackBar();
                 if (value == 0) {
                   statisticsVm.fetchMonthStatistics();
                 } else {
