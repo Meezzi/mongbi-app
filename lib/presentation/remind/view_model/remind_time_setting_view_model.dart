@@ -62,23 +62,6 @@ class NotificationService {
     return status.isGranted;
   }
 
-  Future<void> showInstantNotification() async {
-    await flutterLocalNotificationsPlugin.show(
-      0,
-      '테스트 알림',
-      '이건 즉시 표시되는 알림입니다',
-      const NotificationDetails(
-        android: AndroidNotificationDetails(
-          'test_channel',
-          'Test',
-          channelDescription: '즉시 알림 테스트 채널',
-          importance: Importance.max,
-          priority: Priority.high,
-        ),
-        iOS: DarwinNotificationDetails(),
-      ),
-    );
-  }
 
   Future<void> scheduleDailyReminder(TimeOfDay time) async {
     final now = DateTime.now();
