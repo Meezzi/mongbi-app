@@ -64,14 +64,6 @@ class NotificationService {
     );
 
     final tzTime = _nextInstanceOfTime(scheduledTime);
-    print('[📌 예약 알림 시간(TZ)] $tzTime');
-    print('[📌 예약 알림 시간(Local)] ${tzTime.toLocal()}');
-
-    final tzTime = _nextInstanceOfTime(scheduledTime);
-    print('[📌 예약 알림 시간(TZ)] $tzTime');
-    print('[📌 예약 알림 시간(Local)] ${tzTime.toLocal()}');
-
-    final tzTime = _nextInstanceOfTime(scheduledTime);
 
     const androidDetails = AndroidNotificationDetails(
       'daily_reminder',
