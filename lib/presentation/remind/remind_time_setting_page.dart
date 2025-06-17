@@ -1,37 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/presentation/remind/view_model/remind_time_setting_view_model.dart';
 import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_button_widget.dart';
 import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_image_widget.dart';
 import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_text_widget.dart';
 
-class CustomTimePicker extends StatefulWidget {
-  const CustomTimePicker({super.key, required this.onChanged});
-  final Function(TimeOfDay, String) onChanged;
-
-  @override
-  State<CustomTimePicker> createState() => _CustomTimePickerState();
-}
-
-class _CustomTimePickerState extends State<CustomTimePicker> {
-  final FixedExtentScrollController ampmController =
-      FixedExtentScrollController(initialItem: 0);
-  final FixedExtentScrollController hourController =
-      FixedExtentScrollController(initialItem: 7);
-  final FixedExtentScrollController minuteController =
-      FixedExtentScrollController(initialItem: 0);
-
-  final List<String> ampm = ['오전', '오후'];
-  final List<String> hours = List.generate(
-    12,
-    (i) => i + 1 < 10 ? '0${i + 1}' : '${i + 1}',
-  );
-  final List<String> minutes = List.generate(60, (i) => i < 10 ? '0$i' : '$i');
-
-  int selectedAmPm = 0;
-  int selectedHour = 7;
-  int selectedMinute = 0;
+class RemindTimeSettingPage extends StatelessWidget {
+  const RemindTimeSettingPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -78,8 +54,7 @@ class _CustomTimePickerState extends State<CustomTimePicker> {
               RemindTimeSettingButtonWidget(
                 onTap: () async {
                   final notificationService = NotificationService();
-                  final granted =
-                      await notificationService.requestNotificationPermission();
+                  final granted = await notificationService.requestNotificationPermission();
                   if (granted) {
                     context.go('/remindtime_time_setting');
                   } else {
@@ -98,5 +73,4 @@ class _CustomTimePickerState extends State<CustomTimePicker> {
       ),
     );
   }
-
 }
