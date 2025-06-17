@@ -16,40 +16,54 @@ class _StatisticsPageState extends State<StatisticsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: DefaultTabController(
-        length: 2,
-        child: NestedScrollView(
-          headerSliverBuilder: (context, innerBoxIsScrolled) {
-            return [
-              // 상단 제목 필요 시 사용
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: horizontalPadding,
-                    vertical: 16,
-                  ),
-                  child: Text('모몽의 꿈 통계', style: Font.title20),
-                ),
-              ),
-
-              // 커스텀 탭바 고정
-              SliverPersistentHeader(
-                pinned: true,
-                delegate: _SliverTabBarDelegate(
-                  TabBarTitle(horizontalPadding: horizontalPadding),
-                ),
-              ),
-            ];
-          },
-          body: TabBarView(
-            children: [
-              MonthStatistics(horizontalPadding: horizontalPadding),
-              YearStatistics(horizontalPadding: horizontalPadding),
-            ],
+    return Stack(
+      children: [
+        Container(
+          height: double.infinity,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [Color(0xffFDF8FF), Color(0xfff4eaff)],
+            ),
           ),
         ),
-      ),
+        SafeArea(
+          child: DefaultTabController(
+            length: 2,
+            child: NestedScrollView(
+              headerSliverBuilder: (context, innerBoxIsScrolled) {
+                return [
+                  // 상단 제목 필요 시 사용
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: horizontalPadding,
+                        vertical: 16,
+                      ),
+                      child: Text('모몽의 꿈 통계', style: Font.title20),
+                    ),
+                  ),
+
+                  // 커스텀 탭바 고정
+                  SliverPersistentHeader(
+                    pinned: true,
+                    delegate: _SliverTabBarDelegate(
+                      TabBarTitle(horizontalPadding: horizontalPadding),
+                    ),
+                  ),
+                ];
+              },
+              body: TabBarView(
+                children: [
+                  MonthStatistics(horizontalPadding: horizontalPadding),
+                  YearStatistics(horizontalPadding: horizontalPadding),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
