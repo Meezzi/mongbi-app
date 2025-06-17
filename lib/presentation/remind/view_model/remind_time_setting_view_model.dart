@@ -28,7 +28,6 @@ class NotificationService {
     await flutterLocalNotificationsPlugin.initialize(
       initSettings,
       onDidReceiveNotificationResponse: (details) {
-        // 예: context.go('/remind');
       },
     );
   }
