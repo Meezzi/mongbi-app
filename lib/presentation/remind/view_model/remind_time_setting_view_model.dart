@@ -5,7 +5,6 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
-import 'package:android_intent_plus/android_intent.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
@@ -16,7 +15,6 @@ class NotificationService {
   static final NotificationService _instance = NotificationService._internal();
 
   Future<void> init() async {
-    print('[🔔 알림 초기화] 초기화 시작');
     tz.initializeTimeZones();
     tz.setLocalLocation(tz.getLocation('Asia/Seoul'));
 
@@ -44,20 +42,18 @@ class NotificationService {
   }
 
   Future<bool> requestNotificationPermission() async {
-    print('[🔐 권한 요청] 알림 권한 요청 시작');
     await flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<
-            IOSFlutterLocalNotificationsPlugin>()
+          IOSFlutterLocalNotificationsPlugin
+        >()
         ?.requestPermissions(alert: true, badge: true, sound: true);
 
     final status = await Permission.notification.request();
-    print('[🔐 권한 상태] ${status.isGranted ? "허용됨" : "거부됨"}');
     return status.isGranted;
   }
 
 
   Future<void> scheduleDailyReminder(TimeOfDay time) async {
-    print('[🗓️ 예약 시도] 설정된 시간: ${time.hour}:${time.minute}');
     final now = DateTime.now();
     final scheduledTime = DateTime(
       now.year,
@@ -66,6 +62,7 @@ class NotificationService {
       time.hour,
       time.minute,
     );
+
     final tzTime = _nextInstanceOfTime(scheduledTime);
     print('[📌 예약 알림 시간(TZ)] $tzTime');
     print('[📌 예약 알림 시간(Local)] ${tzTime.toLocal()}');
@@ -103,7 +100,6 @@ class NotificationService {
       matchDateTimeComponents: DateTimeComponents.time,
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
     );
-    print('[✅ 예약 완료] 알림이 등록되었습니다.');
   }
 
   tz.TZDateTime _nextInstanceOfTime(DateTime dateTime) {
@@ -118,7 +114,6 @@ class NotificationService {
     );
 
     if (scheduled.isBefore(tzNow)) {
-      print('[⏩ 시간 조정] 이미 지난 시간입니다. 다음 날로 설정합니다.');
       scheduled = scheduled.add(const Duration(days: 1));
     }
 
