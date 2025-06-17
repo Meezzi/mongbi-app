@@ -52,7 +52,7 @@ final GoRouter router = GoRouter(
       path: '/remindtime_setting',
       builder: (context, state) => RemindTimeSettingPage(),
     ),
-        GoRoute(
+    GoRoute(
       path: '/remindtime_setting',
       builder: (context, state) => RemindTimeSettingPage(),
     ),
@@ -60,7 +60,7 @@ final GoRouter router = GoRouter(
       path: '/remindtime_time_setting',
       builder: (context, state) => RemindTimePickerPage(),
     ),
-    
+
     GoRoute(
       path: '/dream_write',
       pageBuilder:
