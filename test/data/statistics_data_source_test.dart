@@ -94,7 +94,7 @@ void main() {
     });
 
     final statisticsDto = await remoteStatisticsDataSource!
-        .feachMonthStatistics(DateTime.now());
+        .fetchMonthStatistics(DateTime.now());
 
     expect(statisticsDto, isA<StatisticsDto?>());
     expect(statisticsDto!.frequency, 20);

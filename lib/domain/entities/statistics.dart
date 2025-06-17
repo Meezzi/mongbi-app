@@ -4,6 +4,7 @@ class Statistics {
   Statistics({
     this.month,
     this.year,
+    this.totalDays,
     required this.frequency,
     required this.distribution,
     required this.moodState,
@@ -12,6 +13,7 @@ class Statistics {
 
   final String? month;
   final String? year;
+  final int? totalDays;
   final int frequency;
   final DreamScore distribution;
   final MoodState moodState;

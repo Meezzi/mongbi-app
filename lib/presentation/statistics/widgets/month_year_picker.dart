@@ -95,6 +95,7 @@ class MonthYearPickerState extends ConsumerState<MonthYearPicker> {
                                 pickerVm.onChangedMonth(
                                   DateTime(DateTime.now().year, month),
                                 );
+
                                 hide();
                               },
                             );

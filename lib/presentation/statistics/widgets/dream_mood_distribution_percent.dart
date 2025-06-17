@@ -22,22 +22,25 @@ class DreamMoodDistributionPercent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        SvgPicture.asset(
-          iconMap[type]!,
-          fit: BoxFit.cover,
-          width: getResponsiveRatioByWidth(context, 24),
-        ),
-        SizedBox(width: getResponsiveRatioByWidth(context, 8)),
-        Text(
-          '$percent%',
-          style: Font.subTitle12.copyWith(
-            color: Color(0xFFA6A1AA),
-            fontSize: getResponsiveRatioByWidth(context, 12),
+    return SizedBox(
+      width: getResponsiveRatioByWidth(context, 58),
+      child: Row(
+        children: [
+          SvgPicture.asset(
+            iconMap[type]!,
+            fit: BoxFit.cover,
+            width: getResponsiveRatioByWidth(context, 24),
           ),
-        ),
-      ],
+          SizedBox(width: getResponsiveRatioByWidth(context, 6)),
+          Text(
+            '$percent%',
+            style: Font.subTitle12.copyWith(
+              color: Color(0xFFA6A1AA),
+              fontSize: getResponsiveRatioByWidth(context, 12),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

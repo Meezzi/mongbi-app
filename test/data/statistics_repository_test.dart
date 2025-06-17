@@ -12,7 +12,7 @@ void main() {
     final mockRemoteDataSource = MockRemoteDataSource();
 
     when(() {
-      return mockRemoteDataSource.feachMonthStatistics(any());
+      return mockRemoteDataSource.fetchMonthStatistics(any());
     }).thenAnswer((invocation) async {
       return StatisticsDto(
         month: '2025-06',
@@ -62,7 +62,7 @@ void main() {
     );
 
     final statisticsEntity = await remoteStatisticsRepository
-        .feachMonthStatistics(DateTime.now());
+        .fetchMonthStatistics(DateTime.now());
 
     expect(statisticsEntity, isA<Statistics?>());
     expect(statisticsEntity!.frequency, 15);

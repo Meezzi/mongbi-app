@@ -8,7 +8,7 @@ class RemoteStatisticsDataSource implements StatisticsDataSource {
   Dio dio;
 
   @override
-  Future<StatisticsDto?> feachMonthStatistics(DateTime dateTime) async {
+  Future<StatisticsDto?> fetchMonthStatistics(DateTime dateTime) async {
     try {
       final year = dateTime.year.toString();
       final month =
@@ -27,7 +27,7 @@ class RemoteStatisticsDataSource implements StatisticsDataSource {
       // TODO : userIdx로 변경하기
       // TODO : idToken 유저 엔티티에서 받아오기
       final response = await dio.get(
-        '/statistics/$year/$month',
+        '/dreams/statistics/monthly/24/$year/$month',
         // options: Options(
         //   headers: {'Authorization': 'Bearer ${dotenv.env['ID_TOKEN']}'},
         // ),
@@ -37,6 +37,7 @@ class RemoteStatisticsDataSource implements StatisticsDataSource {
         final results = response.data['data'];
         final distributionMap = results['DISTRIBUTION'];
         final moodStateMap = results['MOOD_STATE'];
+        var keywordList = results['KEYWORDS'];
 
         // results['DISTRIBUTION']의 key의 이름만 변경
         // results['DISTRIBUTION']['1'] => results['DISTRIBUTION']['VERY_BAD']
@@ -60,6 +61,11 @@ class RemoteStatisticsDataSource implements StatisticsDataSource {
           }
         }
 
+        // 심리 분석 키워드 5개로 제한
+        if (keywordList.length > 5) {
+          results['KEYWORDS'] = keywordList.sublist(0, 5);
+        }
+
         final statisticsDto = StatisticsDto.fromJson(results);
         return statisticsDto;
       } else {
@@ -73,7 +79,7 @@ class RemoteStatisticsDataSource implements StatisticsDataSource {
   }
 
   @override
-  Future<StatisticsDto?> feachYearStatistics(DateTime dateTime) {
+  Future<StatisticsDto?> fetchYearStatistics(DateTime dateTime) {
     // TODO: implement feachYearStatistics
     throw UnimplementedError();
   }

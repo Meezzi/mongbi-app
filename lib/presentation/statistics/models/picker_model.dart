@@ -13,12 +13,4 @@ class PickerModel {
       focusedYear: focusedYear ?? this.focusedYear,
     );
   }
-
-  @override
-  String toString() {
-    return '''{
-      focusedMonth: $focusedMonth, 
-      focusedYear: $focusedYear,
-    }''';
-  }
 }

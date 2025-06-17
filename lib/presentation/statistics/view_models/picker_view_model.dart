@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mongbi_app/presentation/statistics/models/picker_model.dart';
+import 'package:mongbi_app/providers/statistics_provider.dart';
 
 class PickerViewModel extends Notifier<PickerModel> {
   @override
@@ -8,18 +9,11 @@ class PickerViewModel extends Notifier<PickerModel> {
   }
 
   void onChangedMonth(DateTime date) async {
-    print('✅');
-    print(date);
-    print('✅');
-
     state = state.copyWith(focusedMonth: date);
+    await ref.read(statisticsViewModelProvider.notifier).fetchMonthStatistics();
   }
 
   void onChangedYear(DateTime date) async {
-    print('✅');
-    print(date);
-    print('✅');
-
     state = state.copyWith(focusedYear: date);
   }
 }

@@ -24,7 +24,6 @@ class MonthYearPickerButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final pickerState = ref.watch(pickerViewModelProvider);
-    print('여기는?');
 
     return Padding(
       key: isMonth ? monthPickerButton : yearPickerButton,
