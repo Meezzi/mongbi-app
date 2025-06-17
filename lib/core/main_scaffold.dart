@@ -28,10 +28,10 @@ class MainScaffold extends StatelessWidget {
       body: child,
       bottomNavigationBar: BottomAppBar(
         height: 56,
-        padding: EdgeInsets.symmetric(horizontal: 0),
+        padding: EdgeInsets.symmetric(horizontal: 24),
         color: _buildBottomAppBarColor(location),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             _buildTab(
               context,
