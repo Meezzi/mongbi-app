@@ -131,7 +131,7 @@ class _RemindTimePickerPageState extends State<RemindTimePickerPage> {
                       await NotificationService()
                           .openExactAlarmSettingsIfNeeded();
                     } else {
-                      print('❌ 알림 등록 실패: $e');
+                     
                     }
                   }
                 },
