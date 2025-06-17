@@ -71,7 +71,7 @@ class ProfileSettingPage extends ConsumerWidget {
                     child: Container(
                       width:
                           MediaQuery.of(context).size.width *
-                          0.8, // 💡 가로 길이 조절
+                          0.8, 
                       padding: const EdgeInsets.all(24),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
