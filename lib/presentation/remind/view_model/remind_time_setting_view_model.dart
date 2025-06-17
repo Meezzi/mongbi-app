@@ -1,13 +1,5 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
 import 'dart:io';
 import 'package:android_intent_plus/android_intent.dart';
-=======
->>>>>>> a0bfb6b (feat: 권한 추가 및 뷰모델 기능 추가)
-=======
-import 'dart:io';
-import 'package:android_intent_plus/android_intent.dart';
->>>>>>> 67f0bbc7f9924475cd155a40fe66a97c2f3a4114
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -22,21 +14,9 @@ class NotificationService {
   NotificationService._internal();
   static final NotificationService _instance = NotificationService._internal();
 
-<<<<<<< HEAD
-<<<<<<< HEAD
   Future<void> init() async {
     tz.initializeTimeZones();
     tz.setLocalLocation(tz.getLocation('Asia/Seoul'));
-=======
-  /// 초기화
-  Future<void> init() async {
-    tz.initializeTimeZones();
->>>>>>> a0bfb6b (feat: 권한 추가 및 뷰모델 기능 추가)
-=======
-  Future<void> init() async {
-    tz.initializeTimeZones();
-    tz.setLocalLocation(tz.getLocation('Asia/Seoul'));
->>>>>>> 67f0bbc7f9924475cd155a40fe66a97c2f3a4114
 
     const androidInit = AndroidInitializationSettings('@mipmap/ic_launcher');
     const iosInit = DarwinInitializationSettings();
