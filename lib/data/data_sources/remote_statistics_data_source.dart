@@ -133,7 +133,6 @@ class RemoteStatisticsDataSource implements StatisticsDataSource {
         if (keywordList.length > 5) {
           results['KEYWORDS'] = keywordList.sublist(0, 5);
         }
-        throw Exception('오류');
 
         final statisticsDto = StatisticsDto.fromJson(results);
         return statisticsDto;
