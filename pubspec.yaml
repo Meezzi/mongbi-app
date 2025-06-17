@@ -92,6 +92,7 @@ flutter:
     - assets/audio/
     - assets/audio/background_music.mp3
     - .env
+    - assets/images/remind_bell.webp
     - assets/images/splash_bg.svg
     - assets/images/splash_mongbi.webp
     - assets/images/star.webp
