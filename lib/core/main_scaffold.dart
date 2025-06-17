@@ -58,7 +58,7 @@ class MainScaffold extends StatelessWidget {
                   gradient: LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
-                    stops: isHistory? [0.1, 1.0] : [0, 1.0],
+                    stops: isHistory ? [0.1, 1.0] : [0, 1.0],
                     colors:
                         isHistory
                             ? [Color(0xFFEAC9FA), Color(0xFF8C2EFF)]
@@ -148,7 +148,10 @@ class MainScaffold extends StatelessWidget {
     final stateSuffix = selected ? 'filled' : 'outlined';
 
     return GestureDetector(
-      onTap: () => context.go(path),
+      onTap: () {
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        context.go(path);
+      },
       child: SvgPicture.asset(
         'assets/icons/$iconName${colorSuffix}_$stateSuffix.svg',
         width: 28,

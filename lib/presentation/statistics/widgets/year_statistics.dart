@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mongbi_app/core/get_responsive_ratio_by_width.dart';
 import 'package:mongbi_app/core/get_widget_info.dart';
 import 'package:mongbi_app/presentation/statistics/statistics_key/statistics_key.dart';
+import 'package:mongbi_app/presentation/statistics/widgets/custom_snack_bar.dart';
 import 'package:mongbi_app/presentation/statistics/widgets/dream_frequency_card.dart';
 import 'package:mongbi_app/presentation/statistics/widgets/dream_mood_distribution.dart';
 import 'package:mongbi_app/presentation/statistics/widgets/dream_type_mood_state.dart';
@@ -25,6 +26,7 @@ class _YearStatisticsState extends ConsumerState<YearStatistics> {
   bool isMonth = false;
   double? yearPickerButtonPosition;
   final ScrollController scrollController = ScrollController();
+  bool _snackBarShown = false;
 
   @override
   void initState() {
@@ -91,6 +93,17 @@ class _YearStatisticsState extends ConsumerState<YearStatistics> {
                     final keywordList = yearStatistics?.keywords;
                     final isFirst = frequency == 0;
 
+                    // 스낵바가 한 번만 뜨도록 제어
+                    if (isFirst && !_snackBarShown) {
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        yearSnackBarKey.currentState?.show();
+                        _snackBarShown = true;
+                      });
+                    } else if (!isFirst && _snackBarShown) {
+                      // 조건이 풀리면 플래그 리셋
+                      _snackBarShown = false;
+                    }
+
                     return Column(
                       children: [
                         Padding(
@@ -132,6 +145,7 @@ class _YearStatisticsState extends ConsumerState<YearStatistics> {
                 ),
               ],
             ),
+            CustomSnackBar(key: yearSnackBarKey),
           ],
         ),
       ],
