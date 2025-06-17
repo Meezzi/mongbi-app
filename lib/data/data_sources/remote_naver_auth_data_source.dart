@@ -8,14 +8,11 @@ class RemoteNaverAuthDataSource {
   RemoteNaverAuthDataSource(this.dio);
   final Dio dio;
 
-  Future<LoginResponseDto> login() async {
+  Future<LoginResponseDto> login(String accessToken) async {
     String jwt = '';
     UserDto? userDto;
     try {
       final tokenResult = await FlutterNaverLogin.getCurrentAccessToken();
-      if (!tokenResult.isValid()) {
-        throw Exception('유효하지 않은 accessToken');
-      }
 
       final accessToken = tokenResult.accessToken;
       final response = await dio.post(

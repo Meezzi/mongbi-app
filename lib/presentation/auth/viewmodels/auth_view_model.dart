@@ -1,4 +1,5 @@
 import 'package:flutter/services.dart';
+import 'package:flutter_naver_login/flutter_naver_login.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart' as kakao;
 import 'package:mongbi_app/domain/entities/user.dart';
@@ -24,11 +25,22 @@ class AuthViewModel extends Notifier<User?> {
   Future<void> loginWithNaver() async {
     _isLoading = true;
     try {
-      final result = await _loginWithNaver.execute();
-      state = result;
+      final loginResult = await FlutterNaverLogin.logIn();
+      var accessToken = loginResult.accessToken?.accessToken;
+
+      if (accessToken == null || accessToken.isEmpty) {
+        final tokenResult = await FlutterNaverLogin.getCurrentAccessToken();
+        accessToken = tokenResult?.accessToken;
+      }
+      if (accessToken == null || accessToken.isEmpty) {
+        throw Exception('네이버 accessToken 없음');
+      }
+
+      final user = await _loginWithNaver.execute(accessToken);
+      state = user;
 
       final prefs = await SharedPreferences.getInstance();
-
+      await prefs.setString('jwt_token', accessToken);
       await prefs.setString('lastLoginType', 'naver');
     } catch (e) {
       rethrow;
@@ -49,7 +61,6 @@ class AuthViewModel extends Notifier<User?> {
           if (error is PlatformException && error.code == 'CANCELED') {
             return;
           }
-
           token = await kakao.UserApi.instance.loginWithKakaoAccount();
         }
       } else {

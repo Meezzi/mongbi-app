@@ -19,7 +19,7 @@ import 'package:mongbi_app/presentation/statistics/statistics_page.dart';
 final GoRouter router = GoRouter(
   initialLocation: '/',
   routes: [
-    GoRoute(path: '/', redirect: (_, __) => '/splash'),
+    GoRoute(path: '/', redirect: (_, __) => '/social_login'),
 
     ShellRoute(
       builder: (context, state, child) {
