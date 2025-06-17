@@ -15,5 +15,6 @@ class PickerViewModel extends Notifier<PickerModel> {
 
   void onChangedYear(DateTime date) async {
     state = state.copyWith(focusedYear: date);
+    await ref.read(statisticsViewModelProvider.notifier).fetchYearStatistics();
   }
 }

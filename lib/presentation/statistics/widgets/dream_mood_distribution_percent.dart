@@ -6,10 +6,12 @@ import 'package:mongbi_app/core/get_responsive_ratio_by_width.dart';
 class DreamMoodDistributionPercent extends StatelessWidget {
   DreamMoodDistributionPercent({
     super.key,
+    required this.isFirst,
     required this.type,
     required this.percent,
   });
 
+  final bool isFirst;
   final String type;
   final int percent;
   final Map<String, String> iconMap = {
@@ -23,7 +25,7 @@ class DreamMoodDistributionPercent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: getResponsiveRatioByWidth(context, 58),
+      width: getResponsiveRatioByWidth(context, 65),
       child: Row(
         children: [
           SvgPicture.asset(
@@ -33,7 +35,7 @@ class DreamMoodDistributionPercent extends StatelessWidget {
           ),
           SizedBox(width: getResponsiveRatioByWidth(context, 6)),
           Text(
-            '$percent%',
+            isFirst ? '00%' : '$percent%',
             style: Font.subTitle12.copyWith(
               color: Color(0xFFA6A1AA),
               fontSize: getResponsiveRatioByWidth(context, 12),

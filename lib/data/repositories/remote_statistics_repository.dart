@@ -12,7 +12,7 @@ class RemoteStatisticsRepository implements StatisticsRepository {
     final statisticsDto = await dataSource.fetchMonthStatistics(dateTime);
     if (statisticsDto != null) {
       final afterOneMonth = DateTime(dateTime.year, dateTime.month + 1);
-      final totlaDays =
+      final totalDays =
           DateTime(
             afterOneMonth.year,
             afterOneMonth.month,
@@ -21,7 +21,7 @@ class RemoteStatisticsRepository implements StatisticsRepository {
 
       return Statistics(
         month: statisticsDto.month,
-        totalDays: totlaDays,
+        totalDays: totalDays,
         frequency: statisticsDto.frequency,
         distribution: statisticsDto.distribution,
         moodState: statisticsDto.moodState,
@@ -33,8 +33,23 @@ class RemoteStatisticsRepository implements StatisticsRepository {
   }
 
   @override
-  Future<Statistics?> fetchYearStatistics(DateTime dateTime) {
-    // TODO: implement feachYearStatistics
-    throw UnimplementedError();
+  Future<Statistics?> fetchYearStatistics(DateTime dateTime) async {
+    final statisticsDto = await dataSource.fetchYearStatistics(dateTime);
+    if (statisticsDto != null) {
+      final firstDay = DateTime(dateTime.year, 1, 1);
+      final lastDay = DateTime(dateTime.year + 1, 1, 1);
+      final totalDays = lastDay.difference(firstDay).inDays;
+
+      return Statistics(
+        month: statisticsDto.month,
+        totalDays: totalDays,
+        frequency: statisticsDto.frequency,
+        distribution: statisticsDto.distribution,
+        moodState: statisticsDto.moodState,
+        keywords: statisticsDto.keywords,
+      );
+    }
+
+    return null;
   }
 }

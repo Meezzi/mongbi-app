@@ -89,6 +89,8 @@ class _MonthStatisticsState extends ConsumerState<MonthStatistics> {
                     final distribution = monthStatistics?.distribution;
                     final moodState = monthStatistics?.moodState;
                     final keywordList = monthStatistics?.keywords;
+                    final isFirst = frequency == 0;
+
                     return Column(
                       children: [
                         Padding(
@@ -98,6 +100,7 @@ class _MonthStatisticsState extends ConsumerState<MonthStatistics> {
                           child: Row(
                             children: [
                               DreamFrequencyCard(
+                                isFirst: isFirst,
                                 frequency: frequency ?? 0,
                                 totalDays: totalDays ?? 0,
                               ),
@@ -105,24 +108,27 @@ class _MonthStatisticsState extends ConsumerState<MonthStatistics> {
                                 width: getResponsiveRatioByWidth(context, 16),
                               ),
                               // TODO : 챌린지 달성률 아직 데이터 없음
-                              GiftFrequencyCard(frequency: 0),
+                              GiftFrequencyCard(isFirst: isFirst, frequency: 0),
                             ],
                           ),
                         ),
-                        DreamMoodDistribution(distribution: distribution),
+                        DreamMoodDistribution(
+                          isFirst: isFirst,
+                          distribution: distribution,
+                        ),
                         DreamTypeMoodState(
                           isMonth: isMonth,
                           moodState: moodState,
                         ),
                         PsychologyKeywordChart(
-                          // TODO : 데이터 변수 들어가야 함. 데이터가 null이면 무조건 빈 배열([]) 할당하기
+                          isFirst: isFirst,
                           keywordList: keywordList ?? [],
                         ),
                       ],
                     );
                   },
                   error: (error, stackTrace) {
-                    return Center(child: Text('예기치 못한 오류가 발생했습니다.'));
+                    return Center(child: Text('예기치 못한 오류가 발생했다몽'));
                   },
                 ),
               ],

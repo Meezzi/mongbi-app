@@ -7,8 +7,13 @@ import 'package:mongbi_app/presentation/statistics/widgets/dream_mood_distributi
 import 'package:mongbi_app/presentation/statistics/widgets/dream_mood_distribution_pie_chart.dart';
 
 class DreamMoodDistribution extends StatelessWidget {
-  const DreamMoodDistribution({super.key, required this.distribution});
+  const DreamMoodDistribution({
+    super.key,
+    required this.isFirst,
+    required this.distribution,
+  });
 
+  final bool isFirst;
   final DreamScore? distribution;
 
   @override
@@ -30,33 +35,41 @@ class DreamMoodDistribution extends StatelessWidget {
             child: Row(
               children: [
                 if (distribution != null) ...[
-                  DreamMoodDistributionPieChart(distribution: distribution!),
+                  DreamMoodDistributionPieChart(
+                    isFirst: isFirst,
+                    distribution: distribution!,
+                  ),
                   SizedBox(width: getResponsiveRatioByWidth(context, 40)),
                   Padding(
                     padding: const EdgeInsets.only(right: 21),
                     child: Column(
                       children: [
                         DreamMoodDistributionPercent(
+                          isFirst: isFirst,
                           type: 'very_good',
                           percent: distribution!.veryGood,
                         ),
                         SizedBox(height: getResponsiveRatioByWidth(context, 8)),
                         DreamMoodDistributionPercent(
+                          isFirst: isFirst,
                           type: 'good',
                           percent: distribution!.good,
                         ),
                         SizedBox(height: getResponsiveRatioByWidth(context, 8)),
                         DreamMoodDistributionPercent(
+                          isFirst: isFirst,
                           type: 'ordinary',
                           percent: distribution!.ordinary,
                         ),
                         SizedBox(height: getResponsiveRatioByWidth(context, 8)),
                         DreamMoodDistributionPercent(
+                          isFirst: isFirst,
                           type: 'bad',
                           percent: distribution!.bad,
                         ),
                         SizedBox(height: getResponsiveRatioByWidth(context, 8)),
                         DreamMoodDistributionPercent(
+                          isFirst: isFirst,
                           type: 'very_bad',
                           percent: distribution!.veryBad,
                         ),
