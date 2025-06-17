@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/font.dart';
+import 'package:mongbi_app/presentation/setting/widgets/logout_confirm_dialog.dart';
 import 'package:mongbi_app/presentation/setting/widgets/setting_rounded_list_tile_item.dart';
 import 'package:mongbi_app/providers/auth_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -62,95 +63,39 @@ class ProfileSettingPage extends ConsumerWidget {
               showDialog(
                 context: context,
                 barrierDismissible: true,
-                builder: (context) {
-                  return Dialog(
-                    backgroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Container(
-                      width:
-                          MediaQuery.of(context).size.width *
-                          0.8, 
-                      padding: const EdgeInsets.all(24),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            '로그아웃하시겠어요?',
-                            textAlign: TextAlign.center,
-                            style: Font.body16.copyWith(
-                              color: Color(0xFF1A181B),
-                            ),
-                          ),
-                          const SizedBox(height: 24),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: OutlinedButton(
-                                  onPressed: () => Navigator.pop(context),
-                                  style: OutlinedButton.styleFrom(
-                                    foregroundColor: Color(0xFF1A181B),
-                                    side: BorderSide(color: Color(0xFF1A181B)),
-                                  ),
-                                  child: Text('취소'),
-                                ),
-                              ),
-                              const SizedBox(width: 16),
-                              Expanded(
-                                child: ElevatedButton(
-                                  onPressed: () async {
-                                    final prefs =
-                                        await SharedPreferences.getInstance();
-                                    final loginType = prefs.getString(
-                                      'lastLoginType',
-                                    );
+                builder:
+                    (context) => LogoutConfirmDialog(
+                      onConfirm: () async {
+                        final prefs = await SharedPreferences.getInstance();
+                        final loginType = prefs.getString('lastLoginType');
 
-                                    bool success = false;
-                                    if (loginType == 'naver') {
-                                      success =
-                                          await ref
-                                              .read(
-                                                authViewModelProvider.notifier,
-                                              )
-                                              .logoutWithNaver();
-                                    } else if (loginType == 'kakao') {
-                                      success =
-                                          await ref
-                                              .read(
-                                                authViewModelProvider.notifier,
-                                              )
-                                              .logoutWithKakao();
-                                    }
-                                    if (success && context.mounted) {
-                                      context.go('/social_login');
-                                    } else {
-                                      ScaffoldMessenger.of(
-                                        context,
-                                      ).showSnackBar(
-                                        const SnackBar(
-                                          content: Text('로그아웃에 실패했습니다.'),
-                                        ),
-                                      );
-                                    }
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: const Color(0xFF1A181B),
-                                    foregroundColor: Colors.white,
-                                  ),
-                                  child: const Text('로그아웃'),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                        bool success = false;
+                        if (loginType == 'naver') {
+                          success =
+                              await ref
+                                  .read(authViewModelProvider.notifier)
+                                  .logoutWithNaver();
+                        } else if (loginType == 'kakao') {
+                          success =
+                              await ref
+                                  .read(authViewModelProvider.notifier)
+                                  .logoutWithKakao();
+                        }
+
+                        if (success && context.mounted) {
+                          context.go('/social_login');
+                        } else {
+                          Navigator.pop(context);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('로그아웃에 실패했습니다.')),
+                          );
+                        }
+                      },
                     ),
-                  );
-                },
               );
             },
           ),
+
           RoundedListTileItem(
             title: '계정 탈퇴',
             isFirst: false,
