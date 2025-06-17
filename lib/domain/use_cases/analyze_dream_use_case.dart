@@ -6,7 +6,7 @@ class AnalyzeDreamUseCase {
 
   final DreamRepository dreamRepository;
 
-  Future<Dream> execute(String dreamContent, int dreamScore) async {
-    return await dreamRepository.analyzeDream(dreamContent, dreamScore);
+  Future<Dream> execute(int uid, String dreamContent, int dreamScore) async {
+    return await dreamRepository.analyzeDream(uid, dreamContent, dreamScore);
   }
 }

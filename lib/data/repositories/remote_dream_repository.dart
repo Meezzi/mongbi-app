@@ -17,7 +17,7 @@ class RemoteDreamRepository implements DreamRepository {
   }
 
   @override
-  Future<Dream> analyzeDream(String dreamContent, int dreamScore) async {
+  Future<Dream> analyzeDream(int uid, String dreamContent, int dreamScore) async {
     final responseMap = await dreamAnalysisDataSource.analyzeDream(
       dreamContent,
       dreamScore,
@@ -26,7 +26,7 @@ class RemoteDreamRepository implements DreamRepository {
     final dream = Dream(
       id: null, // TODO: 저장한 후, Dream Id로 저장
       createdAt: DateTime.now(),
-      uid: 1, // TODO: 사용자 id로 변경
+      uid: uid,
       challengeId: 0, // TODO: 사용자가 선택한 챌린지 id로 변경
       content: dreamContent,
       score: dreamScore,
