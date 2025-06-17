@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:mongbi_app/core/font.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
+import 'package:mongbi_app/presentation/remind/view_model/remind_time_setting_view_model.dart';
+import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_button_widget.dart';
+import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_image_widget.dart';
+import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_text_widget.dart';
 
 class CustomTimePicker extends StatefulWidget {
   const CustomTimePicker({super.key, required this.onChanged});
@@ -73,7 +78,8 @@ class _CustomTimePickerState extends State<CustomTimePicker> {
               RemindTimeSettingButtonWidget(
                 onTap: () async {
                   final notificationService = NotificationService();
-                  final granted = await notificationService.requestNotificationPermission();
+                  final granted =
+                      await notificationService.requestNotificationPermission();
                   if (granted) {
                     context.go('/remindtime_time_setting');
                   } else {
@@ -93,16 +99,4 @@ class _CustomTimePickerState extends State<CustomTimePicker> {
     );
   }
 
-  void _notifyChange() {
-    final String amPm = ampm[selectedAmPm];
-    final int hour = selectedHour + 1;
-    final int minute = selectedMinute;
-
-    final realHour =
-        amPm == '오후' && hour != 12
-            ? hour + 12
-            : (amPm == '오전' && hour == 12 ? 0 : hour);
-
-    widget.onChanged(TimeOfDay(hour: realHour, minute: minute), amPm);
-  }
 }
