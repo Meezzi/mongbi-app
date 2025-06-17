@@ -13,8 +13,8 @@ class RemoteAuthRepository implements AuthRepository {
   final RemoteKakaoAuthDataSource kakaoDataSource;
 
   @override
-  Future<User> loginWithNaver() async {
-    final response = await naverDataSource.login();
+  Future<User> loginWithNaver(String accessToken) async {
+    final response = await naverDataSource.login(accessToken);
     return response.user.toEntity();
   }
 

@@ -5,7 +5,7 @@ class LoginWithNaver {
   LoginWithNaver(this.repository);
   final AuthRepository repository;
 
-  Future<User> execute() {
-    return repository.loginWithNaver();
+  Future<User> execute(String accessToken) {
+    return repository.loginWithNaver(accessToken);
   }
 }
