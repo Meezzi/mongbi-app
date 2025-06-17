@@ -134,7 +134,6 @@ class ProfileSettingPage extends ConsumerWidget {
                                       );
                                     }
                                   },
-
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: const Color(0xFF1A181B),
                                     foregroundColor: Colors.white,
