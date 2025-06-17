@@ -1,10 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mongbi_app/presentation/common/floating_animation_widget.dart';
+import 'package:mongbi_app/presentation/home/widgets/mongbi_message_list.dart';
 import 'package:mongbi_app/presentation/home/widgets/speech_bubble.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  late String selectedMessage;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedMessage = (List.of(mongbiMessages)..shuffle()).first;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +69,7 @@ class HomePage extends StatelessWidget {
                 FloatingAnimationWidget(
                   child: Column(
                     children: [
-                      CustomSpeechBubble(text: '킁킁... 좋은 꿈 냄새 난다몽'),
+                      CustomSpeechBubble(text: selectedMessage),
                       Image.asset(
                         'assets/images/mongbi.webp',
                         width: screenHeight * 0.28,
