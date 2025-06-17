@@ -5,6 +5,7 @@ import 'package:mongbi_app/core/route_observer.dart';
 import 'package:mongbi_app/presentation/alarm/alarm_page.dart';
 import 'package:mongbi_app/presentation/auth/social_login_page.dart';
 import 'package:mongbi_app/presentation/challenge/challenge_intro_page.dart';
+import 'package:mongbi_app/presentation/challenge/challenge_page.dart';
 import 'package:mongbi_app/presentation/dream/dream_analysis_loading_page.dart';
 import 'package:mongbi_app/presentation/dream/dream_analysis_result_page.dart';
 import 'package:mongbi_app/presentation/dream/dream_interpretation_page.dart';
@@ -114,6 +115,14 @@ final GoRouter router = GoRouter(
           (context, state) => buildFadeTransitionPage(
             key: state.pageKey,
             child: ChallengeIntroPage(),
+          ),
+    ),
+    GoRoute(
+      path: '/challenge',
+      pageBuilder:
+          (context, state) => buildFadeTransitionPage(
+            key: state.pageKey,
+            child: ChallengePage(),
           ),
     ),
     GoRoute(
