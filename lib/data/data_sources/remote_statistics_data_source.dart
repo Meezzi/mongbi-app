@@ -29,9 +29,6 @@ class RemoteStatisticsDataSource implements StatisticsDataSource {
       // TODO : idToken 유저 엔티티에서 받아오기
       final response = await dio.get(
         '/dreams/statistics/monthly/$userIndex/$year/$month',
-        // options: Options(
-        //   headers: {'Authorization': 'Bearer ${dotenv.env['ID_TOKEN']}'},
-        // ),
       );
 
       if (response.data['code'] == 201 && response.data['success']) {
@@ -83,7 +80,6 @@ class RemoteStatisticsDataSource implements StatisticsDataSource {
   Future<StatisticsDto?> fetchYearStatistics(DateTime dateTime) async {
     try {
       final year = dateTime.year.toString();
-      print(year);
       Map<String, String> keyChanges = {
         '1': 'VERY_BAD',
         '2': 'BAD',
@@ -96,9 +92,6 @@ class RemoteStatisticsDataSource implements StatisticsDataSource {
       // TODO : idToken 유저 엔티티에서 받아오기
       final response = await dio.get(
         '/dreams/statistics/year/$userIndex/$year',
-        // options: Options(
-        //   headers: {'Authorization': 'Bearer ${dotenv.env['ID_TOKEN']}'},
-        // ),
       );
 
       if (response.data['code'] == 201 && response.data['success']) {
@@ -142,7 +135,6 @@ class RemoteStatisticsDataSource implements StatisticsDataSource {
     } on DioException catch (e) {
       throw Exception(e.message ?? '네트워크 오류가 발생하였습니다.');
     } catch (e) {
-      print(e);
       return null;
     }
   }
