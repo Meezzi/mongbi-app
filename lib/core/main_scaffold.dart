@@ -27,6 +27,8 @@ class MainScaffold extends StatelessWidget {
       extendBodyBehindAppBar: location.startsWith('/home') ? true : false,
       body: child,
       bottomNavigationBar: BottomAppBar(
+        height: 56,
+        padding: EdgeInsets.symmetric(horizontal: 0),
         color: _buildBottomAppBarColor(location),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
