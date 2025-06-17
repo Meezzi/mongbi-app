@@ -104,21 +104,9 @@ class _RemindTimePickerPageState extends State<RemindTimePickerPage> {
               child: RemindTimeSettingButtonWidget(
                 onTap: () async {
                   try {
-                    print('⏱️ 현재 시각: ${DateTime.now()}');
-                    print('🔍 예약할 시간: ${selectedTime.format(context)}');
-
-                    final exactAlarmStatus =
-                        await Permission.scheduleExactAlarm.status;
-                    final batteryOptStatus =
-                        await Permission.ignoreBatteryOptimizations.status;
-
-                    print('✅ 정확 알람 권한 상태: $exactAlarmStatus');
-                    print('⚡️ 배터리 최적화 예외 상태: $batteryOptStatus');
-
-
-                    await NotificationService().showInstantNotification();
-
-                    print('💚 알림 등록 성공');
+                    await NotificationService().scheduleDailyReminder(
+                      selectedTime,
+                    );
                     context.go('/home');
                   } catch (e) {
                     if (e is PlatformException &&
