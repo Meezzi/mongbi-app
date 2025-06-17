@@ -1,23 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/core/get_responsive_ratio_by_width.dart';
+import 'package:mongbi_app/providers/statistics_provider.dart';
 
-class MonthYearPicker {
+class MonthYearPicker extends ConsumerStatefulWidget {
+  const MonthYearPicker({
+    super.key,
+    required this.isMonth,
+    required this.left,
+    required this.top,
+    required this.scrollController,
+  });
+
+  final bool isMonth;
+  final double left;
+  final double top;
+  final ScrollController scrollController;
+
+  @override
+  ConsumerState<MonthYearPicker> createState() => MonthYearPickerState();
+}
+
+class MonthYearPickerState extends ConsumerState<MonthYearPicker> {
   OverlayEntry? _overlayEntry;
 
-  void show(
-    BuildContext context, {
-    required bool isMonth,
-    required double left,
-    required double top,
-    required ScrollController scrollController,
-  }) {
+  @override
+  void dispose() {
+    hide();
+    super.dispose();
+  }
+
+  void show() {
     if (_overlayEntry != null) return; // 이미 띄워져 있으면 무시
 
     _overlayEntry = OverlayEntry(
       builder:
           (context) => DefaultTextStyle(
-            style: TextStyle(),
+            style: const TextStyle(),
             child: Stack(
               children: [
                 GestureDetector(
@@ -28,17 +48,17 @@ class MonthYearPicker {
                   child: Container(color: Colors.transparent),
                 ),
                 Positioned(
-                  left: left,
-                  top: top,
+                  left: widget.left,
+                  top: widget.top,
                   child: Container(
-                    padding: EdgeInsets.only(right: 12),
+                    padding: const EdgeInsets.only(right: 12),
                     width: getResponsiveRatioByWidth(context, 100),
                     height: getResponsiveRatioByWidth(context, 189),
                     decoration: BoxDecoration(
                       boxShadow: [
                         BoxShadow(
-                          color: Color(0x337F2AE8),
-                          offset: Offset(0, 4),
+                          color: const Color(0x337F2AE8),
+                          offset: const Offset(0, 4),
                           blurRadius: 10,
                         ),
                       ],
@@ -46,42 +66,62 @@ class MonthYearPicker {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: RawScrollbar(
-                      // controller: scrollController,
-                      // thumbVisibility: true,
-                      thumbColor: Color(0xFFD6D4D8),
-                      // thickness: 6,
-                      // mainAxisMargin: 0,
+                      thumbColor: const Color(0xFFD6D4D8),
                       crossAxisMargin: -8.5,
-                      radius: Radius.circular(100),
+                      radius: const Radius.circular(100),
                       child: ListView.builder(
-                        controller: scrollController,
+                        controller: widget.scrollController,
                         padding: const EdgeInsets.only(top: 8, bottom: 8),
-                        itemCount: isMonth ? 12 : 6,
+                        itemCount: widget.isMonth ? 12 : 6,
                         itemBuilder: (context, index) {
-                          if (isMonth) {
+                          if (widget.isMonth) {
                             final month = index + 1;
-                            // TODO : 선택된 월로 할당하기
-                            final selectedMonth = DateTime.now().month;
-                            final isActive = selectedMonth == month;
+                            final focusedMonth =
+                                ref
+                                    .read(pickerViewModelProvider)
+                                    .focusedMonth
+                                    .month;
+                            final isActive = focusedMonth == month;
                             final isLast = 12 - 1 == index;
                             return pickerContent(
                               context: context,
                               content: '$month월',
                               isActive: isActive,
                               isLast: isLast,
+                              onTap: () {
+                                final pickerVm = ref.read(
+                                  pickerViewModelProvider.notifier,
+                                );
+                                pickerVm.onChangedMonth(
+                                  DateTime(DateTime.now().year, month),
+                                );
+
+                                hide();
+                              },
                             );
                           } else {
-                            final currntYear = DateTime.now().year;
-                            final year = currntYear - (5 - index);
-                            // TODO : 선택된 년으로 할당하기
-                            final selectedYear = DateTime.now().year;
-                            final isActive = selectedYear == year;
+                            final currentYear = DateTime.now().year;
+                            final year = currentYear - (5 - index);
+                            final focusedMonth =
+                                ref
+                                    .read(pickerViewModelProvider)
+                                    .focusedYear
+                                    .year;
+
+                            final isActive = focusedMonth == year;
                             final isLast = 6 - 1 == index;
                             return pickerContent(
                               context: context,
                               content: '$year년',
                               isActive: isActive,
                               isLast: isLast,
+                              onTap: () {
+                                final pickerVm = ref.read(
+                                  pickerViewModelProvider.notifier,
+                                );
+                                pickerVm.onChangedYear(DateTime(year));
+                                hide();
+                              },
                             );
                           }
                         },
@@ -105,14 +145,12 @@ class MonthYearPicker {
   Widget pickerContent({
     required BuildContext context,
     required String content,
-    required isActive,
-    required isLast,
+    required bool isActive,
+    required bool isLast,
+    required VoidCallback onTap,
   }) {
     return GestureDetector(
-      onTap: () {
-        print('$content 터치');
-        hide();
-      },
+      onTap: onTap,
       child: Container(
         padding: EdgeInsets.only(
           top: getResponsiveRatioByWidth(context, 8),
@@ -124,11 +162,11 @@ class MonthYearPicker {
           right: getResponsiveRatioByWidth(context, 16),
         ),
         decoration: BoxDecoration(
-          color: isActive ? Color(0xF5F5F4F5) : Colors.transparent,
+          color: isActive ? const Color(0xF5F5F4F5) : Colors.transparent,
           border:
               isLast
                   ? null
-                  : Border(bottom: BorderSide(color: Color(0xF5F5F4F5))),
+                  : const Border(bottom: BorderSide(color: Color(0xF5F5F4F5))),
         ),
         child: Text(
           content,
@@ -138,5 +176,11 @@ class MonthYearPicker {
         ),
       ),
     );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // show()를 호출해야 picker가 뜸
+    return const SizedBox.shrink();
   }
 }

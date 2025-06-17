@@ -5,10 +5,12 @@ import 'package:mongbi_app/core/get_responsive_ratio_by_width.dart';
 class DreamFrequencyCard extends StatelessWidget {
   const DreamFrequencyCard({
     super.key,
+    required this.isFirst,
     required this.frequency,
     required this.totalDays,
   });
 
+  final bool isFirst;
   final int frequency;
   final int totalDays;
 
@@ -47,6 +49,7 @@ class DreamFrequencyCard extends StatelessWidget {
                   style: Font.title24.copyWith(
                     fontSize: getResponsiveRatioByWidth(context, 24),
                     height: 27 / 24,
+                    color: isFirst ? Color(0xFFA6A1AA) : Color(0xFF1A181B),
                   ),
                 ),
                 SizedBox(width: getResponsiveRatioByWidth(context, 4)),

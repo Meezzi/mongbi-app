@@ -2,13 +2,19 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/core/get_responsive_ratio_by_width.dart';
+import 'package:mongbi_app/data/dtos/statistics_dto.dart';
 import 'package:mongbi_app/presentation/statistics/widgets/common_box.dart';
 import 'package:mongbi_app/presentation/statistics/widgets/custom_fl_dot_painter.dart';
 
 class PsychologyKeywordChart extends StatelessWidget {
-  const PsychologyKeywordChart({super.key, required this.keywordList});
+  const PsychologyKeywordChart({
+    super.key,
+    required this.isFirst,
+    required this.keywordList,
+  });
 
-  final List<String> keywordList;
+  final bool isFirst;
+  final List<Keyword> keywordList;
 
   @override
   Widget build(BuildContext context) {
@@ -68,15 +74,15 @@ class PsychologyKeywordChart extends StatelessWidget {
               ScatterChartData(
                 // 자체적으로 Positioned처럼 동작
                 // 인덱스가 클수록 다른 위젯 위에 쌓일 수 있다
-                scatterSpots: List.generate(kwLength, (index) {
+                scatterSpots: List.generate(isFirst ? 5 : kwLength, (index) {
                   return ScatterSpot(
                     getResponsiveRatioByWidth(context, xList[index]),
                     getResponsiveRatioByWidth(context, yList[index]),
                     dotPainter: CustomFlDotPainter(
                       radius: radiusList[index],
-                      color: colorList[index],
-                      text: keywordList[index],
-                      textStyle: styleList[index],
+                      color: isFirst ? Color(0xFFD6D4D8) : colorList[index],
+                      text: isFirst ? '키워드' : keywordList[index].keyword,
+                      textStyle: isFirst ? styleList[0] : styleList[index],
                     ),
                   );
                 }),

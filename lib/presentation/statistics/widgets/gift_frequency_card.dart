@@ -3,8 +3,13 @@ import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/core/get_responsive_ratio_by_width.dart';
 
 class GiftFrequencyCard extends StatelessWidget {
-  const GiftFrequencyCard({super.key, required this.frequency});
+  const GiftFrequencyCard({
+    super.key,
+    required this.isFirst,
+    required this.frequency,
+  });
 
+  final bool isFirst;
   final int frequency;
 
   @override
@@ -37,6 +42,7 @@ class GiftFrequencyCard extends StatelessWidget {
             Text(
               '$frequency%',
               style: Font.title28.copyWith(
+                color: isFirst ? Color(0xFFA6A1AA) : Color(0xFF1A181B),
                 fontSize: getResponsiveRatioByWidth(context, 28),
               ),
             ),

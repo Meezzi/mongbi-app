@@ -123,13 +123,6 @@ class MainScaffold extends StatelessWidget {
           ),
         ],
       );
-    } else if (location.startsWith('/statistics')) {
-      return AppBar(
-        backgroundColor: Colors.white,
-        titleSpacing: 24,
-        centerTitle: false,
-        title: Text('모몽의 꿈 통계', style: Font.title20),
-      );
     } else if (location.startsWith('/setting')) {
       return AppBar(
         backgroundColor: Colors.transparent,

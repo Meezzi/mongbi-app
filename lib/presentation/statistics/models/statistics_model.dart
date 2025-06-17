@@ -1,23 +1,12 @@
+import 'package:mongbi_app/domain/entities/statistics.dart';
+
 class StatisticsModel {
-  StatisticsModel({DateTime? focusedDay, this.selectedDay}) {
-    this.focusedDay = focusedDay ?? DateTime.now();
-  }
+  StatisticsModel({this.month, this.year});
 
-  DateTime? selectedDay;
-  late DateTime focusedDay;
+  Statistics? month;
+  Statistics? year;
 
-  StatisticsModel copyWith({DateTime? focusedDay, DateTime? selectedDay}) {
-    return StatisticsModel(
-      focusedDay: focusedDay ?? this.focusedDay,
-      selectedDay: selectedDay ?? this.selectedDay,
-    );
-  }
-
-  @override
-  String toString() {
-    return '''{
-      focusedDay: $focusedDay, 
-      selectedDay: $selectedDay,
-    }''';
+  StatisticsModel copyWith({Statistics? month, Statistics? year}) {
+    return StatisticsModel(month: month ?? this.month, year: year ?? this.year);
   }
 }
