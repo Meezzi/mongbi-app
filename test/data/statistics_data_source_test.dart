@@ -99,6 +99,6 @@ void main() {
     expect(statisticsDto, isA<StatisticsDto?>());
     expect(statisticsDto!.frequency, 20);
     expect(statisticsDto.distribution.veryBad, 10);
-    expect(statisticsDto.moodState.goodDream!.veryGood, 7);
+    expect(statisticsDto.moodState.goodDream.veryGood, 7);
   });
 }
