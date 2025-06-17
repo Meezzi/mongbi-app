@@ -23,7 +23,6 @@ class MainScaffold extends StatelessWidget {
 
     return Scaffold(
       appBar: _buildAppBar(location),
-      extendBody: location.startsWith('/home') ? true : false,
       extendBodyBehindAppBar: location.startsWith('/home') ? true : false,
       body: child,
       bottomNavigationBar: BottomAppBar(
