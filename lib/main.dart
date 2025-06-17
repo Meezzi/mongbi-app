@@ -7,10 +7,13 @@ import 'package:mongbi_app/core/router.dart';
 import 'package:mongbi_app/presentation/remind/view_model/remind_time_setting_view_model.dart';
 import 'package:mongbi_app/providers/background_music_provider.dart';
 import 'package:mongbi_app/providers/setting_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await NotificationService().init();
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.clear(); // 앱 시작 시 모든 SharedPreferences 삭제
   await dotenv.load(fileName: '.env');
   // 캘린더 한글화
   await initializeDateFormatting();

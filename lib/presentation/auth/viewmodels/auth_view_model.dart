@@ -1,5 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_naver_login/flutter_naver_login.dart';
+import 'package:flutter_naver_login/interface/types/naver_login_result.dart';
+import 'package:flutter_naver_login/interface/types/naver_login_status.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart' as kakao;
 import 'package:mongbi_app/domain/entities/user.dart';
@@ -77,6 +79,28 @@ class AuthViewModel extends Notifier<User?> {
       rethrow;
     } finally {
       _isLoading = false;
+    }
+  }
+
+  Future<bool> logoutWithKakao() async {
+    try {
+      await kakao.UserApi.instance.unlink();
+      return true; 
+    } catch (error) {
+      return false;
+    }
+  }
+
+  Future<bool> logoutWithNaver() async {
+    try {
+      final NaverLoginResult res =
+          await FlutterNaverLogin.logOutAndDeleteToken();
+      if (res.status == NaverLoginStatus.loggedOut) {
+        return true;
+      }
+      return false;
+    } catch (error) {
+      return false;
     }
   }
 }
