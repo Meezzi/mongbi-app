@@ -13,23 +13,20 @@ class RemindTimeSettingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 24, top: 16),
-          child: IconButton(
-            icon: SvgPicture.asset(
-              'assets/icons/back-arrow.svg',
-              width: 24,
-              height: 24,
-            ),
-            onPressed: () => context.go('/home'),
-            splashRadius: 20,
+        leading: IconButton(
+          icon: SvgPicture.asset(
+            'assets/icons/back-arrow.svg',
+            width: 24,
+            height: 24,
           ),
+          onPressed: () => context.go('/home'),
+          splashRadius: 20,
         ),
         elevation: 0,
         backgroundColor: Colors.transparent,
         foregroundColor: Colors.black,
         toolbarHeight: 56,
-        titleSpacing: 0,
+        titleSpacing: 24,
       ),
       body: SafeArea(
         child: Padding(
