@@ -7,6 +7,7 @@ import 'package:mongbi_app/presentation/terms/widgets/terms_button_widget.dart';
 import 'package:mongbi_app/presentation/terms/widgets/terms_checkbox_widget.dart';
 import 'package:mongbi_app/presentation/terms/widgets/terms_text_widget.dart';
 import 'package:mongbi_app/providers/terms_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class TermsBottomSheet extends ConsumerStatefulWidget {
   const TermsBottomSheet({super.key});
@@ -134,8 +135,15 @@ class _TermsBottomSheetState extends ConsumerState<TermsBottomSheet> {
           ConfirmButton(
             isEnabled: isEssentialChecked,
             onPressed: () async {
-              final userIdx = 1; // TODO: 로그인 연동 시 사용자 ID로 대체
+              final prefs = await SharedPreferences.getInstance();
+              final userIdx = prefs.getInt('user_id');
 
+              if (userIdx == null) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('로그인 정보를 불러올 수 없습니다.')),
+                );
+                return;
+              }
               final agreements =
                   terms.asMap().entries.map((entry) {
                     final i = entry.key;
