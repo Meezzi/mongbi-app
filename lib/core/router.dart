@@ -20,7 +20,7 @@ import 'package:mongbi_app/presentation/statistics/statistics_page.dart';
 final GoRouter router = GoRouter(
   initialLocation: '/',
   routes: [
-    GoRoute(path: '/', redirect: (_, __) => '/splash'),
+    GoRoute(path: '/', redirect: (_, __) => '/remindtime_setting'),
 
     ShellRoute(
       builder: (context, state, child) {
@@ -47,10 +47,6 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/nickname_input',
       builder: (context, state) => NicknameInputPage(),
-    ),
-    GoRoute(
-      path: '/remindtime_setting',
-      builder: (context, state) => RemindTimeSettingPage(),
     ),
     GoRoute(
       path: '/remindtime_setting',

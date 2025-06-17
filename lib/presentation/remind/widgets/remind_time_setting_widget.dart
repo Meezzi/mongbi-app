@@ -10,12 +10,18 @@ class CustomTimePicker extends StatefulWidget {
 }
 
 class _CustomTimePickerState extends State<CustomTimePicker> {
-  final FixedExtentScrollController ampmController = FixedExtentScrollController(initialItem: 0);
-  final FixedExtentScrollController hourController = FixedExtentScrollController(initialItem: 7);
-  final FixedExtentScrollController minuteController = FixedExtentScrollController(initialItem: 0);
+  final FixedExtentScrollController ampmController =
+      FixedExtentScrollController(initialItem: 0);
+  final FixedExtentScrollController hourController =
+      FixedExtentScrollController(initialItem: 7);
+  final FixedExtentScrollController minuteController =
+      FixedExtentScrollController(initialItem: 0);
 
   final List<String> ampm = ['오전', '오후'];
-  final List<String> hours = List.generate(12, (i) => i + 1 < 10 ? '0${i + 1}' : '${i + 1}');
+  final List<String> hours = List.generate(
+    12,
+    (i) => i + 1 < 10 ? '0${i + 1}' : '${i + 1}',
+  );
   final List<String> minutes = List.generate(60, (i) => i < 10 ? '0$i' : '$i');
 
   int selectedAmPm = 0;
@@ -83,7 +89,7 @@ class _CustomTimePickerState extends State<CustomTimePicker> {
   }) {
     return SizedBox(
       width: width,
-      height: 180,
+      height: 188,
       child: ListWheelScrollView.useDelegate(
         controller: controller,
         itemExtent: 40,
@@ -94,17 +100,25 @@ class _CustomTimePickerState extends State<CustomTimePicker> {
           builder: (context, index) {
             Color textColor;
             if (index == selectedIndex) {
-              textColor = const Color(0xFF3B136B); // 선택됨
+              textColor = const Color(0xFF3B136B); 
             } else if ((index - selectedIndex).abs() == 1) {
-              textColor = const Color(0xFFA6A1AA); // 인접
+              textColor = const Color(0xFFA6A1AA);
             } else {
-              textColor = const Color(0xFFE6E4E7); // 나머지
+              textColor = const Color(0xFFE6E4E7); 
             }
 
-            return Center(
-              child: Text(
-                items[index],
-                style: Font.title20.copyWith(color: textColor),
+            return SizedBox(
+              height: 40,
+              child: Center(
+                child: Text(
+                  items[index],
+                  style: Font.title20.copyWith(color: textColor),
+                  textAlign: TextAlign.center,
+                  textHeightBehavior: const TextHeightBehavior(
+                    applyHeightToFirstAscent: false,
+                    applyHeightToLastDescent: false,
+                  ),
+                ),
               ),
             );
           },
@@ -118,9 +132,10 @@ class _CustomTimePickerState extends State<CustomTimePicker> {
     final int hour = selectedHour + 1;
     final int minute = selectedMinute;
 
-    final realHour = amPm == '오후' && hour != 12
-        ? hour + 12
-        : (amPm == '오전' && hour == 12 ? 0 : hour);
+    final realHour =
+        amPm == '오후' && hour != 12
+            ? hour + 12
+            : (amPm == '오전' && hour == 12 ? 0 : hour);
 
     widget.onChanged(TimeOfDay(hour: realHour, minute: minute), amPm);
   }
