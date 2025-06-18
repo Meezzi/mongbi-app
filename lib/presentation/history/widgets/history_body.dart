@@ -36,16 +36,14 @@ class HistoryBody extends StatelessWidget {
       ),
       child: NotificationListener(
         onNotification: (notification) {
+          // 스크롤시 기록의 위치와 앱바를 비교하여 배경 변경
           if (notification is ScrollUpdateNotification) {
             onScroll();
           }
+
           return false;
         },
         child: SingleChildScrollView(
-          physics:
-              calendarState.searchedHistory.isEmpty
-                  ? NeverScrollableScrollPhysics()
-                  : AlwaysScrollableScrollPhysics(),
           padding: EdgeInsets.zero,
           child: Column(
             children: [

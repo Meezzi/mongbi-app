@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mongbi_app/data/data_sources/history_data_source.dart';
-import 'package:mongbi_app/data/data_sources/history_data_source_impl.dart';
-import 'package:mongbi_app/data/repositories/history_repository_impl.dart';
+import 'package:mongbi_app/data/data_sources/remote_history_data_source.dart';
+import 'package:mongbi_app/data/repositories/remote_history_repository.dart';
 import 'package:mongbi_app/domain/entities/history.dart';
 import 'package:mongbi_app/domain/repositories/history_repository.dart';
 import 'package:mongbi_app/domain/use_cases/fetch_user_dreams_history_use_case.dart';
@@ -12,12 +12,12 @@ import 'package:mongbi_app/providers/core_providers.dart';
 
 final _historyDataSourceProvider = Provider<HistoryDataSource>((ref) {
   final dio = ref.read(dioProvider);
-  return HistoryDataSourceImpl(dio);
+  return RemoteHistoryDataSource(dio);
 });
 
 final _historyRepositoryProvider = Provider<HistoryRepository>((ref) {
   final dataSource = ref.read(_historyDataSourceProvider);
-  return HistoryRepositoryImpl(dataSource);
+  return RemoteHistoryRepository(dataSource);
 });
 
 final fetchUserDreamsHistoryUseCaseProvider = Provider((ref) {

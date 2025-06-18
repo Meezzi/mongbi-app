@@ -26,6 +26,7 @@ class CalendarBottomSheetMonthSelector extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final calendarVm = ref.read(calendarViewModelProvider.notifier);
+    final historyAsync = ref.read(historyViewModelProvider);
     final now = DateTime.now();
 
     return Expanded(
@@ -51,14 +52,27 @@ class CalendarBottomSheetMonthSelector extends ConsumerWidget {
             ),
             itemBuilder: (context, index) {
               final month = index + 1;
+
+              // 포커스된(선택한) 년/월 인지 여부
               final isActive =
                   (selectedDate.year == year) && (selectedDate.month == month);
+
+              // 현재보다 미래 시점의 월인지 여부
               final isFutureMonth = isCurrentYear && month > now.month;
+
+              // 꿈 작성한 기록이 있는지 여부
+              final historyList = historyAsync.value ?? [];
+              final isExistingDate = historyList.any((history) {
+                final regYear = history.dreamRegDate.year;
+                final regMonth = history.dreamRegDate.month;
+
+                return year == regYear && month == regMonth;
+              });
 
               return Center(
                 child: GestureDetector(
                   onTap:
-                      isFutureMonth
+                      isFutureMonth || !isExistingDate
                           ? null
                           : () async {
                             // 바텀시트 내에서 현재 선택된 날짜를 표시하기 위한 메서드
@@ -74,7 +88,7 @@ class CalendarBottomSheetMonthSelector extends ConsumerWidget {
                             }
                           },
                   child: Opacity(
-                    opacity: isFutureMonth ? 0.3 : 1,
+                    opacity: isFutureMonth || !isExistingDate ? 0.3 : 1,
                     child: Container(
                       width: getResponsiveRatioByWidth(context, 48),
                       height: getResponsiveRatioByWidth(context, 48),

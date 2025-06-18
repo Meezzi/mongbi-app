@@ -15,7 +15,7 @@ class HistoryList extends ConsumerStatefulWidget {
 }
 
 class _HistoryListState extends ConsumerState<HistoryList> {
-  double? expandPaddingValue;
+  double expandPaddingValue = 0;
 
   @override
   void initState() {
@@ -63,7 +63,7 @@ class _HistoryListState extends ConsumerState<HistoryList> {
       ),
       child: HistoryNotice(
         calendarState: calendarState,
-        expandPaddingValue: expandPaddingValue ?? 0,
+        expandPaddingValue: expandPaddingValue < 0 ? 0 : expandPaddingValue,
         horizontalPadding: widget.horizontalPadding,
       ),
     );

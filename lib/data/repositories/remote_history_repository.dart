@@ -2,8 +2,8 @@ import 'package:mongbi_app/data/data_sources/history_data_source.dart';
 import 'package:mongbi_app/domain/entities/history.dart';
 import 'package:mongbi_app/domain/repositories/history_repository.dart';
 
-class HistoryRepositoryImpl implements HistoryRepository {
-  HistoryRepositoryImpl(this._dataSource);
+class RemoteHistoryRepository implements HistoryRepository {
+  RemoteHistoryRepository(this._dataSource);
 
   final HistoryDataSource _dataSource;
 

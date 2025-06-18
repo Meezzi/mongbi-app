@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:mongbi_app/data/data_sources/history_data_source.dart';
-import 'package:mongbi_app/data/data_sources/history_data_source_impl.dart';
+import 'package:mongbi_app/data/data_sources/remote_history_data_source.dart';
 import 'package:mongbi_app/data/dtos/history_dto.dart';
 
 class MockDio extends Mock implements Dio {}
@@ -15,7 +15,7 @@ void main() {
 
   setUp(() {
     mockDio = MockDio();
-    historyDataSourceImpl = HistoryDataSourceImpl(mockDio!);
+    historyDataSourceImpl = RemoteHistoryDataSource(mockDio!);
   });
   test('HistoryDataSource test', () async {
     // json이 이런 형태인 이유는
