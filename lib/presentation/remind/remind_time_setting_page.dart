@@ -54,7 +54,8 @@ class RemindTimeSettingPage extends StatelessWidget {
               RemindTimeSettingButtonWidget(
                 onTap: () async {
                   final notificationService = NotificationService();
-                  final granted = await notificationService.requestNotificationPermission();
+                  final granted =
+                      await notificationService.requestNotificationPermission();
                   if (granted) {
                     context.go('/remindtime_time_setting');
                   } else {
