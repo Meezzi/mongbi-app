@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mongbi_app/presentation/dream/models/dream_write_state.dart';
-import 'package:mongbi_app/providers/auth_provider.dart';
+import 'package:mongbi_app/providers/core_providers.dart';
 import 'package:mongbi_app/providers/dream_provider.dart';
 
 class DreamWriteViewModel extends Notifier<DreamWriteState> {
@@ -24,13 +24,14 @@ class DreamWriteViewModel extends Notifier<DreamWriteState> {
   Future<void> submitDream() async {
     if (state.dreamContent.trim().length < 10) return;
     if (state.selectedIndex == -1) return;
-    final user = ref.read(authViewModelProvider);
+    final prefs = await ref.read(sharedPreferencesProvider.future);
+    final uid = prefs.getInt('user_id');
 
-    if (user == null) return;
+    if (uid == null) return;
 
     final dream = await ref
         .read(analyzeAndSaveDreamUseCaseProvider)
-        .execute(user.userIdx, state.dreamContent, state.selectedIndex);
+        .execute(uid, state.dreamContent, state.selectedIndex);
     ref.read(dreamInterpretationViewModelProvider.notifier).setDream(dream);
   }
 }
