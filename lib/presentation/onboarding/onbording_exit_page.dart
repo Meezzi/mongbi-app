@@ -13,7 +13,6 @@ class OnboardingExitPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Color(0xFFFAFAFA),
       appBar: AppBar(
-
         leading: IconButton(
           icon: SvgPicture.asset(
             'assets/icons/back-arrow.svg',
