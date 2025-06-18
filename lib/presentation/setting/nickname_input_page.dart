@@ -66,7 +66,7 @@ class _NicknameInputPageState extends ConsumerState<NicknameInputPage> {
                         nickname: nickname,
                       ); 
                   if (mounted) {
-                    context.go('/home');
+                    context.go('/remindtime_setting');
                   }
                 } catch (e) {
                   if (mounted) {
