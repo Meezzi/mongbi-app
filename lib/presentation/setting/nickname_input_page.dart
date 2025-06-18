@@ -61,12 +61,9 @@ class _NicknameInputPageState extends ConsumerState<NicknameInputPage> {
                   }
                   await ref
                       .read(nicknameViewModelProvider.notifier)
-                      .updateNickname(
-                        userId: userId,
-                        nickname: nickname,
-                      ); 
+                      .updateNickname(userId: userId, nickname: nickname);
                   if (mounted) {
-                    context.go('/home');
+                    context.go('/remindtime_setting');
                   }
                 } catch (e) {
                   if (mounted) {

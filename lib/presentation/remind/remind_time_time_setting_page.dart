@@ -106,7 +106,7 @@ class _RemindTimePickerPageState extends State<RemindTimePickerPage> {
                     await NotificationService().scheduleDailyReminder(
                       selectedTime,
                     );
-                    context.go('/home');
+                    context.go('/onbording_page');
                   } catch (e) {
                     if (e is PlatformException &&
                         e.code == 'exact_alarms_not_permitted') {
@@ -117,8 +117,6 @@ class _RemindTimePickerPageState extends State<RemindTimePickerPage> {
                       );
                       await NotificationService()
                           .openExactAlarmSettingsIfNeeded();
-                    } else {
-                     
                     }
                   }
                 },
