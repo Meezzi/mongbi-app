@@ -100,11 +100,11 @@ class _CustomTimePickerState extends State<CustomTimePicker> {
           builder: (context, index) {
             Color textColor;
             if (index == selectedIndex) {
-              textColor = const Color(0xFF3B136B); 
+              textColor = const Color(0xFF3B136B);
             } else if ((index - selectedIndex).abs() == 1) {
               textColor = const Color(0xFFA6A1AA);
             } else {
-              textColor = const Color(0xFFE6E4E7); 
+              textColor = const Color(0xFFE6E4E7);
             }
 
             return SizedBox(

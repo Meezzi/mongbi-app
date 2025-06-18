@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mongbi_app/core/font.dart';
 
 class RemindTimeSettingButtonWidget extends StatelessWidget {
-  const RemindTimeSettingButtonWidget({
-    super.key,
-    required this.onTap,
-  });
+  const RemindTimeSettingButtonWidget({super.key, required this.onTap});
 
   final VoidCallback onTap;
 
@@ -25,9 +22,7 @@ class RemindTimeSettingButtonWidget extends StatelessWidget {
           child: Text(
             '알겠어',
             textAlign: TextAlign.center,
-            style: Font.title18.copyWith(
-              color: Colors.white,
-            ),
+            style: Font.title18.copyWith(color: Colors.white),
           ),
         ),
       ),
