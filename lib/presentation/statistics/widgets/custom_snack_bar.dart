@@ -28,6 +28,10 @@ class CustomSnackBarState extends State<CustomSnackBar> {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
+  void hide() {
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+  }
+
   Widget speechBubbleSnackBar() {
     return Stack(
       clipBehavior: Clip.none,

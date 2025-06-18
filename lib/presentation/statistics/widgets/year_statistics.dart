@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mongbi_app/core/get_responsive_ratio_by_width.dart';
 import 'package:mongbi_app/core/get_widget_info.dart';
+import 'package:mongbi_app/core/route_observer.dart';
 import 'package:mongbi_app/presentation/statistics/statistics_key/statistics_key.dart';
 import 'package:mongbi_app/presentation/statistics/widgets/custom_snack_bar.dart';
 import 'package:mongbi_app/presentation/statistics/widgets/dream_frequency_card.dart';
@@ -22,11 +23,13 @@ class YearStatistics extends ConsumerStatefulWidget {
   ConsumerState<YearStatistics> createState() => _YearStatisticsState();
 }
 
-class _YearStatisticsState extends ConsumerState<YearStatistics> {
+class _YearStatisticsState extends ConsumerState<YearStatistics>
+    with RouteAware {
   bool isMonth = false;
   double? yearPickerButtonPosition;
   final ScrollController scrollController = ScrollController();
-  bool _snackBarShown = false;
+  bool snackBarShown = false;
+  String? currentDisplayedYear;
 
   @override
   void initState() {
@@ -44,10 +47,29 @@ class _YearStatisticsState extends ConsumerState<YearStatistics> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    routeObserver.subscribe(this, ModalRoute.of(context)!);
+  }
+
+  @override
   void dispose() {
     scrollController.dispose();
-
+    routeObserver.unsubscribe(this);
+    yearSnackBarKey.currentState?.hide(); // 페이지 사라질 때 스낵바 강제 종료
     super.dispose();
+  }
+
+  @override
+  void didPushNext() {
+    // 다른 페이지로 이동 시
+    yearSnackBarKey.currentState?.hide();
+  }
+
+  @override
+  void didPopNext() {
+    // 다른 페이지에서 돌아올 때
+    snackBarShown = false; // 플래그 초기화
   }
 
   @override
@@ -86,22 +108,41 @@ class _YearStatisticsState extends ConsumerState<YearStatistics> {
                   },
                   data: (data) {
                     final yearStatistics = data?.year;
+                    final year = yearStatistics?.year; // "2025"
                     final frequency = yearStatistics?.frequency;
                     final totalDays = yearStatistics?.totalDays;
                     final distribution = yearStatistics?.distribution;
                     final moodState = yearStatistics?.moodState;
                     final keywordList = yearStatistics?.keywords;
                     final isFirst = frequency == 0;
+                    final now = DateTime.now();
+                    final isCurrent = now.year == int.parse(year!);
 
-                    // 스낵바가 한 번만 뜨도록 제어
-                    if (isFirst && !_snackBarShown) {
-                      WidgetsBinding.instance.addPostFrameCallback((_) {
-                        yearSnackBarKey.currentState?.show();
-                        _snackBarShown = true;
-                      });
-                    } else if (!isFirst && _snackBarShown) {
-                      // 조건이 풀리면 플래그 리셋
-                      _snackBarShown = false;
+                    // 내가 지금 보고 있는 월(내가 선택한 월) 감지
+                    final currentYear = yearStatistics?.year; // "2025"
+                    if (currentDisplayedYear != null &&
+                        currentDisplayedYear != currentYear) {
+                      snackBarShown = false;
+                      yearSnackBarKey.currentState?.hide();
+                    }
+                    currentDisplayedYear = currentYear;
+
+                    // 이전 월(현재가 아닌 월) 선택 시 무조건 스낵바 제거
+                    if (!isCurrent) {
+                      yearSnackBarKey.currentState?.hide();
+                      snackBarShown = false;
+                    }
+
+                    // 현재 년 + isFirst + 라우트 확인 => 스낵바 표시
+                    if (isCurrent && isFirst && !snackBarShown) {
+                      if (ModalRoute.of(context)?.isCurrent == true) {
+                        WidgetsBinding.instance.addPostFrameCallback((_) {
+                          if (mounted) {
+                            yearSnackBarKey.currentState?.show();
+                            snackBarShown = true;
+                          }
+                        });
+                      }
                     }
 
                     return Column(
