@@ -41,19 +41,20 @@ class _OnboardingPageState extends State<OnboardingPage> {
     return Scaffold(
       backgroundColor: const Color(0xFFFAFAFA),
       appBar: AppBar(
+        titleSpacing: 24,
         backgroundColor: const Color(0xFFFAFAFA),
         elevation: 0,
         actions: [
           Padding(
-            padding: const EdgeInsets.only(right: 12),
+            padding: const EdgeInsets.fromLTRB(0, 16, 24, 16),
             child: SkipButton(
               text: isLastPage ? '끝내기' : '건너뛰기',
               onTap: _onSkip,
             ),
           ),
         ],
+        
       ),
-
       body: SafeArea(
         child: Stack(
           children: [

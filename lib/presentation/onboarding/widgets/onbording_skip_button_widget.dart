@@ -9,7 +9,7 @@ class SkipButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 51,
+      width: 60,
       height: 36,
       child: GestureDetector(
         onTap: onTap,
