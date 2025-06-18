@@ -70,4 +70,12 @@ class StatisticsViewModel extends AsyncNotifier<StatisticsModel?> {
       state = AsyncValue.error(e, s);
     }
   }
+
+  void onChangetabBarIndex(int index) {
+    final currentState = state.value ?? StatisticsModel();
+    final newState = currentState.copyWith(tabBarIndex: index);
+
+    // 상태 업데이트
+    state = AsyncValue.data(newState);
+  }
 }

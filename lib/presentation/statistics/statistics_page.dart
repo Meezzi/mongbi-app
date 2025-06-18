@@ -1,19 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/core/get_responsive_ratio_by_width.dart';
 import 'package:mongbi_app/presentation/statistics/widgets/month_statistics.dart';
 import 'package:mongbi_app/presentation/statistics/widgets/tab_bar_title.dart';
 import 'package:mongbi_app/presentation/statistics/widgets/year_statistics.dart';
+import 'package:mongbi_app/providers/statistics_provider.dart';
 
-class StatisticsPage extends StatefulWidget {
+class StatisticsPage extends ConsumerStatefulWidget {
   const StatisticsPage({super.key});
 
   @override
-  State<StatisticsPage> createState() => _StatisticsPageState();
+  ConsumerState<StatisticsPage> createState() => _StatisticsPageState();
 }
 
-class _StatisticsPageState extends State<StatisticsPage> {
+class _StatisticsPageState extends ConsumerState<StatisticsPage>
+    with TickerProviderStateMixin {
   final double horizontalPadding = 24;
+  late TabController tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    tabController = TabController(
+      length: 2,
+      vsync: this,
+      initialIndex:
+          ref.read(statisticsViewModelProvider).value?.tabBarIndex ?? 0,
+    );
+  }
+
+  @override
+  void dispose() {
+    tabController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,39 +55,40 @@ class _StatisticsPageState extends State<StatisticsPage> {
           ),
         ),
         SafeArea(
-          child: DefaultTabController(
-            length: 2,
-            child: NestedScrollView(
-              headerSliverBuilder: (context, innerBoxIsScrolled) {
-                return [
-                  // 상단 제목 필요 시 사용
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: horizontalPadding,
-                        vertical: 16,
-                      ),
-                      child: Text('모몽의 꿈 통계', style: Font.title20),
+          child: NestedScrollView(
+            headerSliverBuilder: (context, innerBoxIsScrolled) {
+              return [
+                // 상단 제목 필요 시 사용
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: horizontalPadding,
+                      vertical: 16,
                     ),
+                    child: Text('모몽의 꿈 통계', style: Font.title20),
                   ),
+                ),
 
-                  // 커스텀 탭바 고정
-                  SliverPersistentHeader(
-                    pinned: true,
-                    delegate: _SliverTabBarDelegate(
-                      TabBarTitle(horizontalPadding: horizontalPadding),
-                      tabBarHeight,
+                // 커스텀 탭바 고정
+                SliverPersistentHeader(
+                  pinned: true,
+                  delegate: _SliverTabBarDelegate(
+                    TabBarTitle(
+                      tabController: tabController,
+                      horizontalPadding: horizontalPadding,
                     ),
+                    tabBarHeight,
                   ),
-                ];
-              },
-              body: TabBarView(
-                physics: NeverScrollableScrollPhysics(),
-                children: [
-                  MonthStatistics(horizontalPadding: horizontalPadding),
-                  YearStatistics(horizontalPadding: horizontalPadding),
-                ],
-              ),
+                ),
+              ];
+            },
+            body: TabBarView(
+              controller: tabController,
+              physics: NeverScrollableScrollPhysics(),
+              children: [
+                MonthStatistics(horizontalPadding: horizontalPadding),
+                YearStatistics(horizontalPadding: horizontalPadding),
+              ],
             ),
           ),
         ),
