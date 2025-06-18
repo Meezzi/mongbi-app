@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mongbi_app/core/font.dart';
 
 class OnbordingExitButtonWidget extends StatelessWidget {
-  const OnbordingExitButtonWidget({
-    super.key,
-    required this.onTap,
-  });
+  const OnbordingExitButtonWidget({super.key, required this.onTap});
 
   final VoidCallback onTap;
 
@@ -25,9 +22,7 @@ class OnbordingExitButtonWidget extends StatelessWidget {
           child: Text(
             '시작할게',
             textAlign: TextAlign.center,
-            style: Font.title18.copyWith(
-              color: Colors.white,
-            ),
+            style: Font.title18.copyWith(color: Colors.white),
           ),
         ),
       ),

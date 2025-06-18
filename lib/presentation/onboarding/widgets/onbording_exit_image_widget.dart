@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class OnboardingExitImage extends StatelessWidget {
-
   const OnboardingExitImage({
     super.key,
     required this.assetPath,

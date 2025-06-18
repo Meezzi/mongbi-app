@@ -13,7 +13,7 @@ class OnboardingExitPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: Padding(
-          padding: const EdgeInsets.only(left: 24,top: 16),
+          padding: const EdgeInsets.only(left: 24, top: 16),
           child: IconButton(
             icon: SvgPicture.asset(
               'assets/icons/back-arrow.svg',
@@ -27,7 +27,7 @@ class OnboardingExitPage extends StatelessWidget {
         elevation: 0,
         backgroundColor: Colors.transparent,
         foregroundColor: Colors.black,
-        toolbarHeight: 56, 
+        toolbarHeight: 56,
         titleSpacing: 0,
       ),
       body: SafeArea(
@@ -39,7 +39,7 @@ class OnboardingExitPage extends StatelessWidget {
               const CustomText(text: '그럼, 몽비와 함께'),
               const CustomText(text: '꿈을 만나러 가볼까요?'),
               const SizedBox(height: 40),
-              const OnboardingExitImage(assetPath: 'assets/images/mongbi.png'),
+              const OnboardingExitImage(assetPath: 'assets/images/mongbi.webp'),
               const Spacer(),
               OnbordingExitButtonWidget(
                 onTap: () {

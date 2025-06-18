@@ -18,9 +18,7 @@ class CustomText extends StatelessWidget {
     return Text(
       text,
       textAlign: align,
-      style: Font.title20.copyWith(
-        color: color ?? const Color(0xFF1A181B),
-      ),
+      style: Font.title20.copyWith(color: color ?? const Color(0xFF1A181B)),
     );
   }
 }

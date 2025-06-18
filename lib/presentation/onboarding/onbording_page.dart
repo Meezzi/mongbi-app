@@ -118,10 +118,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     gradient: LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
-                      colors: [
-                        Color(0x00FAFAFA),
-                        Color(0xFFFAFAFA), 
-                      ],
+                      colors: [Color(0x00FAFAFA), Color(0xFFFAFAFA)],
                       stops: [0.0, 0.81],
                     ),
                   ),

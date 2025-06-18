@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class ExpandingDotsIndicator extends StatelessWidget {
-
   const ExpandingDotsIndicator({
     super.key,
     required this.currentPage,
