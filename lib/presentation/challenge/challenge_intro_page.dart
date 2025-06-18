@@ -20,10 +20,10 @@ class ChallengeIntroPage extends StatelessWidget {
                 leftText: '괜찮아',
                 rightText: '선물이 뭐야?',
                 onLeftPressed: () {
-                  // TODO: 홈 화면으로 이동
+                  context.go('/home');
                 },
                 onRightPressed: () {
-                  // TODO: 챌린지 제안
+                  context.go('/challenge');
                 },
               ),
             ),
