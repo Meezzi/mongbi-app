@@ -117,7 +117,7 @@ class _RemindTimePickerPageState extends State<RemindTimePickerPage> {
                       );
                       await NotificationService()
                           .openExactAlarmSettingsIfNeeded();
-                    } else {}
+                    }
                   }
                 },
               ),
