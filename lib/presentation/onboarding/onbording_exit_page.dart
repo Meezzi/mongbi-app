@@ -43,7 +43,7 @@ class OnboardingExitPage extends StatelessWidget {
               const Spacer(),
               OnbordingExitButtonWidget(
                 onTap: () {
-                  context.go('/onbording_exit');
+                  context.go('/home');
                 },
               ),
               const SizedBox(height: 32),

@@ -18,7 +18,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
   int _currentPage = 0;
 
   void _onSkip() {
-    context.go('/onbording_exit');
+    context.go('/onbording_exit_page');
   }
 
   @override
