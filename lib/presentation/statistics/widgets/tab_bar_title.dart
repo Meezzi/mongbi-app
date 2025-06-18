@@ -5,8 +5,14 @@ import 'package:mongbi_app/core/get_responsive_ratio_by_width.dart';
 import 'package:mongbi_app/providers/statistics_provider.dart';
 
 class TabBarTitle extends StatelessWidget {
-  const TabBarTitle({super.key, required this.horizontalPadding});
+  const TabBarTitle({
+    super.key,
 
+    required this.tabController,
+    required this.horizontalPadding,
+  });
+
+  final TabController tabController;
   final double horizontalPadding;
 
   @override
@@ -28,8 +34,10 @@ class TabBarTitle extends StatelessWidget {
             final statisticsVm = ref.read(statisticsViewModelProvider.notifier);
 
             return TabBar(
+              controller: tabController,
               onTap: (value) {
                 ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                statisticsVm.onChangetabBarIndex(value);
                 if (value == 0) {
                   statisticsVm.fetchMonthStatistics();
                 } else {
