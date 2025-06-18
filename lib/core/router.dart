@@ -5,9 +5,12 @@ import 'package:mongbi_app/presentation/auth/social_login_page.dart';
 import 'package:mongbi_app/presentation/dream/dream_analysis_loading_page.dart';
 import 'package:mongbi_app/presentation/dream/dream_analysis_result_page.dart';
 import 'package:mongbi_app/presentation/dream/dream_interpretation_page.dart';
+import 'package:mongbi_app/presentation/dream/dream_intro_page.dart';
 import 'package:mongbi_app/presentation/dream/dream_write_page.dart';
 import 'package:mongbi_app/presentation/history/history_page.dart';
 import 'package:mongbi_app/presentation/home/home_page.dart';
+import 'package:mongbi_app/presentation/onboarding/onbording_exit_page.dart';
+import 'package:mongbi_app/presentation/onboarding/onbording_page.dart';
 import 'package:mongbi_app/presentation/remind/remind_time_setting_page.dart';
 import 'package:mongbi_app/presentation/remind/remind_time_time_setting_page.dart';
 import 'package:mongbi_app/presentation/setting/alarm_setting_page.dart';
@@ -20,7 +23,7 @@ import 'package:mongbi_app/presentation/statistics/statistics_page.dart';
 final GoRouter router = GoRouter(
   initialLocation: '/',
   routes: [
-    GoRoute(path: '/', redirect: (_, __) => '/splash'),
+    GoRoute(path: '/', redirect: (_, __) => '/onbording_page'),
 
     ShellRoute(
       builder: (context, state, child) {
@@ -52,11 +55,27 @@ final GoRouter router = GoRouter(
       path: '/remindtime_setting',
       builder: (context, state) => RemindTimeSettingPage(),
     ),
+
     GoRoute(
       path: '/remindtime_time_setting',
       builder: (context, state) => RemindTimePickerPage(),
     ),
-
+    GoRoute(
+      path: '/onbording_page',
+      builder: (context, state) => OnboardingPage(),
+    ),
+    GoRoute(
+      path: '/onbording_exit_page',
+      builder: (context, state) => OnboardingExitPage(),
+    ),
+    GoRoute(
+      path: '/dream_intro',
+      pageBuilder:
+          (context, state) => buildFadeTransitionPage(
+            key: state.pageKey,
+            child: DreamIntroPage(),
+          ),
+    ),
     GoRoute(
       path: '/dream_write',
       pageBuilder:
