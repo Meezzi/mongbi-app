@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/presentation/challenge/widgets/challenge_container.dart';
+import 'package:mongbi_app/presentation/challenge/widgets/mongbi_dialog.dart';
 import 'package:mongbi_app/presentation/common/action_button_row.dart';
 
 class ChallengePage extends StatelessWidget {
@@ -64,7 +65,17 @@ class ChallengePage extends StatelessWidget {
                   // TODO: 홈 화면으로 이동
                 },
                 onRightPressed: () {
-                  // TODO: 챌린지 수락
+                  showDialog(
+                    context: context,
+                    builder:
+                        (context) => MongbiDialog(
+                          content: '꿈 잘먹었몽!\n선물 완료하고, 오늘도 힘내라몽',
+                          buttonText: '고마워',
+                          onSubmit: () {
+                            // TODO: 저장 로직
+                          },
+                        ),
+                  );
                 },
               ),
               SizedBox(height: 24),
