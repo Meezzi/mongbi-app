@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/presentation/challenge/widgets/challenge_container.dart';
 import 'package:mongbi_app/presentation/challenge/widgets/mongbi_dialog.dart';
@@ -62,7 +63,17 @@ class ChallengePage extends StatelessWidget {
                 leftText: '흠 안할래',
                 rightText: '이걸로 할래',
                 onLeftPressed: () {
-                  // TODO: 홈 화면으로 이동
+                  showDialog(
+                    context: context,
+                    builder:
+                        (context) => MongbiDialog(
+                          content: '아앗, 아쉬워라\n꿈 잘먹었몽! 오늘도 힘내라몽',
+                          buttonText: '고마워',
+                          onSubmit: () {
+                            context.go('/home');
+                          },
+                        ),
+                  );
                 },
                 onRightPressed: () {
                   showDialog(
