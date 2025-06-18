@@ -48,7 +48,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
           Padding(
             padding: const EdgeInsets.fromLTRB(0, 16, 24, 16),
             child: SkipButton(
-              text: isLastPage ? '끝내기' : '건너뛰기',
+              text: isLastPage ? '몽비 만나러 가기' : '건너뛰기',
               onTap: _onSkip,
             ),
           ),
@@ -58,7 +58,6 @@ class _OnboardingPageState extends State<OnboardingPage> {
         child: Column(
           children: [
             const SizedBox(height: 100),
-            // ✅ 인디케이터 위치 고정
             ExpandingDotsIndicator(
               currentPage: _currentPage,
               count: onboardingData.length,
