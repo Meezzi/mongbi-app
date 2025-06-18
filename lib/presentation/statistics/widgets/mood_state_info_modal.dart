@@ -44,8 +44,9 @@ class MoodStateInfoModal {
                   alignment: Alignment.center,
                   padding: const EdgeInsets.symmetric(horizontal: 24),
                   child: Container(
-                    padding: EdgeInsets.all(
-                      getResponsiveRatioByWidth(context, 24),
+                    padding: EdgeInsets.symmetric(
+                      vertical: getResponsiveRatioByWidth(context, 24),
+                      horizontal: getResponsiveRatioByWidth(context, 20),
                     ),
                     decoration: BoxDecoration(
                       color: Color(0xFFFAFAFA),

@@ -83,11 +83,14 @@ class MonthYearPickerState extends ConsumerState<MonthYearPicker> {
                                     .month;
                             final isActive = focusedMonth == month;
                             final isLast = 12 - 1 == index;
+                            final isAfterCurrentMonth =
+                                DateTime.now().month < month;
                             return pickerContent(
                               context: context,
                               content: '$month월',
                               isActive: isActive,
                               isLast: isLast,
+                              isAfterCurrentMonth: isAfterCurrentMonth,
                               onTap: () {
                                 final pickerVm = ref.read(
                                   pickerViewModelProvider.notifier,
@@ -153,9 +156,10 @@ class MonthYearPickerState extends ConsumerState<MonthYearPicker> {
     required bool isActive,
     required bool isLast,
     required VoidCallback onTap,
+    bool? isAfterCurrentMonth,
   }) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: (isAfterCurrentMonth ?? false) ? null : onTap,
       child: Container(
         padding: EdgeInsets.only(
           top: getResponsiveRatioByWidth(context, 8),
@@ -176,6 +180,10 @@ class MonthYearPickerState extends ConsumerState<MonthYearPicker> {
         child: Text(
           content,
           style: Font.body14.copyWith(
+            color:
+                (isAfterCurrentMonth ?? false)
+                    ? Color(0xFFA6A1AA)
+                    : Color(0xFF1A181B),
             fontSize: getResponsiveRatioByWidth(context, 14),
           ),
         ),

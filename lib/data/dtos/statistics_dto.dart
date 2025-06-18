@@ -66,9 +66,9 @@ class MoodState {
   final DreamScore badDream;
 
   factory MoodState.fromJson(Map<String, dynamic>? json) => MoodState(
-    goodDream: DreamScore.fromJson(json?['GOOD_DREAM']),
-    ordinaryDream: DreamScore.fromJson(json?['ORDINARY_DREAM']),
-    badDream: DreamScore.fromJson(json?['BAD_DREAM']),
+    goodDream: DreamScore.fromJson(json?['길몽']),
+    ordinaryDream: DreamScore.fromJson(json?['일상몽']),
+    badDream: DreamScore.fromJson(json?['흉몽']),
   );
 
   Map<String, dynamic> toJson() => {

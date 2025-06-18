@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/custom_transition_page.dart';
 import 'package:mongbi_app/core/main_scaffold.dart';
+import 'package:mongbi_app/core/route_observer.dart';
 import 'package:mongbi_app/presentation/auth/social_login_page.dart';
 import 'package:mongbi_app/presentation/dream/dream_analysis_loading_page.dart';
 import 'package:mongbi_app/presentation/dream/dream_analysis_result_page.dart';
@@ -21,6 +22,7 @@ import 'package:mongbi_app/presentation/splash/splash_page.dart';
 import 'package:mongbi_app/presentation/statistics/statistics_page.dart';
 
 final GoRouter router = GoRouter(
+  observers: [routeObserver],
   initialLocation: '/',
   routes: [
     GoRoute(path: '/', redirect: (_, __) => '/splash'),

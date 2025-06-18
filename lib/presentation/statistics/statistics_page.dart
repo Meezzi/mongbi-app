@@ -61,6 +61,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
                 ];
               },
               body: TabBarView(
+                physics: NeverScrollableScrollPhysics(),
                 children: [
                   MonthStatistics(horizontalPadding: horizontalPadding),
                   YearStatistics(horizontalPadding: horizontalPadding),

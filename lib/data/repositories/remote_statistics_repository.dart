@@ -41,7 +41,7 @@ class RemoteStatisticsRepository implements StatisticsRepository {
       final totalDays = lastDay.difference(firstDay).inDays;
 
       return Statistics(
-        month: statisticsDto.month,
+        year: statisticsDto.year,
         totalDays: totalDays,
         frequency: statisticsDto.frequency,
         distribution: statisticsDto.distribution,
