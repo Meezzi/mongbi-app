@@ -7,6 +7,7 @@ import 'package:mongbi_app/presentation/remind/view_model/remind_time_setting_vi
 import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_button_widget.dart';
 import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_text_widget.dart';
 import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_widget.dart';
+import 'package:mongbi_app/presentation/remind/widgets/remoind_time_time_setting_button.widget.dart';
 
 class RemindTimePickerPage extends StatefulWidget {
   const RemindTimePickerPage({super.key});
@@ -100,7 +101,7 @@ class _RemindTimePickerPageState extends State<RemindTimePickerPage> {
               bottom: 32,
               left: 24,
               right: 24,
-              child: RemindTimeSettingButtonWidget(
+              child: RemindTimeTimeSettingButtonWidget(
                 onTap: () async {
                   try {
                     await NotificationService().scheduleDailyReminder(

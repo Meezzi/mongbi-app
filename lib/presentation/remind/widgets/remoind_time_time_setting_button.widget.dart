@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mongbi_app/core/font.dart';
 
-class RemindTimeSettingButtonWidget extends StatelessWidget {
-  const RemindTimeSettingButtonWidget({
+class RemindTimeTimeSettingButtonWidget extends StatelessWidget {
+  const RemindTimeTimeSettingButtonWidget({
     super.key,
     required this.onTap,
   });
@@ -23,7 +23,7 @@ class RemindTimeSettingButtonWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(40),
           ),
           child: Text(
-            '알겠어',
+            '정했어',
             textAlign: TextAlign.center,
             style: Font.title18.copyWith(
               color: Colors.white,
