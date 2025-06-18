@@ -28,8 +28,7 @@ class _YearStatisticsState extends ConsumerState<YearStatistics>
   bool isMonth = false;
   double? yearPickerButtonPosition;
   final ScrollController scrollController = ScrollController();
-  bool snackBarShown = false;
-  String? currentDisplayedYear;
+  String? prevDisplayedYear; // 이전에 표시된 년
 
   @override
   void initState() {
@@ -64,12 +63,6 @@ class _YearStatisticsState extends ConsumerState<YearStatistics>
   void didPushNext() {
     // 다른 페이지로 이동 시
     yearSnackBarKey.currentState?.hide();
-  }
-
-  @override
-  void didPopNext() {
-    // 다른 페이지에서 돌아올 때
-    snackBarShown = false; // 플래그 초기화
   }
 
   @override
@@ -118,32 +111,36 @@ class _YearStatisticsState extends ConsumerState<YearStatistics>
                     final now = DateTime.now();
                     final isCurrent = now.year == int.parse(year!);
 
-                    // 내가 지금 보고 있는 월(내가 선택한 월) 감지
+                    // 년이 바뀌었거나, 같은 년을 다시 선택했을 때 항상 스낵바를 hide
                     final currentYear = yearStatistics?.year; // "2025"
-                    if (currentDisplayedYear != null &&
-                        currentDisplayedYear != currentYear) {
-                      snackBarShown = false;
-                      yearSnackBarKey.currentState?.hide();
-                    }
-                    currentDisplayedYear = currentYear;
 
-                    // 이전 월(현재가 아닌 월) 선택 시 무조건 스낵바 제거
+                    if (prevDisplayedYear != null &&
+                        prevDisplayedYear != currentYear) {
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        yearSnackBarKey.currentState?.hide();
+                      });
+                    }
+
+                    // 이전 년(현재가 아닌 년) 선택 시 무조건 스낵바 제거
                     if (!isCurrent) {
-                      yearSnackBarKey.currentState?.hide();
-                      snackBarShown = false;
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        yearSnackBarKey.currentState?.hide();
+                      });
                     }
 
                     // 현재 년 + isFirst + 라우트 확인 => 스낵바 표시
-                    if (isCurrent && isFirst && !snackBarShown) {
-                      if (ModalRoute.of(context)?.isCurrent == true) {
-                        WidgetsBinding.instance.addPostFrameCallback((_) {
-                          if (mounted) {
-                            yearSnackBarKey.currentState?.show();
-                            snackBarShown = true;
-                          }
-                        });
-                      }
+                    if (isCurrent && isFirst) {
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        if (ModalRoute.of(context)?.isCurrent == true &&
+                            mounted) {
+                          yearSnackBarKey.currentState?.hide(); // 항상 hide 후
+                          yearSnackBarKey.currentState?.show(); // 다시 show
+                        }
+                      });
                     }
+
+                    // 현재 표시 년 갱신
+                    prevDisplayedYear = currentYear;
 
                     return Column(
                       children: [
