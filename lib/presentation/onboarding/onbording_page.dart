@@ -53,61 +53,67 @@ class _OnboardingPageState extends State<OnboardingPage> {
             ),
           ),
         ],
-        
       ),
       body: SafeArea(
-        child: Stack(
+        child: Column(
           children: [
-            PageView.builder(
-              controller: _pageController,
-              itemCount: onboardingData.length,
-              itemBuilder: (context, index) {
-                final item = onboardingData[index];
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 100),
-                      ExpandingDotsIndicator(
-                        currentPage: _currentPage,
-                        count: onboardingData.length,
-                      ),
-                      const SizedBox(height: 24),
-                      OnboardingText(
-                        text: item['title'],
-                        type: OnboardingTextType.title,
-                      ),
-                      const SizedBox(height: 8),
-                      OnboardingText(
-                        text: item['description'],
-                        type: OnboardingTextType.description,
-                      ),
-                      const SizedBox(height: 80),
-                      Expanded(
-                        child: OnboardingImage(assetPath: item['image']),
-                      ),
-                    ],
-                  ),
-                );
-              },
+            const SizedBox(height: 100),
+            // ✅ 인디케이터 위치 고정
+            ExpandingDotsIndicator(
+              currentPage: _currentPage,
+              count: onboardingData.length,
             ),
-            Positioned(
-              left: 0,
-              right: 0,
-              bottom: 0,
-              child: IgnorePointer(
-                child: Container(
-                  height: 145,
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [Color(0x00FAFAFA), Color(0xFFFAFAFA)],
-                      stops: [0.0, 0.81],
+            const SizedBox(height: 24),
+            Expanded(
+              child: Stack(
+                children: [
+                  PageView.builder(
+                    controller: _pageController,
+                    itemCount: onboardingData.length,
+                    itemBuilder: (context, index) {
+                      final item = onboardingData[index];
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            OnboardingText(
+                              text: item['title'],
+                              type: OnboardingTextType.title,
+                            ),
+                            const SizedBox(height: 8),
+                            OnboardingText(
+                              text: item['description'],
+                              type: OnboardingTextType.description,
+                            ),
+                            const SizedBox(height: 80),
+                            Expanded(
+                              child: OnboardingImage(assetPath: item['image']),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    child: IgnorePointer(
+                      child: Container(
+                        height: 145,
+                        decoration: const BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [Color(0x00FAFAFA), Color(0xFFFAFAFA)],
+                            stops: [0.0, 0.81],
+                          ),
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                ],
               ),
             ),
           ],
