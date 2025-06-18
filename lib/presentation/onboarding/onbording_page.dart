@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mongbi_app/presentation/onboarding/data/onboarding_data.dart';
 import 'package:mongbi_app/presentation/onboarding/widgets/onbording_image_widget.dart';
 import 'package:mongbi_app/presentation/onboarding/widgets/onbording_indicator_widget.dart';
 import 'package:mongbi_app/presentation/onboarding/widgets/onbording_skip_button_widget.dart';
@@ -15,29 +16,6 @@ class OnboardingPage extends StatefulWidget {
 class _OnboardingPageState extends State<OnboardingPage> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
-
-  final List<Map<String, dynamic>> onboardingData = [
-    {
-      'image': 'assets/images/screen1.webp',
-      'title': '꿈과 기분을 기록하면,',
-      'description': 'AI가 꿈 내용을 분석해 의미와\n심리적 신호를 알려줘요.',
-    },
-    {
-      'image': 'assets/images/screen2.webp',
-      'title': '해석을 받으면,',
-      'description': '지금 내 마음속 상태를\n더 잘 이해할 수 있어요.',
-    },
-    {
-      'image': 'assets/images/screen3.webp',
-      'title': '감정에 따라,',
-      'description': '몽비가 나만의 작은 챌린지를\n추천해줘요.',
-    },
-    {
-      'image': 'assets/images/screen4.webp',
-      'title': '시간이 지나면,',
-      'description': '내 꿈과 감정의 흐름으 한눈에\n볼 수 있어요.',
-    },
-  ];
 
   void _onSkip() {
     context.go('/onbording_exit');
@@ -58,10 +36,24 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
   @override
   Widget build(BuildContext context) {
-    final _ = onboardingData[_currentPage];
-    bool isLastPage = _currentPage == onboardingData.length - 1;
+    final isLastPage = _currentPage == onboardingData.length - 1;
+
     return Scaffold(
-      backgroundColor: Color(0xFFFAFAFA),
+      backgroundColor: const Color(0xFFFAFAFA),
+      appBar: AppBar(
+        backgroundColor: const Color(0xFFFAFAFA),
+        elevation: 0,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 12),
+            child: SkipButton(
+              text: isLastPage ? '끝내기' : '건너뛰기',
+              onTap: _onSkip,
+            ),
+          ),
+        ],
+      ),
+
       body: SafeArea(
         child: Stack(
           children: [
@@ -75,7 +67,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      const SizedBox(height: 150), // 상단 여백
+                      const SizedBox(height: 100),
                       ExpandingDotsIndicator(
                         currentPage: _currentPage,
                         count: onboardingData.length,
@@ -98,14 +90,6 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   ),
                 );
               },
-            ),
-            Positioned(
-              top: 16,
-              right: 16,
-              child: SkipButton(
-                onTap: _onSkip,
-                text: isLastPage ? '끝내기' : '건너뛰기',
-              ),
             ),
             Positioned(
               left: 0,
