@@ -3,9 +3,9 @@ import 'package:mongbi_app/domain/entities/alarm.dart';
 import 'package:mongbi_app/domain/repositories/alarm_repository.dart';
 
 class RemoteAlarmRepository implements AlarmRepository {
-  RemoteAlarmRepository(this.dataSource);
+  const RemoteAlarmRepository(this.dataSource);
 
-  AlarmDataSource dataSource;
+  final AlarmDataSource dataSource;
 
   @override
   Future<List<Alarm>?> fetchAlarms() async {
