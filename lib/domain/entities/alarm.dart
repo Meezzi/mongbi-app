@@ -1,7 +1,7 @@
 class Alarm {
-  Alarm({this.type, this.date, this.content});
+  const Alarm({required this.type, required this.date, required this.content});
 
-  final String? type;
-  final String? date;
-  final String? content;
+  final String type;
+  final String date;
+  final String content;
 }

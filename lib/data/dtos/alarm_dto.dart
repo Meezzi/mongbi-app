@@ -1,9 +1,13 @@
 class AlarmDto {
-  AlarmDto({this.type, this.date, this.content});
+  const AlarmDto({
+    required this.type,
+    required this.date,
+    required this.content,
+  });
 
-  final String? type;
-  final String? date;
-  final String? content;
+  final String type;
+  final String date;
+  final String content;
 
   factory AlarmDto.fromJson(Map<String, dynamic> json) => AlarmDto(
     type: json['type'],
