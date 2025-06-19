@@ -3,9 +3,9 @@ import 'package:mongbi_app/data/data_sources/alarm_data_source.dart';
 import 'package:mongbi_app/data/dtos/alarm_dto.dart';
 
 class RemoteAlarmDataSource implements AlarmDataSource {
-  RemoteAlarmDataSource(this.dio);
+  const RemoteAlarmDataSource(this.dio);
 
-  Dio dio;
+  final Dio dio;
 
   @override
   Future<List<AlarmDto>?> fetchAlarms() async {
