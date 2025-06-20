@@ -76,7 +76,6 @@ class AuthViewModel extends Notifier<User?> {
       state = user;
 
       final prefs = await SharedPreferences.getInstance();
-      await prefs.setString('jwt_token', accessToken);
       await prefs.setString('lastLoginType', 'naver');
     } catch (e) {
       rethrow;
@@ -107,7 +106,6 @@ class AuthViewModel extends Notifier<User?> {
       state = result;
 
       final prefs = await SharedPreferences.getInstance();
-      await prefs.setString('jwt_token', token.accessToken);
       await prefs.setString('lastLoginType', 'kakao');
     } catch (e) {
       rethrow;

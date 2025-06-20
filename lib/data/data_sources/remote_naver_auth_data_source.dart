@@ -1,12 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_naver_login/flutter_naver_login.dart';
+import 'package:mongbi_app/core/secure_storage_service.dart';
 import 'package:mongbi_app/data/dtos/login_response_dto.dart';
 import 'package:mongbi_app/data/dtos/user_dto.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class RemoteNaverAuthDataSource {
   RemoteNaverAuthDataSource(this.dio);
   final Dio dio;
+  final storageService = SecureStorageService();
 
   Future<LoginResponseDto> login(String accessToken) async {
     String jwt = '';
@@ -23,11 +24,8 @@ class RemoteNaverAuthDataSource {
 
       if (response.statusCode == 201 && response.data['token'] != null) {
         jwt = response.data['token'];
-        final userMap = response.data['user'];
-        final int userIdx = userMap['USER_IDX'];
-        final prefs = await SharedPreferences.getInstance();
-        await prefs.setBool('isLogined', true);
-        await prefs.setInt('user_id', userIdx);
+
+        await storageService.saveAccessToken(jwt);
         userDto = UserDto.fromJson(response.data['user']);
       } else {}
     } catch (e) {}
