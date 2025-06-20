@@ -22,7 +22,7 @@ class MainScaffold extends StatelessWidget {
     final isHistory = location.startsWith('/history');
 
     return Scaffold(
-      appBar: _buildAppBar(location),
+      appBar: _buildAppBar(context, location),
       extendBodyBehindAppBar: location.startsWith('/home') ? true : false,
       body: child,
       bottomNavigationBar: BottomAppBar(
@@ -104,7 +104,7 @@ class MainScaffold extends StatelessWidget {
     }
   }
 
-  AppBar? _buildAppBar(String location) {
+  AppBar? _buildAppBar(BuildContext context, String location) {
     if (location.startsWith('/home')) {
       return AppBar(
         title: Text(
@@ -118,6 +118,7 @@ class MainScaffold extends StatelessWidget {
           IconButton(
             onPressed: () {
               // TODO: 알림 화면으로 이동
+              context.push('/alarm');
             },
             icon: SvgPicture.asset('assets/icons/bell.svg'),
           ),
@@ -154,8 +155,8 @@ class MainScaffold extends StatelessWidget {
       },
       child: SvgPicture.asset(
         'assets/icons/$iconName${colorSuffix}_$stateSuffix.svg',
-        width: 28,
-        height: 28,
+        width: 24,
+        height: 24,
       ),
     );
   }
