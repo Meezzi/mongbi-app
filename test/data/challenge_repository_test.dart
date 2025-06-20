@@ -10,7 +10,7 @@ void main() {
 
   setUp(() {
     challengeDataSource = MockChallengeDataSource();
-    remoteChallengeRepository = RemoteChallengeRepository(challengeDataSource);
+    remoteChallengeRepository = RemoteChallengeRepository(challengeDataSource: challengeDataSource);
   });
 
   final dreamScore = 1;
