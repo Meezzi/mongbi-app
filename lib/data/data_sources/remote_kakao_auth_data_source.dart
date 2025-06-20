@@ -3,7 +3,6 @@ import 'package:dio/dio.dart';
 import 'package:mongbi_app/core/secure_storage_service.dart';
 import 'package:mongbi_app/data/dtos/login_response_dto.dart';
 import 'package:mongbi_app/data/dtos/user_dto.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class RemoteKakaoAuthDataSource {
   RemoteKakaoAuthDataSource(this.dio);
