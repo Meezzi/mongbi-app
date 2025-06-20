@@ -42,7 +42,21 @@ class SocialLoginPage extends ConsumerWidget {
                             final authViewModel = ref.read(
                               authViewModelProvider.notifier,
                             );
-                            await authViewModel.loginWithApple();
+                            try {
+                              await authViewModel.loginWithApple();
+                              await showModalBottomSheet(
+                                context: context,
+                                isScrollControlled: false,
+                                isDismissible: false,
+                                backgroundColor:
+                                    Colors.transparent, // 바깥 배경 둥글기 유지
+                                builder: (_) => const TermsBottomSheet(),
+                              );
+                            } catch (e) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('애플 로그인 실패 $e')),
+                              );
+                            }
                           },
                         ),
                       ),
