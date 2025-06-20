@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mongbi_app/presentation/auth/widgets/apple_login_button_widget.dart';
 import 'package:mongbi_app/presentation/auth/widgets/kakao_login_button_widget.dart';
 import 'package:mongbi_app/presentation/auth/widgets/last_login_state_weiget.dart';
 import 'package:mongbi_app/presentation/auth/widgets/mongbi_image_widget.dart';
@@ -34,11 +35,18 @@ class SocialLoginPage extends ConsumerWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      // _SocialLoginItem(
-                      //   showRecentBubble: lastLoginProvider == 'apple',
-                      //   child: AppleLoginButton(onTap: () {}),
-                      // ),
-                      // const SizedBox(width: 24),
+                      _SocialLoginItem(
+                        showRecentBubble: lastLoginProvider == 'apple',
+                        child: AppleLoginButton(
+                          onTap: () async {
+                            final authViewModel = ref.read(
+                              authViewModelProvider.notifier,
+                            );
+                            await authViewModel.loginWithApple();
+                          },
+                        ),
+                      ),
+                      const SizedBox(width: 24),
                       _SocialLoginItem(
                         showRecentBubble: lastLoginProvider == 'kakao',
                         child: KakaoLoginButton(

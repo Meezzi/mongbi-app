@@ -10,6 +10,7 @@ import 'package:mongbi_app/providers/setting_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await NotificationService().init();
   await dotenv.load(fileName: '.env');
   // 캘린더 한글화

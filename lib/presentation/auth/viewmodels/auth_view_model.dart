@@ -9,6 +9,7 @@ import 'package:mongbi_app/domain/use_cases/login_with_kakao.dart';
 import 'package:mongbi_app/domain/use_cases/login_with_naver.dart';
 import 'package:mongbi_app/providers/auth_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class AuthViewModel extends Notifier<User?> {
   late final LoginWithNaver _loginWithNaver;
@@ -23,6 +24,29 @@ class AuthViewModel extends Notifier<User?> {
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
+
+  Future<void> loginWithApple() async {
+    _isLoading = true;
+    try {
+      final credential = await SignInWithApple.getAppleIDCredential(
+        scopes: [
+          AppleIDAuthorizationScopes.fullName,
+          AppleIDAuthorizationScopes.email,
+        ],
+      );
+      print("애플 로그인 정보:$credential");
+      final identityToken = credential.identityToken;
+
+      print("애플 로그인 정보:$identityToken");
+
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('lastLoginType', 'apple');
+    } catch (e) {
+      rethrow;
+    } finally {
+      _isLoading = false;
+    }
+  }
 
   Future<void> loginWithNaver() async {
     _isLoading = true;
