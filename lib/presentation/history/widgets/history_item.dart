@@ -54,7 +54,10 @@ class HistoryItem extends StatelessWidget {
               // ),
             ],
           ),
-          trailing: SvgPicture.asset('assets/icons/chevron-down.svg'),
+          trailing: SvgPicture.asset(
+            'assets/icons/chevron-down.svg',
+            colorFilter: ColorFilter.mode(Color(0xff4D198C), BlendMode.srcIn),
+          ),
           children: [
             Container(
               padding: const EdgeInsets.fromLTRB(24, 16, 24, 32),
