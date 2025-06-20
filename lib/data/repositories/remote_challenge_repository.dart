@@ -3,7 +3,7 @@ import 'package:mongbi_app/domain/entities/challenge.dart';
 import 'package:mongbi_app/domain/repositories/challenge_repository.dart';
 
 class RemoteChallengeRepository implements ChallengeRepository {
-  RemoteChallengeRepository(this.challengeDataSource);
+  RemoteChallengeRepository({required this.challengeDataSource});
 
   final ChallengeDataSource challengeDataSource;
 
