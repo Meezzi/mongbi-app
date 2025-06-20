@@ -22,6 +22,7 @@ class CalendarChangeButton extends ConsumerWidget {
           GestureDetector(
             onTap: () {
               showModalBottomSheet(
+                barrierColor: Colors.black.withValues(alpha: 0.6),
                 isScrollControlled: true,
                 context: context,
                 builder: (context) {
