@@ -42,6 +42,7 @@ class SocialLoginPage extends ConsumerWidget {
                             final authViewModel = ref.read(
                               authViewModelProvider.notifier,
                             );
+<<<<<<< HEAD
                             try {
                               await authViewModel.loginWithApple();
                               await showModalBottomSheet(
@@ -57,6 +58,9 @@ class SocialLoginPage extends ConsumerWidget {
                                 SnackBar(content: Text('애플 로그인 실패 $e')),
                               );
                             }
+=======
+                            await authViewModel.loginWithApple();
+>>>>>>> 406ccf7 (feat: 애플로그인 뷰모델 작성)
                           },
                         ),
                       ),
