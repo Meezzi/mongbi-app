@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mongbi_app/data/data_sources/remote_challenge_data_source.dart';
 import 'package:mongbi_app/data/repositories/remote_challenge_repository.dart';
+import 'package:mongbi_app/domain/use_cases/fetch_challenge_use_case.dart';
 import 'package:mongbi_app/providers/core_providers.dart';
 
 final _challengeDataSourceProvider = Provider(
@@ -10,5 +11,11 @@ final _challengeDataSourceProvider = Provider(
 final _challengeRepositoryProvider = Provider(
   (ref) => RemoteChallengeRepository(
     challengeDataSource: ref.read(_challengeDataSourceProvider),
+  ),
+);
+
+final fetchChallengeUseCaseProvider = Provider(
+  (ref) => FetchChallengeUseCase(
+    challengeRepository: ref.read(_challengeRepositoryProvider),
   ),
 );
