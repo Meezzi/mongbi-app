@@ -1,3 +1,5 @@
+import 'package:mongbi_app/domain/entities/challenge.dart';
+
 class ChallengeDto {
   ChallengeDto(
     this.id,
@@ -31,4 +33,14 @@ class ChallengeDto {
     'CHALLENGE_TRAIT': dreamScore,
     'IS_COMPLETE': isComplete,
   };
+
+  Challenge toEntity() {
+    return Challenge(
+      id: id,
+      content: content,
+      type: type,
+      dreamScore: dreamScore,
+      isComplete: isComplete,
+    );
+  }
 }
