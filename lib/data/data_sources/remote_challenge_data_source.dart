@@ -1,11 +1,13 @@
 import 'package:dio/dio.dart';
+import 'package:mongbi_app/data/data_sources/challenge_data_source.dart';
 import 'package:mongbi_app/data/dtos/challenge_dto.dart';
 
-class RemoteChallengeDataSource {
+class RemoteChallengeDataSource implements ChallengeDataSource{
   RemoteChallengeDataSource({required this.dio});
 
   final Dio dio;
 
+  @override
   Future<List<ChallengeDto>> fetchChallenge(int dreamScore) async {
     try {
       final response = await dio.post(
