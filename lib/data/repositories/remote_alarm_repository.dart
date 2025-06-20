@@ -12,7 +12,15 @@ class RemoteAlarmRepository implements AlarmRepository {
     final alarmDtoList = await dataSource.fetchAlarms();
     if (alarmDtoList != null) {
       return alarmDtoList
-          .map((e) => Alarm(type: e.type, date: e.date, content: e.content))
+          .map(
+            (e) => Alarm(
+              id: e.id,
+              type: e.type,
+              date: e.date,
+              content: e.content,
+              isConfirm: e.isConfirm,
+            ),
+          )
           .toList();
     }
 

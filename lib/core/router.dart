@@ -2,6 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/custom_transition_page.dart';
 import 'package:mongbi_app/core/main_scaffold.dart';
 import 'package:mongbi_app/core/route_observer.dart';
+import 'package:mongbi_app/presentation/alarm/alarm_page.dart';
 import 'package:mongbi_app/presentation/auth/social_login_page.dart';
 import 'package:mongbi_app/presentation/dream/dream_analysis_loading_page.dart';
 import 'package:mongbi_app/presentation/dream/dream_analysis_result_page.dart';
@@ -114,5 +115,6 @@ final GoRouter router = GoRouter(
       path: '/alarm_setting',
       builder: (context, state) => AlarmSettingPage(),
     ),
+    GoRoute(path: '/alarm', builder: (context, state) => AlarmPage()),
   ],
 );
