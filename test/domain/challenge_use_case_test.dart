@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:mongbi_app/domain/entities/challenge.dart';
 import 'package:mongbi_app/domain/repositories/challenge_repository.dart';
+import 'package:mongbi_app/domain/use_cases/fetch_challenge_use_case.dart';
 
 void main() {
   late FetchChallengeUseCase fetchChallengeUseCase;
