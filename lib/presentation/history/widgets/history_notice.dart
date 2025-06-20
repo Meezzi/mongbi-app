@@ -49,7 +49,7 @@ class HistoryNotice extends StatelessWidget {
         children: [
           Text(
             DateFormatter.formatYearMonthDayWeek(calendarState.selectedDay!),
-            style: Font.subTitle14.copyWith(color: Colors.white),
+            style: Font.title14.copyWith(color: Colors.white),
           ),
           SizedBox(height: horizontalPadding),
           HistoryItem(label: '내가 꾼 꿈', content: history.dreamContent),
