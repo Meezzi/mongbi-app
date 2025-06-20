@@ -1,3 +1,4 @@
+import 'package:mongbi_app/core/remove_html_tags.dart';
 import 'package:mongbi_app/domain/entities/challenge.dart';
 
 class ChallengeDto {
@@ -20,8 +21,8 @@ class ChallengeDto {
   ChallengeDto.fromJson(Map<String, dynamic> json)
     : id = json['CHALLENGE_ID'] as int,
       title = json['CHALLENGE_NAME'] as String,
-      content = json['CHALLENGE_DESC'] as String,
-      type = json['CHALLENGE_TYPE'] as String,
+      content = removeHtmlTags(json['CHALLENGE_DESC'] as String),
+      type = removeHtmlTags(json['CHALLENGE_TYPE'] as String),
       dreamScore = json['CHALLENGE_TRAIT'] as int,
       isComplete = json['IS_COMPLETE'] ?? false;
 
