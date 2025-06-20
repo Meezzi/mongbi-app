@@ -5,7 +5,7 @@ import 'package:mongbi_app/domain/use_cases/fetch_challenge_use_case.dart';
 import 'package:mongbi_app/providers/core_providers.dart';
 
 final _challengeDataSourceProvider = Provider(
-  (ref) => RemoteChallengeDataSource(dio: ref.read(dioProvider)),
+  (ref) => RemoteChallengeDataSource(dio: ref.read(adminDioProvider)),
 );
 
 final _challengeRepositoryProvider = Provider(
