@@ -43,6 +43,7 @@ class SocialLoginPage extends ConsumerWidget {
                               authViewModelProvider.notifier,
                             );
 <<<<<<< HEAD
+<<<<<<< HEAD
                             try {
                               await authViewModel.loginWithApple();
                               await showModalBottomSheet(
@@ -61,6 +62,9 @@ class SocialLoginPage extends ConsumerWidget {
 =======
                             await authViewModel.loginWithApple();
 >>>>>>> 406ccf7 (feat: 애플로그인 뷰모델 작성)
+=======
+                            await authViewModel.loginWithApple();
+>>>>>>> e54661e (feat: 애플로그인 뷰모델 작성)
                           },
                         ),
                       ),
