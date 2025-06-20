@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Mongbi App</string>
+	<string>몽비</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -79,11 +79,17 @@
 	<key>naverServiceAppName</key>
 	<string>몽비</string>
 	<key>naverServiceAppUrlScheme</key>
-	<string>https://naver.com</string>
+	<string>com.codepoets.mongbi</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<!-- 카카오톡으로 로그인 -->
 		<string>kakaokompassauth</string>
 	</array>
+    <key>UIBackgroundModes</key>
+    <array>
+        <string>fetch</string>
+        <string>remote-notification</string>
+    </array>
+    
 </dict>
 </plist>
