@@ -1,17 +1,18 @@
 import 'package:dio/dio.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:mongbi_app/core/secure_storage_service.dart';
 
 class AuthInterceptor extends Interceptor {
   AuthInterceptor(this.dio);
   final Dio dio;
+
+  final storageService = SecureStorageService();
 
   @override
   void onRequest(
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
-    final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('jwt_token');
+    final token = await storageService.getAccessToken();
 
     if (token != null) {
       options.headers['Authorization'] = 'Bearer $token';
@@ -22,10 +23,8 @@ class AuthInterceptor extends Interceptor {
 
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) async {
-    final prefs = await SharedPreferences.getInstance();
-
     if (err.response?.statusCode == 401) {
-      final refreshToken = prefs.getString('refresh_token');
+      final refreshToken = await storageService.getRefreshToken();
 
       if (refreshToken != null) {
         try {
@@ -35,15 +34,15 @@ class AuthInterceptor extends Interceptor {
           );
 
           final newAccessToken = response.data['accessToken'];
-          await prefs.setString('jwt_token', newAccessToken);
+          await storageService.saveAccessToken(newAccessToken);
 
           final retryRequest = err.requestOptions;
           retryRequest.headers['Authorization'] = 'Bearer $newAccessToken';
 
-          final cloneResponse = await dio.fetch(retryRequest);
-          return handler.resolve(cloneResponse);
+          final clonedResponse = await dio.fetch(retryRequest);
+          return handler.resolve(clonedResponse);
         } catch (e) {
-          await prefs.clear();
+          await storageService.clearAll();
           return handler.reject(err);
         }
       }
