@@ -16,7 +16,17 @@ class HistoryAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedContainer(
       duration: Duration(milliseconds: 200),
-      color: isActive ? Color(0xFF3B136B) : Color(0xffFCF6FF),
+      decoration: BoxDecoration(
+        // 앱바의 배경
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors:
+              isActive
+                  ? [Color(0xFF3B136B), Color(0xFF3B136B)]
+                  : [Color(0xFFFDF8FF), Color(0xFFF9F3FF)],
+        ),
+      ),
       child: AppBar(
         systemOverlayStyle:
             isActive ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark,

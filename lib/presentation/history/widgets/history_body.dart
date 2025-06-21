@@ -18,20 +18,24 @@ class HistoryBody extends StatelessWidget {
   final void Function() onScroll;
   final CalendarModel calendarState;
   final double horizontalPadding;
+  final double extendPadding = 40;
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
+    return Container(
       height: double.infinity,
-      duration: Duration(milliseconds: 200),
+      // 오버스크롤(튕김) 된 경우 보여줄 배경
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors:
-              isActive
-                  ? [Color(0xFF3B136B), Color(0xFF3B136B)]
-                  : [Color(0xffFDF8FF), Color(0xffEAC9FA)],
+          stops: [0, 0.5, 0.5, 1],
+          colors: [
+            Color(0xFFF9F3FF),
+            Color(0xffFDF8FF),
+            Color(0xFF3B136B),
+            Color(0xFF3B136B),
+          ],
         ),
       ),
       child: NotificationListener(
@@ -47,23 +51,40 @@ class HistoryBody extends StatelessWidget {
           padding: EdgeInsets.zero,
           child: Column(
             children: [
-              Padding(
-                key: calendarKey,
-                padding: EdgeInsets.only(
-                  left: horizontalPadding,
-                  right: horizontalPadding,
-                  bottom: horizontalPadding,
+              AnimatedContainer(
+                duration: Duration(milliseconds: 200),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    // 캘린더쪽 배경
+                    colors:
+                        isActive
+                            ? [Color(0xFF3B136B), Color(0xFF3B136B)]
+                            : [Color(0xFFF9F3FF), Color(0xffE8D6FF)],
+                  ),
                 ),
-                child: Column(
-                  children: [
-                    CalendarChangeButton(),
-                    Calendar(horizontalPadding: horizontalPadding),
-                  ],
+                child: Padding(
+                  key: calendarKey,
+                  padding: EdgeInsets.only(
+                    left: horizontalPadding,
+                    right: horizontalPadding,
+                    bottom: horizontalPadding + extendPadding,
+                  ),
+                  child: Column(
+                    children: [
+                      CalendarChangeButton(),
+                      Calendar(horizontalPadding: horizontalPadding),
+                    ],
+                  ),
                 ),
               ),
-              HistoryList(
-                key: historyKey,
-                horizontalPadding: horizontalPadding,
+              Transform.translate(
+                offset: Offset(0, -extendPadding),
+                child: HistoryList(
+                  key: historyKey,
+                  horizontalPadding: horizontalPadding,
+                ),
               ),
             ],
           ),
