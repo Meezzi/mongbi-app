@@ -5,7 +5,7 @@ class SecureStorageService {
 
   // 키 정의
   static const _accessTokenKey = 'accessToken';
-  static const _refreshTokenKey = 'refreshToken'; // ✅ 추가
+  static const _refreshTokenKey = 'refreshToken';
 
   final FlutterSecureStorage _secureStorage;
 
