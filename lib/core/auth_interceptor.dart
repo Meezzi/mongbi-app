@@ -22,7 +22,11 @@ class AuthInterceptor extends Interceptor {
   }
 
   @override
-  void onError(DioException err, ErrorInterceptorHandler handler) async {
+  void onError(DioException err, ErrorInterceptorHandler handler) async { 
+    if (err.requestOptions.path.contains('/auth/refresh')) {
+      return handler.reject(err);
+    }
+
     if (err.response?.statusCode == 401) {
       final refreshToken = await storageService.getRefreshToken();
 
