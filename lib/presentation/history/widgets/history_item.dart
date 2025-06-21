@@ -69,19 +69,20 @@ class HistoryItem extends StatelessWidget {
                     content,
                     style: Font.body14.copyWith(color: Color(0xFF1A181B)),
                   ),
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.only(top: 16),
-                    child: WrapSuper(
-                      wrapType: WrapType.fit,
-                      spacing: 8,
-                      lineSpacing: 8,
-                      children: [
-                        if (tagList != null)
-                          ...tagList!.map((item) => tag(item)),
-                      ],
+                  if (tagList != null)
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.only(top: 16),
+                      child: WrapSuper(
+                        wrapType: WrapType.fit,
+                        spacing: 8,
+                        lineSpacing: 8,
+                        children: [
+                          if (tagList != null)
+                            ...tagList!.map((item) => tag(item)),
+                        ],
+                      ),
                     ),
-                  ),
                 ],
               ),
             ),
