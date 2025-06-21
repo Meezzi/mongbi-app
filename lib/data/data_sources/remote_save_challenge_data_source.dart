@@ -1,10 +1,12 @@
 import 'package:dio/dio.dart';
+import 'package:mongbi_app/data/data_sources/save_challenge_data_source.dart';
 
-class RemoteSaveChallengeDataSource {
+class RemoteSaveChallengeDataSource implements SaveChallengeDataSource {
   RemoteSaveChallengeDataSource({required this.dio});
 
   final Dio dio;
 
+  @override
   Future<bool> saveChallenge({
     required int uid,
     required int challengeId,
