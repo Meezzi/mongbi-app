@@ -31,8 +31,8 @@ class HistoryBody extends StatelessWidget {
           end: Alignment.bottomCenter,
           stops: [0, 0.5, 0.5, 1],
           colors: [
-            Color(0xFFF9F3FF),
-            Color(0xffFDF8FF),
+            Color(0xFFFCF8FF),
+            Color(0xFFFCF8FF),
             Color(0xFF3B136B),
             Color(0xFF3B136B),
           ],
@@ -61,7 +61,7 @@ class HistoryBody extends StatelessWidget {
                     colors:
                         isActive
                             ? [Color(0xFF3B136B), Color(0xFF3B136B)]
-                            : [Color(0xFFF9F3FF), Color(0xffE8D6FF)],
+                            : [Color(0xFFFCF8FF), Color(0xffE8D6FF)],
                   ),
                 ),
                 child: Padding(
