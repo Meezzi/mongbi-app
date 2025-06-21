@@ -1,6 +1,5 @@
 <a href="https://club-project-one.vercel.app/" target="_blank">
-<img src="![Group 600](https://github.com/user-attachments/assets/405920cd-6fd7-47bf-be27-bab8059fbd28)
-" alt="배너" width="100%"/>
+<img src="https://github.com/user-attachments/assets/405920cd-6fd7-47bf-be27-bab8059fbd28" alt="배너" width="100%"/>
 </a>
 <br/>
 <br/>
