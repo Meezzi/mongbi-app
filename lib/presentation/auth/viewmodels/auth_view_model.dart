@@ -13,11 +13,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AuthViewModel extends Notifier<User?> {
   late final LoginWithNaver _loginWithNaver;
   late final LoginWithKakao _loginWithKakao;
+  late final Future<SharedPreferences> _prefsFuture;
 
   @override
   User? build() {
     _loginWithNaver = ref.read(loginWithNaverUseCaseProvider);
     _loginWithKakao = ref.read(loginWithKakaoUseCaseProvider);
+    _prefsFuture = SharedPreferences.getInstance();
     return null;
   }
 
@@ -41,8 +43,9 @@ class AuthViewModel extends Notifier<User?> {
       final user = await _loginWithNaver.execute(accessToken);
       state = user;
 
-      final prefs = await SharedPreferences.getInstance();
+      final prefs = await _prefsFuture;
       await prefs.setString('lastLoginType', 'naver');
+      await prefs.setBool('isLoginState', true);
     } catch (e) {
       rethrow;
     } finally {
@@ -71,8 +74,9 @@ class AuthViewModel extends Notifier<User?> {
       final result = await _loginWithKakao.execute(token.accessToken);
       state = result;
 
-      final prefs = await SharedPreferences.getInstance();
+      final prefs = await _prefsFuture;
       await prefs.setString('lastLoginType', 'kakao');
+      await prefs.setBool('isLoginState', true);
     } catch (e) {
       rethrow;
     } finally {
@@ -83,6 +87,8 @@ class AuthViewModel extends Notifier<User?> {
   Future<bool> logoutWithKakao() async {
     try {
       await kakao.UserApi.instance.unlink();
+      final prefs = await _prefsFuture;
+      await prefs.setBool('isLoginState', false);
       return true;
     } catch (error) {
       return false;
@@ -94,6 +100,8 @@ class AuthViewModel extends Notifier<User?> {
       final NaverLoginResult res =
           await FlutterNaverLogin.logOutAndDeleteToken();
       if (res.status == NaverLoginStatus.loggedOut) {
+        final prefs = await _prefsFuture;
+        await prefs.setBool('isLoginState', false);
         return true;
       }
       return false;
