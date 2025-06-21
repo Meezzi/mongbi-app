@@ -39,8 +39,7 @@ class RemoteNaverAuthDataSource {
       } else {
         throw Exception('로그인 실패: 토큰이 없거나 잘못된 응답입니다.');
       }
-    } catch (e, stack) {
-      print('로그인 중 오류 발생: $e');
+    } catch (e) {
       rethrow;
     }
 
