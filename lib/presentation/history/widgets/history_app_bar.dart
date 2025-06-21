@@ -24,7 +24,7 @@ class HistoryAppBar extends StatelessWidget {
           colors:
               isActive
                   ? [Color(0xFF3B136B), Color(0xFF3B136B)]
-                  : [Color(0xFFFDF8FF), Color(0xFFF9F3FF)],
+                  : [Color(0xFFFDF8FF), Color(0xFFFDF8FF)],
         ),
       ),
       child: AppBar(
