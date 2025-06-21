@@ -1,16 +1,22 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:mongbi_app/data/data_sources/fetch_challenge_data_source.dart';
+import 'package:mongbi_app/data/data_sources/remote_save_challenge_data_source.dart';
 import 'package:mongbi_app/data/dtos/challenge_dto.dart';
 import 'package:mongbi_app/data/repositories/remote_challenge_repository.dart';
 
 void main() {
   late MockChallengeDataSource challengeDataSource;
+  late MockSaveChallengeDataSource mockSaveChallengeDataSource;
   late RemoteChallengeRepository remoteChallengeRepository;
 
   setUp(() {
     challengeDataSource = MockChallengeDataSource();
-    remoteChallengeRepository = RemoteChallengeRepository(challengeDataSource: challengeDataSource);
+    mockSaveChallengeDataSource = MockSaveChallengeDataSource();
+    remoteChallengeRepository = RemoteChallengeRepository(
+      challengeDataSource: challengeDataSource,
+      saveChallengeDataSource: mockSaveChallengeDataSource,
+    );
   });
 
   final dreamScore = 1;
@@ -57,6 +63,26 @@ void main() {
     // Assert
     expect(result[0].content, expectedChallengeList[0].content);
   });
+
+  test('챌린지 저장이 성공적으로 이루어졌는지 테스트', () async {
+    // Arrange
+    when(
+      () => mockSaveChallengeDataSource.saveChallenge(uid: 1, challengeId: 1),
+    ).thenAnswer((_) async => true);
+
+    // Act
+    final result = await remoteChallengeRepository.saveChallenge(
+      uid: 1,
+      challengeId: 1,
+    );
+
+    // Assert
+    expect(result, true);
+  });
 }
 
-class MockChallengeDataSource extends Mock implements FetchChallengeDataSource {}
+class MockChallengeDataSource extends Mock
+    implements FetchChallengeDataSource {}
+
+class MockSaveChallengeDataSource extends Mock
+    implements RemoteSaveChallengeDataSource {}
