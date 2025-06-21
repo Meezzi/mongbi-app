@@ -22,6 +22,8 @@ class CalendarChangeButton extends ConsumerWidget {
           GestureDetector(
             onTap: () {
               showModalBottomSheet(
+                useRootNavigator: true,
+                barrierColor: Colors.black.withValues(alpha: 0.6),
                 isScrollControlled: true,
                 context: context,
                 builder: (context) {
@@ -53,11 +55,11 @@ class CalendarChangeButton extends ConsumerWidget {
               decoration: BoxDecoration(
                 color: Color(0xFFF4EAFF),
                 borderRadius: BorderRadius.circular(999),
-                border: Border.all(color: Color(0xFFDBBEFF)),
+                border: Border.all(color: Color(0xFFB273FF)),
               ),
               child: Text(
                 '이번달',
-                style: Font.subTitle12.copyWith(color: Color(0xFFB273FF)),
+                style: Font.subTitle12.copyWith(color: Color(0xFF7F2AE8)),
               ),
             ),
         ],
