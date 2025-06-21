@@ -1,16 +1,16 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:mongbi_app/data/data_sources/remote_challenge_data_source.dart';
+import 'package:mongbi_app/data/data_sources/remote_fetch_challenge_data_source.dart';
 import 'package:mongbi_app/data/dtos/challenge_dto.dart';
 
 void main() {
-  late RemoteChallengeDataSource dataSource;
+  late RemoteFetchChallengeDataSource dataSource;
   late MockDio mockDio;
 
   setUp(() {
     mockDio = MockDio();
-    dataSource = RemoteChallengeDataSource(dio: mockDio);
+    dataSource = RemoteFetchChallengeDataSource(dio: mockDio);
   });
 
   final dreamScore = 1;
