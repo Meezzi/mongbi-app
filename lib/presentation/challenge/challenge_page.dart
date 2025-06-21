@@ -85,7 +85,7 @@ class ChallengePage extends ConsumerWidget {
                           content: '아앗, 아쉬워라\n꿈 잘먹었몽! 오늘도 힘내라몽',
                           buttonText: '고마워',
                           onSubmit: () {
-                            context.go('/home');
+                            context.pushReplacement('/home');
                           },
                         ),
                   );
@@ -99,6 +99,7 @@ class ChallengePage extends ConsumerWidget {
                           buttonText: '고마워',
                           onSubmit: () {
                             // TODO: 저장 로직
+                            context.pushReplacement('/home');
                           },
                         ),
                   );
