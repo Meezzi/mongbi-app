@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mongbi_app/core/font.dart';
 
-class HistoryItem extends StatelessWidget {
+class HistoryItem extends StatefulWidget {
   const HistoryItem({
     super.key,
     required this.label,
@@ -14,6 +14,17 @@ class HistoryItem extends StatelessWidget {
   final String label;
   final String content;
   final List<String>? tagList;
+
+  @override
+  State<HistoryItem> createState() => _HistoryItemState();
+}
+
+class _HistoryItemState extends State<HistoryItem> {
+  bool isExpansion = false;
+  List<String> iconPath = [
+    'assets/icons/chevron-up.svg',
+    'assets/icons/chevron-down.svg',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -30,12 +41,17 @@ class HistoryItem extends StatelessWidget {
           hoverColor: Colors.transparent,
         ),
         child: ExpansionTile(
+          onExpansionChanged: (value) {
+            setState(() {
+              isExpansion = value;
+            });
+          },
           tilePadding: EdgeInsets.symmetric(horizontal: 24),
           dense: true,
           title: Row(
             children: [
               Text(
-                label,
+                widget.label,
                 style: Font.title16.copyWith(color: Color(0xFF4D198C)),
               ),
               SizedBox(width: 4),
@@ -55,7 +71,7 @@ class HistoryItem extends StatelessWidget {
             ],
           ),
           trailing: SvgPicture.asset(
-            'assets/icons/chevron-down.svg',
+            isExpansion ? iconPath[0] : iconPath[1],
             colorFilter: ColorFilter.mode(Color(0xff4D198C), BlendMode.srcIn),
           ),
           children: [
@@ -66,10 +82,10 @@ class HistoryItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    content,
+                    widget.content,
                     style: Font.body14.copyWith(color: Color(0xFF1A181B)),
                   ),
-                  if (tagList != null)
+                  if (widget.tagList != null)
                     Container(
                       width: double.infinity,
                       padding: const EdgeInsets.only(top: 16),
@@ -78,8 +94,8 @@ class HistoryItem extends StatelessWidget {
                         spacing: 8,
                         lineSpacing: 8,
                         children: [
-                          if (tagList != null)
-                            ...tagList!.map((item) => tag(item)),
+                          if (widget.tagList != null)
+                            ...widget.tagList!.map((item) => tag(item)),
                         ],
                       ),
                     ),
