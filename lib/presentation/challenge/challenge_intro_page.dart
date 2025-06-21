@@ -4,12 +4,14 @@ import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/presentation/challenge/widgets/challenge_intro_mongbi_message_view.dart';
 import 'package:mongbi_app/presentation/common/action_button_row.dart';
 import 'package:mongbi_app/providers/challenge_provider.dart';
+import 'package:mongbi_app/providers/dream_provider.dart';
 
 class ChallengeIntroPage extends ConsumerWidget {
   const ChallengeIntroPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    int dreamScore = ref.read(dreamWriteViewModelProvider).selectedIndex;
     return Scaffold(
       backgroundColor: Color(0xFFFAFAFA),
       body: SafeArea(
@@ -25,10 +27,9 @@ class ChallengeIntroPage extends ConsumerWidget {
                   context.go('/home');
                 },
                 onRightPressed: () async {
-                  // TODO: 사용자가 선택한 꿈 기분으로 변경
                   await ref
                       .read(challengeViewModelProvider.notifier)
-                      .loadChallenges(1);
+                      .loadChallenges(dreamScore);
                   context.go('/challenge');
                 },
               ),
