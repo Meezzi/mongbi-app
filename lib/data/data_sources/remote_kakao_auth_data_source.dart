@@ -22,8 +22,12 @@ class RemoteKakaoAuthDataSource {
       }
 
       final jwt = response.data['token'];
+      final refreshToken = response.data['refreshToken'];
       final userDto = UserDto.fromJson(response.data['user']);
+
       await storageService.saveAccessToken(jwt);
+      await storageService.saveRefreshToken(refreshToken);
+
       return LoginResponseDto(token: jwt, user: userDto);
     } catch (e, s) {
       throw Exception('카카오 로그인 오류: $e \n $s');

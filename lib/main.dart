@@ -14,7 +14,6 @@ void main() async {
   await dotenv.load(fileName: '.env');
   // 캘린더 한글화
   await initializeDateFormatting();
-
   KakaoSdk.init(
     nativeAppKey: dotenv.env['KAKAO_NATIVE_APP_KEY'],
     javaScriptAppKey: dotenv.env['KAKAO_JAVA_SCRIPT_APP_KEY'],

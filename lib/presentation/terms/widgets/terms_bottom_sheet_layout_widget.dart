@@ -136,7 +136,7 @@ class _TermsBottomSheetState extends ConsumerState<TermsBottomSheet> {
             isEnabled: isEssentialChecked,
             onPressed: () async {
               final prefs = await SharedPreferences.getInstance();
-              final userIdx = prefs.getInt('user_id');
+              final userIdx = 1;
 
               if (userIdx == null) {
                 ScaffoldMessenger.of(context).showSnackBar(

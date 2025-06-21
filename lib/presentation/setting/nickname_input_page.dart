@@ -50,7 +50,7 @@ class _NicknameInputPageState extends ConsumerState<NicknameInputPage> {
 
                 try {
                   final prefs = await SharedPreferences.getInstance();
-                  final userId = prefs.getInt('user_id');
+                  final userId =1;
                   if (userId == null) {
                     if (mounted) {
                       ScaffoldMessenger.of(context).showSnackBar(
