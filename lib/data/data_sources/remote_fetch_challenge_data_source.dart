@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
-import 'package:mongbi_app/data/data_sources/challenge_data_source.dart';
+import 'package:mongbi_app/data/data_sources/fetch_challenge_data_source.dart';
 import 'package:mongbi_app/data/dtos/challenge_dto.dart';
 
-class RemoteChallengeDataSource implements ChallengeDataSource {
-  RemoteChallengeDataSource({required this.dio});
+class RemoteFetchChallengeDataSource implements FetchChallengeDataSource {
+  RemoteFetchChallengeDataSource({required this.dio});
 
   final Dio dio;
 

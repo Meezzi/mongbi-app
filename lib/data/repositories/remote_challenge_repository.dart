@@ -1,11 +1,11 @@
-import 'package:mongbi_app/data/data_sources/challenge_data_source.dart';
+import 'package:mongbi_app/data/data_sources/fetch_challenge_data_source.dart';
 import 'package:mongbi_app/domain/entities/challenge.dart';
 import 'package:mongbi_app/domain/repositories/challenge_repository.dart';
 
 class RemoteChallengeRepository implements ChallengeRepository {
   RemoteChallengeRepository({required this.challengeDataSource});
 
-  final ChallengeDataSource challengeDataSource;
+  final FetchChallengeDataSource challengeDataSource;
 
   @override
   Future<List<Challenge>> fetchChallenge(int dreamScore) async {
