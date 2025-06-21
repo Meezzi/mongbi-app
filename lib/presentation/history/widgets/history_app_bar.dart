@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mongbi_app/core/font.dart';
 
 class HistoryAppBar extends StatelessWidget {
   const HistoryAppBar({
@@ -35,9 +34,14 @@ class HistoryAppBar extends StatelessWidget {
         titleSpacing: horizontalPadding,
         title: AnimatedDefaultTextStyle(
           duration: Duration(milliseconds: 200),
-          style: Font.title20.copyWith(
+          style: TextStyle(
+            fontFamily: 'NanumSquareRound',
+            fontWeight: FontWeight.w800,
+            fontSize: 20,
+            height: 28 / 20,
             color: isActive ? Colors.white : Color(0xff1A181B),
           ),
+
           // TODO : 나중에 사용자 닉네임으로 변경
           child: Text('모몽의 꿈 기록'),
         ),
