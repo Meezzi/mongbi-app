@@ -24,13 +24,13 @@ class ChallengeIntroPage extends ConsumerWidget {
                 leftText: '괜찮아',
                 rightText: '선물이 뭐야?',
                 onLeftPressed: () {
-                  context.go('/home');
+                  context.pushReplacement('/home');
                 },
                 onRightPressed: () async {
                   await ref
                       .read(challengeViewModelProvider.notifier)
                       .loadChallenges(dreamScore);
-                  context.go('/challenge');
+                  context.pushReplacement('/challenge');
                 },
               ),
             ),
