@@ -73,7 +73,12 @@ class MainScaffold extends StatelessWidget {
                             : [Color(0xFF8C2EFF), Color(0xFF3B136B)],
                   ),
                 ),
-                child: const Icon(Icons.add, size: 32, color: Colors.white),
+                child: SvgPicture.asset(
+                  'assets/icons/add.svg',
+                  width: 24,
+                  height: 24,
+                  fit: BoxFit.none,
+                ),
               ),
             ),
             _buildTab(
