@@ -133,7 +133,13 @@ class MainScaffold extends StatelessWidget {
               // TODO: 알림 화면으로 이동
               context.push('/alarm');
             },
-            icon: SvgPicture.asset('assets/icons/bell.svg'),
+            padding: EdgeInsets.only(right: 24),
+            icon: SvgPicture.asset(
+              'assets/icons/bell.svg',
+              width: 24,
+              height: 24,
+              fit: BoxFit.none,
+            ),
           ),
         ],
       );
