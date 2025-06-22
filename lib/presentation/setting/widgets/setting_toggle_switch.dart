@@ -21,7 +21,7 @@ class ToggleSwitch extends StatelessWidget {
         child: Container(
           width: 24,
           height: 24,
-          margin: EdgeInsets.symmetric(horizontal: 4),
+          margin: EdgeInsets.symmetric(horizontal: 2),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: Colors.white,
