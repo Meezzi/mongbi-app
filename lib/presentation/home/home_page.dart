@@ -27,17 +27,10 @@ class _HomePageState extends State<HomePage> {
     return Container(
       width: double.infinity,
       height: double.infinity,
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Color(0xFF08063A),
-            Color(0xFF54BAF9),
-            Color(0xFF8C8CFF),
-            Color(0xFFF56CFF),
-          ],
-          stops: [0.2, 0.5, 0.78, 0.96],
+      decoration: BoxDecoration(
+        image: const DecorationImage(
+          image: AssetImage('assets/images/home_background.webp'),
+          fit: BoxFit.cover,
         ),
       ),
       child: Stack(
