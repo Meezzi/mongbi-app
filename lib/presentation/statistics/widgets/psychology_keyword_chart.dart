@@ -49,13 +49,16 @@ class PsychologyKeywordChart extends StatelessWidget {
     ];
     final List<TextStyle> styleList = [
       Font.subTitle16.copyWith(color: Colors.white),
-      Font.subTitle16.copyWith(color: Colors.white),
-      Font.subTitle16.copyWith(color: Colors.white),
-      Font.subTitle16.copyWith(color: Colors.white),
-      Font.subTitle16.copyWith(color: Color(0xFFCA9FFF)),
+      Font.subTitle14.copyWith(color: Colors.white),
+      Font.subTitle12.copyWith(color: Colors.white),
+      Font.subTitle12.copyWith(color: Colors.white),
+      Font.subTitle12.copyWith(
+        color: isFirst ? Color(0xFFFFFFFF) : Color(0xFFCA9FFF),
+      ),
     ];
 
     return CommonBox(
+      applyBottomPadding: false,
       title: Text(
         '몽비가 분석해준 심리 키워드',
         style: Font.title14.copyWith(
@@ -82,7 +85,7 @@ class PsychologyKeywordChart extends StatelessWidget {
                       radius: radiusList[index],
                       color: isFirst ? Color(0xFFD6D4D8) : colorList[index],
                       text: isFirst ? '키워드' : keywordList[index].keyword,
-                      textStyle: isFirst ? styleList[0] : styleList[index],
+                      textStyle: styleList[index],
                     ),
                   );
                 }),
