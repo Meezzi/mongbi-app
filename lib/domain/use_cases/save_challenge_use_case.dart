@@ -6,9 +6,14 @@ class SaveChallengeUseCase {
   final ChallengeRepository repository;
 
   Future<bool> saveChallenge({
+    required int dreamId,
     required int uid,
     required int challengeId,
   }) async {
-    return await repository.saveChallenge(uid: uid, challengeId: challengeId);
+    return await repository.saveChallenge(
+      dreamId: dreamId,
+      uid: uid,
+      challengeId: challengeId,
+    );
   }
 }

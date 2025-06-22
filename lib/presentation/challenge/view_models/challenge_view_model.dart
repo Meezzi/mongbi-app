@@ -41,6 +41,6 @@ class ChallengeViewModel extends AsyncNotifier<List<Challenge>> {
 
     return await ref
         .read(saveChallengeUseCaseProvider)
-        .saveChallenge(uid: uid, challengeId: challengeId);
+        .saveChallenge(dreamId: dreamId, uid: uid, challengeId: challengeId);
   }
 }
