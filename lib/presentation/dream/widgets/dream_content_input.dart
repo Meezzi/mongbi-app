@@ -15,7 +15,7 @@ class DreamContentInput extends ConsumerWidget {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: Colors.purple[50],
+        color: Color(0xFFF4EAFF),
         borderRadius: BorderRadius.circular(24),
       ),
       child: TextField(
@@ -30,7 +30,7 @@ class DreamContentInput extends ConsumerWidget {
         decoration: InputDecoration(
           hintText: '오늘 꾼 꿈을 10글자 이상 입력해주몽 :)',
           hintStyle: Font.subTitle14.copyWith(
-            color: state.isFocused ? Colors.grey : Colors.purple,
+            color: state.isFocused ? Colors.grey : Color(0xFFB273FF),
           ),
           border: InputBorder.none,
           counter: Align(
