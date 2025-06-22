@@ -119,15 +119,17 @@ class ChallengePage extends ConsumerWidget {
                         ),
                   );
                 },
-                onRightPressed: () {
-                  showDialog(
+                onRightPressed: () async {
+                  await ref
+                      .read(challengeViewModelProvider.notifier)
+                      .saveChallenge();
+                  await showDialog(
                     context: context,
                     builder:
                         (context) => MongbiDialog(
                           content: '꿈 잘먹었몽!\n선물 완료하고, 오늘도 힘내라몽',
                           buttonText: '고마워',
                           onSubmit: () {
-                            // TODO: 저장 로직
                             context.pushReplacement('/home');
                           },
                         ),
