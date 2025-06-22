@@ -15,6 +15,6 @@ class AnalyzeAndSaveDreamUseCase {
       dreamScore,
     );
     final dreamId = await saveDreamUseCase.execute(uid, dream);
-    return dream;
+    return dream.copyWith(id: dreamId);
   }
 }
