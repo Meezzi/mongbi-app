@@ -38,6 +38,7 @@ class UserInfoHeader extends StatelessWidget {
             height: 24,
             colorFilter: ColorFilter.mode(Color(0xFFA6A1AA), BlendMode.srcIn),
           ),
+          SizedBox(width: 20),
         ],
       ),
     );
