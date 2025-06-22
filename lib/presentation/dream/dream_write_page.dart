@@ -38,7 +38,7 @@ class _DreamWritePageState extends ConsumerState<DreamWritePage> {
   Widget build(BuildContext context) {
     final state = ref.watch(dreamWriteViewModelProvider);
 
-    // 버튼 활건화 조건
+    // 버튼 활성화 조건
     final isButtonEnabled =
         state.dreamContent.trim().length >= 10 && state.selectedIndex != -1;
 
