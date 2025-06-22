@@ -46,6 +46,7 @@ class ChallengePage extends ConsumerWidget {
                                 content: challenges[0].content,
                                 containerColor: const Color(0xFFB7EBE5),
                                 rotationAngle: -0.14,
+                                isSelected: selectedIndex == 0,
                               ),
                             ),
                             Positioned(
@@ -56,6 +57,7 @@ class ChallengePage extends ConsumerWidget {
                                 content: challenges[1].content,
                                 containerColor: const Color(0xFF94E2D8),
                                 rotationAngle: 0.14,
+                                isSelected: selectedIndex == 1,
                               ),
                             ),
                             Positioned(
@@ -66,6 +68,7 @@ class ChallengePage extends ConsumerWidget {
                                 content: challenges[2].content,
                                 containerColor: const Color(0xFF64D4C7),
                                 rotationAngle: -0.14,
+                                isSelected: selectedIndex == 2,
                               ),
                             ),
                           ] else
