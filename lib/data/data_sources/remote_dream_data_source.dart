@@ -8,11 +8,11 @@ class RemoteDreamDataSource implements DreamSaveDataSource {
   final Dio dio;
 
   @override
-  Future<bool> saveDream(DreamDto dream) async {
+  Future<int> saveDream(DreamDto dream) async {
     try {
       final response = await dio.post('/dreams', data: dream.toJson());
       if (response.statusCode == 201 && response.data['success'] == true) {
-        return true;
+        return response.data['data']['DREAM_IDX'] as int;
       } else {
         throw Exception(response.data['message'] ?? '알 수 없는 오류가 발생하였습니다.');
       }
