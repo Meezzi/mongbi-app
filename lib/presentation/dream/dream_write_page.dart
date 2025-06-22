@@ -76,13 +76,18 @@ class _DreamWritePageState extends ConsumerState<DreamWritePage> {
                       Text('꿈을 꾸고 내 기분은', style: Font.title18),
                       const SizedBox(height: 16),
                       const MoodSelectionRow(),
-                      SizedBox(
-                        height:
-                            MediaQuery.of(context).viewInsets.bottom > 0
-                                ? 0
-                                : MediaQuery.of(context).size.height * 0.2,
-                      ),
-
+                      SizedBox(height: 50),
+                    ],
+                  ),
+                ),
+              ),
+              SliverFillRemaining(
+                hasScrollBody: false,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: Column(
+                    children: [
+                      const Spacer(),
                       FilledButtonWidget(
                         type: ButtonType.primary,
                         text: '내가 꾼 꿈이야',
