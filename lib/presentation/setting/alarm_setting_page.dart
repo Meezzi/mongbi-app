@@ -28,6 +28,7 @@ class AlarmSettingPage extends ConsumerWidget {
             isLast: false,
             trailing: ToggleSwitch(value: alarmState.isAll),
             onTap: alarmViewModel.toggleAll,
+            enableInkWell: false,
           ),
 
           Divider(height: 0, thickness: 8, color: Color(0xFFF3F2F4)),
@@ -38,6 +39,7 @@ class AlarmSettingPage extends ConsumerWidget {
             isLast: false,
             trailing: ToggleSwitch(value: alarmState.isReminder),
             onTap: alarmViewModel.toggleReminder,
+            enableInkWell: false,
           ),
 
           RoundedListTileItem(
@@ -46,6 +48,7 @@ class AlarmSettingPage extends ConsumerWidget {
             isLast: true,
             trailing: ToggleSwitch(value: alarmState.isChallenge),
             onTap: alarmViewModel.toggleChallenge,
+            enableInkWell: false,
           ),
         ],
       ),
