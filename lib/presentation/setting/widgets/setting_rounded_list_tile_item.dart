@@ -10,6 +10,7 @@ class RoundedListTileItem extends StatelessWidget {
     required this.onTap,
     required this.isFirst,
     required this.isLast,
+    this.enableInkWell = true,
   });
 
   final String title;
@@ -17,6 +18,7 @@ class RoundedListTileItem extends StatelessWidget {
   final VoidCallback onTap;
   final bool isFirst;
   final bool isLast;
+  final bool enableInkWell;
 
   @override
   Widget build(BuildContext context) {
@@ -36,33 +38,39 @@ class RoundedListTileItem extends StatelessWidget {
       );
     }
 
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        borderRadius: borderRadius,
-        onTap: onTap,
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-          child: Row(
-            children: [
-              Expanded(
-                child: Text(
-                  title,
-                  style: Font.body16.copyWith(color: Color(0xFF1A181B)),
+    Widget content = Container(
+      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              title,
+              style: Font.body16.copyWith(color: Color(0xFF1A181B)),
+            ),
+          ),
+          trailing ??
+              SvgPicture.asset(
+                'assets/icons/chevron-right.svg',
+                colorFilter: ColorFilter.mode(
+                  Color(0xFFA6A1AA),
+                  BlendMode.srcIn,
                 ),
               ),
-              trailing ??
-                  SvgPicture.asset(
-                    'assets/icons/chevron-right.svg',
-                    colorFilter: ColorFilter.mode(
-                      Color(0xFFA6A1AA),
-                      BlendMode.srcIn,
-                    ),
-                  ),
-            ],
-          ),
-        ),
+        ],
       ),
     );
+
+    if (enableInkWell) {
+      return Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: borderRadius,
+          onTap: onTap,
+          child: content,
+        ),
+      );
+    } else {
+      return GestureDetector(onTap: onTap, child: content);
+    }
   }
 }
