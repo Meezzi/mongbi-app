@@ -22,6 +22,7 @@ class MainScaffold extends StatelessWidget {
     final isHistory = location.startsWith('/history');
 
     return Scaffold(
+      backgroundColor: _buildScaffoldBackgroundColor(location),
       appBar: _buildAppBar(context, location),
       extendBodyBehindAppBar: location.startsWith('/home') ? true : false,
       body: child,
@@ -101,6 +102,13 @@ class MainScaffold extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Color _buildScaffoldBackgroundColor(String location) {
+    if (location.startsWith('/setting')) {
+      return Color(0xFFFCF6FF);
+    }
+    return Color(0xFFFAFAFA);
   }
 
   Color _buildBottomAppBarColor(String location) {
