@@ -15,7 +15,7 @@ class DreamContentInput extends ConsumerWidget {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: Colors.purple[50],
+        color: Color(0xFFF4EAFF),
         borderRadius: BorderRadius.circular(24),
       ),
       child: TextField(
