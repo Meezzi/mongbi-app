@@ -55,6 +55,14 @@ class MainScaffold extends StatelessWidget {
                 height: 48,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Color(0xFF1A181B).withAlpha(20),
+                      blurRadius: 10,
+                      offset: Offset(2, 2),
+                      spreadRadius: 0,
+                    ),
+                  ],
                   gradient: LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
