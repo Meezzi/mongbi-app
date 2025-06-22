@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/presentation/common/button_type.dart';
 
 class FilledButtonWidget extends StatelessWidget {
@@ -39,7 +38,14 @@ class FilledButtonWidget extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPress,
         style: ButtonStyle(
-          textStyle: WidgetStatePropertyAll(Font.title18),
+          textStyle: WidgetStatePropertyAll(
+            TextStyle(
+              fontFamily: 'NanumSquareRound',
+              fontWeight: FontWeight.w800,
+              fontSize: 18,
+              height: 24 / 18,
+            ),
+          ),
           elevation: WidgetStatePropertyAll(0),
           minimumSize: WidgetStatePropertyAll(Size.zero),
           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
