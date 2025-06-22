@@ -22,8 +22,13 @@ class RemoteChallengeRepository implements ChallengeRepository {
   }
 
   @override
-  Future<bool> saveChallenge({required int uid, required int challengeId}) {
+  Future<bool> saveChallenge({
+    required int dreamId,
+    required int uid,
+    required int challengeId,
+  }) {
     return saveChallengeDataSource.saveChallenge(
+      dreamId: dreamId,
       uid: uid,
       challengeId: challengeId,
     );
