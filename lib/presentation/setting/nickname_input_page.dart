@@ -23,14 +23,6 @@ class _NicknameInputPageState extends ConsumerState<NicknameInputPage> {
     final isButtonEnabled = nickname.trim().isNotEmpty;
 
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new),
-          onPressed: () => Navigator.pop(context),
-        ),
-        backgroundColor: Colors.white,
-        elevation: 0,
-      ),
       backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.fromLTRB(24, 84, 24, 0),
