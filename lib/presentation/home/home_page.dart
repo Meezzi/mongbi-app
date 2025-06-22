@@ -72,8 +72,8 @@ class _HomePageState extends State<HomePage> {
                       CustomSpeechBubble(text: selectedMessage),
                       Image.asset(
                         'assets/images/mongbi.webp',
-                        width: screenHeight * 0.28,
-                        height: screenHeight * 0.28,
+                        width: screenHeight * 0.32,
+                        height: screenHeight * 0.32,
                       ),
                     ],
                   ),
