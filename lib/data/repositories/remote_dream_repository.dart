@@ -11,7 +11,7 @@ class RemoteDreamRepository implements DreamRepository {
   final DreamAnalysisDataSource dreamAnalysisDataSource;
 
   @override
-  Future<bool> saveDream(Dream dream) async {
+  Future<int> saveDream(Dream dream) async {
     final dreamDto = DreamDto.fromEntity(dream);
     return await dreamSaveDataSource.saveDream(dreamDto);
   }
