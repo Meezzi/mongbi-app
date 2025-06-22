@@ -1,5 +1,6 @@
 class DreamInterpretationState {
   DreamInterpretationState({
+    this.dreamId = 0,
     this.dreamSubTitle = '',
     this.dreamInterpretation = '',
     this.dreamKeywords = const [],
@@ -10,6 +11,7 @@ class DreamInterpretationState {
     this.dreamCategory = '',
   });
 
+  final int dreamId;
   final String dreamSubTitle;
   final String dreamInterpretation;
   final List<String> dreamKeywords;
