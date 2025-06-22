@@ -79,28 +79,12 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/
-    - assets/images/mongbi.webp
-    - assets/images/apple_login.svg
-    - assets/images/naver_login.svg
-    - assets/images/kakao_login.svg
-    - assets/icons/checkbox_unchecked.svg
-    - assets/icons/checkbox_checked.svg
-    - assets/icons/chevron_right.svg
-    - assets/images/home_cloude.svg
-    - assets/images/home_star.webp
-    - assets/icons/
     - assets/audio/
-    - assets/audio/background_music.mp3
+    - assets/fonts/
+    - assets/icons/
+    - assets/images/
+    - assets/logo/
     - .env
-    - assets/images/remind_bell.webp
-    - assets/images/splash_bg.svg
-    - assets/images/splash_mongbi.webp
-    - assets/images/star.webp
-    - assets/images/screen1.webp
-    - assets/images/screen2.webp
-    - assets/images/screen3.webp
-    - assets/images/screen4.webp
-    - assets/images/home_background.webp
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
