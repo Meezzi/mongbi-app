@@ -26,4 +26,21 @@ class ChallengeViewModel extends AsyncNotifier<List<Challenge>> {
         .execute(dreamScore);
     return result;
   }
+
+  Future<bool> saveChallenge() async {
+    final challenges = state.value;
+    final selectedIndex = selectedChallengeIndex;
+
+    if (challenges == null || selectedIndex == null) {
+      return false;
+    }
+
+    final challengeId = challenges[selectedIndex].id;
+    // TODO: 사용자 ID로 변경
+    final int uid = 17;
+
+    return await ref
+        .read(saveChallengeUseCaseProvider)
+        .saveChallenge(uid: uid, challengeId: challengeId);
+  }
 }
