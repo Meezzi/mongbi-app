@@ -55,6 +55,14 @@ class MainScaffold extends StatelessWidget {
                 height: 48,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Color(0xFF1A181B).withAlpha(20),
+                      blurRadius: 10,
+                      offset: Offset(2, 2),
+                      spreadRadius: 0,
+                    ),
+                  ],
                   gradient: LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
@@ -65,7 +73,12 @@ class MainScaffold extends StatelessWidget {
                             : [Color(0xFF8C2EFF), Color(0xFF3B136B)],
                   ),
                 ),
-                child: const Icon(Icons.add, size: 32, color: Colors.white),
+                child: SvgPicture.asset(
+                  'assets/icons/add.svg',
+                  width: 24,
+                  height: 24,
+                  fit: BoxFit.none,
+                ),
               ),
             ),
             _buildTab(
@@ -120,7 +133,13 @@ class MainScaffold extends StatelessWidget {
               // TODO: 알림 화면으로 이동
               context.push('/alarm');
             },
-            icon: SvgPicture.asset('assets/icons/bell.svg'),
+            padding: EdgeInsets.only(right: 24),
+            icon: SvgPicture.asset(
+              'assets/icons/bell.svg',
+              width: 24,
+              height: 24,
+              fit: BoxFit.none,
+            ),
           ),
         ],
       );
