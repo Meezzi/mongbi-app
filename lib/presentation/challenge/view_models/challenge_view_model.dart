@@ -3,9 +3,16 @@ import 'package:mongbi_app/domain/entities/challenge.dart';
 import 'package:mongbi_app/providers/challenge_provider.dart';
 
 class ChallengeViewModel extends AsyncNotifier<List<Challenge>> {
+  int? selectedChallengeIndex;
+
   @override
   Future<List<Challenge>> build() async {
     return [];
+  }
+
+  void selectChallenge(int index) {
+    selectedChallengeIndex = index;
+    state = AsyncValue.data(state.value ?? []);
   }
 
   Future<void> loadChallenges(int dreamScore) async {
