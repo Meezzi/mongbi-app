@@ -22,7 +22,7 @@ class _NicknameInputPageState extends ConsumerState<NicknameInputPage> {
     final isButtonEnabled = nickname.trim().isNotEmpty;
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Color(0xFFFAFAFA),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(24, 84, 24, 0),
         child: Column(
