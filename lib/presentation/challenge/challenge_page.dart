@@ -13,6 +13,8 @@ class ChallengePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final challenges = ref.watch(challengeViewModelProvider);
+    final selectedIndex =
+        ref.watch(challengeViewModelProvider.notifier).selectedChallengeIndex;
 
     return Scaffold(
       backgroundColor: Color(0xFFFAFAFA),
@@ -41,34 +43,58 @@ class ChallengePage extends ConsumerWidget {
                             Positioned(
                               top: 80,
                               left: 0,
-                              child: ChallengeContainer(
-                                title: challenges[0].type,
-                                content: challenges[0].content,
-                                containerColor: const Color(0xFFB7EBE5),
-                                rotationAngle: -0.14,
-                                isSelected: selectedIndex == 0,
+                              child: GestureDetector(
+                                onTap:
+                                    () => ref
+                                        .read(
+                                          challengeViewModelProvider.notifier,
+                                        )
+                                        .selectChallenge(0),
+                                child: ChallengeContainer(
+                                  title: challenges[0].type,
+                                  content: challenges[0].content,
+                                  containerColor: const Color(0xFFB7EBE5),
+                                  rotationAngle: -0.14,
+                                  isSelected: selectedIndex == 0,
+                                ),
                               ),
                             ),
                             Positioned(
                               top: 250,
                               right: 10,
-                              child: ChallengeContainer(
-                                title: challenges[1].type,
-                                content: challenges[1].content,
-                                containerColor: const Color(0xFF94E2D8),
-                                rotationAngle: 0.14,
-                                isSelected: selectedIndex == 1,
+                              child: GestureDetector(
+                                onTap:
+                                    () => ref
+                                        .read(
+                                          challengeViewModelProvider.notifier,
+                                        )
+                                        .selectChallenge(1),
+                                child: ChallengeContainer(
+                                  title: challenges[1].type,
+                                  content: challenges[1].content,
+                                  containerColor: const Color(0xFF94E2D8),
+                                  rotationAngle: 0.14,
+                                  isSelected: selectedIndex == 1,
+                                ),
                               ),
                             ),
                             Positioned(
                               top: 450,
                               left: 10,
-                              child: ChallengeContainer(
-                                title: challenges[2].type,
-                                content: challenges[2].content,
-                                containerColor: const Color(0xFF64D4C7),
-                                rotationAngle: -0.14,
-                                isSelected: selectedIndex == 2,
+                              child: GestureDetector(
+                                onTap:
+                                    () => ref
+                                        .read(
+                                          challengeViewModelProvider.notifier,
+                                        )
+                                        .selectChallenge(2),
+                                child: ChallengeContainer(
+                                  title: challenges[2].type,
+                                  content: challenges[2].content,
+                                  containerColor: const Color(0xFF64D4C7),
+                                  rotationAngle: -0.14,
+                                  isSelected: selectedIndex == 2,
+                                ),
                               ),
                             ),
                           ] else
