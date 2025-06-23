@@ -3,7 +3,7 @@ import 'package:mongbi_app/presentation/dream/models/dream_write_state.dart';
 import 'package:mongbi_app/providers/core_providers.dart';
 import 'package:mongbi_app/providers/dream_provider.dart';
 
-class DreamWriteViewModel extends Notifier<DreamWriteState> {
+class DreamWriteViewModel extends AutoDisposeNotifier<DreamWriteState> {
   @override
   DreamWriteState build() {
     return DreamWriteState();
