@@ -5,7 +5,8 @@ import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/presentation/setting/widgets/logout_confirm_dialog.dart';
 import 'package:mongbi_app/presentation/setting/widgets/setting_rounded_list_tile_item.dart';
-import 'package:mongbi_app/providers/auth_provider.dart';
+import 'package:mongbi_app/providers/auth_provider.dart' as auth2;
+import 'package:mongbi_app/providers/user_info_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileSettingPage extends ConsumerWidget {
@@ -13,8 +14,11 @@ class ProfileSettingPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.read(authViewModelProvider);
+    final user = ref.read(auth2.authViewModelProvider);
+    final userInfo = ref.watch(splashViewModelProvider);
+    final userResult = userInfo.userList?.first; // List지만 보통 1명만 있으니 first 사용
 
+    final nickname = userResult?.userNickname ?? '비회원';
     return Scaffold(
       appBar: AppBar(
         title: Text('프로필 설정', style: Font.title20),
@@ -34,11 +38,10 @@ class ProfileSettingPage extends ConsumerWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // TODO: 사용자 별명
                   Text('별명 설정', style: Font.body16),
                   SizedBox(width: 8),
                   Text(
-                    'ㄴㄴㄴ',
+                    nickname,
                     style: Font.body16.copyWith(color: Color(0xFF8C2EFF)),
                   ),
                   Spacer(),
