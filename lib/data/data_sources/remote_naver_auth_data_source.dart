@@ -33,6 +33,14 @@ class RemoteNaverAuthDataSource {
 
         if (response.data['user'] != null) {
           userDto = UserDto.fromJson(response.data['user']);
+
+          await storageService.saveUserIdx(userDto.userIdx); // ✅ 저장
+        } else {
+          throw Exception('로그인 응답에 user 정보가 없습니다.');
+        }
+
+        if (response.data['user'] != null) {
+          userDto = UserDto.fromJson(response.data['user']);
         } else {
           throw Exception('로그인 응답에 user 정보가 없습니다.');
         }

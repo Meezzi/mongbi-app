@@ -24,7 +24,7 @@ class SettingPage extends ConsumerWidget {
       children: [
         UserInfoHeader(
           // TODO: 로그인 기능 완료 후 확인 필요
-          nickname: 'ㅈㅈㅈ',
+          nickname: '모몽',
           loginType: '카카오',
           onTap: () {
             context.push('/profile_setting');

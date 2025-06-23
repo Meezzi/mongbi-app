@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mongbi_app/core/secure_storage_service.dart';
 import 'package:mongbi_app/data/dtos/terms_aggrement_dto.dart';
 import 'package:mongbi_app/domain/entities/terms.dart';
 import 'package:mongbi_app/presentation/terms/widgets/terms_button_widget.dart';
@@ -135,10 +136,10 @@ class _TermsBottomSheetState extends ConsumerState<TermsBottomSheet> {
           ConfirmButton(
             isEnabled: isEssentialChecked,
             onPressed: () async {
-              final prefs = await SharedPreferences.getInstance();
-              final userIdx = 1;
+              
+              final userId = await SecureStorageService().getUserIdx();
 
-              if (userIdx == null) {
+              if (userId == null) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text('로그인 정보를 불러올 수 없습니다.')),
                 );
@@ -157,7 +158,7 @@ class _TermsBottomSheetState extends ConsumerState<TermsBottomSheet> {
               try {
                 await ref
                     .read(termsViewModelProvider.notifier)
-                    .submitAgreements(userIdx: userIdx, agreements: agreements);
+                    .submitAgreements(userIdx: userId, agreements: agreements);
                 if (mounted) {
                   context.go('/nickname_input');
                 }
