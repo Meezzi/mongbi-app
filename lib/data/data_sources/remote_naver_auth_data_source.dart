@@ -39,11 +39,7 @@ class RemoteNaverAuthDataSource {
           throw Exception('로그인 응답에 user 정보가 없습니다.');
         }
 
-        if (response.data['user'] != null) {
-          userDto = UserDto.fromJson(response.data['user']);
-        } else {
-          throw Exception('로그인 응답에 user 정보가 없습니다.');
-        }
+      
       } else {
         throw Exception('로그인 실패: 토큰이 없거나 잘못된 응답입니다.');
       }
