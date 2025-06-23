@@ -23,8 +23,6 @@ class RemoteHistoryDataSource implements HistoryDataSource {
       } else {
         throw Exception(response.data['message'] ?? '알 수 없는 오류가 발생하였습니다.');
       }
-    } on DioException catch (e) {
-      throw Exception(e.message ?? '네트워크 오류가 발생하였습니다.');
     } catch (e) {
       return [];
     }
