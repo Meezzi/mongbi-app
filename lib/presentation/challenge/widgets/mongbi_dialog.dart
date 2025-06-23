@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/presentation/auth/widgets/mongbi_image_widget.dart';
-import 'package:mongbi_app/presentation/common/floating_animation_widget.dart';
 import 'package:mongbi_app/presentation/dream/widgets/custom_button.dart';
 
 class MongbiDialog extends StatelessWidget {
@@ -34,7 +33,7 @@ class MongbiDialog extends StatelessWidget {
                 style: Font.title18.copyWith(color: Color(0xFF1A181B)),
                 textAlign: TextAlign.center,
               ),
-              FloatingAnimationWidget(child: MongbiCharacter(size: 144)),
+              MongbiCharacter(size: 144),
               CustomButton(text: buttonText, onSubmit: onSubmit),
             ],
           ),
