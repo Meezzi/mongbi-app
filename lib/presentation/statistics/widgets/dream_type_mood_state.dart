@@ -37,7 +37,7 @@ class DreamTypeMoodState extends StatelessWidget {
             child: SvgPicture.asset(
               'assets/icons/info.svg',
               fit: BoxFit.cover,
-              width: getResponsiveRatioByWidth(context, 20),
+              width: getResponsiveRatioByWidth(context, 18),
             ),
           ),
         ],

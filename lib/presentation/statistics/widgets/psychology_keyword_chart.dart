@@ -47,15 +47,53 @@ class PsychologyKeywordChart extends StatelessWidget {
       Color(0xFF45CCBC),
       Color(0xFFF4EAFF),
     ];
-    final List<TextStyle> styleList = [
-      Font.subTitle16.copyWith(color: Colors.white),
-      Font.subTitle16.copyWith(color: Colors.white),
-      Font.subTitle16.copyWith(color: Colors.white),
-      Font.subTitle16.copyWith(color: Colors.white),
-      Font.subTitle16.copyWith(color: Color(0xFFCA9FFF)),
+    final List<TextStyle> textStyleList = [
+      TextStyle(
+        fontFamily: 'NanumSquareRound',
+        color: Colors.white,
+        fontWeight: FontWeight.w700,
+        fontSize: 16,
+        height: 24 / 16,
+      ),
+      TextStyle(
+        fontFamily: 'NanumSquareRound',
+        color: Colors.white,
+        fontWeight: FontWeight.w700,
+        fontSize: 14,
+        height: 20 / 14,
+      ),
+      TextStyle(
+        fontFamily: 'NanumSquareRound',
+        color: Colors.white,
+        fontWeight: FontWeight.w700,
+        fontSize: 12,
+        height: 16 / 12,
+      ),
+      TextStyle(
+        fontFamily: 'NanumSquareRound',
+        color: Colors.white,
+        fontWeight: FontWeight.w700,
+        fontSize: 12,
+        height: 16 / 12,
+      ),
+      TextStyle(
+        fontFamily: 'NanumSquareRound',
+        color: isFirst ? Color(0xFFFFFFFF) : Color(0xFFCA9FFF),
+        fontWeight: FontWeight.w700,
+        fontSize: 12,
+        height: 16 / 12,
+      ),
+    ];
+    final List<String> initialKeywordList = [
+      '새로운 시작',
+      '큰 기대감',
+      '자신감',
+      '성장욕구',
+      '설렘',
     ];
 
     return CommonBox(
+      applyBottomPadding: false,
       title: Text(
         '몽비가 분석해준 심리 키워드',
         style: Font.title14.copyWith(
@@ -81,8 +119,11 @@ class PsychologyKeywordChart extends StatelessWidget {
                     dotPainter: CustomFlDotPainter(
                       radius: radiusList[index],
                       color: isFirst ? Color(0xFFD6D4D8) : colorList[index],
-                      text: isFirst ? '키워드' : keywordList[index].keyword,
-                      textStyle: isFirst ? styleList[0] : styleList[index],
+                      text:
+                          isFirst
+                              ? initialKeywordList[index]
+                              : keywordList[index].keyword,
+                      textStyle: textStyleList[index],
                     ),
                   );
                 }),

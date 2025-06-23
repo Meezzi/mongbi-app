@@ -1,11 +1,11 @@
 import 'package:mongbi_app/domain/entities/statistics.dart';
 
 class StatisticsModel {
-  StatisticsModel({this.month, this.year, this.tabBarIndex});
+  StatisticsModel({this.month, this.year, this.tabBarIndex = 0});
 
   Statistics? month;
   Statistics? year;
-  int? tabBarIndex;
+  int tabBarIndex;
 
   StatisticsModel copyWith({
     Statistics? month,

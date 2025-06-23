@@ -27,7 +27,7 @@ class HistoryDto {
     dreamRegDate: DateTime.parse(json['DREAM_REG_DATE']),
     dreamIdx: json['DREAM_IDX'],
     userIdx: json['USER_IDX'],
-    challengeIdx: json['CHALLENGE_IDX'],
+    challengeIdx: json['CHALLENGE_IDX'] ?? 0,
   );
 
   final String dreamContent;

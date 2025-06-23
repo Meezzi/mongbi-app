@@ -6,7 +6,7 @@ class RemoteStatisticsDataSource implements StatisticsDataSource {
   RemoteStatisticsDataSource(this.dio);
 
   Dio dio;
-  int userIndex = 45;
+  int userIndex = 41;
 
   @override
   Future<StatisticsDto?> fetchMonthStatistics(DateTime dateTime) async {
@@ -69,8 +69,6 @@ class RemoteStatisticsDataSource implements StatisticsDataSource {
       } else {
         throw Exception(response.data['message'] ?? '알 수 없는 오류가 발생하였습니다.');
       }
-    } on DioException catch (e) {
-      throw Exception(e.message ?? '네트워크 오류가 발생하였습니다.');
     } catch (e) {
       return null;
     }
@@ -132,8 +130,6 @@ class RemoteStatisticsDataSource implements StatisticsDataSource {
       } else {
         throw Exception(response.data['message'] ?? '알 수 없는 오류가 발생하였습니다.');
       }
-    } on DioException catch (e) {
-      throw Exception(e.message ?? '네트워크 오류가 발생하였습니다.');
     } catch (e) {
       return null;
     }
