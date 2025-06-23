@@ -30,7 +30,9 @@ class ProfileSettingPage extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           InkWell(
-            onTap: () {
+            onTap: () async{
+              final prefs = await SharedPreferences.getInstance();
+              await prefs.setBool('nicknameChangeState', true);
               context.push('/nickname_input');
             },
             child: Padding(

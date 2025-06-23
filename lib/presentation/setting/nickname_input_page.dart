@@ -7,6 +7,7 @@ import 'package:mongbi_app/presentation/setting/widgets/nickname_text_field.dart
 import 'package:mongbi_app/presentation/setting/widgets/nickname_title.dart';
 import 'package:mongbi_app/providers/nickname_provider.dart';
 import 'package:mongbi_app/providers/user_info_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class NicknameInputPage extends ConsumerStatefulWidget {
   const NicknameInputPage({super.key});
@@ -47,6 +48,9 @@ class _NicknameInputPageState extends ConsumerState<NicknameInputPage> {
             NicknameSubmitButton(
               enabled: isButtonEnabled,
               onTap: () async {
+                final prefs = await SharedPreferences.getInstance();
+                final isFromSetting =
+                    prefs.getBool('nicknameChangeState') ?? false;
                 if (!isButtonEnabled) return;
 
                 try {
@@ -66,7 +70,11 @@ class _NicknameInputPageState extends ConsumerState<NicknameInputPage> {
                       .read(splashViewModelProvider.notifier)
                       .checkLoginAndFetchUserInfo();
                   if (mounted) {
-                    context.go('/remindtime_setting');
+                    if (isFromSetting) {
+                      context.go('/setting');
+                    } else {
+                      context.go('/remindtime_setting');
+                    }
                   }
                 } catch (e) {
                   if (mounted) {
