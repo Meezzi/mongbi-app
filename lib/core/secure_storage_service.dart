@@ -6,6 +6,7 @@ class SecureStorageService {
   // 키 정의
   static const _accessTokenKey = 'accessToken';
   static const _refreshTokenKey = 'refreshToken';
+  static const _userIdxKey = 'userIdx';
 
   final FlutterSecureStorage _secureStorage;
 
@@ -42,5 +43,14 @@ class SecureStorageService {
   /// ❌ 전체 SecureStorage 초기화 (로그아웃 시 등)
   Future<void> clearAll() async {
     await _secureStorage.deleteAll();
+  }
+
+  Future<void> saveUserIdx(int userIdx) async {
+    await _secureStorage.write(key: _userIdxKey, value: userIdx.toString());
+  }
+
+  Future<int?> getUserIdx() async {
+    final value = await _secureStorage.read(key: _userIdxKey);
+    return value != null ? int.tryParse(value) : null;
   }
 }

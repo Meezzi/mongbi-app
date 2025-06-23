@@ -38,7 +38,7 @@ class ProfileSettingPage extends ConsumerWidget {
                   Text('별명 설정', style: Font.body16),
                   SizedBox(width: 8),
                   Text(
-                    user!.userNickname ?? '',
+                    'ㄴㄴㄴ',
                     style: Font.body16.copyWith(color: Color(0xFF8C2EFF)),
                   ),
                   Spacer(),
