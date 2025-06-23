@@ -34,6 +34,7 @@ class MongbiDialog extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               MongbiCharacter(size: 144),
+              SizedBox(height: 8),
               CustomButton(text: buttonText, onSubmit: onSubmit),
             ],
           ),
