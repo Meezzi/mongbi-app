@@ -24,12 +24,13 @@ class _SplashPageState extends ConsumerState<SplashPage>
       final viewModel = ref.read(splashViewModelProvider.notifier);
       await viewModel.checkLoginAndFetchUserInfo();
 
-      final status = ref.read(splashViewModelProvider);
-      if (status == SplashStatus.success) {
+      final splashState = ref.read(splashViewModelProvider);
+      if (splashState.status == SplashStatus.success) {
         context.go('/home');
-      } else if (status == SplashStatus.needLogin) {
+      } else if (splashState.status == SplashStatus.needLogin) {
         context.go('/social_login');
       } else {
+        if (!context.mounted) return;
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(const SnackBar(content: Text('오류 발생')));

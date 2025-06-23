@@ -5,7 +5,7 @@ class GetUserInfoUseCase {
   GetUserInfoUseCase(this.repository);
   final UserInfoRepository repository;
 
-  Future<List<User>> call() async {
+  Future<List<User>> execute() async {
     return await repository.getUserInfo();
   }
 }

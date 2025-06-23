@@ -32,7 +32,6 @@ class RemoteKakaoAuthDataSource {
       } else {
         throw Exception('로그인 응답에 user 정보가 없습니다.');
       }
-      await storageService.saveUserIdx(userDto.userIdx);
 
       return LoginResponseDto(token: jwt, user: userDto);
     } catch (e, s) {

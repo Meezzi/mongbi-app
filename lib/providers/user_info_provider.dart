@@ -24,6 +24,7 @@ final getUserInfoUseCaseProvider = Provider<GetUserInfoUseCase>(
 final authViewModelProvider = NotifierProvider<AuthViewModel, User?>(
   () => AuthViewModel(),
 );
+
 final userInfoDataSourceProvider = Provider<RemoteUserInfoGetDataSource>(
   (ref) => RemoteUserInfoGetDataSource(ref.read(dioProvider)),
 );

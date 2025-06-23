@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:mongbi_app/core/secure_storage_service.dart';
 import 'package:mongbi_app/data/data_sources/statistics_data_source.dart';
 import 'package:mongbi_app/data/dtos/statistics_dto.dart';
 
@@ -24,9 +25,6 @@ class RemoteStatisticsDataSource implements StatisticsDataSource {
         '4': 'GOOD',
         '5': 'VERY_GOOD',
       };
-
-      // TODO : userIdx로 변경하기
-      // TODO : idToken 유저 엔티티에서 받아오기
       final response = await dio.get(
         '/dreams/statistics/monthly/$userIndex/$year/$month',
       );
