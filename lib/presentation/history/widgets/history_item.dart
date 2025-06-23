@@ -76,6 +76,7 @@ class _HistoryItemState extends State<HistoryItem> {
           ),
           children: [
             Container(
+              width: double.infinity,
               padding: const EdgeInsets.fromLTRB(24, 16, 24, 32),
               color: Colors.white,
               child: Column(

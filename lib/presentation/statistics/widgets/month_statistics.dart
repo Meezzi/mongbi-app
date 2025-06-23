@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mongbi_app/core/get_responsive_ratio_by_width.dart';
 import 'package:mongbi_app/core/get_widget_info.dart';
 import 'package:mongbi_app/core/route_observer.dart';
+import 'package:mongbi_app/data/dtos/statistics_dto.dart';
 import 'package:mongbi_app/presentation/statistics/statistics_key/statistics_key.dart';
 import 'package:mongbi_app/presentation/statistics/widgets/custom_snack_bar.dart';
 import 'package:mongbi_app/presentation/statistics/widgets/dream_frequency_card.dart';
@@ -68,6 +69,7 @@ class _MonthStatisticsState extends ConsumerState<MonthStatistics>
   @override
   Widget build(BuildContext context) {
     final statisticsAsync = ref.watch(statisticsViewModelProvider);
+    final pickerState = ref.watch(pickerViewModelProvider);
 
     return ListView(
       padding: EdgeInsets.only(
@@ -101,18 +103,22 @@ class _MonthStatisticsState extends ConsumerState<MonthStatistics>
                   },
                   data: (data) {
                     final monthStatistics = data?.month;
-                    final yearMonth = monthStatistics?.month?.split(
-                      '-',
-                    ); // "2025-06"
-                    final frequency = monthStatistics?.frequency;
-                    final totalDays = monthStatistics?.totalDays;
-                    final distribution = monthStatistics?.distribution;
+                    final now = DateTime.now();
+                    final yearMonth =
+                        monthStatistics?.month?.split('-') ??
+                        [
+                          pickerState.focusedMonth.year.toString(),
+                          pickerState.focusedMonth.month.toString(),
+                        ]; // "2025-06"
+                    final frequency = monthStatistics?.frequency ?? 0;
+                    final totalDays = monthStatistics?.totalDays ?? 0;
+                    final distribution =
+                        monthStatistics?.distribution ?? DreamScore();
                     final moodState = monthStatistics?.moodState;
                     final keywordList = monthStatistics?.keywords;
                     final isFirst = frequency == 0;
-                    final now = DateTime.now();
                     final isCurrent =
-                        now.year == int.parse(yearMonth![0]) &&
+                        now.year == int.parse(yearMonth[0]) &&
                         now.month == int.parse(yearMonth[1]);
 
                     // 월이 바뀌었거나, 같은 월을 다시 선택했을 때 항상 스낵바를 hide
@@ -156,8 +162,8 @@ class _MonthStatisticsState extends ConsumerState<MonthStatistics>
                             children: [
                               DreamFrequencyCard(
                                 isFirst: isFirst,
-                                frequency: frequency ?? 0,
-                                totalDays: totalDays ?? 0,
+                                frequency: frequency,
+                                totalDays: totalDays,
                               ),
                               SizedBox(
                                 width: getResponsiveRatioByWidth(context, 16),

@@ -35,9 +35,9 @@ class StatisticsViewModel extends AsyncNotifier<StatisticsModel?> {
 
       // 값도 반환
       return newState;
-    } catch (e, s) {
-      state = AsyncValue.error(e, s);
-      return null;
+    } catch (e) {
+      state = AsyncValue.data(StatisticsModel(tabBarIndex: 0));
+      return Future.value(StatisticsModel(tabBarIndex: 0));
     }
   }
 
@@ -66,8 +66,8 @@ class StatisticsViewModel extends AsyncNotifier<StatisticsModel?> {
 
       // 상태 업데이트
       state = AsyncValue.data(newState);
-    } catch (e, s) {
-      state = AsyncValue.error(e, s);
+    } catch (e) {
+      state = AsyncValue.data(StatisticsModel(tabBarIndex: 1));
     }
   }
 
