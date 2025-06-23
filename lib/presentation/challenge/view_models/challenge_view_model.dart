@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mongbi_app/domain/entities/challenge.dart';
 import 'package:mongbi_app/providers/challenge_provider.dart';
+import 'package:mongbi_app/providers/dream_provider.dart';
 
 class ChallengeViewModel extends AsyncNotifier<List<Challenge>> {
   int? selectedChallengeIndex;
@@ -37,10 +38,16 @@ class ChallengeViewModel extends AsyncNotifier<List<Challenge>> {
 
     final challengeId = challenges[selectedIndex].id;
     // TODO: 사용자 ID로 변경
-    final int uid = 17;
+    final int uid = 19;
+    final currentDreamId =
+        ref.read(dreamInterpretationViewModelProvider).dreamId;
 
     return await ref
         .read(saveChallengeUseCaseProvider)
-        .saveChallenge(dreamId: dreamId, uid: uid, challengeId: challengeId);
+        .saveChallenge(
+          dreamId: currentDreamId,
+          uid: uid,
+          challengeId: challengeId,
+        );
   }
 }
