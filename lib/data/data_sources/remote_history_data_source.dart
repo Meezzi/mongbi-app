@@ -7,11 +7,11 @@ class RemoteHistoryDataSource implements HistoryDataSource {
   RemoteHistoryDataSource(this._dio);
 
   final Dio _dio;
-  final userIndex = SecureStorageService().getUserIdx();
 
   @override
   Future<List<HistoryDto>> feachUserDreamsHistory() async {
     try {
+      final userIndex = await SecureStorageService().getUserIdx();
       final response = await _dio.get('/dreams/$userIndex');
 
       if (response.data['code'] == 201 && response.data['success']) {

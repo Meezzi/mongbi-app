@@ -12,6 +12,7 @@ class RemoteStatisticsDataSource implements StatisticsDataSource {
   @override
   Future<StatisticsDto?> fetchMonthStatistics(DateTime dateTime) async {
     try {
+      final userIndex = await SecureStorageService().getUserIdx();
       final year = dateTime.year;
       final month =
           dateTime.month.toString().length < 2
@@ -75,6 +76,7 @@ class RemoteStatisticsDataSource implements StatisticsDataSource {
   @override
   Future<StatisticsDto?> fetchYearStatistics(DateTime dateTime) async {
     try {
+      final userIndex = await SecureStorageService().getUserIdx();
       final year = dateTime.year.toString();
       Map<String, String> keyChanges = {
         '1': 'VERY_BAD',
