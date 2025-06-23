@@ -26,6 +26,7 @@ void main() {
 
     // Act
     final result = await saveChallengeDataSource.saveChallenge(
+      dreamId: 1,
       uid: 1,
       challengeId: 1,
     );

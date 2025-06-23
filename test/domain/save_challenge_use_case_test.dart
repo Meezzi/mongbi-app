@@ -17,11 +17,16 @@ void main() {
   test('챌린지가 성공적으로 저장이 되었는지 테스트', () async {
     // Arrange
     when(
-      () => mockChallengeRepository.saveChallenge(uid: 1, challengeId: 1),
+      () => mockChallengeRepository.saveChallenge(
+        dreamId: 1,
+        uid: 1,
+        challengeId: 1,
+      ),
     ).thenAnswer((_) async => true);
 
     // Act
     final result = await saveChallengeUseCase.saveChallenge(
+      dreamId: 1,
       uid: 1,
       challengeId: 1,
     );
