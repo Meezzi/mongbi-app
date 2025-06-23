@@ -101,7 +101,6 @@
 
   <key>NSUserNotificationUsageDescription</key>
   <string>앱에서 알림을 보내기 위해 권한이 필요합니다.</string>
-
   <key>NSAppTransportSecurity</key>
   <dict>
     <key>NSAllowsArbitraryLoads</key>
@@ -124,6 +123,45 @@
       </dict>
     </dict>
   </dict>
-
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>NidAppName</key>
+	<string>몽비</string>
+	<key>NidClientID</key>
+	<string>84HmkP_Ac_kc2H1hqQ4s</string>
+	<key>NidClientSecret</key>
+	<string>k0ylbPhyvg</string>
+	<key>NidUrlScheme</key>
+	<string>mongbi-login</string>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>remote-notification</string>
+	</array>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<key>UIMainStoryboardFile</key>
+	<string>Main</string>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<false/>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
 </dict>
 </plist>

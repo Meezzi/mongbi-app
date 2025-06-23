@@ -11,20 +11,25 @@ import FirebaseCore
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
     FirebaseApp.configure()
+
     if #available(iOS 10.0, *) {
       UNUserNotificationCenter.current().delegate = self
     }
+
+    UIApplication.shared.registerForRemoteNotifications()
+
     GeneratedPluginRegistrant.register(with: self)
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
+
   override func application(
-    _ app: UIApplication,
+    _ application: UIApplication,
     open url: URL,
     options: [UIApplication.OpenURLOptionsKey : Any] = [:]
   ) -> Bool {
     if NidOAuth.shared.handleURL(url) {
       return true
     }
-    return super.application(app, open: url, options: options)
+    return super.application(application, open: url, options: options)
   }
 }
