@@ -5,6 +5,7 @@ import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/presentation/challenge/widgets/challenge_container.dart';
 import 'package:mongbi_app/presentation/challenge/widgets/mongbi_dialog.dart';
 import 'package:mongbi_app/presentation/common/action_button_row.dart';
+import 'package:mongbi_app/presentation/common/custom_snack_bar.dart';
 import 'package:mongbi_app/providers/challenge_provider.dart';
 
 class ChallengePage extends ConsumerWidget {
@@ -120,6 +121,13 @@ class ChallengePage extends ConsumerWidget {
                   );
                 },
                 onRightPressed: () async {
+                  if (selectedIndex == null) {
+                    ScaffoldMessenger.of(
+                      context,
+                    ).showSnackBar(customSnackBar('선물을 먼저 골라줘'));
+                    return;
+                  }
+
                   await ref
                       .read(challengeViewModelProvider.notifier)
                       .saveChallenge();
