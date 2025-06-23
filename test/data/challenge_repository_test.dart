@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:mongbi_app/data/data_sources/fetch_challenge_data_source.dart';
+import 'package:mongbi_app/data/data_sources/remote_complete_challenge_data_source.dart';
 import 'package:mongbi_app/data/data_sources/remote_save_challenge_data_source.dart';
 import 'package:mongbi_app/data/dtos/challenge_dto.dart';
 import 'package:mongbi_app/data/repositories/remote_challenge_repository.dart';
@@ -117,4 +118,4 @@ class MockSaveChallengeDataSource extends Mock
     implements RemoteSaveChallengeDataSource {}
 
 class MockCompleteChallengeDataSource extends Mock
-    implements CompleteChallengeDataSource {}
+    implements RemoteCompleteChallengeDataSource {}
