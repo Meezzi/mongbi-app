@@ -52,9 +52,11 @@ void main() {
       'data': responseChallenge,
     };
 
-    when(() => mockDio.post(any(), data: any(named: 'data'))).thenAnswer(
+    when(() => mockDio.get(any(), data: any(named: 'data'))).thenAnswer(
       (_) async => Response(
-        requestOptions: RequestOptions(path: '/challenges/trait/$dreamScore'),
+        requestOptions: RequestOptions(
+          path: 'api/challenges/trait/$dreamScore',
+        ),
         statusCode: 200,
         data: mockResponse,
       ),
