@@ -67,11 +67,16 @@ void main() {
   test('챌린지 저장이 성공적으로 이루어졌는지 테스트', () async {
     // Arrange
     when(
-      () => mockSaveChallengeDataSource.saveChallenge(uid: 1, challengeId: 1),
+      () => mockSaveChallengeDataSource.saveChallenge(
+        dreamId: 1,
+        uid: 1,
+        challengeId: 1,
+      ),
     ).thenAnswer((_) async => true);
 
     // Act
     final result = await remoteChallengeRepository.saveChallenge(
+      dreamId: 1,
       uid: 1,
       challengeId: 1,
     );
