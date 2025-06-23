@@ -15,8 +15,16 @@ void main() {
   test('성공적으로 챌린지 저장 테스트', () async {
     // Arrange
     final response = {'success': true, 'code': 201, 'message': '꿈 등록에 성공했습니다.'};
+    final dreamId = 1;
+    final challengeId = 1;
+    final uid = 1;
 
-    when(() => mockDio.post('/dreams', data: any(named: 'data'))).thenAnswer(
+    when(
+      () => mockDio.post(
+        '/dreams/$dreamId/challenge/$challengeId/$uid',
+        data: any(named: 'data'),
+      ),
+    ).thenAnswer(
       (_) async => Response(
         data: response,
         statusCode: 201,
@@ -26,9 +34,9 @@ void main() {
 
     // Act
     final result = await saveChallengeDataSource.saveChallenge(
-      dreamId: 1,
-      uid: 1,
-      challengeId: 1,
+      dreamId: dreamId,
+      uid: uid,
+      challengeId: challengeId,
     );
 
     // Assert
