@@ -7,8 +7,8 @@ import 'package:mongbi_app/presentation/setting/widgets/setting_rounded_list_til
 import 'package:mongbi_app/presentation/setting/widgets/setting_section_card.dart';
 import 'package:mongbi_app/presentation/setting/widgets/setting_toggle_switch.dart';
 import 'package:mongbi_app/presentation/setting/widgets/setting_user_info_header.dart';
-import 'package:mongbi_app/providers/auth_provider.dart';
 import 'package:mongbi_app/providers/setting_provider.dart';
+import 'package:mongbi_app/providers/user_info_provider.dart';
 
 class SettingPage extends ConsumerWidget {
   const SettingPage({super.key});
@@ -17,15 +17,18 @@ class SettingPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isBgmOn = ref.watch(bgmProvider);
     final bgmNotifier = ref.read(bgmProvider.notifier);
-    final user = ref.read(authViewModelProvider);
+    final userInfo = ref.watch(splashViewModelProvider);
+    final user = userInfo.userList?.first; // List지만 보통 1명만 있으니 first 사용
 
+    final nickname = user?.userNickname ?? '비회원';
+    final loginType = user?.userSocialType ?? 'UNKNOWN';
     return ListView(
       padding: EdgeInsets.symmetric(horizontal: 24),
       children: [
         UserInfoHeader(
           // TODO: 로그인 기능 완료 후 확인 필요
-          nickname: '모몽',
-          loginType: '카카오',
+          nickname: nickname,
+          loginType: loginType,
           onTap: () {
             context.push('/profile_setting');
           },
