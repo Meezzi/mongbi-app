@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:mongbi_app/data/repositories/remote_challenge_repository.dart';
+import 'package:mongbi_app/domain/use_cases/complete_challenge_use_case.dart';
 
 void main() {
   late MockRepository mockRepository;
