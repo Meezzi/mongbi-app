@@ -18,20 +18,18 @@ class _SplashPageState extends State<SplashPage>
     super.initState();
 
     Future.delayed(const Duration(seconds: 3), () async {
-      if (mounted) {
-        late final bool aggreedState;
-        late final bool loginState;
-        final prefs = await SharedPreferences.getInstance();
-        aggreedState = prefs.getBool('isaggreed') ?? false;
-        loginState = prefs.getBool('isLogined') ?? false;
+      if (!mounted) return;
 
-        if (loginState) {
-          context.go('/home');
-        } else if (loginState == true && !aggreedState) {
-          //홈 화면으로 이동후 바텀 시트 출력되게
-        } else {
-          context.go('/social_login');
-        }
+      final prefs = await SharedPreferences.getInstance();
+      final aggreedState = prefs.getBool('isaggreed') ?? false;
+      final loginState = prefs.getBool('isLogined') ?? false;
+
+      if (loginState && aggreedState) {
+        context.go('/home');
+      } else if (loginState && !aggreedState) {
+        context.go('/home');
+      } else {
+        context.go('/social_login');
       }
     });
   }

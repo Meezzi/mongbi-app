@@ -4,21 +4,25 @@ import 'package:flutter_naver_login/interface/types/naver_login_result.dart';
 import 'package:flutter_naver_login/interface/types/naver_login_status.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart' as kakao;
+import 'package:mongbi_app/data/data_sources/remote_user_info_data_source.dart';
 import 'package:mongbi_app/domain/entities/user.dart';
 import 'package:mongbi_app/domain/use_cases/login_with_kakao.dart';
 import 'package:mongbi_app/domain/use_cases/login_with_naver.dart';
 import 'package:mongbi_app/providers/auth_provider.dart';
+import 'package:mongbi_app/providers/user_info_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthViewModel extends Notifier<User?> {
   late final LoginWithNaver _loginWithNaver;
   late final LoginWithKakao _loginWithKakao;
   late final Future<SharedPreferences> _prefsFuture;
+  late final RemoteUserInfoGetDataSource _userInfoDataSource;
 
   @override
   User? build() {
     _loginWithNaver = ref.read(loginWithNaverUseCaseProvider);
     _loginWithKakao = ref.read(loginWithKakaoUseCaseProvider);
+    _userInfoDataSource = ref.read(userInfoDataSourceProvider);
     _prefsFuture = SharedPreferences.getInstance();
     return null;
   }
@@ -46,6 +50,9 @@ class AuthViewModel extends Notifier<User?> {
       final prefs = await _prefsFuture;
       await prefs.setString('lastLoginType', 'naver');
       await prefs.setBool('isLoginState', true);
+
+      final userInfo = await _userInfoDataSource.fetchGetUserInfo();
+      print('서버에서 가져온 유저 정보: $userInfo');
     } catch (e) {
       rethrow;
     } finally {
@@ -77,6 +84,9 @@ class AuthViewModel extends Notifier<User?> {
       final prefs = await _prefsFuture;
       await prefs.setString('lastLoginType', 'kakao');
       await prefs.setBool('isLoginState', true);
+
+      final userInfo = await _userInfoDataSource.fetchGetUserInfo();
+      print('서버에서 가져온 유저 정보: $userInfo');
     } catch (e) {
       rethrow;
     } finally {
