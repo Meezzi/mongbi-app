@@ -50,7 +50,7 @@ final analyzeAndSaveDreamUseCaseProvider = Provider<AnalyzeAndSaveDreamUseCase>(
 );
 
 final dreamWriteViewModelProvider =
-    NotifierProvider<DreamWriteViewModel, DreamWriteState>(
+    AutoDisposeNotifierProvider<DreamWriteViewModel, DreamWriteState>(
       () => DreamWriteViewModel(),
     );
 
