@@ -51,7 +51,7 @@ class _DreamInterpretationPageState
                 SizedBox(height: 24),
                 CustomButton(
                   text: '오 맞아!',
-                  onSubmit: () => context.pushReplacement('/challenge_intro'),
+                  onSubmit: () => context.pushReplacement('/home'),
                 ),
                 SizedBox(height: 24),
               ],
