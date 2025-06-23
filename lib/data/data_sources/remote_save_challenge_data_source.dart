@@ -14,8 +14,12 @@ class RemoteSaveChallengeDataSource implements SaveChallengeDataSource {
   }) async {
     try {
       final response = await dio.post(
-        '/dreams',
-        data: {'USER_IDX': uid, 'CHALLENGE_IDX': challengeId},
+        '/dreams/$dreamId/challenge/$challengeId/$uid',
+        data: {
+          'dream_idx': dreamId,
+          'user_idx ': uid,
+          'challenge_idx ': challengeId,
+        },
       );
 
       return response.statusCode == 201 && response.data['success'] == true;
