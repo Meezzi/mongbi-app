@@ -1,4 +1,5 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+package="com.codepoets.mongbi">
     <queries>
         <!-- If your app opens https URLs -->
         <intent>
@@ -21,8 +22,6 @@
             <data android:mimeType="*/*" />
         </intent>
     </queries>
-
-
 <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.VIBRATE" />
@@ -35,7 +34,15 @@
         android:label="몽비"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
-
+        
+        <!--  애널리틱스 수집과 FCM 자동 초기화를 중지 -->
+        <meta-data
+            android:name="firebase_messaging_auto_init_enabled"
+            android:value="false" />
+        <meta-data
+            android:name="firebase_analytics_collection_enabled"
+            android:value="false" />
+        <!--  // 애널리틱스 수집과 FCM 자동 초기화를 중지 -->    
         
         <activity
             android:name=".MainActivity"
