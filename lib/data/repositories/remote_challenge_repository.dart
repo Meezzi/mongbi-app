@@ -37,6 +37,7 @@ class RemoteChallengeRepository implements ChallengeRepository {
     );
   }
 
+  @override
   Future<bool> completeChallenge({
     required int uid,
     required int dreamId,
