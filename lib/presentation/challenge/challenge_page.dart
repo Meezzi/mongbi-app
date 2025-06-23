@@ -41,7 +41,7 @@ class ChallengePage extends ConsumerWidget {
                         children: [
                           if (challenges.length >= 3) ...[
                             Positioned(
-                              top: 80,
+                              top: 44,
                               left: 0,
                               child: GestureDetector(
                                 onTap:
@@ -60,7 +60,7 @@ class ChallengePage extends ConsumerWidget {
                               ),
                             ),
                             Positioned(
-                              top: 250,
+                              top: 220,
                               right: 10,
                               child: GestureDetector(
                                 onTap:
@@ -79,7 +79,7 @@ class ChallengePage extends ConsumerWidget {
                               ),
                             ),
                             Positioned(
-                              top: 450,
+                              top: 410,
                               left: 10,
                               child: GestureDetector(
                                 onTap:
