@@ -5,7 +5,7 @@ import 'package:mongbi_app/domain/entities/user.dart';
 import 'package:mongbi_app/domain/repositories/user_info_repository.dart';
 import 'package:mongbi_app/domain/use_cases/get_user_info_use_case.dart';
 import 'package:mongbi_app/presentation/auth/viewmodels/auth_view_model.dart';
-import 'package:mongbi_app/presentation/splash/view_models/splash_status.dart';
+import 'package:mongbi_app/presentation/splash/view_models/splash_state.dart';
 import 'package:mongbi_app/presentation/splash/view_models/splash_view_model.dart';
 import 'package:mongbi_app/providers/core_providers.dart';
 
@@ -29,7 +29,7 @@ final userInfoDataSourceProvider = Provider<RemoteUserInfoGetDataSource>(
 );
 
 final splashViewModelProvider =
-    StateNotifierProvider<SplashViewModel, SplashStatus>((ref) {
+    StateNotifierProvider<SplashViewModel, SplashState>((ref) {
       final dataSource = ref.read(userInfoDataSourceProvider);
       return SplashViewModel(dataSource);
     });
