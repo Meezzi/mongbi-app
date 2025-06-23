@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mongbi_app/data/data_sources/remote_user_info_data_source.dart';
+import 'package:mongbi_app/data/dtos/user_dto.dart';
 import 'package:mongbi_app/presentation/splash/view_models/splash_state.dart';
 import 'package:mongbi_app/presentation/splash/view_models/splash_status.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -26,5 +27,13 @@ class SplashViewModel extends StateNotifier<SplashState> {
     } catch (_) {
       state = state.copyWith(status: SplashStatus.error);
     }
+  }
+
+  void setUser(UserDto user) {
+    state = state.copyWith(status: SplashStatus.success, userList: [user]);
+  }
+
+  void logout() {
+    state = state.copyWith(status: SplashStatus.needLogin, userList: null);
   }
 }

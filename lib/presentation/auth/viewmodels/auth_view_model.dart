@@ -51,8 +51,9 @@ class AuthViewModel extends Notifier<User?> {
       await prefs.setString('lastLoginType', 'naver');
       await prefs.setBool('isLoginState', true);
 
-      final userInfo = await _userInfoDataSource.fetchGetUserInfo();
-      print('서버에서 가져온 유저 정보: $userInfo');
+      final getUserUseCase = ref.read(getUserInfoUseCaseProvider);
+      final userInfo = await getUserUseCase.execute();
+      state = userInfo[0];
     } catch (e) {
       rethrow;
     } finally {
@@ -85,8 +86,9 @@ class AuthViewModel extends Notifier<User?> {
       await prefs.setString('lastLoginType', 'kakao');
       await prefs.setBool('isLoginState', true);
 
-      final userInfo = await _userInfoDataSource.fetchGetUserInfo();
-      print('서버에서 가져온 유저 정보: $userInfo');
+      final getUserUseCase = ref.read(getUserInfoUseCaseProvider);
+      final userInfo = await getUserUseCase.execute();
+      state = userInfo[0];
     } catch (e) {
       rethrow;
     } finally {
@@ -99,6 +101,7 @@ class AuthViewModel extends Notifier<User?> {
       await kakao.UserApi.instance.unlink();
       final prefs = await _prefsFuture;
       await prefs.setBool('isLoginState', false);
+      ref.read(splashViewModelProvider.notifier).logout();
       return true;
     } catch (error) {
       return false;
@@ -112,6 +115,7 @@ class AuthViewModel extends Notifier<User?> {
       if (res.status == NaverLoginStatus.loggedOut) {
         final prefs = await _prefsFuture;
         await prefs.setBool('isLoginState', false);
+        ref.read(splashViewModelProvider.notifier).logout();
         return true;
       }
       return false;

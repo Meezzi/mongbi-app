@@ -5,7 +5,7 @@ class LoginWithKakao {
   LoginWithKakao(this.repository);
   final AuthRepository repository;
 
-  Future<User> execute(String accessToken) {
-    return repository.loginWithKakao(accessToken);
+  Future<User> execute(String accessToken) async {
+    return await repository.loginWithKakao(accessToken);
   }
 }

@@ -4,7 +4,6 @@ import 'package:mongbi_app/domain/entities/user.dart';
 import 'package:mongbi_app/domain/repositories/auth_repository.dart';
 
 class RemoteAuthRepository implements AuthRepository {
-
   RemoteAuthRepository({
     required this.naverDataSource,
     required this.kakaoDataSource,
@@ -18,9 +17,9 @@ class RemoteAuthRepository implements AuthRepository {
     return response.user.toEntity();
   }
 
-@override
-Future<User> loginWithKakao(String accessToken) async {
-  final response = await kakaoDataSource.login(accessToken);
-  return response.user.toEntity();
-}
+  @override
+  Future<User> loginWithKakao(String accessToken) async {
+    final response = await kakaoDataSource.login(accessToken);
+    return response.user.toEntity();
+  }
 }
