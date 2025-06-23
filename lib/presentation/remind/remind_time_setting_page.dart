@@ -53,18 +53,7 @@ class RemindTimeSettingPage extends StatelessWidget {
               const Spacer(),
               RemindTimeSettingButtonWidget(
                 onTap: () async {
-                  final notificationService = NotificationService();
-                  final granted =
-                      await notificationService.requestNotificationPermission();
-                  if (granted) {
-                    context.go('/remindtime_time_setting');
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('알림 권한을 허용해야 다음 단계로 진행할 수 있어요.'),
-                      ),
-                    );
-                  }
+                  context.go('/remindtime_time_setting');
                 },
               ),
               const SizedBox(height: 32),

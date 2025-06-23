@@ -54,6 +54,8 @@ dependencies:
   timezone: ^0.10.1
   android_intent_plus: ^5.3.0
   sign_in_with_apple: ^7.0.1
+  firebase_core: ^3.14.0
+  app_settings: ^6.1.1
 
 dev_dependencies:
   flutter_test:
