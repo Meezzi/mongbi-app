@@ -6,7 +6,7 @@ class SaveDreamUseCase {
 
   final DreamRepository dreamRepository;
 
-  Future<bool> execute(int uid, Dream dream) async {
+  Future<int> execute(int uid, Dream dream) async {
     return await dreamRepository.saveDream(dream);
   }
 }

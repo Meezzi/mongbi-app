@@ -10,6 +10,7 @@ class DreamInterpretationViewModel extends Notifier<DreamInterpretationState> {
 
   void setDream(Dream dream) {
     state = DreamInterpretationState(
+      dreamId: dream.id ?? 0,
       dreamSubTitle: dream.dreamSubTitle,
       dreamInterpretation: dream.dreamInterpretation,
       dreamKeywords: dream.dreamKeywords,

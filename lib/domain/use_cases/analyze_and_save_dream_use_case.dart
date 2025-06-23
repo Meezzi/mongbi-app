@@ -9,8 +9,12 @@ class AnalyzeAndSaveDreamUseCase {
   final SaveDreamUseCase saveDreamUseCase;
 
   Future<Dream> execute(int uid, String dreamContent, int dreamScore) async {
-    final dream = await analyzeDreamUseCase.execute(uid, dreamContent, dreamScore);
-    await saveDreamUseCase.execute(uid, dream);
-    return dream;
+    final dream = await analyzeDreamUseCase.execute(
+      uid,
+      dreamContent,
+      dreamScore,
+    );
+    final dreamId = await saveDreamUseCase.execute(uid, dream);
+    return dream.copyWith(id: dreamId);
   }
 }
