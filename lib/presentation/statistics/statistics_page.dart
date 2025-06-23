@@ -42,57 +42,55 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage>
         getResponsiveRatioByWidth(context, 48) + // TabBar 높이
         getResponsiveRatioByWidth(context, 8) * 2; // Padding Vertical
 
-    return Stack(
-      children: [
-        Container(
-          height: double.infinity,
+    return SafeArea(
+      child: NestedScrollView(
+        headerSliverBuilder: (context, innerBoxIsScrolled) {
+          return [
+            // 상단 제목 필요 시 사용
+            SliverToBoxAdapter(
+              child: Container(
+                color: Colors.white,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: horizontalPadding,
+                    vertical: 16,
+                  ),
+                  child: Text('모몽의 꿈 통계', style: Font.title20),
+                ),
+              ),
+            ),
+
+            // 커스텀 탭바 고정
+            SliverPersistentHeader(
+              pinned: true,
+              delegate: _SliverTabBarDelegate(
+                TabBarTitle(
+                  tabController: tabController,
+                  horizontalPadding: horizontalPadding,
+                ),
+                tabBarHeight,
+              ),
+            ),
+          ];
+        },
+        body: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              colors: [Color(0xffFDF8FF), Color(0xfff4eaff)],
+              colors: [Colors.white, Color(0xFFF4EAFF)],
             ),
           ),
-        ),
-        SafeArea(
-          child: NestedScrollView(
-            headerSliverBuilder: (context, innerBoxIsScrolled) {
-              return [
-                // 상단 제목 필요 시 사용
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: horizontalPadding,
-                      vertical: 16,
-                    ),
-                    child: Text('모몽의 꿈 통계', style: Font.title20),
-                  ),
-                ),
-
-                // 커스텀 탭바 고정
-                SliverPersistentHeader(
-                  pinned: true,
-                  delegate: _SliverTabBarDelegate(
-                    TabBarTitle(
-                      tabController: tabController,
-                      horizontalPadding: horizontalPadding,
-                    ),
-                    tabBarHeight,
-                  ),
-                ),
-              ];
-            },
-            body: TabBarView(
-              controller: tabController,
-              physics: NeverScrollableScrollPhysics(),
-              children: [
-                MonthStatistics(horizontalPadding: horizontalPadding),
-                YearStatistics(horizontalPadding: horizontalPadding),
-              ],
-            ),
+          child: TabBarView(
+            controller: tabController,
+            physics: NeverScrollableScrollPhysics(),
+            children: [
+              MonthStatistics(horizontalPadding: horizontalPadding),
+              YearStatistics(horizontalPadding: horizontalPadding),
+            ],
           ),
         ),
-      ],
+      ),
     );
   }
 }
@@ -114,7 +112,7 @@ class _SliverTabBarDelegate extends SliverPersistentHeaderDelegate {
     double shrinkOffset,
     bool overlapsContent,
   ) {
-    return Container(color: const Color(0xffFDF8FF), child: tabBar);
+    return Container(color: Colors.white, child: tabBar);
   }
 
   @override

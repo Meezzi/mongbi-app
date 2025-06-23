@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mongbi_app/core/get_responsive_ratio_by_width.dart';
 import 'package:mongbi_app/core/get_widget_info.dart';
 import 'package:mongbi_app/core/route_observer.dart';
+import 'package:mongbi_app/data/dtos/statistics_dto.dart';
 import 'package:mongbi_app/presentation/statistics/statistics_key/statistics_key.dart';
 import 'package:mongbi_app/presentation/statistics/widgets/custom_snack_bar.dart';
 import 'package:mongbi_app/presentation/statistics/widgets/dream_frequency_card.dart';
@@ -68,6 +69,7 @@ class _YearStatisticsState extends ConsumerState<YearStatistics>
   @override
   Widget build(BuildContext context) {
     final statisticsAsync = ref.watch(statisticsViewModelProvider);
+    final pickerState = ref.watch(pickerViewModelProvider);
 
     return ListView(
       padding: EdgeInsets.only(
@@ -101,15 +103,18 @@ class _YearStatisticsState extends ConsumerState<YearStatistics>
                   },
                   data: (data) {
                     final yearStatistics = data?.year;
-                    final year = yearStatistics?.year; // "2025"
-                    final frequency = yearStatistics?.frequency;
-                    final totalDays = yearStatistics?.totalDays;
-                    final distribution = yearStatistics?.distribution;
+                    final now = DateTime.now();
+                    final year =
+                        yearStatistics?.year ??
+                        pickerState.focusedYear.year.toString(); // "2025"
+                    final frequency = yearStatistics?.frequency ?? 0;
+                    final totalDays = yearStatistics?.totalDays ?? 0;
+                    final distribution =
+                        yearStatistics?.distribution ?? DreamScore();
                     final moodState = yearStatistics?.moodState;
                     final keywordList = yearStatistics?.keywords;
                     final isFirst = frequency == 0;
-                    final now = DateTime.now();
-                    final isCurrent = now.year == int.parse(year!);
+                    final isCurrent = now.year == int.parse(year);
 
                     // 년이 바뀌었거나, 같은 년을 다시 선택했을 때 항상 스낵바를 hide
                     final currentYear = yearStatistics?.year; // "2025"
@@ -152,8 +157,8 @@ class _YearStatisticsState extends ConsumerState<YearStatistics>
                             children: [
                               DreamFrequencyCard(
                                 isFirst: isFirst,
-                                frequency: frequency ?? 0,
-                                totalDays: totalDays ?? 0,
+                                frequency: frequency,
+                                totalDays: totalDays,
                               ),
                               SizedBox(
                                 width: getResponsiveRatioByWidth(context, 16),

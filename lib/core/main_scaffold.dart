@@ -50,7 +50,10 @@ class MainScaffold extends StatelessWidget {
               isHistory,
             ),
             GestureDetector(
-              onTap: () => context.push('/dream_intro'),
+              onTap: () {
+                ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                context.push('/dream_intro');
+              },
               child: Container(
                 width: 48,
                 height: 48,
@@ -107,6 +110,8 @@ class MainScaffold extends StatelessWidget {
   Color _buildScaffoldBackgroundColor(String location) {
     if (location.startsWith('/setting')) {
       return Color(0xFFFCF6FF);
+    } else if (location.startsWith('/statistics')) {
+      return Color(0xFFFFFFFF);
     }
     return Color(0xFFFAFAFA);
   }
