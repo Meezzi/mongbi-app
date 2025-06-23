@@ -11,11 +11,10 @@ class RemoteUserInfoGetDataSource implements GetUserInfoDataSource {
   Future<List<UserDto>?> fetchGetUserInfo() async {
     final userId = await SecureStorageService().getUserIdx();
     final response = await dio.get('/users/$userId');
-    final userInfo = response.data;
 
     if (response.data['code'] == 201 && response.data['sucess']) {
-      final results = response.data['data'];
-      print(results);
+      final results = response.data['data'] as List;
+      return results.map((e) => UserDto.fromJson(e)).toList();
     } else {
       throw Exception(response.data['message'] ?? '알 수 없는 오류가 발생하였습니다.');
     }
