@@ -96,6 +96,12 @@ class AuthViewModel extends Notifier<User?> {
     }
   }
 
+  Future<void> updateUserInfo(User user) async {
+    try {
+      state = user;
+    } catch (e) {}
+  }
+
   Future<bool> logoutWithKakao() async {
     try {
       await kakao.UserApi.instance.unlink();

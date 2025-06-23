@@ -18,8 +18,8 @@ class SettingPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isBgmOn = ref.watch(bgmProvider);
     final bgmNotifier = ref.read(bgmProvider.notifier);
-    // final user = ref.read(authViewModelProvider);
-    final splashState = ref.read(splashViewModelProvider);
+    // final user  = ref.watch(authViewModelProvider);
+    final splashState = ref.watch(splashViewModelProvider);
     return ListView(
       padding: EdgeInsets.symmetric(horizontal: 24),
       children: [
