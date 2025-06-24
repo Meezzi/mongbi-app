@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:mongbi_app/core/secure_storage_service.dart';
 import 'package:mongbi_app/data/data_sources/alarm_data_source.dart';
 import 'package:mongbi_app/data/dtos/alarm_dto.dart';
+import 'package:sentry_flutter/sentry_flutter.dart'; // ✅ 추가
 
 class RemoteAlarmDataSource implements AlarmDataSource {
   const RemoteAlarmDataSource(this.dio);
@@ -22,7 +23,8 @@ class RemoteAlarmDataSource implements AlarmDataSource {
       } else {
         throw Exception(response.data['message'] ?? '알 수 없는 오류가 발생하였습니다.');
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
+      await Sentry.captureException(e, stackTrace: stackTrace); // ✅ Sentry로 전송
       return null;
     }
   }
@@ -41,7 +43,8 @@ class RemoteAlarmDataSource implements AlarmDataSource {
       } else {
         throw Exception(response.data['message'] ?? '알 수 없는 오류가 발생하였습니다.');
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
+      await Sentry.captureException(e, stackTrace: stackTrace); // ✅ Sentry로 전송
       return false;
     }
   }

@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:mongbi_app/core/secure_storage_service.dart';
 import 'package:mongbi_app/data/dtos/login_response_dto.dart';
 import 'package:mongbi_app/data/dtos/user_dto.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 class RemoteKakaoAuthDataSource {
   RemoteKakaoAuthDataSource(this.dio);
@@ -18,7 +19,15 @@ class RemoteKakaoAuthDataSource {
       );
 
       if (response.statusCode != 201 || response.data['token'] == null) {
-        throw Exception('서버 로그인 실패: ${response.data}');
+        final error = Exception('서버 로그인 실패: ${response.data}');
+        await Sentry.captureException(
+          error,
+          withScope: (scope) {
+            scope.setExtra('accessToken', accessToken);
+            scope.setExtra('response', response.data);
+          },
+        );
+        throw error;
       }
 
       final jwt = response.data['token'];
@@ -27,17 +36,25 @@ class RemoteKakaoAuthDataSource {
 
       await storageService.saveAccessToken(jwt);
       await storageService.saveRefreshToken(refreshToken);
+
       if (response.data['user'] != null) {
-        await storageService.saveUserIdx(userDto.userIdx); 
+        await storageService.saveUserIdx(userDto.userIdx);
       } else {
-        throw Exception('로그인 응답에 user 정보가 없습니다.');
+        final error = Exception('로그인 응답에 user 정보가 없습니다.');
+        await Sentry.captureException(error);
+        throw error;
       }
-      await storageService.saveUserIdx(userDto.userIdx);
 
       return LoginResponseDto(token: jwt, user: userDto);
     } catch (e, s) {
-      throw Exception('카카오 로그인 오류: $e \n $s');
+      await Sentry.captureException(
+        e,
+        stackTrace: s,
+        withScope: (scope) {
+          scope.setTag('auth', 'kakao');
+        },
+      );
+      throw Exception('카카오 로그인 오류: $e \n$s');
     }
   }
 }
-//TODO 엑세스 토큰 유효기간 짧게 잡고 리프래쉬 토큰 재발급 해주는 API 개발 및 연동

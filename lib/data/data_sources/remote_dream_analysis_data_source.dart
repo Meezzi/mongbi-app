@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:mongbi_app/data/data_sources/dream_analysis_data_source.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 class RemoteDreamAnalysisDataSource implements DreamAnalysisDataSource {
   RemoteDreamAnalysisDataSource({
@@ -96,19 +97,23 @@ class RemoteDreamAnalysisDataSource implements DreamAnalysisDataSource {
         final jsonResponse = jsonDecode(text) as Map<String, dynamic>;
         return jsonResponse;
       } else {
-        throw Exception(
+        final ex = Exception(
           'Claude API 호출 실패: ${response.statusCode} ${response.statusMessage}',
         );
+        await Sentry.captureException(ex); // ✅ Sentry로 전송
+        throw ex;
       }
-    } on DioException catch (e) {
-      if (e.response?.statusCode == 401) {
-        throw Exception('API Key가 잘못되었습니다. 다시 확인해주세요.');
-      } else if (e.response?.statusCode == 404) {
-        throw Exception('API 엔드포인트를 찾을 수 없습니다. URL 또는 모델명을 확인해주세요.');
-      }
+    } on DioException catch (e, s) {
+      final message = switch (e.response?.statusCode) {
+        401 => 'API Key가 잘못되었습니다. 다시 확인해주세요.',
+        404 => 'API 엔드포인트를 찾을 수 없습니다. URL 또는 모델명을 확인해주세요.',
+        _ => '네트워크 오류: ${e.message}',
+      };
 
-      throw Exception('네트워크 오류: ${e.message}');
-    } catch (e) {
+      await Sentry.captureException(e, stackTrace: s);
+      throw Exception(message);
+    } catch (e, s) {
+      await Sentry.captureException(e, stackTrace: s);
       throw Exception('알 수 없는 오류: $e');
     }
   }

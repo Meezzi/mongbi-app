@@ -3,6 +3,7 @@ import 'package:flutter_naver_login/flutter_naver_login.dart';
 import 'package:mongbi_app/core/secure_storage_service.dart';
 import 'package:mongbi_app/data/dtos/login_response_dto.dart';
 import 'package:mongbi_app/data/dtos/user_dto.dart';
+import 'package:sentry_flutter/sentry_flutter.dart'; // ✅ Sentry 추가
 
 class RemoteNaverAuthDataSource {
   RemoteNaverAuthDataSource(this.dio);
@@ -33,14 +34,31 @@ class RemoteNaverAuthDataSource {
 
         if (response.data['user'] != null) {
           userDto = UserDto.fromJson(response.data['user']);
-          await storageService.saveUserIdx(userDto.userIdx); 
+          await storageService.saveUserIdx(userDto.userIdx);
         } else {
-          throw Exception('로그인 응답에 user 정보가 없습니다.');
+          final error = Exception('로그인 응답에 user 정보가 없습니다.');
+          await Sentry.captureException(error);
+          throw error;
         }
       } else {
-        throw Exception('로그인 실패: 토큰이 없거나 잘못된 응답입니다.');
+        final error = Exception('로그인 실패: 토큰이 없거나 잘못된 응답입니다.');
+        await Sentry.captureException(
+          error,
+          withScope: (scope) {
+            scope.setExtra('accessToken', accessToken);
+            scope.setTag('auth', 'naver');
+          },
+        );
+        throw error;
       }
-    } catch (e) {
+    } catch (e, s) {
+      await Sentry.captureException(
+        e,
+        stackTrace: s,
+        withScope: (scope) {
+          scope.setTag('auth', 'naver');
+        },
+      );
       rethrow;
     }
 
