@@ -1,37 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/presentation/common/floating_animation_widget.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:mongbi_app/presentation/splash/view_models/splash_status.dart';
+import 'package:mongbi_app/providers/user_info_provider.dart';
 
-class SplashPage extends StatefulWidget {
+class SplashPage extends ConsumerStatefulWidget {
   const SplashPage({super.key});
 
   @override
-  State<SplashPage> createState() => _SplashPageState();
+  ConsumerState<SplashPage> createState() => _SplashPageState();
 }
 
-class _SplashPageState extends State<SplashPage>
+class _SplashPageState extends ConsumerState<SplashPage>
     with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
 
     Future.delayed(const Duration(seconds: 3), () async {
-      if (mounted) {
-        late final bool aggreedState;
-        late final bool loginState;
-        final prefs = await SharedPreferences.getInstance();
-        aggreedState = prefs.getBool('isaggreed') ?? false;
-        loginState = prefs.getBool('isLogined') ?? false;
+      final viewModel = ref.read(splashViewModelProvider.notifier);
+      await viewModel.checkLoginAndFetchUserInfo();
 
-        if (loginState) {
-          context.go('/home');
-        } else if (loginState == true && !aggreedState) {
-          //홈 화면으로 이동후 바텀 시트 출력되게
-        } else {
-          context.go('/social_login');
-        }
+      final splashState = ref.read(splashViewModelProvider);
+      if (splashState.status == SplashStatus.success) {
+        context.go('/home');
+      } else if (splashState.status == SplashStatus.needLogin) {
+        context.go('/social_login');
+      } else {
+        if (!context.mounted) return;
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('오류 발생')));
+        context.go('/social_login');
       }
     });
   }

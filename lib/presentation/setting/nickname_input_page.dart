@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mongbi_app/core/secure_storage_service.dart';
 import 'package:mongbi_app/presentation/setting/widgets/nickname_submit_button.dart';
 import 'package:mongbi_app/presentation/setting/widgets/nickname_text_field.dart';
 import 'package:mongbi_app/presentation/setting/widgets/nickname_title.dart';
 import 'package:mongbi_app/providers/nickname_provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:mongbi_app/providers/user_info_provider.dart';
 
 class NicknameInputPage extends ConsumerStatefulWidget {
   const NicknameInputPage({super.key});
@@ -49,8 +50,7 @@ class _NicknameInputPageState extends ConsumerState<NicknameInputPage> {
                 if (!isButtonEnabled) return;
 
                 try {
-                  final prefs = await SharedPreferences.getInstance();
-                  final userId = prefs.getInt('user_id');
+                  final userId = await SecureStorageService().getUserIdx();
                   if (userId == null) {
                     if (mounted) {
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -62,6 +62,9 @@ class _NicknameInputPageState extends ConsumerState<NicknameInputPage> {
                   await ref
                       .read(nicknameViewModelProvider.notifier)
                       .updateNickname(userId: userId, nickname: nickname);
+                  await ref
+                      .read(splashViewModelProvider.notifier)
+                      .checkLoginAndFetchUserInfo();
                   if (mounted) {
                     context.go('/remindtime_setting');
                   }

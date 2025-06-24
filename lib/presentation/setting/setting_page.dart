@@ -7,8 +7,8 @@ import 'package:mongbi_app/presentation/setting/widgets/setting_rounded_list_til
 import 'package:mongbi_app/presentation/setting/widgets/setting_section_card.dart';
 import 'package:mongbi_app/presentation/setting/widgets/setting_toggle_switch.dart';
 import 'package:mongbi_app/presentation/setting/widgets/setting_user_info_header.dart';
-import 'package:mongbi_app/providers/auth_provider.dart';
 import 'package:mongbi_app/providers/setting_provider.dart';
+import 'package:mongbi_app/providers/user_info_provider.dart';
 
 class SettingPage extends ConsumerWidget {
   const SettingPage({super.key});
@@ -17,15 +17,15 @@ class SettingPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isBgmOn = ref.watch(bgmProvider);
     final bgmNotifier = ref.read(bgmProvider.notifier);
-    final user = ref.read(authViewModelProvider);
-
+    // final user  = ref.watch(authViewModelProvider);
+    final splashState = ref.watch(splashViewModelProvider);
     return ListView(
       padding: EdgeInsets.symmetric(horizontal: 24),
       children: [
         UserInfoHeader(
           // TODO: 로그인 기능 완료 후 확인 필요
-          nickname: 'ㅈㅈㅈ',
-          loginType: '카카오',
+          nickname: splashState.userList![0].userNickname!,
+          loginType: splashState.userList![0].userSocialType!,
           onTap: () {
             context.push('/profile_setting');
           },

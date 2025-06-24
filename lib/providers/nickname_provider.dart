@@ -12,17 +12,16 @@ final _nicknameSettingDataSourceProvider = Provider<NicknameSettingDataSource>(
   (ref) => RemoteNicknameSettingDataSource(ref.read(dioProvider)),
 );
 
-
 final _nicknameRepositoryProvider = Provider<NicknameSettingRepository>((ref) {
   final remoteDataSource = ref.watch(_nicknameSettingDataSourceProvider);
   return RemoteNicknameSettingRepository(remoteDataSource);
 });
-
 
 final updateNicknameUseCaseProvider = Provider<UpdateNicknameUseCase>((ref) {
   final repository = ref.watch(_nicknameRepositoryProvider);
   return UpdateNicknameUseCase(repository);
 });
 
-final nicknameViewModelProvider =
-    NotifierProvider<NicknameViewModel, User?>(() => NicknameViewModel());
+final nicknameViewModelProvider = NotifierProvider<NicknameViewModel, User?>(
+  () => NicknameViewModel(),
+);

@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:mongbi_app/core/secure_storage_service.dart';
 import 'package:mongbi_app/data/data_sources/statistics_data_source.dart';
 import 'package:mongbi_app/data/dtos/statistics_dto.dart';
 
@@ -6,11 +7,12 @@ class RemoteStatisticsDataSource implements StatisticsDataSource {
   RemoteStatisticsDataSource(this.dio);
 
   Dio dio;
-  int userIndex = 41;
+
 
   @override
   Future<StatisticsDto?> fetchMonthStatistics(DateTime dateTime) async {
     try {
+      final userIndex = await SecureStorageService().getUserIdx();
       final year = dateTime.year;
       final month =
           dateTime.month.toString().length < 2
@@ -24,9 +26,6 @@ class RemoteStatisticsDataSource implements StatisticsDataSource {
         '4': 'GOOD',
         '5': 'VERY_GOOD',
       };
-
-      // TODO : userIdx로 변경하기
-      // TODO : idToken 유저 엔티티에서 받아오기
       final response = await dio.get(
         '/dreams/statistics/monthly/$userIndex/$year/$month',
       );
@@ -77,6 +76,7 @@ class RemoteStatisticsDataSource implements StatisticsDataSource {
   @override
   Future<StatisticsDto?> fetchYearStatistics(DateTime dateTime) async {
     try {
+      final userIndex = await SecureStorageService().getUserIdx();
       final year = dateTime.year.toString();
       Map<String, String> keyChanges = {
         '1': 'VERY_BAD',

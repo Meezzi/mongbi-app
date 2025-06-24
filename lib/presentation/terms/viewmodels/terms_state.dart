@@ -10,11 +10,7 @@ class TermsState {
 
   factory TermsState.loading() => TermsState(status: TermsStateStatus.loading);
 
-  const TermsState({
-    required this.status,
-    this.terms = const [],
-    this.error,
-  });
+  const TermsState({required this.status, this.terms = const [], this.error});
   final TermsStateStatus status;
   final List<Terms> terms;
   final String? error;

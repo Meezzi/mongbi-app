@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class CustomCheckbox extends StatelessWidget {
-
   const CustomCheckbox({
     super.key,
     required this.isChecked,

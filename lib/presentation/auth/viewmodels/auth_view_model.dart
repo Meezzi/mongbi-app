@@ -9,6 +9,7 @@ import 'package:mongbi_app/domain/use_cases/login_with_apple.dart';
 import 'package:mongbi_app/domain/use_cases/login_with_kakao.dart';
 import 'package:mongbi_app/domain/use_cases/login_with_naver.dart';
 import 'package:mongbi_app/providers/auth_provider.dart';
+import 'package:mongbi_app/providers/user_info_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
@@ -17,11 +18,14 @@ class AuthViewModel extends Notifier<User?> {
   late final LoginWithKakao _loginWithKakao;
   late final LoginWithApple _loginWithApple;
 
+  late final Future<SharedPreferences> _prefsFuture;
   @override
   User? build() {
     _loginWithNaver = ref.read(loginWithNaverUseCaseProvider);
     _loginWithKakao = ref.read(loginWithKakaoUseCaseProvider);
     _loginWithApple = ref.read(loginWithAppleUseCaseProvider);
+
+    _prefsFuture = SharedPreferences.getInstance();
     return null;
   }
 
@@ -37,10 +41,7 @@ class AuthViewModel extends Notifier<User?> {
           AppleIDAuthorizationScopes.email,
         ],
       );
-      print("애플 로그인 정보:$credential");
       final identity_token = credential.identityToken;
-
-      print("애플 로그인 정보:$identity_token");
 
       if (identity_token != null) {
         final result = await _loginWithApple.excute(identity_token);
@@ -75,9 +76,13 @@ class AuthViewModel extends Notifier<User?> {
       final user = await _loginWithNaver.execute(accessToken);
       state = user;
 
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setString('jwt_token', accessToken);
+      final prefs = await _prefsFuture;
       await prefs.setString('lastLoginType', 'naver');
+      await prefs.setBool('isLogined', true);
+
+      final getUserUseCase = ref.read(getUserInfoUseCaseProvider);
+      final userInfo = await getUserUseCase.execute();
+      state = userInfo[0];
     } catch (e) {
       rethrow;
     } finally {
@@ -106,9 +111,14 @@ class AuthViewModel extends Notifier<User?> {
       final result = await _loginWithKakao.execute(token.accessToken);
       state = result;
 
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setString('jwt_token', token.accessToken);
+      final prefs = await _prefsFuture;
       await prefs.setString('lastLoginType', 'kakao');
+      await prefs.setBool('isLogined', true);
+
+      final getUserUseCase = ref.read(getUserInfoUseCaseProvider);
+      final userInfo = await getUserUseCase.execute();
+
+      state = userInfo[0];
     } catch (e) {
       rethrow;
     } finally {
@@ -116,9 +126,18 @@ class AuthViewModel extends Notifier<User?> {
     }
   }
 
+  Future<void> updateUserInfo(User user) async {
+    try {
+      state = user;
+    } catch (e) {}
+  }
+
   Future<bool> logoutWithKakao() async {
     try {
       await kakao.UserApi.instance.unlink();
+      final prefs = await _prefsFuture;
+      await prefs.setBool('isLoginState', false);
+      ref.read(splashViewModelProvider.notifier).logout();
       return true;
     } catch (error) {
       return false;
@@ -130,6 +149,9 @@ class AuthViewModel extends Notifier<User?> {
       final NaverLoginResult res =
           await FlutterNaverLogin.logOutAndDeleteToken();
       if (res.status == NaverLoginStatus.loggedOut) {
+        final prefs = await _prefsFuture;
+        await prefs.setBool('isLoginState', false);
+        ref.read(splashViewModelProvider.notifier).logout();
         return true;
       }
       return false;
