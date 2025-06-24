@@ -35,6 +35,7 @@ class _AlarmTypeState extends ConsumerState<AlarmType> {
             final typeLabel = alarmTypeList[index];
             final isLast = alarmTypeList.length - 1 == index;
             final isActive = seletedIndex == index;
+
             return GestureDetector(
               key: alarmTypeKeyList[index],
               onTap: () {
@@ -65,13 +66,14 @@ class _AlarmTypeState extends ConsumerState<AlarmType> {
                 scrollToIndex(index);
               },
               child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 15,
-                  vertical: 7,
+                padding: EdgeInsets.symmetric(
+                  horizontal: isActive ? 16 : 15,
+                  vertical: isActive ? 8 : 7,
                 ),
                 margin: EdgeInsets.only(right: isLast ? 0 : 8),
                 decoration: BoxDecoration(
-                  border: Border.all(color: Color(0xFFE6E4E7)),
+                  border:
+                      isActive ? null : Border.all(color: Color(0xFFE6E4E7)),
                   borderRadius: BorderRadius.circular(999),
                   color: isActive ? Color(0xFF8C2EFF) : null,
                 ),
