@@ -11,7 +11,7 @@ class ChallengeIntroPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    int dreamScore = ref.read(dreamWriteViewModelProvider).selectedIndex + 1;
+    final dreamScore = ref.read(selectedDreamScoreProvider);
     return Scaffold(
       backgroundColor: Color(0xFFFAFAFA),
       body: SafeArea(
