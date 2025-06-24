@@ -3,14 +3,19 @@ import 'package:mongbi_app/core/secure_storage_service.dart';
 import 'package:mongbi_app/presentation/home/models/home_state.dart';
 import 'package:mongbi_app/providers/challenge_provider.dart';
 
-class HomeViewModel extends Notifier<HomeState> {
+class HomeViewModel extends AutoDisposeNotifier<HomeState> {
   @override
   HomeState build() {
     return HomeState();
   }
 
-  Future<void> fetchActiveChallenge({required int uid}) async {
+  Future<void> fetchActiveChallenge() async {
     state = state.copyWith(isLoading: true, error: null);
+    final uid = await SecureStorageService().getUserIdx();
+
+    if (uid == null) {
+      return;
+    }
 
     try {
       final challenge = await ref
