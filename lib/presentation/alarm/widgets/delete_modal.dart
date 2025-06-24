@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/font.dart';
+import 'package:mongbi_app/presentation/common/button_type.dart';
+import 'package:mongbi_app/presentation/common/filled_button_widget.dart';
+import 'package:mongbi_app/presentation/common/ghost_button_widget.dart';
+import 'package:mongbi_app/providers/alarm_provider.dart';
 
 class DeleteModal extends StatelessWidget {
   const DeleteModal({super.key});
@@ -8,6 +13,7 @@ class DeleteModal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // Scaffold는 자체 배경이 있으므로 showDialog의 배경을 보이게 하기 위해 투명으로 설정
       backgroundColor: Colors.transparent,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -37,37 +43,32 @@ class DeleteModal extends StatelessWidget {
                   ),
                   child: Row(
                     children: [
-                      _button(
-                        backgroundColor: Color(0xFFF4EAFF),
-                        foregroundColor: Color(0xFFB273FF),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Color(0x191A181B),
-                            blurRadius: 10,
-                            offset: Offset(2, 2),
-                            spreadRadius: 0,
-                          ),
-                        ],
-                        text: '취소',
-                        onTap: () {
-                          context.pop();
-                        },
+                      Expanded(
+                        child: GhostButtonWidget(
+                          type: ButtonType.primary,
+                          text: '취소',
+                          onPress: () {
+                            context.pop();
+                          },
+                        ),
                       ),
                       SizedBox(width: 8),
-                      _button(
-                        backgroundColor: Color(0xFF8B2DFF),
-                        foregroundColor: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Color(0x331A181B),
-                            blurRadius: 10,
-                            offset: Offset(2, 2),
-                            spreadRadius: 0,
-                          ),
-                        ],
-                        text: '전체 삭제',
-                        onTap: () {
-                          context.pop();
+                      Consumer(
+                        builder: (context, ref, child) {
+                          final alarmVm = ref.read(
+                            alarmViewModelProvider.notifier,
+                          );
+
+                          return Expanded(
+                            child: FilledButtonWidget(
+                              type: ButtonType.primary,
+                              text: '전체 삭제',
+                              onPress: () {
+                                alarmVm.clearAlarmList();
+                                context.pop();
+                              },
+                            ),
+                          );
                         },
                       ),
                     ],
@@ -75,33 +76,6 @@ class DeleteModal extends StatelessWidget {
                 ),
               ],
             ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _button({
-    required Color backgroundColor,
-    required Color foregroundColor,
-    required List<BoxShadow> boxShadow,
-    required String text,
-    required VoidCallback onTap,
-  }) {
-    return Expanded(
-      child: GestureDetector(
-        onTap: onTap,
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: backgroundColor,
-            borderRadius: BorderRadius.circular(999),
-            boxShadow: boxShadow,
-          ),
-          child: Text(
-            text,
-            style: Font.title18.copyWith(color: foregroundColor),
           ),
         ),
       ),

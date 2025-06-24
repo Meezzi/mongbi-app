@@ -24,9 +24,15 @@ void main() {
   "success": true,
   "data": [
     {
-      "date": "날짜",
-      "type": "리마인드",
-      "content": "내용"
+      "FCM_ID": 1,
+      "FCM_SEND_ADMIN_ID": 1,
+      "FCM_SEND_FROM_USER_ID": 1,
+      "FCM_SUBJECT": "꿈을 진짜 많이 꿨다몽 ",
+      "FCM_CONTENT": "꿈을 진짜 많이 꿨다몽 ",
+      "FCM_TYPE": "REPORT",
+      "FCM_SEND_AT": "2025-06-20T00:00:00.000Z",
+      "FCM_SEND_STATE": "true",
+      "FCM_IS_READ": false
     }
   ]
 }
@@ -48,6 +54,6 @@ void main() {
     final alarmDtoList = await alarmDataSource!.fetchAlarms();
 
     expect(alarmDtoList, isA<List<AlarmDto>>());
-    expect(alarmDtoList!.first.date, '날짜');
+    expect(alarmDtoList!.first.fcmType, 'REPORT');
   });
 }

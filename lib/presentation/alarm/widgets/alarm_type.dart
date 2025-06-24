@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mongbi_app/core/font.dart';
+import 'package:mongbi_app/presentation/alarm/models/alarm_model.dart';
+import 'package:mongbi_app/providers/alarm_provider.dart';
 
-class AlarmType extends StatefulWidget {
+class AlarmType extends ConsumerStatefulWidget {
   const AlarmType({super.key});
 
   @override
-  State<AlarmType> createState() => _AlarmTypeState();
+  ConsumerState<AlarmType> createState() => _AlarmTypeState();
 }
 
-class _AlarmTypeState extends State<AlarmType> {
+class _AlarmTypeState extends ConsumerState<AlarmType> {
   final alarmTypeList = const ['전체', '리마인드', '진행 중인 선물', '주간 꿈 리포트'];
   int seletedIndex = 0;
   final ScrollController scrollController = ScrollController();
@@ -22,6 +25,18 @@ class _AlarmTypeState extends State<AlarmType> {
 
   @override
   Widget build(BuildContext context) {
+    // liset은 뷰모델의 상태(AlarmModel)가 변경될 때마다 실행하는 메서드
+    // AlarmModel의 isClear 값이 변경될 때마다 실행하기 위함
+    ref.listen<AlarmModel>(alarmViewModelProvider, (previous, next) {
+      if (next.isClear) {
+        scrollToIndex(0);
+        setState(() {
+          seletedIndex = 0;
+        });
+        ref.read(alarmViewModelProvider.notifier).setClear();
+      }
+    });
+
     return SingleChildScrollView(
       controller: scrollController,
       scrollDirection: Axis.horizontal,
@@ -32,23 +47,45 @@ class _AlarmTypeState extends State<AlarmType> {
             final typeLabel = alarmTypeList[index];
             final isLast = alarmTypeList.length - 1 == index;
             final isActive = seletedIndex == index;
+
             return GestureDetector(
               key: alarmTypeKeyList[index],
               onTap: () {
+                final alarmVm = ref.read(alarmViewModelProvider.notifier);
+                FilterType? type;
+
                 setState(() {
                   seletedIndex = index;
                 });
 
+                switch (index) {
+                  case 0:
+                    type = FilterType.all;
+                    break;
+                  case 1:
+                    type = FilterType.remind;
+                    break;
+                  case 2:
+                    type = FilterType.challenge;
+                    break;
+                  case 3:
+                    type = FilterType.report;
+                    break;
+                }
+
+                alarmVm.filterAlarmList(type!);
+
                 scrollToIndex(index);
               },
               child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 15,
-                  vertical: 7,
+                padding: EdgeInsets.symmetric(
+                  horizontal: isActive ? 16 : 15,
+                  vertical: isActive ? 8 : 7,
                 ),
                 margin: EdgeInsets.only(right: isLast ? 0 : 8),
                 decoration: BoxDecoration(
-                  border: Border.all(color: Color(0xFFE6E4E7)),
+                  border:
+                      isActive ? null : Border.all(color: Color(0xFFE6E4E7)),
                   borderRadius: BorderRadius.circular(999),
                   color: isActive ? Color(0xFF8C2EFF) : null,
                 ),

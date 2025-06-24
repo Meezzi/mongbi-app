@@ -14,13 +14,21 @@ void main() {
     when(() {
       return mockAlarmDataSource.fetchAlarms();
     }).thenAnswer((invocation) async {
-      return [AlarmDto(type: '타입', date: '날짜', content: '내용')];
+      return [
+        AlarmDto(
+          fcmId: 1,
+          fcmType: '타입',
+          fcmSendAt: DateTime(2025, 11, 11),
+          fcmContent: '내용',
+          fcmIsRead: false,
+        ),
+      ];
     });
 
     final alarmRepository = RemoteAlarmRepository(mockAlarmDataSource);
     final alarmList = await alarmRepository.fetchAlarms();
 
     expect(alarmList, isA<List<Alarm>>());
-    expect(alarmList!.first.type, '타입');
+    expect(alarmList!.first.fcmType, '타입');
   });
 }
