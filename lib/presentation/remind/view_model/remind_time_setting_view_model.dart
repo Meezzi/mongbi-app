@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:android_intent_plus/android_intent.dart';
+import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -19,19 +20,21 @@ class NotificationService {
     tz.setLocalLocation(tz.getLocation('Asia/Seoul'));
 
     const androidInit = AndroidInitializationSettings('@mipmap/ic_launcher');
-    const iosInit = DarwinInitializationSettings();
+    const iosInit = DarwinInitializationSettings(
+      requestAlertPermission: false,
+      requestBadgePermission: false,
+      requestSoundPermission: false,
+    );
+
     const initSettings = InitializationSettings(
       android: androidInit,
       iOS: iosInit,
     );
 
-    await flutterLocalNotificationsPlugin.initialize(
-      initSettings,
-      onDidReceiveNotificationResponse: (details) {
-      },
-    );
+    await flutterLocalNotificationsPlugin.initialize(initSettings);
   }
 
+  /// 정확한 알람 권한 설정 (Android 12+)
   Future<void> openExactAlarmSettingsIfNeeded() async {
     if (Platform.isAndroid) {
       final intent = AndroidIntent(
@@ -41,18 +44,40 @@ class NotificationService {
     }
   }
 
-  Future<bool> requestNotificationPermission() async {
-    await flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<
-          IOSFlutterLocalNotificationsPlugin
-        >()
-        ?.requestPermissions(alert: true, badge: true, sound: true);
-
-    final status = await Permission.notification.request();
-    return status.isGranted;
+  /// 앱 설정 화면으로 이동 (알림 영구 거부 시)
+  Future<void> openAppSettingsIfNeeded() async {
+    await AppSettings.openAppSettings();
   }
 
+  /// 알림 권한 요청
+  Future<bool> requestNotificationPermission() async {
+    if (Platform.isIOS) {
+      final iosPlugin =
+          flutterLocalNotificationsPlugin
+              .resolvePlatformSpecificImplementation<
+                IOSFlutterLocalNotificationsPlugin
+              >();
+      await iosPlugin?.requestPermissions(
+        alert: true,
+        badge: true,
+        sound: true,
+      );
+      return true; // iOS는 권한 요청 후 바로 사용 가능
+    }
 
+    final status = await Permission.notification.request();
+
+    if (status.isGranted) {
+      return true;
+    } else if (status.isPermanentlyDenied) {
+      // 설정화면으로 이동 유도 필요
+      return false;
+    } else {
+      return false;
+    }
+  }
+
+  /// 매일 알림 스케줄링
   Future<void> scheduleDailyReminder(TimeOfDay time) async {
     final now = DateTime.now();
     final scheduledTime = DateTime(
@@ -62,7 +87,6 @@ class NotificationService {
       time.hour,
       time.minute,
     );
-
     final tzTime = _nextInstanceOfTime(scheduledTime);
 
     const androidDetails = AndroidNotificationDetails(

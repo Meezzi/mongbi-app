@@ -5,24 +5,58 @@ import 'package:flutter_naver_login/interface/types/naver_login_status.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart' as kakao;
 import 'package:mongbi_app/domain/entities/user.dart';
+import 'package:mongbi_app/domain/use_cases/login_with_apple.dart';
 import 'package:mongbi_app/domain/use_cases/login_with_kakao.dart';
 import 'package:mongbi_app/domain/use_cases/login_with_naver.dart';
 import 'package:mongbi_app/providers/auth_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class AuthViewModel extends Notifier<User?> {
   late final LoginWithNaver _loginWithNaver;
   late final LoginWithKakao _loginWithKakao;
+  late final LoginWithApple _loginWithApple;
 
   @override
   User? build() {
     _loginWithNaver = ref.read(loginWithNaverUseCaseProvider);
     _loginWithKakao = ref.read(loginWithKakaoUseCaseProvider);
+    _loginWithApple = ref.read(loginWithAppleUseCaseProvider);
     return null;
   }
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
+
+  Future<void> loginWithApple() async {
+    _isLoading = true;
+    try {
+      final credential = await SignInWithApple.getAppleIDCredential(
+        scopes: [
+          AppleIDAuthorizationScopes.fullName,
+          AppleIDAuthorizationScopes.email,
+        ],
+      );
+      print("애플 로그인 정보:$credential");
+      final identity_token = credential.identityToken;
+
+      print("애플 로그인 정보:$identity_token");
+
+      if (identity_token != null) {
+        final result = await _loginWithApple.excute(identity_token);
+        state = result;
+      } else {
+        throw Exception('Apple identity_token 없음');
+      }
+
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('lastLoginType', 'apple');
+    } catch (e) {
+      rethrow;
+    } finally {
+      _isLoading = false;
+    }
+  }
 
   Future<void> loginWithNaver() async {
     _isLoading = true;

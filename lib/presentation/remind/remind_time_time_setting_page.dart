@@ -7,6 +7,7 @@ import 'package:mongbi_app/presentation/remind/view_model/remind_time_setting_vi
 import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_text_widget.dart';
 import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_widget.dart';
 import 'package:mongbi_app/presentation/remind/widgets/remoind_time_time_setting_button.widget.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class RemindTimePickerPage extends StatefulWidget {
   const RemindTimePickerPage({super.key});
@@ -17,21 +18,6 @@ class RemindTimePickerPage extends StatefulWidget {
 
 class _RemindTimePickerPageState extends State<RemindTimePickerPage> {
   TimeOfDay selectedTime = const TimeOfDay(hour: 8, minute: 0);
-
-  @override
-  void initState() {
-    super.initState();
-    // 앱 최초 진입 시 알림 권한 요청
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      final granted =
-          await NotificationService().requestNotificationPermission();
-      if (!granted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('알림 권한이 거부되었습니다. 설정에서 허용해주세요.')),
-        );
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -103,20 +89,48 @@ class _RemindTimePickerPageState extends State<RemindTimePickerPage> {
               child: RemindTimeTimeSettingButtonWidget(
                 onTap: () async {
                   try {
+                    final status = await Permission.notification.status;
+
+                    // 권한 요청 시도
+                    final granted =
+                        await NotificationService()
+                            .requestNotificationPermission();
+
+                    if (!granted) {
+                      if (status.isPermanentlyDenied) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                              '알림 권한이 영구적으로 거부되었습니다. 설정 > 몽비 > 알림에서 직접 허용해주세요.',
+                            ),
+                          ),
+                        );
+                        await NotificationService()
+                            .openAppSettingsIfNeeded(); // 앱 설정으로 이동
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('알림 권한이 거부되었습니다.')),
+                        );
+                      }
+                      return;
+                    }
+
+                    // 알림 예약
                     await NotificationService().scheduleDailyReminder(
                       selectedTime,
                     );
+
+                    // 다음 화면으로 이동
                     context.go('/onbording_page');
                   } catch (e) {
                     if (e is PlatformException &&
                         e.code == 'exact_alarms_not_permitted') {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('정확한 알람 권한이 필요해요! 설정에서 허용해주세요.'),
-                        ),
-                      );
                       await NotificationService()
                           .openExactAlarmSettingsIfNeeded();
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('알림 예약 중 오류: ${e.toString()}')),
+                      );
                     }
                   }
                 },
