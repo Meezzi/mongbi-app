@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/font.dart';
+import 'package:mongbi_app/presentation/common/button_type.dart';
+import 'package:mongbi_app/presentation/common/filled_button_widget.dart';
 import 'package:mongbi_app/presentation/remind/view_model/remind_time_setting_view_model.dart';
 import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_text_widget.dart';
 import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_widget.dart';
@@ -30,12 +32,18 @@ class _RemindTimePickerPageState extends State<RemindTimePickerPage> {
         leading: Padding(
           padding: const EdgeInsets.only(left: 24, top: 16),
           child: IconButton(
-            icon: SvgPicture.asset('assets/icons/back-arrow.svg'),
+            icon: SvgPicture.asset(
+              'assets/icons/back-arrow.svg',
+              width: 24,
+              height: 24,
+            ),
             onPressed: () => Navigator.pop(context),
+            iconSize:24, // 이건 실제론 무시되지만 명시해주면 의도 파악에 도움
+            padding: EdgeInsets.zero,
+            constraints: const BoxConstraints(), // 내부 공간 제약 제거
             splashRadius: 20,
           ),
         ),
-        foregroundColor: Colors.black,
         toolbarHeight: 56,
         titleSpacing: 0,
       ),
@@ -86,16 +94,16 @@ class _RemindTimePickerPageState extends State<RemindTimePickerPage> {
               bottom: 32,
               left: 24,
               right: 24,
-              child: RemindTimeTimeSettingButtonWidget(
-                onTap: () async {
+              child: FilledButtonWidget(
+                type: ButtonType.primary,
+                text: '정했어',
+                onPress: () async {
                   try {
                     final status = await Permission.notification.status;
-
                     // 권한 요청 시도
                     final granted =
                         await NotificationService()
                             .requestNotificationPermission();
-
                     if (!granted) {
                       if (status.isPermanentlyDenied) {
                         ScaffoldMessenger.of(context).showSnackBar(
