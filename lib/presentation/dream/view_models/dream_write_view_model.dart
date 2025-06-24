@@ -17,6 +17,7 @@ class DreamWriteViewModel extends AutoDisposeNotifier<DreamWriteState> {
 
   void setSelectedIndex(int index) {
     state = state.copyWith(selectedIndex: index);
+    ref.read(selectedDreamScoreProvider.notifier).state = index + 1;
   }
 
   void setFocused(bool focused) {

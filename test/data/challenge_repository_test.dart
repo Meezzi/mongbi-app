@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:mongbi_app/data/data_sources/fetch_challenge_data_source.dart';
+import 'package:mongbi_app/data/data_sources/remote_complete_challenge_data_source.dart';
 import 'package:mongbi_app/data/data_sources/remote_save_challenge_data_source.dart';
 import 'package:mongbi_app/data/dtos/challenge_dto.dart';
 import 'package:mongbi_app/data/repositories/remote_challenge_repository.dart';
@@ -8,14 +9,17 @@ import 'package:mongbi_app/data/repositories/remote_challenge_repository.dart';
 void main() {
   late MockChallengeDataSource challengeDataSource;
   late MockSaveChallengeDataSource mockSaveChallengeDataSource;
+  late MockCompleteChallengeDataSource mockCompleteChallengeDataSource;
   late RemoteChallengeRepository remoteChallengeRepository;
 
   setUp(() {
     challengeDataSource = MockChallengeDataSource();
     mockSaveChallengeDataSource = MockSaveChallengeDataSource();
+    mockCompleteChallengeDataSource = MockCompleteChallengeDataSource();
     remoteChallengeRepository = RemoteChallengeRepository(
       challengeDataSource: challengeDataSource,
       saveChallengeDataSource: mockSaveChallengeDataSource,
+      completeChallengeDataSource: mockCompleteChallengeDataSource,
     );
   });
 
@@ -84,6 +88,27 @@ void main() {
     // Assert
     expect(result, true);
   });
+
+  test('챌린지의 완료 여부를 성공적으로 저장하는지 테스트', () async {
+    // Arrange
+    when(
+      () => mockCompleteChallengeDataSource.completeChallenge(
+        uid: 1,
+        dreamId: 1,
+        challengeId: 1,
+      ),
+    ).thenAnswer((_) async => true);
+
+    // Act
+    final response = await remoteChallengeRepository.completeChallenge(
+      uid: 1,
+      dreamId: 1,
+      challengeId: 1,
+    );
+
+    // Assert
+    expect(response, true);
+  });
 }
 
 class MockChallengeDataSource extends Mock
@@ -91,3 +116,6 @@ class MockChallengeDataSource extends Mock
 
 class MockSaveChallengeDataSource extends Mock
     implements RemoteSaveChallengeDataSource {}
+
+class MockCompleteChallengeDataSource extends Mock
+    implements RemoteCompleteChallengeDataSource {}

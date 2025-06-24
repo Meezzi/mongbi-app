@@ -8,4 +8,12 @@ abstract interface class ChallengeRepository {
     required int uid,
     required int challengeId,
   });
+
+  Future<Challenge?> fetchActiveChallenge({required int uid});
+
+  Future<bool> completeChallenge({
+    required int uid,
+    required int challengeId,
+    required String challengeStatus,
+  });
 }

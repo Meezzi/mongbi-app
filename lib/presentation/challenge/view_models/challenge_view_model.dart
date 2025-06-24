@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mongbi_app/core/secure_storage_service.dart';
 import 'package:mongbi_app/domain/entities/challenge.dart';
 import 'package:mongbi_app/providers/challenge_provider.dart';
 import 'package:mongbi_app/providers/dream_provider.dart';
@@ -37,17 +38,21 @@ class ChallengeViewModel extends AsyncNotifier<List<Challenge>> {
     }
 
     final challengeId = challenges[selectedIndex].id;
-    // TODO: 사용자 ID로 변경
-    final int uid = 19;
+    final uid = await SecureStorageService().getUserIdx();
     final currentDreamId =
         ref.read(dreamInterpretationViewModelProvider).dreamId;
 
-    return await ref
+    if (uid == null) {
+      return false;
+    }
+    final result = await ref
         .read(saveChallengeUseCaseProvider)
         .saveChallenge(
           dreamId: currentDreamId,
           uid: uid,
           challengeId: challengeId,
         );
+
+    return result;
   }
 }

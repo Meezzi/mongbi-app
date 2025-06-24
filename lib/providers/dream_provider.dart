@@ -58,3 +58,5 @@ final dreamInterpretationViewModelProvider =
     NotifierProvider<DreamInterpretationViewModel, DreamInterpretationState>(
       () => DreamInterpretationViewModel(),
     );
+
+final selectedDreamScoreProvider = StateProvider<int>((ref) => -1);

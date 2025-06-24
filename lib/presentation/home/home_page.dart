@@ -1,28 +1,37 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mongbi_app/presentation/common/floating_animation_widget.dart';
+import 'package:mongbi_app/presentation/home/widgets/challenge_card.dart';
 import 'package:mongbi_app/presentation/home/widgets/mongbi_message_list.dart';
 import 'package:mongbi_app/presentation/home/widgets/speech_bubble.dart';
+import 'package:mongbi_app/providers/challenge_provider.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  ConsumerState<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends ConsumerState<HomePage> {
   late String selectedMessage;
 
   @override
   void initState() {
     super.initState();
     selectedMessage = (List.of(mongbiMessages)..shuffle()).first;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await ref.read(homeViewModelProvider.notifier).fetchActiveChallenge();
+    });
+
     FirebaseAnalytics.instance.logEvent(
       name: 'home_viewed',
       parameters: {'screen': 'HomePage'},
     );
+
     FirebaseAnalytics.instance.logEvent(
       name: 'message_shown',
       parameters: {'message': selectedMessage},
@@ -32,6 +41,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
+    final challengeState = ref.watch(homeViewModelProvider);
 
     return Container(
       width: double.infinity,
@@ -81,6 +91,10 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
+
+          // 챌린지가 있을 때만 ChallengeCard 표시
+          if (challengeState.challenge != null)
+            Positioned(bottom: 24, left: 24, right: 24, child: ChallengeCard()),
         ],
       ),
     );
