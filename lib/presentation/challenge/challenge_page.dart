@@ -148,7 +148,7 @@ class ChallengePage extends ConsumerWidget {
                 },
                 onRightPressed: () async {
                   if (selectedIndex == null) {
-                    FirebaseAnalytics.instance.logEvent(
+                    await FirebaseAnalytics.instance.logEvent(
                       name: 'challenge_not_selected',
                       parameters: {'screen': 'ChallengePage'},
                     );
