@@ -4,4 +4,6 @@ abstract interface class DreamRepository {
   Future<int> saveDream(Dream dream);
 
   Future<Dream> analyzeDream(int uid, String dreamContent, int dreamScore);
+
+  Future<bool> canWriteDreamToday(int uid);
 }
