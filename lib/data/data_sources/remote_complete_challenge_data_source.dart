@@ -13,7 +13,7 @@ class RemoteCompleteChallengeDataSource implements CompleteChallengeDataSource {
     required String challengeStatus,
   }) async {
     try {
-      final response = await dio.post(
+      final response = await dio.patch(
         '/challenge-status',
         data: {
           'USER_IDX': uid,
