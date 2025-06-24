@@ -159,6 +159,7 @@ class ChallengeCard extends ConsumerWidget {
                             subTitle: '오늘 하루도 행복했으면 좋겠어요.',
                             buttonText: '고마워',
                             onButtonPressed: () {
+                              context.pop();
                               homeViewModel.completeChallenge(isComplete: true);
                             },
                           ),
