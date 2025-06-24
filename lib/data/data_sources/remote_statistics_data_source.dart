@@ -7,7 +7,7 @@ class RemoteStatisticsDataSource implements StatisticsDataSource {
   RemoteStatisticsDataSource(this.dio);
 
   Dio dio;
-  int userIndex = 41;
+
 
   @override
   Future<StatisticsDto?> fetchMonthStatistics(DateTime dateTime) async {

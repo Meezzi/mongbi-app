@@ -17,13 +17,15 @@ import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 class AuthViewModel extends Notifier<User?> {
   late final LoginWithNaver _loginWithNaver;
   late final LoginWithKakao _loginWithKakao;
-  late final LoginWithApple _loginWithApple;
+  late final Future<SharedPreferences> _prefsFuture;
+  late final RemoteUserInfoGetDataSource _userInfoDataSource;
 
   @override
   User? build() {
     _loginWithNaver = ref.read(loginWithNaverUseCaseProvider);
     _loginWithKakao = ref.read(loginWithKakaoUseCaseProvider);
-    _loginWithApple = ref.read(loginWithAppleUseCaseProvider);
+    _userInfoDataSource = ref.read(userInfoDataSourceProvider);
+    _prefsFuture = SharedPreferences.getInstance();
     return null;
   }
 
