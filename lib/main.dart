@@ -19,8 +19,6 @@ void main() async {
     nativeAppKey: dotenv.env['KAKAO_NATIVE_APP_KEY'],
     javaScriptAppKey: dotenv.env['KAKAO_JAVA_SCRIPT_APP_KEY'],
   );
-  var key = await KakaoSdk.origin;
-  print('key:$key');
   runApp(const ProviderScope(child: MyApp()));
 }
 

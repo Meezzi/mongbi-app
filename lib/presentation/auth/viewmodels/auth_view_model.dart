@@ -4,7 +4,6 @@ import 'package:flutter_naver_login/interface/types/naver_login_result.dart';
 import 'package:flutter_naver_login/interface/types/naver_login_status.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart' as kakao;
-import 'package:mongbi_app/data/data_sources/remote_user_info_data_source.dart';
 import 'package:mongbi_app/domain/entities/user.dart';
 import 'package:mongbi_app/domain/use_cases/login_with_apple.dart';
 import 'package:mongbi_app/domain/use_cases/login_with_kakao.dart';
@@ -42,10 +41,7 @@ class AuthViewModel extends Notifier<User?> {
           AppleIDAuthorizationScopes.email,
         ],
       );
-      print("애플 로그인 정보:$credential");
       final identity_token = credential.identityToken;
-
-      print("애플 로그인 정보:$identity_token");
 
       if (identity_token != null) {
         final result = await _loginWithApple.excute(identity_token);
@@ -121,7 +117,7 @@ class AuthViewModel extends Notifier<User?> {
 
       final getUserUseCase = ref.read(getUserInfoUseCaseProvider);
       final userInfo = await getUserUseCase.execute();
-      
+
       state = userInfo[0];
     } catch (e) {
       rethrow;

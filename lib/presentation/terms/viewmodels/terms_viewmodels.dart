@@ -5,7 +5,6 @@ import 'package:mongbi_app/domain/use_cases/agree_to_terms_usecase.dart';
 import 'package:mongbi_app/domain/use_cases/fetch_terms_use_case.dart';
 
 class TermsState {
-
   const TermsState({required this.terms});
   final List<Terms> terms;
 
@@ -13,10 +12,10 @@ class TermsState {
     return TermsState(terms: terms ?? this.terms);
   }
 }
-class TermsViewModel extends StateNotifier<TermsState> {
 
+class TermsViewModel extends StateNotifier<TermsState> {
   TermsViewModel(this._getLatestTermsUseCase, this._agreeToTermsUseCase)
-      : super(const TermsState(terms: []));
+    : super(const TermsState(terms: []));
   final GetLatestTerms _getLatestTermsUseCase;
   final AgreeToTermsUseCase _agreeToTermsUseCase;
 

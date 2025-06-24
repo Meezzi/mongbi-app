@@ -7,7 +7,6 @@ import 'package:mongbi_app/presentation/setting/widgets/setting_rounded_list_til
 import 'package:mongbi_app/presentation/setting/widgets/setting_section_card.dart';
 import 'package:mongbi_app/presentation/setting/widgets/setting_toggle_switch.dart';
 import 'package:mongbi_app/presentation/setting/widgets/setting_user_info_header.dart';
-import 'package:mongbi_app/providers/auth_provider.dart';
 import 'package:mongbi_app/providers/setting_provider.dart';
 import 'package:mongbi_app/providers/user_info_provider.dart';
 

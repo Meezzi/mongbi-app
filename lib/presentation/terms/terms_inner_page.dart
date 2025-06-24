@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mongbi_app/domain/entities/terms.dart';
 
 class TermsDetailPage extends StatelessWidget {
-
   const TermsDetailPage({super.key, required this.termsList});
   final List<Terms> termsList;
 
@@ -30,10 +29,7 @@ class TermsDetailPage extends StatelessWidget {
               const SizedBox(height: 8),
               const Text(
                 '서비스 약관',
-                style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
               Text(termsList.map((t) => '• ${t.name}').join('\n')),
@@ -51,10 +47,7 @@ class TermsDetailPage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 12),
-                    Text(
-                      term.content,
-                      style: const TextStyle(height: 1.5),
-                    ),
+                    Text(term.content, style: const TextStyle(height: 1.5)),
                     const SizedBox(height: 24),
                   ],
                 ),

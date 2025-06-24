@@ -136,7 +136,6 @@ class _TermsBottomSheetState extends ConsumerState<TermsBottomSheet> {
           ConfirmButton(
             isEnabled: isEssentialChecked,
             onPressed: () async {
-              
               final userId = await SecureStorageService().getUserIdx();
 
               if (userId == null) {
