@@ -1,10 +1,9 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/presentation/common/button_type.dart';
 import 'package:mongbi_app/presentation/common/filled_button_widget.dart';
-import 'package:mongbi_app/presentation/remind/view_model/remind_time_setting_view_model.dart';
-import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_button_widget.dart';
 import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_image_widget.dart';
 import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_text_widget.dart';
 
@@ -13,8 +12,14 @@ class RemindTimeSettingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // ✅ 진입 시 로그
+    FirebaseAnalytics.instance.logEvent(
+      name: 'remind_intro_viewed',
+      parameters: {'screen': 'RemindTimeSettingPage'},
+    );
+
     return Scaffold(
-      backgroundColor: Color(0xFFFAFAFA),
+      backgroundColor: const Color(0xFFFAFAFA),
       appBar: AppBar(
         leading: IconButton(
           icon: SvgPicture.asset(
@@ -57,7 +62,13 @@ class RemindTimeSettingPage extends StatelessWidget {
               FilledButtonWidget(
                 type: ButtonType.primary,
                 text: '알겠어',
-                onPress:() async {
+                onPress: () async {
+                  // ✅ 알림 수락 클릭 로그
+                  await FirebaseAnalytics.instance.logEvent(
+                    name: 'remind_intro_confirmed',
+                    parameters: {'screen': 'RemindTimeSettingPage'},
+                  );
+
                   context.go('/remindtime_time_setting');
                 },
               ),
