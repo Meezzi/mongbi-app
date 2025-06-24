@@ -9,6 +9,7 @@ import 'package:mongbi_app/presentation/setting/widgets/setting_user_info_header
 import 'package:mongbi_app/providers/setting_provider.dart';
 import 'package:mongbi_app/providers/user_info_provider.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SettingPage extends ConsumerStatefulWidget {
   const SettingPage({super.key});
@@ -26,12 +27,12 @@ class _SettingPageState extends ConsumerState<SettingPage> {
     _loadVersion();
   }
 
-Future<void> _loadVersion() async {
-  final info = await PackageInfo.fromPlatform();
-  setState(() {
-    _version = '${info.version} ';
-  });
-}
+  Future<void> _loadVersion() async {
+    final info = await PackageInfo.fromPlatform();
+    setState(() {
+      _version = '${info.version} ';
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,16 +86,18 @@ Future<void> _loadVersion() async {
               isFirst: true,
               isLast: false,
               onTap: () {
-                // 이동
+                final uri = Uri.parse(
+                  'https://destiny-yam-088.notion.site/MONGBI-21b1c082f0ac804a8de8f5e499b00078?source=copy_link' ??
+                      '',
+                );
+                launchUrl(uri);
               },
             ),
             RoundedListTileItem(
               title: '오픈소스 라이선스',
               isFirst: false,
               isLast: false,
-              onTap: () {
-                // 이동
-              },
+              onTap: () => context.push('/license_page'),
             ),
             RoundedListTileItem(
               title: '버전 정보',
