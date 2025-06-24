@@ -1,5 +1,6 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mongbi_app/presentation/common/floating_animation_widget.dart';
 import 'package:mongbi_app/presentation/home/widgets/mongbi_message_list.dart';
 import 'package:mongbi_app/presentation/home/widgets/speech_bubble.dart';
@@ -18,6 +19,14 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     selectedMessage = (List.of(mongbiMessages)..shuffle()).first;
+    FirebaseAnalytics.instance.logEvent(
+      name: 'home_viewed',
+      parameters: {'screen': 'HomePage'},
+    );
+    FirebaseAnalytics.instance.logEvent(
+      name: 'message_shown',
+      parameters: {'message': selectedMessage},
+    );
   }
 
   @override
@@ -27,8 +36,8 @@ class _HomePageState extends State<HomePage> {
     return Container(
       width: double.infinity,
       height: double.infinity,
-      decoration: BoxDecoration(
-        image: const DecorationImage(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
           image: AssetImage('assets/images/home_background.webp'),
           fit: BoxFit.cover,
         ),
@@ -44,7 +53,6 @@ class _HomePageState extends State<HomePage> {
               fit: BoxFit.cover,
             ),
           ),
-
           Positioned(
             right: 0,
             left: 0,
@@ -53,7 +61,6 @@ class _HomePageState extends State<HomePage> {
               fit: BoxFit.contain,
             ),
           ),
-
           Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

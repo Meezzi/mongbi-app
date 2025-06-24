@@ -1,6 +1,7 @@
+import 'package:firebase_analytics/firebase_analytics.dart'; 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/core/secure_storage_service.dart';
@@ -32,9 +33,18 @@ class _NicknameInputPageState extends ConsumerState<NicknameInputPage> {
   Future<void> _loadNicknameChangeState() async {
     final prefs = await SharedPreferences.getInstance();
     final changed = prefs.getBool('nicknameChangeState') ?? false;
+
     setState(() {
       nicknameChanged = changed;
     });
+
+    // ✅ 진입 로그
+    await FirebaseAnalytics.instance.logEvent(
+      name: 'nickname_input_viewed',
+      parameters: {
+        'from': changed ? 'profile_setting' : 'onboarding',
+      },
+    );
   }
 
   @override
@@ -42,30 +52,29 @@ class _NicknameInputPageState extends ConsumerState<NicknameInputPage> {
     final isButtonEnabled = nickname.trim().length >= 2;
 
     return Scaffold(
-      appBar:
-          nicknameChanged
-              ? AppBar(
-                backgroundColor: const Color(0xFFFAFAFA),
-                elevation: 0,
-                titleSpacing: 0,
-                title: Row(
-                  children: [
-                    IconButton(
-                      icon: SvgPicture.asset(
-                        'assets/icons/back-arrow.svg',
-                        width: 24,
-                        height: 24,
-                      ),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
+      appBar: nicknameChanged
+          ? AppBar(
+              backgroundColor: const Color(0xFFFAFAFA),
+              elevation: 0,
+              titleSpacing: 0,
+              title: Row(
+                children: [
+                  IconButton(
+                    icon: SvgPicture.asset(
+                      'assets/icons/back-arrow.svg',
+                      width: 24,
+                      height: 24,
                     ),
-                    const SizedBox(width: 8),
-                    Text('별명 수정', style: Font.title20),
-                  ],
-                ),
-              )
-              : null,
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  const SizedBox(width: 8),
+                  Text('별명 수정', style: Font.title20),
+                ],
+              ),
+            )
+          : null,
       backgroundColor: const Color(0xFFFAFAFA),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(24, 140, 24, 0),
@@ -95,9 +104,9 @@ class _NicknameInputPageState extends ConsumerState<NicknameInputPage> {
       final userId = await SecureStorageService().getUserIdx();
       if (userId == null) {
         if (mounted) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(const SnackBar(content: Text('로그인이 필요합니다.')));
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('로그인이 필요합니다.')),
+          );
         }
         return;
       }
@@ -110,20 +119,38 @@ class _NicknameInputPageState extends ConsumerState<NicknameInputPage> {
           .read(splashViewModelProvider.notifier)
           .checkLoginAndFetchUserInfo();
 
+      // ✅ 성공 로그
+      await FirebaseAnalytics.instance.logEvent(
+        name: 'nickname_submitted',
+        parameters: {
+          'nickname': nickname,
+          'changed': nicknameChanged,
+        },
+      );
+
       if (mounted) {
         if (nicknameChanged) {
-          context.pop();
           final prefs = await SharedPreferences.getInstance();
           await prefs.setBool('nicknameChangeState', false);
+          context.pop();
         } else {
           context.go('/remindtime_setting');
         }
       }
     } catch (e) {
+      // ✅ 실패 로그
+      await FirebaseAnalytics.instance.logEvent(
+        name: 'nickname_submit_failed',
+        parameters: {
+          'nickname': nickname,
+          'error': e.toString(),
+        },
+      );
+
       if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text('닉네임 저장 실패: $e')));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('닉네임 저장 실패: $e')),
+        );
       }
     }
   }

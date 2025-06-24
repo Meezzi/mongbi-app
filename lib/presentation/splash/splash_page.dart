@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -19,17 +20,37 @@ class _SplashPageState extends ConsumerState<SplashPage>
   void initState() {
     super.initState();
 
+    FirebaseAnalytics.instance.logEvent(
+      name: 'splash_viewed',
+      parameters: {'screen': 'SplashPage'},
+    );
+
     Future.delayed(const Duration(seconds: 3), () async {
       final viewModel = ref.read(splashViewModelProvider.notifier);
       await viewModel.checkLoginAndFetchUserInfo();
 
       final splashState = ref.read(splashViewModelProvider);
+
+      if (!context.mounted) return;
+
       if (splashState.status == SplashStatus.success) {
+        await FirebaseAnalytics.instance.logEvent(
+          name: 'splash_routed_home',
+          parameters: {'status': 'success'},
+        );
         context.go('/home');
       } else if (splashState.status == SplashStatus.needLogin) {
+        await FirebaseAnalytics.instance.logEvent(
+          name: 'splash_routed_login',
+          parameters: {'status': 'needLogin'},
+        );
         context.go('/social_login');
       } else {
-        if (!context.mounted) return;
+        await FirebaseAnalytics.instance.logEvent(
+          name: 'splash_error',
+          parameters: {'status': 'error'},
+        );
+
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(const SnackBar(content: Text('오류 발생')));
@@ -41,6 +62,7 @@ class _SplashPageState extends ConsumerState<SplashPage>
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       body: Stack(
         children: [

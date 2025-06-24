@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
@@ -16,40 +17,50 @@ class ProfileSettingPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.read(auth2.authViewModelProvider);
     final userInfo = ref.watch(splashViewModelProvider);
-    final userResult = userInfo.userList?.first; // List지만 보통 1명만 있으니 first 사용
-
+    final userResult = userInfo.userList?.first;
     final nickname = userResult?.userNickname ?? '비회원';
+
+    FirebaseAnalytics.instance.logEvent(
+      name: 'profile_setting_viewed',
+      parameters: {'screen': 'ProfileSettingPage'},
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: Text('프로필 설정', style: Font.title20),
         titleSpacing: 0,
-        backgroundColor: Color(0xFFFAFAFA),
+        backgroundColor: const Color(0xFFFAFAFA),
       ),
-      backgroundColor: Color(0xFFFAFAFA),
+      backgroundColor: const Color(0xFFFAFAFA),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           InkWell(
-            onTap: () async{
+            onTap: () async {
+              await FirebaseAnalytics.instance.logEvent(
+                name: 'nickname_setting_opened',
+                parameters: {'nickname': nickname},
+              );
+
               final prefs = await SharedPreferences.getInstance();
               await prefs.setBool('nicknameChangeState', true);
               context.push('/nickname_input');
             },
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('별명 설정', style: Font.body16),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Text(
                     nickname,
-                    style: Font.body16.copyWith(color: Color(0xFF8C2EFF)),
+                    style: Font.body16.copyWith(color: const Color(0xFF8C2EFF)),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   SvgPicture.asset(
                     'assets/icons/chevron-right.svg',
-                    colorFilter: ColorFilter.mode(
+                    colorFilter: const ColorFilter.mode(
                       Color(0xFFA6A1AA),
                       BlendMode.srcIn,
                     ),
@@ -58,13 +69,18 @@ class ProfileSettingPage extends ConsumerWidget {
               ),
             ),
           ),
+          const Divider(height: 8, thickness: 8, color: Color(0xFFF3F2F4)),
 
-          Divider(height: 8, thickness: 8, color: Color(0xFFF3F2F4)),
           RoundedListTileItem(
             title: '로그아웃',
             isFirst: false,
             isLast: false,
             onTap: () {
+              FirebaseAnalytics.instance.logEvent(
+                name: 'logout_attempted',
+                parameters: {'screen': 'ProfileSettingPage'},
+              );
+
               showDialog(
                 context: context,
                 barrierDismissible: true,
@@ -73,26 +89,47 @@ class ProfileSettingPage extends ConsumerWidget {
                       onConfirm: () async {
                         final prefs = await SharedPreferences.getInstance();
                         final loginType = prefs.getString('lastLoginType');
-
                         bool success = false;
-                        if (loginType == 'naver') {
-                          success =
-                              await ref
-                                  .read(authViewModelProvider.notifier)
-                                  .logoutWithNaver();
-                        } else if (loginType == 'kakao') {
-                          success =
-                              await ref
-                                  .read(authViewModelProvider.notifier)
-                                  .logoutWithKakao();
-                        }
 
-                        if (success && context.mounted) {
-                          context.go('/social_login');
-                        } else {
+                        try {
+                          if (loginType == 'naver') {
+                            success =
+                                await ref
+                                    .read(auth2.authViewModelProvider.notifier)
+                                    .logoutWithNaver();
+                          } else if (loginType == 'kakao') {
+                            success =
+                                await ref
+                                    .read(auth2.authViewModelProvider.notifier)
+                                    .logoutWithKakao();
+                          }
+
+                          if (success && context.mounted) {
+                            await FirebaseAnalytics.instance.logEvent(
+                              name: 'logout_success',
+                              parameters: {'method': loginType ?? 'unknown'},
+                            );
+                            context.go('/social_login');
+                          } else {
+                            await FirebaseAnalytics.instance.logEvent(
+                              name: 'logout_failed',
+                              parameters: {
+                                'error': 'logout_failed_or_context_unmounted',
+                              },
+                            );
+                            Navigator.pop(context);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('로그아웃에 실패했습니다.')),
+                            );
+                          }
+                        } catch (e) {
+                          await FirebaseAnalytics.instance.logEvent(
+                            name: 'logout_failed',
+                            parameters: {'error': e.toString()},
+                          );
                           Navigator.pop(context);
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('로그아웃에 실패했습니다.')),
+                            const SnackBar(content: Text('로그아웃 중 오류가 발생했습니다.')),
                           );
                         }
                       },
@@ -106,6 +143,11 @@ class ProfileSettingPage extends ConsumerWidget {
             isFirst: false,
             isLast: false,
             onTap: () {
+              FirebaseAnalytics.instance.logEvent(
+                name: 'account_deletion_tapped',
+                parameters: {'screen': 'ProfileSettingPage'},
+              );
+
               // TODO: 계정 탈퇴
             },
           ),

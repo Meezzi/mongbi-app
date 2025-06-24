@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -8,7 +9,6 @@ import 'package:mongbi_app/presentation/common/filled_button_widget.dart';
 import 'package:mongbi_app/presentation/remind/view_model/remind_time_setting_view_model.dart';
 import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_text_widget.dart';
 import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_widget.dart';
-import 'package:mongbi_app/presentation/remind/widgets/remoind_time_time_setting_button.widget.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class RemindTimePickerPage extends StatefulWidget {
@@ -20,6 +20,16 @@ class RemindTimePickerPage extends StatefulWidget {
 
 class _RemindTimePickerPageState extends State<RemindTimePickerPage> {
   TimeOfDay selectedTime = const TimeOfDay(hour: 8, minute: 0);
+
+  @override
+  void initState() {
+    super.initState();
+
+    FirebaseAnalytics.instance.logEvent(
+      name: 'remind_time_page_viewed',
+      parameters: {'screen': 'RemindTimePickerPage'},
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +48,9 @@ class _RemindTimePickerPageState extends State<RemindTimePickerPage> {
               height: 24,
             ),
             onPressed: () => Navigator.pop(context),
-            iconSize:24, // 이건 실제론 무시되지만 명시해주면 의도 파악에 도움
+            iconSize: 24,
             padding: EdgeInsets.zero,
-            constraints: const BoxConstraints(), // 내부 공간 제약 제거
+            constraints: const BoxConstraints(),
             splashRadius: 20,
           ),
         ),
@@ -100,12 +110,21 @@ class _RemindTimePickerPageState extends State<RemindTimePickerPage> {
                 onPress: () async {
                   try {
                     final status = await Permission.notification.status;
-                    // 권한 요청 시도
+
                     final granted =
                         await NotificationService()
                             .requestNotificationPermission();
+
                     if (!granted) {
                       if (status.isPermanentlyDenied) {
+                        await FirebaseAnalytics.instance.logEvent(
+                          name: 'remind_permission_permanent_denied',
+                          parameters: {
+                            'screen': 'RemindTimePickerPage',
+                            'permanently': true,
+                          },
+                        );
+
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text(
@@ -113,9 +132,16 @@ class _RemindTimePickerPageState extends State<RemindTimePickerPage> {
                             ),
                           ),
                         );
-                        await NotificationService()
-                            .openAppSettingsIfNeeded(); // 앱 설정으로 이동
+                        await NotificationService().openAppSettingsIfNeeded();
                       } else {
+                        await FirebaseAnalytics.instance.logEvent(
+                          name: 'remind_permission_denied',
+                          parameters: {
+                            'screen': 'RemindTimePickerPage',
+                            'permanently': false,
+                          },
+                        );
+
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(content: Text('알림 권한이 거부되었습니다.')),
                         );
@@ -123,12 +149,20 @@ class _RemindTimePickerPageState extends State<RemindTimePickerPage> {
                       return;
                     }
 
-                    // 알림 예약
+                    // ✅ 알림 설정 시간 저장 로그
+                    await FirebaseAnalytics.instance.logEvent(
+                      name: 'remind_time_selected',
+                      parameters: {
+                        'hour': selectedTime.hour,
+                        'minute': selectedTime.minute,
+                        'screen': 'RemindTimePickerPage',
+                      },
+                    );
+
                     await NotificationService().scheduleDailyReminder(
                       selectedTime,
                     );
 
-                    // 다음 화면으로 이동
                     context.go('/onbording_page');
                   } catch (e) {
                     if (e is PlatformException &&

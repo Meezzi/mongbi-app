@@ -1,3 +1,5 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/custom_transition_page.dart';
 import 'package:mongbi_app/core/main_scaffold.dart';
@@ -25,8 +27,12 @@ import 'package:mongbi_app/presentation/setting/widgets/open_source_license_page
 import 'package:mongbi_app/presentation/splash/splash_page.dart';
 import 'package:mongbi_app/presentation/statistics/statistics_page.dart';
 
+final FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.instance;
 final GoRouter router = GoRouter(
-  observers: [routeObserver],
+  observers: [
+    FirebaseAnalyticsObserver(analytics: firebaseAnalytics),
+    routeObserver,
+  ],
   initialLocation: '/',
   routes: [
     GoRoute(path: '/', redirect: (_, __) => '/splash'),

@@ -69,6 +69,15 @@ class CalendarBottomSheetMonthSelector extends ConsumerWidget {
                 return year == regYear && month == regMonth;
               });
 
+              // 현재 년/월인지 여부
+              final isCurrentMonth = isCurrentYear && month == now.month;
+
+              // 현재 년/월은 기록이 없어도 불투명도가 1
+              final double opacity =
+                  isCurrentMonth
+                      ? 1
+                      : (isFutureMonth || !isExistingDate ? 0.3 : 1);
+
               return Center(
                 child: GestureDetector(
                   onTap:
@@ -88,7 +97,7 @@ class CalendarBottomSheetMonthSelector extends ConsumerWidget {
                             }
                           },
                   child: Opacity(
-                    opacity: isFutureMonth || !isExistingDate ? 0.3 : 1,
+                    opacity: opacity,
                     child: Container(
                       width: getResponsiveRatioByWidth(context, 48),
                       height: getResponsiveRatioByWidth(context, 48),

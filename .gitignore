@@ -48,3 +48,6 @@ app.*.map.json
 .env
 ios/Runner/GoogleService-info.plist
 sentry.properties
+google-services.json
+firebase_options.dart
+firebase.json
