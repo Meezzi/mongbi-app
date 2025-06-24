@@ -15,7 +15,8 @@ class RemoteAlarmDataSource implements AlarmDataSource {
       // TODO : idToken 유저 엔티티에서 받아오기
       final response = await dio.get('/api/fcm-logs/user/$userIndex');
 
-      if (response.data['code'] == 201 && response.data['success']) {
+      if ((response.data['code'] == 201 || response.data['code'] == 200) &&
+          response.data['success']) {
         final results = List.from(response.data['data']);
         final alarmDtoList = results.map((e) => AlarmDto.fromJson(e)).toList();
         return alarmDtoList;
@@ -32,7 +33,11 @@ class RemoteAlarmDataSource implements AlarmDataSource {
     try {
       // TODO : userIdx로 변경하기
       // TODO : idToken 유저 엔티티에서 받아오기
-      final response = await dio.get('/api/fcm-logs/$id/read');
+      final response = await dio.put(
+        '/api/fcm-logs/$id/read',
+        data: {'isRead': true},
+        options: Options(headers: {'Content-Type': 'application/json'}),
+      );
 
       if (response.data['code'] == 201 && response.data['success']) {
         return true;
