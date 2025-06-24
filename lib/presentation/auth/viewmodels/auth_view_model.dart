@@ -17,14 +17,15 @@ import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 class AuthViewModel extends Notifier<User?> {
   late final LoginWithNaver _loginWithNaver;
   late final LoginWithKakao _loginWithKakao;
-  late final Future<SharedPreferences> _prefsFuture;
-  late final RemoteUserInfoGetDataSource _userInfoDataSource;
+  late final LoginWithApple _loginWithApple;
 
+  late final Future<SharedPreferences> _prefsFuture;
   @override
   User? build() {
     _loginWithNaver = ref.read(loginWithNaverUseCaseProvider);
     _loginWithKakao = ref.read(loginWithKakaoUseCaseProvider);
-    _userInfoDataSource = ref.read(userInfoDataSourceProvider);
+    _loginWithApple = ref.read(loginWithAppleUseCaseProvider);
+
     _prefsFuture = SharedPreferences.getInstance();
     return null;
   }
@@ -81,7 +82,7 @@ class AuthViewModel extends Notifier<User?> {
 
       final prefs = await _prefsFuture;
       await prefs.setString('lastLoginType', 'naver');
-      await prefs.setBool('isLoginState', true);
+      await prefs.setBool('isLogined', true);
 
       final getUserUseCase = ref.read(getUserInfoUseCaseProvider);
       final userInfo = await getUserUseCase.execute();
@@ -116,10 +117,11 @@ class AuthViewModel extends Notifier<User?> {
 
       final prefs = await _prefsFuture;
       await prefs.setString('lastLoginType', 'kakao');
-      await prefs.setBool('isLoginState', true);
+      await prefs.setBool('isLogined', true);
 
       final getUserUseCase = ref.read(getUserInfoUseCaseProvider);
       final userInfo = await getUserUseCase.execute();
+      
       state = userInfo[0];
     } catch (e) {
       rethrow;

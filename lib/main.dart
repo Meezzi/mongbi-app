@@ -7,13 +7,10 @@ import 'package:mongbi_app/core/router.dart';
 import 'package:mongbi_app/presentation/remind/view_model/remind_time_setting_view_model.dart';
 import 'package:mongbi_app/providers/background_music_provider.dart';
 import 'package:mongbi_app/providers/setting_provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 //TODO 앱 시작시 권한 요청 에러 수정
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.clear();
   await NotificationService().init();
   await dotenv.load(fileName: '.env');
   // 캘린더 한글화
@@ -22,7 +19,8 @@ void main() async {
     nativeAppKey: dotenv.env['KAKAO_NATIVE_APP_KEY'],
     javaScriptAppKey: dotenv.env['KAKAO_JAVA_SCRIPT_APP_KEY'],
   );
-
+  var key = await KakaoSdk.origin;
+  print('key:$key');
   runApp(const ProviderScope(child: MyApp()));
 }
 

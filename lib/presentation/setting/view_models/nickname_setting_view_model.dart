@@ -23,7 +23,8 @@ class NicknameViewModel extends Notifier<User?> {
         nickname: nickname,
       );
       state = user;
-      ref.read(authViewModelProvider.notifier).updateUserInfo(user);
+      await ref.read(authViewModelProvider.notifier).updateUserInfo(user);
+      await ref.read(splashViewModelProvider.notifier).checkLoginAndFetchUserInfo();
     } catch (e) {
       rethrow;
     } finally {
