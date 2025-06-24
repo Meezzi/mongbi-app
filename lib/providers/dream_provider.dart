@@ -4,6 +4,7 @@ import 'package:mongbi_app/data/data_sources/dream_analysis_data_source.dart';
 import 'package:mongbi_app/data/data_sources/dream_check_data_source.dart';
 import 'package:mongbi_app/data/data_sources/dream_save_data_source.dart';
 import 'package:mongbi_app/data/data_sources/remote_dream_analysis_data_source.dart';
+import 'package:mongbi_app/data/data_sources/remote_dream_check_data_source.dart';
 import 'package:mongbi_app/data/data_sources/remote_dream_data_source.dart';
 import 'package:mongbi_app/data/repositories/remote_dream_repository.dart';
 import 'package:mongbi_app/domain/repositories/dream_repository.dart';
@@ -36,6 +37,7 @@ final _dreamRepositoryProvider = Provider<DreamRepository>(
   (ref) => RemoteDreamRepository(
     ref.read(_dreamDataSourceProvider),
     ref.read(_dreamAnalysisDataSource),
+    ref.read(_dreamCheckDataSource),
   ),
 );
 
