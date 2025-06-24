@@ -13,5 +13,9 @@ class Alarm {
   final String fcmContent;
   final String fcmType;
   final DateTime fcmSendAt;
-  final bool fcmIsRead;
+  bool fcmIsRead;
+
+  void updateIsReadStatus() {
+    fcmIsRead = true;
+  }
 }

@@ -20,7 +20,19 @@ class AlarmViewModel extends Notifier<List<Alarm>?> {
     final updateIsReadStatusUseCase = ref.read(
       updateIsReadStatusUseCaseProvider,
     );
-    await updateIsReadStatusUseCase.execute(id);
+
+    if (state != null) {
+      state =
+          state?.map((e) {
+            if (e.fcmId == id) {
+              e.updateIsReadStatus();
+            }
+
+            return e;
+          }).toList();
+
+      await updateIsReadStatusUseCase.execute(id);
+    }
   }
 
   void clearAlarmList() {

@@ -15,6 +15,7 @@ class AlarmBody extends ConsumerWidget {
     // TODO : ref.watch를 스플레쉬에서 하기
     // +1은 마지막 인덱스때 보관 메시지 위젯을 리턴하기 위해 추가한 것
     final alarmList = ref.watch(alarmViewModelProvider);
+    final alarmVm = ref.watch(alarmViewModelProvider.notifier);
     final totalLength = (alarmList?.length ?? 0) + 1;
 
     return SafeArea(
@@ -59,18 +60,21 @@ class AlarmBody extends ConsumerWidget {
                       case 'REMIND':
                         type = '리마인드';
                         onTap = () {
+                          alarmVm.updateIsReadStatus(alarm.fcmId);
                           context.go('/dream_write');
                         };
                         break;
                       case 'CHALLENGE':
                         type = '진행 중인 선물';
                         onTap = () {
+                          alarmVm.updateIsReadStatus(alarm.fcmId);
                           context.go('/home');
                         };
                         break;
                       case 'REPORT':
                         type = '주간 꿈 리포트';
                         onTap = () {
+                          alarmVm.updateIsReadStatus(alarm.fcmId);
                           context.go('/history');
                         };
                         break;
