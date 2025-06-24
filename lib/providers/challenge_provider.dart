@@ -16,6 +16,10 @@ final _saveChallengeDataSourceProvider = Provider(
   (ref) => RemoteSaveChallengeDataSource(dio: ref.read(dioProvider)),
 );
 
+final _activeChallengeDataSourceProvider = Provider(
+  (ref) => RemoteActiveChallengeDataSource(dio: ref.read(dioProvider)),
+);
+
 final _completeChallengeDataSourceProvider = Provider(
   (ref) => RemoteCompleteChallengeDataSource(dio: ref.read(dioProvider)),
 );
