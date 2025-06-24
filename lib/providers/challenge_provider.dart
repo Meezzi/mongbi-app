@@ -53,6 +53,12 @@ final saveChallengeUseCaseProvider = Provider(
       SaveChallengeUseCase(repository: ref.read(_challengeRepositoryProvider)),
 );
 
+final fetchActiveChallengeUseCaseProvider = Provider(
+  (ref) => FetchActiveChallengeUseCase(
+    challengeRepository: ref.read(_challengeRepositoryProvider),
+  ),
+);
+
 final challengeViewModelProvider = AsyncNotifierProvider(
   () => ChallengeViewModel(),
 );
