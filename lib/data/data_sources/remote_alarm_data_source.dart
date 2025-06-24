@@ -6,13 +6,14 @@ class RemoteAlarmDataSource implements AlarmDataSource {
   const RemoteAlarmDataSource(this.dio);
 
   final Dio dio;
+  final userIndex = 10;
 
   @override
   Future<List<AlarmDto>?> fetchAlarms() async {
     try {
       // TODO : userIdx로 변경하기
       // TODO : idToken 유저 엔티티에서 받아오기
-      final response = await dio.get('/alarm/');
+      final response = await dio.get('/api/fcm-logs/user/$userIndex');
 
       if (response.data['code'] == 201 && response.data['success']) {
         final results = List.from(response.data['data']);
@@ -21,8 +22,6 @@ class RemoteAlarmDataSource implements AlarmDataSource {
       } else {
         throw Exception(response.data['message'] ?? '알 수 없는 오류가 발생하였습니다.');
       }
-    } on DioException catch (e) {
-      throw Exception(e.message ?? '네트워크 오류가 발생하였습니다.');
     } catch (e) {
       return null;
     }
