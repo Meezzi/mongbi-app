@@ -26,4 +26,21 @@ class RemoteAlarmDataSource implements AlarmDataSource {
       return null;
     }
   }
+
+  @override
+  Future<bool> updateConfirmStatus(int id) async {
+    try {
+      // TODO : userIdx로 변경하기
+      // TODO : idToken 유저 엔티티에서 받아오기
+      final response = await dio.get('/api/fcm-logs/$id/read');
+
+      if (response.data['code'] == 201 && response.data['success']) {
+        return true;
+      } else {
+        throw Exception(response.data['message'] ?? '알 수 없는 오류가 발생하였습니다.');
+      }
+    } catch (e) {
+      return false;
+    }
+  }
 }
