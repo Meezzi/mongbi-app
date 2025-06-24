@@ -154,7 +154,7 @@ class ChallengePage extends ConsumerWidget {
                     );
                     ScaffoldMessenger.of(
                       context,
-                    ).showSnackBar(customSnackBar('선물을 먼저 골라줘'));
+                    ).showSnackBar(customSnackBar('선물을 먼저 골라줘', 80));
                     return;
                   }
 
