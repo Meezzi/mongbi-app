@@ -70,7 +70,7 @@ class _DreamAnalysisLoadingPageState
     try {
       await ref.read(dreamWriteViewModelProvider.notifier).submitDream();
       if (mounted) {
-        context.go('/dream_analysis_result');
+        context.pushReplacement('/dream_analysis_result');
       }
     } catch (e) {
       if (mounted) {
