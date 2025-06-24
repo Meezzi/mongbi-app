@@ -8,6 +8,7 @@ import 'package:mongbi_app/domain/entities/user.dart';
 import 'package:mongbi_app/domain/use_cases/login_with_apple.dart';
 import 'package:mongbi_app/domain/use_cases/login_with_kakao.dart';
 import 'package:mongbi_app/domain/use_cases/login_with_naver.dart';
+import 'package:mongbi_app/providers/account_provider.dart';
 import 'package:mongbi_app/providers/auth_provider.dart';
 import 'package:mongbi_app/providers/user_info_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -158,5 +159,10 @@ class AuthViewModel extends Notifier<User?> {
     } catch (error) {
       return false;
     }
+  }
+
+  Future<bool> removeAccount() async {
+    final removeAccountUseCase = ref.read(removeAccountUseCaseProvider);
+    return await removeAccountUseCase.execute();
   }
 }
