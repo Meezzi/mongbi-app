@@ -70,4 +70,4 @@ final challengeViewModelProvider = AsyncNotifierProvider(
   () => ChallengeViewModel(),
 );
 
-final homeViewModelProvider = NotifierProvider(() => HomeViewModel());
+final homeViewModelProvider = AutoDisposeNotifierProvider(() => HomeViewModel());
