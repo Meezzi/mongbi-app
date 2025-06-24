@@ -7,10 +7,15 @@ import 'package:mongbi_app/presentation/alarm/widgets/alarm_type.dart';
 import 'package:mongbi_app/presentation/alarm/widgets/delete_modal.dart';
 
 class AlarmPage extends StatelessWidget {
-  const AlarmPage({super.key});
+  AlarmPage({super.key});
+
+  final List alArmList = List.filled(10, 1);
 
   @override
   Widget build(BuildContext context) {
+    // TODO : alArmList대신 데이터의 길이로 변경하기. 1은 마지막 인덱스때 다른 위젯을 리턴하기 위해 추가한 것
+    final totalLength = alArmList.length + 1;
+
     return Scaffold(
       backgroundColor: Color(0xFFFAFAFA),
       appBar: AppBar(
@@ -74,8 +79,22 @@ class AlarmPage extends StatelessWidget {
               AlarmType(),
               Expanded(
                 child: ListView.builder(
-                  itemCount: 10,
+                  itemCount: totalLength,
                   itemBuilder: (context, index) {
+                    if (totalLength - 1 == index) {
+                      return Center(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(vertical: 8),
+                          child: Text(
+                            '받은 알림은 30일동안 보관됩니다.',
+                            style: Font.subTitle12.copyWith(
+                              color: Color(0xFFA6A1AA),
+                            ),
+                          ),
+                        ),
+                      );
+                    }
+
                     return AlarmItem(
                       type: '리마인드',
                       date: '2025년 06월 15일',
@@ -83,13 +102,6 @@ class AlarmPage extends StatelessWidget {
                       isConfirmed: index % 2 == 0,
                     );
                   },
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 8),
-                child: Text(
-                  '받은 알림은 30일동안 보관됩니다.',
-                  style: Font.subTitle12.copyWith(color: Color(0xFFA6A1AA)),
                 ),
               ),
             ],
