@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/presentation/setting/widgets/setting_rounded_list_tile_item.dart';
@@ -9,28 +8,46 @@ import 'package:mongbi_app/presentation/setting/widgets/setting_toggle_switch.da
 import 'package:mongbi_app/presentation/setting/widgets/setting_user_info_header.dart';
 import 'package:mongbi_app/providers/setting_provider.dart';
 import 'package:mongbi_app/providers/user_info_provider.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
-class SettingPage extends ConsumerWidget {
+class SettingPage extends ConsumerStatefulWidget {
   const SettingPage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<SettingPage> createState() => _SettingPageState();
+}
+
+class _SettingPageState extends ConsumerState<SettingPage> {
+  String _version = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _loadVersion();
+  }
+
+Future<void> _loadVersion() async {
+  final info = await PackageInfo.fromPlatform();
+  setState(() {
+    _version = '${info.version} ';
+  });
+}
+
+  @override
+  Widget build(BuildContext context) {
     final isBgmOn = ref.watch(bgmProvider);
     final bgmNotifier = ref.read(bgmProvider.notifier);
-    // final user  = ref.watch(authViewModelProvider);
     final splashState = ref.watch(splashViewModelProvider);
+
     return ListView(
-      padding: EdgeInsets.symmetric(horizontal: 24),
+      padding: const EdgeInsets.symmetric(horizontal: 24),
       children: [
         UserInfoHeader(
-          // TODO: 로그인 기능 완료 후 확인 필요
           nickname: splashState.userList![0].userNickname!,
           loginType: splashState.userList![0].userSocialType!,
-          onTap: () {
-            context.push('/profile_setting');
-          },
+          onTap: () => context.push('/profile_setting'),
         ),
-        SizedBox(height: 24),
+        const SizedBox(height: 24),
         SectionCard(
           title: '설정',
           children: [
@@ -39,50 +56,36 @@ class SettingPage extends ConsumerWidget {
               isFirst: true,
               isLast: false,
               trailing: ToggleSwitch(value: isBgmOn),
-              onTap: () {
-                if (isBgmOn) {
-                  bgmNotifier.turnOff();
-                } else {
-                  bgmNotifier.turnOn();
-                }
-              },
+              onTap:
+                  () => isBgmOn ? bgmNotifier.turnOff() : bgmNotifier.turnOn(),
             ),
             RoundedListTileItem(
               title: '알림 설정',
               isFirst: false,
-              isLast: false,
-              onTap: () {
-                context.push('/alarm_setting');
-              },
-            ),
-            RoundedListTileItem(
-              title: '멤버쉽',
-              isFirst: false,
               isLast: true,
-              onTap: () {
-                // TODO: 멤버십 화면으로 이동
-              },
+              onTap: () => context.push('/alarm_setting'),
             ),
+            //TODO 맴버쉽 버튼 추후 업데이트 이후 사용
+            // RoundedListTileItem(
+            //   title: '멤버쉽',
+            //   isFirst: false,
+            //   isLast: true,
+            //   onTap: () {
+            //     // TODO: 멤버십 화면으로 이동
+            //   },
+            // ),
           ],
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         SectionCard(
           title: '기타',
           children: [
             RoundedListTileItem(
-              title: '앱 정보',
+              title: '이용 약관',
               isFirst: true,
               isLast: false,
               onTap: () {
-                // TODO: 앱 정보 화면으로 이동
-              },
-            ),
-            RoundedListTileItem(
-              title: '이용 약관',
-              isFirst: false,
-              isLast: false,
-              onTap: () {
-                // TODO: 이용 약관 화면으로 이동
+                // 이동
               },
             ),
             RoundedListTileItem(
@@ -90,7 +93,7 @@ class SettingPage extends ConsumerWidget {
               isFirst: false,
               isLast: false,
               onTap: () {
-                // TODO: 오픈소스 라이선스 화면으로 이동
+                // 이동
               },
             ),
             RoundedListTileItem(
@@ -101,22 +104,14 @@ class SettingPage extends ConsumerWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    '00.00.0(0000)',
-                    // TODO: 버전 정보로 변경
-                    style: Font.body16.copyWith(color: Color(0xFF8C2EFF)),
+                    _version.isEmpty ? '0.0.0' : _version,
+                    style: Font.body16.copyWith(color: const Color(0xFF8C2EFF)),
                   ),
-                  SizedBox(width: 8),
-                  SvgPicture.asset(
-                    'assets/icons/chevron-right.svg',
-                    colorFilter: ColorFilter.mode(
-                      Color(0xFFA6A1AA),
-                      BlendMode.srcIn,
-                    ),
-                  ),
+                  const SizedBox(width: 8),
                 ],
               ),
               onTap: () {
-                // TODO: 버전 정보 화면으로 이동
+                // 이동
               },
             ),
           ],
