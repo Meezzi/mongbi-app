@@ -44,6 +44,11 @@ class NotificationService {
     }
   }
 
+  /// 등록된 모든 알림 취소
+  Future<void> cancelAllNotifications() async {
+    await flutterLocalNotificationsPlugin.cancelAll();
+  }
+
   /// 앱 설정 화면으로 이동 (알림 영구 거부 시)
   Future<void> openAppSettingsIfNeeded() async {
     await AppSettings.openAppSettings();

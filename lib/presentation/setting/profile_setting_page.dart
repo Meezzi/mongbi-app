@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/font.dart';
+import 'package:mongbi_app/presentation/common/custom_dilog.dart';
+import 'package:mongbi_app/presentation/remind/view_model/remind_time_setting_view_model.dart';
 import 'package:mongbi_app/presentation/setting/widgets/logout_confirm_dialog.dart';
 import 'package:mongbi_app/presentation/setting/widgets/setting_rounded_list_tile_item.dart';
 import 'package:mongbi_app/providers/auth_provider.dart' as auth2;
@@ -30,7 +32,7 @@ class ProfileSettingPage extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           InkWell(
-            onTap: () async{
+            onTap: () async {
               final prefs = await SharedPreferences.getInstance();
               await prefs.setBool('nicknameChangeState', true);
               context.push('/nickname_input');
@@ -69,11 +71,15 @@ class ProfileSettingPage extends ConsumerWidget {
                 context: context,
                 barrierDismissible: true,
                 builder:
-                    (context) => LogoutConfirmDialog(
-                      onConfirm: () async {
+                    (context) => CustomInputDialog(
+                      title: '로그아웃 하시겠어요?',
+                      contentText: '다시 로그인해야 이용할 수 있어요.',
+                      leftText: '취소',
+                      rightText: '로그아웃',
+                      onLeftPressed: () => Navigator.pop(context),
+                      onRightPressed: () async {
                         final prefs = await SharedPreferences.getInstance();
                         final loginType = prefs.getString('lastLoginType');
-
                         bool success = false;
                         if (loginType == 'naver') {
                           success =
@@ -86,8 +92,8 @@ class ProfileSettingPage extends ConsumerWidget {
                                   .read(authViewModelProvider.notifier)
                                   .logoutWithKakao();
                         }
-
                         if (success && context.mounted) {
+                          await NotificationService().cancelAllNotifications();
                           context.go('/social_login');
                         } else {
                           Navigator.pop(context);
@@ -96,7 +102,7 @@ class ProfileSettingPage extends ConsumerWidget {
                           );
                         }
                       },
-                    ),
+                ),
               );
             },
           ),
@@ -106,7 +112,20 @@ class ProfileSettingPage extends ConsumerWidget {
             isFirst: false,
             isLast: false,
             onTap: () {
-              // TODO: 계정 탈퇴
+              showDialog(
+                context: context,
+                builder:
+                    (context) => CustomInputDialog(
+                      title: '',
+                      contentText: '정말 몽비를 탈퇴 하시겠어요?',
+                      leftText: '탈퇴하기',
+                      rightText: '아니오',
+                      onLeftPressed: () => Navigator.of(context).pop(),
+                      onRightPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+              );
             },
           ),
         ],
