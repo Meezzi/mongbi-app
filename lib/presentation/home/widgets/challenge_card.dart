@@ -103,6 +103,7 @@ class ChallengeCard extends ConsumerWidget {
                       context: context,
                       backgroundColor: Colors.transparent,
                       isScrollControlled: true,
+                      useRootNavigator: true,
                       builder:
                           (context) => GiveUpConfirmBottomSheet(
                             title: '정말로 포기할거야몽?',
@@ -153,6 +154,7 @@ class ChallengeCard extends ConsumerWidget {
                       context: context,
                       backgroundColor: Colors.transparent,
                       isScrollControlled: true,
+                      useRootNavigator: true,
                       builder:
                           (context) => CompletionBottomSheet(
                             title: '정말 잘 했어몽!',
