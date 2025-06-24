@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mongbi_app/presentation/auth/widgets/apple_login_button_widget.dart';
@@ -42,8 +43,25 @@ class SocialLoginPage extends ConsumerWidget {
                             final authViewModel = ref.read(
                               authViewModelProvider.notifier,
                             );
+                            await FirebaseAnalytics.instance.logEvent(
+                              name: 'button_click',
+                              parameters: {
+                                'button_name': 'apple_login',
+                                'screen': 'SocialLoginPage',
+                              },
+                            );
+
                             try {
                               await authViewModel.loginWithApple();
+
+                              await FirebaseAnalytics.instance.logEvent(
+                                name: 'login_success',
+                                parameters: {
+                                  'provider': 'apple',
+                                  'screen': 'SocialLoginPage',
+                                },
+                              );
+
                               await showModalBottomSheet(
                                 context: context,
                                 isScrollControlled: false,
@@ -53,10 +71,19 @@ class SocialLoginPage extends ConsumerWidget {
                                   0,
                                   0,
                                   0,
-                                ), // 바깥 배경 둥글기 유지
+                                ),
                                 builder: (_) => const TermsBottomSheet(),
                               );
                             } catch (e) {
+                              await FirebaseAnalytics.instance.logEvent(
+                                name: 'login_failure',
+                                parameters: {
+                                  'provider': 'apple',
+                                  'screen': 'SocialLoginPage',
+                                  'error': e.toString().substring(0, 100),
+                                },
+                              );
+
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(content: Text('애플 로그인 실패 $e')),
                               );
@@ -72,8 +99,24 @@ class SocialLoginPage extends ConsumerWidget {
                             final authViewModel = ref.read(
                               authViewModelProvider.notifier,
                             );
+                            await FirebaseAnalytics.instance.logEvent(
+                              name: 'button_click',
+                              parameters: {
+                                'button_name': 'kakao_login',
+                                'screen': 'SocialLoginPage',
+                              },
+                            );
+
                             try {
                               await authViewModel.loginWithKakao();
+                              await FirebaseAnalytics.instance.logEvent(
+                                name: 'login_success',
+                                parameters: {
+                                  'provider': 'kakao',
+                                  'screen': 'SocialLoginPage',
+                                },
+                              );
+
                               await showModalBottomSheet(
                                 context: context,
                                 isScrollControlled: false,
@@ -87,6 +130,18 @@ class SocialLoginPage extends ConsumerWidget {
                                 builder: (_) => const TermsBottomSheet(),
                               );
                             } catch (e) {
+                              await FirebaseAnalytics.instance.logEvent(
+                                name: 'login_failure',
+                                parameters: {
+                                  'provider': 'kakao',
+                                  'screen': 'SocialLoginPage',
+                                  'error': e.toString().substring(
+                                    0,
+                                    100,
+                                  ), // 너무 길면 잘라줌
+                                },
+                              );
+
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(content: Text('카카오 로그인 실패 $e')),
                               );
@@ -102,8 +157,24 @@ class SocialLoginPage extends ConsumerWidget {
                             final authViewModel = ref.read(
                               authViewModelProvider.notifier,
                             );
+                            await FirebaseAnalytics.instance.logEvent(
+                              name: 'button_click',
+                              parameters: {
+                                'button_name': 'naver_login',
+                                'screen': 'SocialLoginPage',
+                              },
+                            );
+
                             try {
                               await authViewModel.loginWithNaver();
+
+                              await FirebaseAnalytics.instance.logEvent(
+                                name: 'login_success',
+                                parameters: {
+                                  'provider': 'naver',
+                                  'screen': 'SocialLoginPage',
+                                },
+                              );
                               await showModalBottomSheet(
                                 context: context,
                                 isScrollControlled: false,
@@ -113,10 +184,21 @@ class SocialLoginPage extends ConsumerWidget {
                                   0,
                                   0,
                                   0,
-                                ), // 바깥 배경 둥글기 유지
+                                ),
                                 builder: (_) => const TermsBottomSheet(),
                               );
                             } catch (e) {
+                              await FirebaseAnalytics.instance.logEvent(
+                                name: 'login_failure',
+                                parameters: {
+                                  'provider': 'naver',
+                                  'screen': 'SocialLoginPage',
+                                  'error': e.toString().substring(
+                                    0,
+                                    100,
+                                  ), // 길면 자름
+                                },
+                              );
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(content: Text('네이버 로그인 실패 $e')),
                               );

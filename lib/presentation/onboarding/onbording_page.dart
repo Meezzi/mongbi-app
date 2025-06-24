@@ -1,9 +1,9 @@
+import 'package:firebase_analytics/firebase_analytics.dart'; 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/presentation/common/button_type.dart';
 import 'package:mongbi_app/presentation/common/filled_button_widget.dart';
 import 'package:mongbi_app/presentation/onboarding/data/onboarding_data.dart';
-import 'package:mongbi_app/presentation/onboarding/widgets/onbording_exit_button_widget.dart';
 import 'package:mongbi_app/presentation/onboarding/widgets/onbording_exit_image_widget.dart';
 import 'package:mongbi_app/presentation/onboarding/widgets/onbording_exit_text_widget.dart';
 import 'package:mongbi_app/presentation/onboarding/widgets/onbording_image_widget.dart';
@@ -26,6 +26,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
     if (_currentPage == onboardingData.length) {
       context.go('/home');
     } else {
+      FirebaseAnalytics.instance.logEvent(
+        name: 'onboarding_skipped',
+        parameters: {'from_index': _currentPage},
+      );
+
       _pageController.animateToPage(
         onboardingData.length,
         duration: const Duration(milliseconds: 300),
@@ -43,8 +48,17 @@ class _OnboardingPageState extends State<OnboardingPage> {
         setState(() {
           _currentPage = page;
         });
+
+        FirebaseAnalytics.instance.logEvent(
+          name: 'onboarding_page_viewed',
+          parameters: {'index': page},
+        );
       }
     });
+    FirebaseAnalytics.instance.logEvent(
+      name: 'onboarding_page_viewed',
+      parameters: {'index': 0},
+    );
   }
 
   @override
@@ -60,10 +74,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
         actions: [
           Padding(
             padding: const EdgeInsets.fromLTRB(0, 16, 24, 16),
-            child: SkipButton(
-              text: isLastPage ? '' : '건너뛰기',
-              onTap: _onSkip,
-            ),
+            child: SkipButton(text: isLastPage ? '' : '건너뛰기', onTap: _onSkip),
           ),
         ],
       ),
@@ -125,6 +136,13 @@ class _OnboardingPageState extends State<OnboardingPage> {
                                 type: ButtonType.primary,
                                 text: '시작할게',
                                 onPress: () async {
+                                  // ✅ 추적: 온보딩 완료
+                                  await FirebaseAnalytics.instance.logEvent(
+                                    name: 'onboarding_completed',
+                                    parameters: {
+                                      'total_pages': onboardingData.length,
+                                    },
+                                  );
                                   context.go('/home');
                                 },
                               ),
@@ -135,8 +153,6 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       }
                     },
                   ),
-
-                  // 마지막 페이지가 아닐 경우에만 배경 그라데이션 표시
                   if (!isLastPage)
                     Positioned(
                       left: 0,

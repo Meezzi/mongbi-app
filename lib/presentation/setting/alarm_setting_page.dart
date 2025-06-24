@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mongbi_app/core/font.dart';
@@ -13,13 +14,18 @@ class AlarmSettingPage extends ConsumerWidget {
     final alarmState = ref.watch(alarmSettingProvider);
     final alarmViewModel = ref.read(alarmSettingProvider.notifier);
 
+    FirebaseAnalytics.instance.logEvent(
+      name: 'alarm_setting_viewed',
+      parameters: {'screen': 'AlarmSettingPage'},
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: Text('알림 설정', style: Font.title20),
         titleSpacing: 0,
-        backgroundColor: Color(0xFFFAFAFA),
+        backgroundColor: const Color(0xFFFAFAFA),
       ),
-      backgroundColor: Color(0xFFFAFAFA),
+      backgroundColor: const Color(0xFFFAFAFA),
       body: Column(
         children: [
           RoundedListTileItem(
@@ -27,18 +33,33 @@ class AlarmSettingPage extends ConsumerWidget {
             isFirst: true,
             isLast: false,
             trailing: ToggleSwitch(value: alarmState.isAll),
-            onTap: alarmViewModel.toggleAll,
+            onTap: () {
+              alarmViewModel.toggleAll();
+              FirebaseAnalytics.instance.logEvent(
+                name: 'alarm_toggle_changed',
+                parameters: {'type': 'all', 'enabled': !alarmState.isAll},
+              );
+            },
             enableInkWell: false,
           ),
 
-          Divider(height: 0, thickness: 8, color: Color(0xFFF3F2F4)),
+          const Divider(height: 0, thickness: 8, color: Color(0xFFF3F2F4)),
 
           RoundedListTileItem(
             title: '리마인드 알림',
             isFirst: true,
             isLast: false,
             trailing: ToggleSwitch(value: alarmState.isReminder),
-            onTap: alarmViewModel.toggleReminder,
+            onTap: () {
+              alarmViewModel.toggleReminder();
+              FirebaseAnalytics.instance.logEvent(
+                name: 'alarm_toggle_changed',
+                parameters: {
+                  'type': 'reminder',
+                  'enabled': !alarmState.isReminder,
+                },
+              );
+            },
             enableInkWell: false,
           ),
 
@@ -47,7 +68,16 @@ class AlarmSettingPage extends ConsumerWidget {
             isFirst: false,
             isLast: true,
             trailing: ToggleSwitch(value: alarmState.isChallenge),
-            onTap: alarmViewModel.toggleChallenge,
+            onTap: () {
+              alarmViewModel.toggleChallenge();
+              FirebaseAnalytics.instance.logEvent(
+                name: 'alarm_toggle_changed',
+                parameters: {
+                  'type': 'challenge',
+                  'enabled': !alarmState.isChallenge,
+                },
+              );
+            },
             enableInkWell: false,
           ),
         ],

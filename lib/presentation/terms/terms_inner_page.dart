@@ -1,6 +1,7 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/domain/entities/terms.dart';
@@ -11,6 +12,13 @@ class TermsDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    FirebaseAnalytics.instance.logEvent(
+      name: 'terms_detail_viewed',
+      parameters: {
+        'terms': termsList.map((t) => t.name).toList(),
+      },
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -30,7 +38,7 @@ class TermsDetailPage extends StatelessWidget {
           ],
         ),
         elevation: 0,
-         backgroundColor: Color(0xFFFAFAFA),
+        backgroundColor: const Color(0xFFFAFAFA),
         surfaceTintColor: Colors.white,
       ),
       body: Padding(
@@ -47,7 +55,6 @@ class TermsDetailPage extends StatelessWidget {
               const SizedBox(height: 8),
               Text(termsList.map((t) => '• ${t.name}').join('\n')),
               const SizedBox(height: 24),
-
               ...termsList.map(
                 (term) => Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,7 +67,7 @@ class TermsDetailPage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 12),
-                    Html(data: term.content), // HTML 내용 렌더링
+                    Html(data: term.content),
                     const SizedBox(height: 24),
                   ],
                 ),

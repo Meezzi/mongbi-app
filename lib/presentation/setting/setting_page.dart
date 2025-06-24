@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart'; 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -25,6 +26,11 @@ class _SettingPageState extends ConsumerState<SettingPage> {
   void initState() {
     super.initState();
     _loadVersion();
+
+    FirebaseAnalytics.instance.logEvent(
+      name: 'settings_viewed',
+      parameters: {'screen': 'SettingPage'},
+    );
   }
 
   Future<void> _loadVersion() async {
@@ -57,24 +63,28 @@ class _SettingPageState extends ConsumerState<SettingPage> {
               isFirst: true,
               isLast: false,
               trailing: ToggleSwitch(value: isBgmOn),
-              onTap:
-                  () => isBgmOn ? bgmNotifier.turnOff() : bgmNotifier.turnOn(),
+              onTap: () {
+                final toggledOn = !isBgmOn;
+                toggledOn ? bgmNotifier.turnOn() : bgmNotifier.turnOff();
+                FirebaseAnalytics.instance.logEvent(
+                  name: 'bgm_toggled',
+                  parameters: {'enabled': toggledOn},
+                );
+              },
             ),
             RoundedListTileItem(
               title: '알림 설정',
               isFirst: false,
               isLast: true,
-              onTap: () => context.push('/alarm_setting'),
+              onTap: () {
+                FirebaseAnalytics.instance.logEvent(
+                  name: 'notification_setting_opened',
+                  parameters: {'screen': 'SettingPage'},
+                );
+
+                context.push('/alarm_setting');
+              },
             ),
-            //TODO 맴버쉽 버튼 추후 업데이트 이후 사용
-            // RoundedListTileItem(
-            //   title: '멤버쉽',
-            //   isFirst: false,
-            //   isLast: true,
-            //   onTap: () {
-            //     // TODO: 멤버십 화면으로 이동
-            //   },
-            // ),
           ],
         ),
         const SizedBox(height: 16),
@@ -86,9 +96,13 @@ class _SettingPageState extends ConsumerState<SettingPage> {
               isFirst: true,
               isLast: false,
               onTap: () {
+                FirebaseAnalytics.instance.logEvent(
+                  name: 'terms_opened',
+                  parameters: {'screen': 'SettingPage'},
+                );
+
                 final uri = Uri.parse(
-                  'https://destiny-yam-088.notion.site/MONGBI-21b1c082f0ac804a8de8f5e499b00078?source=copy_link' ??
-                      '',
+                  'https://destiny-yam-088.notion.site/MONGBI-21b1c082f0ac804a8de8f5e499b00078?source=copy_link',
                 );
                 launchUrl(uri);
               },
@@ -97,7 +111,13 @@ class _SettingPageState extends ConsumerState<SettingPage> {
               title: '오픈소스 라이선스',
               isFirst: false,
               isLast: false,
-              onTap: () => context.push('/license_page'),
+              onTap: () {
+                FirebaseAnalytics.instance.logEvent(
+                  name: 'license_opened',
+                  parameters: {'screen': 'SettingPage'},
+                );
+                context.push('/license_page');
+              },
             ),
             RoundedListTileItem(
               title: '버전 정보',
@@ -114,7 +134,10 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                 ],
               ),
               onTap: () {
-                // 이동
+                FirebaseAnalytics.instance.logEvent(
+                  name: 'version_info_tapped',
+                  parameters: {'screen': 'SettingPage'},
+                );
               },
             ),
           ],
