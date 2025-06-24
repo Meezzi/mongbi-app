@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "129833386062",
+    "project_id": "mongbi",
+    "storage_bucket": "mongbi.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:129833386062:android:e57324f243ce643f49031f",
+        "android_client_info": {
+          "package_name": "com.codepoets.mongbi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYf8llsaNAfn7q_YTEGwEfFaIuTA1Ts80"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

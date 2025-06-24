@@ -1,23 +1,23 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:mongbi_app/core/router.dart';
+import 'package:mongbi_app/firebase_optiopns.dart';
 import 'package:mongbi_app/presentation/remind/view_model/remind_time_setting_view_model.dart';
 import 'package:mongbi_app/providers/background_music_provider.dart';
 import 'package:mongbi_app/providers/setting_provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-//TODO 앱 시작시 권한 요청 에러 수정
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await NotificationService().init();
-  final prefs = await SharedPreferences.getInstance();
-  await prefs.clear();
   await dotenv.load(fileName: '.env');
   // 캘린더 한글화
   await initializeDateFormatting();
+
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   KakaoSdk.init(
     nativeAppKey: dotenv.env['KAKAO_NATIVE_APP_KEY'],
     javaScriptAppKey: dotenv.env['KAKAO_JAVA_SCRIPT_APP_KEY'],
