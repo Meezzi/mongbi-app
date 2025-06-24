@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/presentation/common/button_type.dart';
 import 'package:mongbi_app/presentation/common/filled_button_widget.dart';
 import 'package:mongbi_app/presentation/common/ghost_button_widget.dart';
+import 'package:mongbi_app/providers/alarm_provider.dart';
 
 class DeleteModal extends StatelessWidget {
   const DeleteModal({super.key});
@@ -11,6 +13,7 @@ class DeleteModal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // Scaffold는 자체 배경이 있으므로 showDialog의 배경을 보이게 하기 위해 투명으로 설정
       backgroundColor: Colors.transparent,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -50,31 +53,24 @@ class DeleteModal extends StatelessWidget {
                         ),
                       ),
                       SizedBox(width: 8),
-                      Expanded(
-                        child: FilledButtonWidget(
-                          type: ButtonType.primary,
-                          text: '전체 삭제',
-                          onPress: () {
-                            context.pop();
-                          },
-                        ),
+                      Consumer(
+                        builder: (context, ref, child) {
+                          final alarmVm = ref.read(
+                            alarmViewModelProvider.notifier,
+                          );
+
+                          return Expanded(
+                            child: FilledButtonWidget(
+                              type: ButtonType.primary,
+                              text: '전체 삭제',
+                              onPress: () {
+                                alarmVm.clearAlarmList();
+                                context.pop();
+                              },
+                            ),
+                          );
+                        },
                       ),
-                      // _button(
-                      //   backgroundColor: Color(0xFF8B2DFF),
-                      //   foregroundColor: Colors.white,
-                      //   boxShadow: [
-                      //     BoxShadow(
-                      //       color: Color(0x331A181B),
-                      //       blurRadius: 10,
-                      //       offset: Offset(2, 2),
-                      //       spreadRadius: 0,
-                      //     ),
-                      //   ],
-                      //   text: '전체 삭제',
-                      //   onTap: () {
-                      //     context.pop();
-                      //   },
-                      // ),
                     ],
                   ),
                 ),
