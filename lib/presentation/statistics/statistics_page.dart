@@ -51,9 +51,11 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage>
               child: Container(
                 color: Colors.white,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: horizontalPadding,
-                    vertical: 16,
+                  padding: EdgeInsets.only(
+                    left: horizontalPadding,
+                    right: horizontalPadding,
+                    top: 15,
+                    bottom: 16,
                   ),
                   child: Text('모몽의 꿈 통계', style: Font.title20),
                 ),
