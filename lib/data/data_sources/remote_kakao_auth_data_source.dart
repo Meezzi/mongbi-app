@@ -36,25 +36,33 @@ class RemoteKakaoAuthDataSource {
 
       await storageService.saveAccessToken(jwt);
       await storageService.saveRefreshToken(refreshToken);
-
-      if (response.data['user'] != null) {
-        await storageService.saveUserIdx(userDto.userIdx);
-      } else {
-        final error = Exception('로그인 응답에 user 정보가 없습니다.');
-        await Sentry.captureException(error);
-        throw error;
-      }
+      await storageService.saveUserIdx(userDto.userIdx);
 
       return LoginResponseDto(token: jwt, user: userDto);
-    } catch (e, s) {
+    } on DioException catch (e, s) {
+      final errorData = e.response?.data;
+      final errorMessage =
+          errorData is Map ? errorData['message'] : '알 수 없는 오류';
+      final errorCode = errorData is Map ? errorData['code'] : null;
+
       await Sentry.captureException(
         e,
         stackTrace: s,
         withScope: (scope) {
           scope.setTag('auth', 'kakao');
+          scope.setExtra('code', errorCode);
+          scope.setExtra('message', errorMessage);
         },
       );
-      throw Exception('카카오 로그인 오류: $e \n$s');
+
+      if (errorCode == 1259) {
+        throw Exception('탈퇴한 회원입니다. 재가입이 불가합니다.');
+      }
+
+      throw Exception(null);
+    } catch (e, s) {
+      await Sentry.captureException(e, stackTrace: s);
+      throw Exception('카카오 로그인 예외 발생: $e');
     }
   }
 }

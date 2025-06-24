@@ -9,6 +9,7 @@ import 'package:mongbi_app/presentation/auth/widgets/last_login_state_weiget.dar
 import 'package:mongbi_app/presentation/auth/widgets/mongbi_image_widget.dart';
 import 'package:mongbi_app/presentation/auth/widgets/naver_login_button_widget.dart';
 import 'package:mongbi_app/presentation/auth/widgets/text_widgets.dart';
+import 'package:mongbi_app/presentation/common/custom_snack_bar.dart';
 import 'package:mongbi_app/presentation/terms/widgets/terms_bottom_sheet_layout_widget.dart';
 import 'package:mongbi_app/providers/auth_provider.dart';
 import 'package:mongbi_app/providers/last_login_provider.dart';
@@ -144,7 +145,10 @@ class SocialLoginPage extends ConsumerWidget {
                               );
 
                               ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('카카오 로그인 실패 $e')),
+                                customSnackBar(
+                                  e.toString().replaceFirst('Exception: ', ''),
+                                  40,
+                                ),
                               );
                             }
                           },

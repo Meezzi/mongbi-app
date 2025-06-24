@@ -64,7 +64,7 @@ class RemoveAccontModal extends ConsumerWidget {
                                 context.go('/social_login');
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  customSnackBar('오류로 인해 탈퇴가 중지 되었습니다'),
+                                  customSnackBar('오류로 인해 탈퇴가 중지 되었습니다', 40),
                                 );
                               }
                             }
