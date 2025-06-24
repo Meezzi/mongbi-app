@@ -1,14 +1,20 @@
 import 'package:mongbi_app/data/data_sources/dream_analysis_data_source.dart';
+import 'package:mongbi_app/data/data_sources/dream_check_data_source.dart';
 import 'package:mongbi_app/data/data_sources/dream_save_data_source.dart';
 import 'package:mongbi_app/data/dtos/dream_dto.dart';
 import 'package:mongbi_app/domain/entities/dream.dart';
 import 'package:mongbi_app/domain/repositories/dream_repository.dart';
 
 class RemoteDreamRepository implements DreamRepository {
-  RemoteDreamRepository(this.dreamSaveDataSource, this.dreamAnalysisDataSource);
+  RemoteDreamRepository(
+    this.dreamSaveDataSource,
+    this.dreamAnalysisDataSource,
+    this.dreamCheckDataSource,
+  );
 
   final DreamSaveDataSource dreamSaveDataSource;
   final DreamAnalysisDataSource dreamAnalysisDataSource;
+  final DreamCheckDataSource dreamCheckDataSource;
 
   @override
   Future<int> saveDream(Dream dream) async {
@@ -17,7 +23,11 @@ class RemoteDreamRepository implements DreamRepository {
   }
 
   @override
-  Future<Dream> analyzeDream(int uid, String dreamContent, int dreamScore) async {
+  Future<Dream> analyzeDream(
+    int uid,
+    String dreamContent,
+    int dreamScore,
+  ) async {
     final responseMap = await dreamAnalysisDataSource.analyzeDream(
       dreamContent,
       dreamScore,
@@ -47,5 +57,10 @@ class RemoteDreamRepository implements DreamRepository {
       dreamCategory: responseMap['dreamCategory'] as String,
     );
     return dream;
+  }
+
+  @override
+  Future<bool> canWriteDreamToday(int uid) async {
+    return await dreamCheckDataSource.canWriteDreamToday(uid: uid);
   }
 }

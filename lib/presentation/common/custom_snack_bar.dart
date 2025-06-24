@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mongbi_app/core/font.dart';
 
-SnackBar customSnackBar(String message) {
+SnackBar customSnackBar(String message, double margin) {
   return SnackBar(
     backgroundColor: Colors.transparent,
     elevation: 0,
     behavior: SnackBarBehavior.floating,
-    margin: EdgeInsets.only(bottom: 80),
+    margin: EdgeInsets.only(bottom: margin),
     duration: Duration(seconds: 2),
     content: Row(
       mainAxisSize: MainAxisSize.min,

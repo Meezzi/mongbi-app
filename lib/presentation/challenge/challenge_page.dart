@@ -148,13 +148,13 @@ class ChallengePage extends ConsumerWidget {
                 },
                 onRightPressed: () async {
                   if (selectedIndex == null) {
-                    FirebaseAnalytics.instance.logEvent(
+                    await FirebaseAnalytics.instance.logEvent(
                       name: 'challenge_not_selected',
                       parameters: {'screen': 'ChallengePage'},
                     );
                     ScaffoldMessenger.of(
                       context,
-                    ).showSnackBar(customSnackBar('선물을 먼저 골라줘'));
+                    ).showSnackBar(customSnackBar('선물을 먼저 골라줘', 80));
                     return;
                   }
 

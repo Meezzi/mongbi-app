@@ -3,15 +3,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/font.dart';
+import 'package:mongbi_app/core/secure_storage_service.dart';
+import 'package:mongbi_app/presentation/common/custom_snack_bar.dart';
 import 'package:mongbi_app/providers/alarm_provider.dart';
+import 'package:mongbi_app/providers/dream_provider.dart';
 
-class MainScaffold extends StatelessWidget {
+class MainScaffold extends ConsumerWidget {
   const MainScaffold({super.key, required this.child});
 
   final Widget child;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final String location = GoRouterState.of(context).uri.toString();
 
     int selectedIndex = switch (location) {
@@ -52,9 +55,24 @@ class MainScaffold extends StatelessWidget {
               isHistory,
             ),
             GestureDetector(
-              onTap: () {
+              onTap: () async {
                 ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                context.push('/dream_intro');
+
+                final uid = await SecureStorageService().getUserIdx();
+
+                if (uid == null) return;
+
+                final canWrite = await ref
+                    .read(canWriteDreamTodayUseCaseProvider)
+                    .execute(uid);
+
+                if (canWrite) {
+                  await context.push('/dream_intro');
+                } else {
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(customSnackBar('오늘은 이미 했어, 배불러몽!', 16));
+                }
               },
               child: Container(
                 width: 48,
