@@ -61,7 +61,7 @@ class MainScaffold extends StatelessWidget {
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
-                      color: Color(0xFF1A181B).withAlpha(20),
+                      color: Color(0xFF1A181B).withValues(alpha: 0.2),
                       blurRadius: 10,
                       offset: Offset(2, 2),
                       spreadRadius: 0,
@@ -137,13 +137,13 @@ class MainScaffold extends StatelessWidget {
           'MONGBI',
           style: Font.title24.copyWith(color: Colors.white),
         ),
+        centerTitle: false,
         backgroundColor: Colors.transparent,
         titleSpacing: 24,
         elevation: 0,
         actions: [
           IconButton(
             onPressed: () {
-              // TODO: 알림 화면으로 이동
               context.push('/alarm');
             },
             padding: EdgeInsets.only(right: 24),
