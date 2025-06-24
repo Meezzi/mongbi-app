@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mongbi_app/core/date_formatter.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/presentation/alarm/widgets/alarm_item.dart';
 import 'package:mongbi_app/presentation/alarm/widgets/alarm_type.dart';
 import 'package:mongbi_app/presentation/alarm/widgets/delete_modal.dart';
+import 'package:mongbi_app/providers/alarm_provider.dart';
 
-class AlarmPage extends StatelessWidget {
+class AlarmPage extends ConsumerWidget {
   AlarmPage({super.key});
 
-  final alArmList = List.filled(10, 1);
-
   @override
-  Widget build(BuildContext context) {
-    // TODO : alArmList대신 데이터의 길이로 변경하기. 1은 마지막 인덱스때 다른 위젯을 리턴하기 위해 추가한 것
-    final totalLength = (alArmList.length ?? 0) + 1;
+  Widget build(BuildContext context, WidgetRef ref) {
+    // +1은 마지막 인덱스때 보관 메시지 위젯을 리턴하기 위해 추가한 것
+    final alarmList = ref.watch(alarmViewModelProvider);
+    final totalLength = (alarmList?.length ?? 0) + 1;
 
     return Scaffold(
       backgroundColor: Color(0xFFFAFAFA),
@@ -81,6 +83,11 @@ class AlarmPage extends StatelessWidget {
                 child: ListView.builder(
                   itemCount: totalLength,
                   itemBuilder: (context, index) {
+                    // -1은 보관 메시지 때문에 totalLength에 추가한 +1 때문에 한 것
+                    // 다른 -1은 알림 리스트의 마지막 인덱스를 구하기 위해 한 것
+                    final listIndex = index.clamp(0, totalLength - 1 - 1);
+                    final alarm = alarmList?[listIndex];
+
                     if (totalLength - 1 == index) {
                       return Center(
                         child: Padding(
@@ -95,12 +102,28 @@ class AlarmPage extends StatelessWidget {
                       );
                     }
 
-                    return AlarmItem(
-                      type: '리마인드',
-                      date: '2025년 06월 15일',
-                      content: '안녕! 오늘은 어떤 꿈을 꿨는지 알려줘몽!' * 4,
-                      isConfirmed: index % 2 == 0,
-                    );
+                    if (alarm != null) {
+                      String type = '';
+
+                      switch (alarm.fcmType) {
+                        case 'REMIND':
+                          type = '리마인드';
+                          break;
+                        case 'CHALLENGE':
+                          type = '진행 중인 선물';
+                          break;
+                        case 'REPORT':
+                          type = '주간 꿈 리포트';
+                          break;
+                      }
+
+                      return AlarmItem(
+                        type: type,
+                        date: DateFormatter.formatYearMonthDay(alarm.fcmSendAt),
+                        content: alarm.fcmContent,
+                        isRead: alarm.fcmIsRead,
+                      );
+                    }
                   },
                 ),
               ),

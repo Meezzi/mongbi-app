@@ -7,13 +7,13 @@ class AlarmItem extends StatelessWidget {
     required this.type,
     required this.date,
     required this.content,
-    required this.isConfirmed,
+    required this.isRead,
   });
 
   final String type;
   final String date;
   final String content;
-  final bool isConfirmed;
+  final bool isRead;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class AlarmItem extends StatelessWidget {
                     type,
                     style: Font.title14.copyWith(color: Color(0xFF76717A)),
                   ),
-                  if (isConfirmed)
+                  if (!isRead)
                     Positioned(
                       right: -4,
                       top: 0,
