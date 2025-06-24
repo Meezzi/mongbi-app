@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/secure_storage_service.dart';
 import 'package:mongbi_app/data/dtos/terms_aggrement_dto.dart';
 import 'package:mongbi_app/domain/entities/terms.dart';
+import 'package:mongbi_app/presentation/common/button_type.dart';
+import 'package:mongbi_app/presentation/common/filled_button_widget.dart';
 import 'package:mongbi_app/presentation/terms/widgets/terms_button_widget.dart';
 import 'package:mongbi_app/presentation/terms/widgets/terms_checkbox_widget.dart';
 import 'package:mongbi_app/presentation/terms/widgets/terms_text_widget.dart';
@@ -132,12 +134,11 @@ class _TermsBottomSheetState extends ConsumerState<TermsBottomSheet> {
           }),
 
           const SizedBox(height: 24),
-
-          ConfirmButton(
-            isEnabled: isEssentialChecked,
-            onPressed: () async {
+          FilledButtonWidget(
+            type: ButtonType.primary,
+            text: '확인했어',
+            onPress: () async {
               final userId = await SecureStorageService().getUserIdx();
-
               if (userId == null) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text('로그인 정보를 불러올 수 없습니다.')),
@@ -153,7 +154,6 @@ class _TermsBottomSheetState extends ConsumerState<TermsBottomSheet> {
                       agreed: isCheckedList[i] ? 'Y' : 'N',
                     );
                   }).toList();
-
               try {
                 await ref
                     .read(termsViewModelProvider.notifier)
