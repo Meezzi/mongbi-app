@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:mongbi_app/core/calculate_time_remaining.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/providers/challenge_provider.dart';
 
@@ -67,8 +68,7 @@ class ChallengeCard extends ConsumerWidget {
                       height: 16,
                     ),
                     Text(
-                      // TODO: 시간 변경
-                      '24시간',
+                      calculateTimeRemaining(),
                       style: Font.subTitle12.copyWith(
                         color: const Color(0xFFA6A1AA),
                       ),
