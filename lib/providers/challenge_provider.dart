@@ -5,6 +5,8 @@ import 'package:mongbi_app/data/data_sources/remote_complete_challenge_data_sour
 import 'package:mongbi_app/data/data_sources/remote_fetch_challenge_data_source.dart';
 import 'package:mongbi_app/data/data_sources/remote_save_challenge_data_source.dart';
 import 'package:mongbi_app/data/repositories/remote_challenge_repository.dart';
+import 'package:mongbi_app/domain/use_cases/complete_challenge_use_case.dart';
+import 'package:mongbi_app/domain/use_cases/fetch_active_challenge_use_case.dart';
 import 'package:mongbi_app/domain/use_cases/fetch_challenge_use_case.dart';
 import 'package:mongbi_app/domain/use_cases/save_challenge_use_case.dart';
 import 'package:mongbi_app/presentation/challenge/view_models/challenge_view_model.dart';
@@ -35,6 +37,8 @@ final _challengeRepositoryProvider = Provider(
     challengeDataSource: ref.read(_fetchChallengeDataSourceProvider),
     saveChallengeDataSource: ref.read(_saveChallengeDataSourceProvider),
     completeChallengeDataSource: ref.read(_completeChallengeDataSourceProvider),
+    activeChallengeDataSource: ref.read(_activeChallengeDataSourceProvider),
+    challengeDetailDataSource: ref.read(_challengeDetailDataSourceProvider),
   ),
 );
 
