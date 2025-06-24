@@ -23,8 +23,8 @@ class _HomePageState extends ConsumerState<HomePage> {
     super.initState();
     selectedMessage = (List.of(mongbiMessages)..shuffle()).first;
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(homeViewModelProvider.notifier).fetchActiveChallenge(uid: 41);
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await ref.read(homeViewModelProvider.notifier).fetchActiveChallenge();
     });
 
     FirebaseAnalytics.instance.logEvent(
