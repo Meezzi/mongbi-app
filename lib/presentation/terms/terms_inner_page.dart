@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
+import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/domain/entities/terms.dart';
 
 class TermsDetailPage extends StatelessWidget {
@@ -9,15 +13,24 @@ class TermsDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: null,
-        leading: IconButton(
-          icon: const Icon(Icons.close),
-          onPressed: () {
-            Navigator.pop(context);
-          },
+        title: Row(
+          children: [
+            IconButton(
+              icon: SvgPicture.asset(
+                'assets/icons/back-arrow.svg',
+                width: 24,
+                height: 24,
+              ),
+              onPressed: () {
+                context.pop();
+              },
+            ),
+            const SizedBox(width: 8),
+            Text('서비스 약관', style: Font.title20),
+          ],
         ),
         elevation: 0,
-        backgroundColor: Colors.white,
+         backgroundColor: Color(0xFFFAFAFA),
         surfaceTintColor: Colors.white,
       ),
       body: Padding(
@@ -47,7 +60,7 @@ class TermsDetailPage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 12),
-                    Text(term.content, style: const TextStyle(height: 1.5)),
+                    Html(data: term.content), // HTML 내용 렌더링
                     const SizedBox(height: 24),
                   ],
                 ),

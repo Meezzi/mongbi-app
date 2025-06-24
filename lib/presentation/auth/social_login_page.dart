@@ -48,8 +48,12 @@ class SocialLoginPage extends ConsumerWidget {
                                 context: context,
                                 isScrollControlled: false,
                                 isDismissible: false,
-                                backgroundColor:
-                                    Colors.transparent, // 바깥 배경 둥글기 유지
+                                backgroundColor: const Color.fromARGB(
+                                  60,
+                                  0,
+                                  0,
+                                  0,
+                                ), // 바깥 배경 둥글기 유지
                                 builder: (_) => const TermsBottomSheet(),
                               );
                             } catch (e) {
@@ -74,8 +78,12 @@ class SocialLoginPage extends ConsumerWidget {
                                 context: context,
                                 isScrollControlled: false,
                                 isDismissible: false,
-                                backgroundColor:
-                                    Colors.transparent, // 바깥 배경 둥글기 유지
+                                backgroundColor: const Color.fromARGB(
+                                  60,
+                                  0,
+                                  0,
+                                  0,
+                                ),
                                 builder: (_) => const TermsBottomSheet(),
                               );
                             } catch (e) {
@@ -100,8 +108,12 @@ class SocialLoginPage extends ConsumerWidget {
                                 context: context,
                                 isScrollControlled: false,
                                 isDismissible: false,
-                                backgroundColor:
-                                    Colors.transparent, // 바깥 배경 둥글기 유지
+                                backgroundColor: const Color.fromARGB(
+                                  60,
+                                  0,
+                                  0,
+                                  0,
+                                ), // 바깥 배경 둥글기 유지
                                 builder: (_) => const TermsBottomSheet(),
                               );
                             } catch (e) {

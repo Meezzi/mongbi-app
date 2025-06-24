@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/secure_storage_service.dart';
 import 'package:mongbi_app/data/dtos/terms_aggrement_dto.dart';
 import 'package:mongbi_app/domain/entities/terms.dart';
+import 'package:mongbi_app/presentation/common/button_type.dart';
+import 'package:mongbi_app/presentation/common/filled_button_widget.dart';
 import 'package:mongbi_app/presentation/terms/widgets/terms_button_widget.dart';
 import 'package:mongbi_app/presentation/terms/widgets/terms_checkbox_widget.dart';
 import 'package:mongbi_app/presentation/terms/widgets/terms_text_widget.dart';
@@ -89,6 +91,7 @@ class _TermsBottomSheetState extends ConsumerState<TermsBottomSheet> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          SizedBox(height: 8),
           const TermsHeaderText(),
           const SizedBox(height: 15),
 
@@ -132,43 +135,49 @@ class _TermsBottomSheetState extends ConsumerState<TermsBottomSheet> {
           }),
 
           const SizedBox(height: 24),
-
-          ConfirmButton(
-            isEnabled: isEssentialChecked,
-            onPressed: () async {
-              final userId = await SecureStorageService().getUserIdx();
-
-              if (userId == null) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('로그인 정보를 불러올 수 없습니다.')),
-                );
-                return;
-              }
-              final agreements =
-                  terms.asMap().entries.map((entry) {
-                    final i = entry.key;
-                    final term = entry.value;
-                    return AgreementDto(
-                      termsId: term.id,
-                      agreed: isCheckedList[i] ? 'Y' : 'N',
-                    );
-                  }).toList();
-
-              try {
-                await ref
-                    .read(termsViewModelProvider.notifier)
-                    .submitAgreements(userIdx: userId, agreements: agreements);
-                if (mounted) {
-                  context.go('/nickname_input');
-                }
-              } catch (e) {
-                if (mounted) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('약관 동의 중 오류가 발생했습니다.')),
-                  );
-                }
-              }
-            },
+          FilledButtonWidget(
+            type: ButtonType.primary,
+            text: '확인했어',
+            onPress:
+                isEssentialChecked
+                    ? () async {
+                      final userId = await SecureStorageService().getUserIdx();
+                      if (userId == null) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('로그인 정보를 불러올 수 없습니다.')),
+                        );
+                        return;
+                      }
+                      final agreements =
+                          terms.asMap().entries.map((entry) {
+                            final i = entry.key;
+                            final term = entry.value;
+                            return AgreementDto(
+                              termsId: term.id,
+                              agreed: isCheckedList[i] ? 'Y' : 'N',
+                            );
+                          }).toList();
+                      try {
+                        await ref
+                            .read(termsViewModelProvider.notifier)
+                            .submitAgreements(
+                              userIdx: userId,
+                              agreements: agreements,
+                            );
+                        if (mounted) {
+                          context.go('/nickname_input');
+                        }
+                      } catch (e) {
+                        if (mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('약관 동의 중 오류가 발생했습니다.'),
+                            ),
+                          );
+                        }
+                      }
+                    }
+                    : null, // 필수 항목 미체크 시 비활성화
           ),
         ],
       ),

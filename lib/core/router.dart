@@ -21,6 +21,7 @@ import 'package:mongbi_app/presentation/setting/alarm_setting_page.dart';
 import 'package:mongbi_app/presentation/setting/nickname_input_page.dart';
 import 'package:mongbi_app/presentation/setting/profile_setting_page.dart';
 import 'package:mongbi_app/presentation/setting/setting_page.dart';
+import 'package:mongbi_app/presentation/setting/widgets/open_source_license_page.dart';
 import 'package:mongbi_app/presentation/splash/splash_page.dart';
 import 'package:mongbi_app/presentation/statistics/statistics_page.dart';
 
@@ -28,7 +29,7 @@ final GoRouter router = GoRouter(
   observers: [routeObserver],
   initialLocation: '/',
   routes: [
-    GoRoute(path: '/', redirect: (_, __) => '/home'),
+    GoRoute(path: '/', redirect: (_, __) => '/splash'),
 
     ShellRoute(
       builder: (context, state, child) {
@@ -143,5 +144,9 @@ final GoRouter router = GoRouter(
       builder: (context, state) => AlarmSettingPage(),
     ),
     GoRoute(path: '/alarm', builder: (context, state) => AlarmPage()),
+    GoRoute(
+      path: '/license_page',
+      builder: (context, state) => OpenSourceLicensePage(),
+    ),
   ],
 );
