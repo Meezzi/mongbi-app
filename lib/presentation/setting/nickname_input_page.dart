@@ -1,4 +1,4 @@
-import 'package:firebase_analytics/firebase_analytics.dart'; 
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -41,9 +41,7 @@ class _NicknameInputPageState extends ConsumerState<NicknameInputPage> {
     // ✅ 진입 로그
     await FirebaseAnalytics.instance.logEvent(
       name: 'nickname_input_viewed',
-      parameters: {
-        'from': changed ? 'profile_setting' : 'onboarding',
-      },
+      parameters: {'from': changed ? 'profile_setting' : 'onboarding'},
     );
   }
 
@@ -52,29 +50,30 @@ class _NicknameInputPageState extends ConsumerState<NicknameInputPage> {
     final isButtonEnabled = nickname.trim().length >= 2;
 
     return Scaffold(
-      appBar: nicknameChanged
-          ? AppBar(
-              backgroundColor: const Color(0xFFFAFAFA),
-              elevation: 0,
-              titleSpacing: 0,
-              title: Row(
-                children: [
-                  IconButton(
-                    icon: SvgPicture.asset(
-                      'assets/icons/back-arrow.svg',
-                      width: 24,
-                      height: 24,
+      appBar:
+          nicknameChanged
+              ? AppBar(
+                backgroundColor: const Color(0xFFFAFAFA),
+                elevation: 0,
+                titleSpacing: 0,
+                title: Row(
+                  children: [
+                    IconButton(
+                      icon: SvgPicture.asset(
+                        'assets/icons/back-arrow.svg',
+                        width: 24,
+                        height: 24,
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
                     ),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                  const SizedBox(width: 8),
-                  Text('별명 수정', style: Font.title20),
-                ],
-              ),
-            )
-          : null,
+                    const SizedBox(width: 8),
+                    Text('별명 수정', style: Font.title20),
+                  ],
+                ),
+              )
+              : null,
       backgroundColor: const Color(0xFFFAFAFA),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(24, 140, 24, 0),
@@ -104,9 +103,9 @@ class _NicknameInputPageState extends ConsumerState<NicknameInputPage> {
       final userId = await SecureStorageService().getUserIdx();
       if (userId == null) {
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('로그인이 필요합니다.')),
-          );
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(const SnackBar(content: Text('로그인이 필요합니다.')));
         }
         return;
       }
@@ -124,7 +123,7 @@ class _NicknameInputPageState extends ConsumerState<NicknameInputPage> {
         name: 'nickname_submitted',
         parameters: {
           'nickname': nickname,
-          'changed': nicknameChanged,
+          'changed': nicknameChanged.toString(),
         },
       );
 
@@ -143,14 +142,14 @@ class _NicknameInputPageState extends ConsumerState<NicknameInputPage> {
         name: 'nickname_submit_failed',
         parameters: {
           'nickname': nickname,
-          'error': e.toString(),
+          'changed': nicknameChanged.toString(),
         },
       );
 
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('닉네임 저장 실패: $e')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('닉네임 저장 실패: $e')));
       }
     }
   }
