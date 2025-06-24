@@ -28,7 +28,7 @@ final GoRouter router = GoRouter(
   observers: [routeObserver],
   initialLocation: '/',
   routes: [
-    GoRoute(path: '/', redirect: (_, __) => '/remindtime_setting'),
+    GoRoute(path: '/', redirect: (_, __) => '/splash'),
 
     ShellRoute(
       builder: (context, state, child) {
