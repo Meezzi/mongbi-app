@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/font.dart';
+import 'package:mongbi_app/providers/alarm_provider.dart';
 
 class MainScaffold extends StatelessWidget {
   const MainScaffold({super.key, required this.child});
@@ -147,11 +149,38 @@ class MainScaffold extends StatelessWidget {
               context.push('/alarm');
             },
             padding: EdgeInsets.only(right: 24),
-            icon: SvgPicture.asset(
-              'assets/icons/bell.svg',
-              width: 24,
-              height: 24,
-              fit: BoxFit.none,
+            icon: Consumer(
+              builder: (context, ref, child) {
+                final alarmState = ref.watch(alarmViewModelProvider);
+                final alarmList = alarmState.alarmList;
+                final isNotRead =
+                    alarmList?.any((e) => e.fcmIsRead == false) ?? false;
+
+                return Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    SvgPicture.asset(
+                      'assets/icons/bell.svg',
+                      width: 24,
+                      height: 24,
+                      fit: BoxFit.none,
+                    ),
+                    if (isNotRead)
+                      Positioned(
+                        right: 0,
+                        top: 0,
+                        child: Container(
+                          width: 6,
+                          height: 6,
+                          decoration: BoxDecoration(
+                            color: Color(0xFFEA4D57),
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                      ),
+                  ],
+                );
+              },
             ),
           ),
         ],
