@@ -135,4 +135,8 @@ class NotificationService {
 
     return scheduled;
   }
+
+  Future<void> cancelAllNotifications() async {
+    await flutterLocalNotificationsPlugin.cancelAll();
+  }
 }
