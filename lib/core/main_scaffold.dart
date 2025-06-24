@@ -61,7 +61,7 @@ class MainScaffold extends StatelessWidget {
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
-                      color: Color(0xFF1A181B).withAlpha(20),
+                      color: Color(0xFF1A181B).withValues(alpha: 0.2),
                       blurRadius: 10,
                       offset: Offset(2, 2),
                       spreadRadius: 0,
