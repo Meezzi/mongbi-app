@@ -148,8 +148,22 @@ class ChallengeCard extends ConsumerWidget {
               ),
               Expanded(
                 child: GestureDetector(
-                  onTap:
-                      () => homeViewModel.completeChallenge(isComplete: true),
+                  onTap: () {
+                    showModalBottomSheet(
+                      context: context,
+                      backgroundColor: Colors.transparent,
+                      isScrollControlled: true,
+                      builder:
+                          (context) => CompletionBottomSheet(
+                            title: '정말 잘 했어몽!',
+                            subTitle: '오늘 하루도 행복했으면 좋겠어요.',
+                            buttonText: '고마워',
+                            onButtonPressed: () {
+                              homeViewModel.completeChallenge(isComplete: true);
+                            },
+                          ),
+                    );
+                  },
                   child: Container(
                     height: 36,
                     padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
