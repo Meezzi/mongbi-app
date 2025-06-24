@@ -62,13 +62,13 @@ class RemoteChallengeRepository implements ChallengeRepository {
   @override
   Future<bool> completeChallenge({
     required int uid,
-    required int dreamId,
     required int challengeId,
+    required String challengeStatus,
   }) async {
     return await completeChallengeDataSource.completeChallenge(
       uid: uid,
-      dreamId: dreamId,
       challengeId: challengeId,
+      challengeStatus: challengeStatus,
     );
   }
 }
