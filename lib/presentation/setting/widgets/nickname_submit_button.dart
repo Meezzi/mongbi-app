@@ -7,7 +7,7 @@ class NicknameSubmitButton extends StatelessWidget {
     required this.enabled,
     required this.onTap,
   });
-  
+
   final bool enabled;
   final VoidCallback? onTap;
 
