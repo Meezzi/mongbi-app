@@ -10,6 +10,7 @@ import 'package:mongbi_app/data/repositories/remote_dream_repository.dart';
 import 'package:mongbi_app/domain/repositories/dream_repository.dart';
 import 'package:mongbi_app/domain/use_cases/analyze_and_save_dream_use_case.dart';
 import 'package:mongbi_app/domain/use_cases/analyze_dream_use_case.dart';
+import 'package:mongbi_app/domain/use_cases/can_write_dream_today_use_case.dart';
 import 'package:mongbi_app/domain/use_cases/save_dream_use_case.dart';
 import 'package:mongbi_app/presentation/dream/models/dream_interpretation_state.dart';
 import 'package:mongbi_app/presentation/dream/models/dream_write_state.dart';
@@ -54,6 +55,11 @@ final analyzeAndSaveDreamUseCaseProvider = Provider<AnalyzeAndSaveDreamUseCase>(
     ref.read(_analyzeDreamUseCaseProvider),
     ref.read(_saveDreamUseCaseProvider),
   ),
+);
+
+final canWriteDreamTodayUseCaseProvider = Provider<CanWriteDreamTodayUseCase>(
+  (ref) =>
+      CanWriteDreamTodayUseCase(repository: ref.read(_dreamRepositoryProvider)),
 );
 
 final dreamWriteViewModelProvider =
