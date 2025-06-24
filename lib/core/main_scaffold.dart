@@ -137,6 +137,7 @@ class MainScaffold extends StatelessWidget {
           'MONGBI',
           style: Font.title24.copyWith(color: Colors.white),
         ),
+        centerTitle: false,
         backgroundColor: Colors.transparent,
         titleSpacing: 24,
         elevation: 0,
