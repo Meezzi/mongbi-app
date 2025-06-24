@@ -9,20 +9,25 @@ class RemoteCompleteChallengeDataSource implements CompleteChallengeDataSource {
   @override
   Future<bool> completeChallenge({
     required int uid,
-    required int dreamId,
     required int challengeId,
+    required String challengeStatus,
   }) async {
     try {
       final response = await dio.post(
-        '/api/user-challenges',
+        '/challenge-status',
         data: {
-          'USER_ID': uid,
-          'CHALLENGE_ID': challengeId,
-          'DREAM_ID': dreamId,
+          'USER_IDX': uid,
+          'CHALLENGE_IDX': challengeId,
+          'CHALLENGE_STATUS': challengeStatus,
         },
       );
 
-      return response.statusCode == 201 && response.data['success'] == true;
+      if ((response.statusCode == 200 || response.statusCode == 201) &&
+          response.data['success'] == true) {
+        return true;
+      } else {
+        throw Exception(response.data['message'] ?? '챌린지 완료에 실패했습니다.');
+      }
     } on DioException catch (e) {
       throw Exception(e.message ?? '네트워크 오류가 발생했습니다.');
     } catch (e) {
