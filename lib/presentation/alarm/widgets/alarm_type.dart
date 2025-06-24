@@ -25,6 +25,18 @@ class _AlarmTypeState extends ConsumerState<AlarmType> {
 
   @override
   Widget build(BuildContext context) {
+    // liset은 뷰모델의 상태(AlarmModel)가 변경될 때마다 실행하는 메서드
+    // AlarmModel의 isClear 값이 변경될 때마다 실행하기 위함
+    ref.listen<AlarmModel>(alarmViewModelProvider, (previous, next) {
+      if (next.isClear) {
+        scrollToIndex(0);
+        setState(() {
+          seletedIndex = 0;
+        });
+        ref.read(alarmViewModelProvider.notifier).setClear();
+      }
+    });
+
     return SingleChildScrollView(
       controller: scrollController,
       scrollDirection: Axis.horizontal,

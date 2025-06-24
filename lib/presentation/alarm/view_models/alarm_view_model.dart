@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mongbi_app/domain/entities/alarm.dart';
 import 'package:mongbi_app/presentation/alarm/models/alarm_model.dart';
 import 'package:mongbi_app/providers/alarm_provider.dart';
 
@@ -39,7 +38,11 @@ class AlarmViewModel extends Notifier<AlarmModel> {
   }
 
   void clearAlarmList() {
-    state = state.copyWith(alarmList: null);
+    state = state.copyWith(alarmList: [], isClear: true);
+  }
+
+  void setClear() {
+    state = state.copyWith(isClear: false);
   }
 
   void filterAlarmList(FilterType type) {

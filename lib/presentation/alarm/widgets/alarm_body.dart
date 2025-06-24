@@ -19,7 +19,6 @@ class AlarmBody extends ConsumerWidget {
     final alarmList = alarmState.alarmList;
     final alarmVm = ref.read(alarmViewModelProvider.notifier);
     final filterType = alarmState.filterType;
-
     List<Alarm>? filteredAlarmList;
 
     switch (filterType) {
@@ -61,7 +60,10 @@ class AlarmBody extends ConsumerWidget {
                     0,
                     maxLength <= 0 ? 0 : maxLength,
                   );
-                  final alarm = alarmList?[listIndex];
+                  final alarm =
+                      filteredAlarmList!.isEmpty
+                          ? null
+                          : filteredAlarmList[listIndex];
 
                   if (totalLength - 1 == index) {
                     return Center(
