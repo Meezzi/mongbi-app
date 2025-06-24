@@ -91,6 +91,7 @@ class _TermsBottomSheetState extends ConsumerState<TermsBottomSheet> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          SizedBox(height: 8),
           const TermsHeaderText(),
           const SizedBox(height: 15),
 
