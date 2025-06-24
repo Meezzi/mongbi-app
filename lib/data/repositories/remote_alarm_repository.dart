@@ -14,11 +14,12 @@ class RemoteAlarmRepository implements AlarmRepository {
       return alarmDtoList
           .map(
             (e) => Alarm(
-              id: e.id,
-              type: e.type,
-              date: e.date,
-              content: e.content,
-              isConfirm: e.isConfirm,
+              fcmId: e.fcmId!,
+              fcmSendFromUserId: e.fcmSendFromUserId!,
+              fcmContent: e.fcmContent!,
+              fcmType: e.fcmType!,
+              fcmSendAt: e.fcmSendAt!,
+              fcmIsRead: e.fcmIsRead!,
             ),
           )
           .toList();

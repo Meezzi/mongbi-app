@@ -16,11 +16,11 @@ void main() {
     }).thenAnswer((invocation) async {
       return [
         AlarmDto(
-          id: 1,
-          type: '타입',
-          date: DateTime(2025, 11, 11),
-          content: '내용',
-          isConfirm: false,
+          fcmId: 1,
+          fcmType: '타입',
+          fcmSendAt: DateTime(2025, 11, 11),
+          fcmContent: '내용',
+          fcmIsRead: false,
         ),
       ];
     });
@@ -29,6 +29,6 @@ void main() {
     final alarmList = await alarmRepository.fetchAlarms();
 
     expect(alarmList, isA<List<Alarm>>());
-    expect(alarmList!.first.type, '타입');
+    expect(alarmList!.first.fcmType, '타입');
   });
 }

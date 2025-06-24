@@ -1,15 +1,17 @@
 class Alarm {
-  const Alarm({
-    required this.id,
-    required this.type,
-    required this.date,
-    required this.content,
-    required this.isConfirm,
+  Alarm({
+    required this.fcmId,
+    required this.fcmSendFromUserId,
+    required this.fcmContent,
+    required this.fcmType,
+    required this.fcmSendAt,
+    required this.fcmIsRead,
   });
 
-  final int id;
-  final String type;
-  final DateTime date;
-  final String content;
-  final bool isConfirm;
+  final int fcmId;
+  final int fcmSendFromUserId;
+  final String fcmContent;
+  final String fcmType;
+  final DateTime fcmSendAt;
+  final bool fcmIsRead;
 }
