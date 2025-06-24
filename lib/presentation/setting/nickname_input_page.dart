@@ -25,7 +25,7 @@ class _NicknameInputPageState extends ConsumerState<NicknameInputPage> {
     return Scaffold(
       backgroundColor: Color(0xFFFAFAFA),
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(24, 84, 24, 0),
+        padding: const EdgeInsets.fromLTRB(24, 140, 24, 0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
