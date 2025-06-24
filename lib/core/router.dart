@@ -28,7 +28,7 @@ final GoRouter router = GoRouter(
   observers: [routeObserver],
   initialLocation: '/',
   routes: [
-    GoRoute(path: '/', redirect: (_, __) => '/splash'),
+    GoRoute(path: '/', redirect: (_, __) => '/nickname_input'),
 
     ShellRoute(
       builder: (context, state, child) {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mongbi_app/core/font.dart';
+import 'package:flutter/services.dart';
 
 class NicknameTextField extends StatefulWidget {
   const NicknameTextField({
@@ -66,28 +67,33 @@ class _NicknameTextFieldState extends State<NicknameTextField> {
               counterText: '',
               hintStyle: Font.title16.copyWith(color: Color(0xFFA6A1AA)),
             ),
+            inputFormatters: [
+              FilteringTextInputFormatter.allow(RegExp(r'[가-힣ㄱ-ㅎㅏ-ㅣ]')),
+            ],
             onChanged: widget.onChanged,
           ),
         ),
         const SizedBox(height: 8),
-        AnimatedOpacity(
-          opacity: isFocused ? 1.0 : 0.0,
-          duration: const Duration(milliseconds: 200),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              // 안내 문구는 포커스 시에만 표시
+              AnimatedOpacity(
+                opacity: isFocused ? 1.0 : 0.0,
+                duration: const Duration(milliseconds: 200),
+                child: Text(
                   '한글 2자 이상 입력해주세요.',
                   style: Font.subTitle16.copyWith(color: Color(0xFFD6D4D8)),
                 ),
-                Text(
-                  '${widget.nickname.length}/5',
-                  style: Font.body14.copyWith(color: Color(0xFF76717A)),
-                ),
-              ],
-            ),
+              ),
+              // 글자 수는 항상 표시
+              Text(
+                '${widget.nickname.length}/5',
+                style: Font.body14.copyWith(color: Color(0xFF76717A)),
+              ),
+            ],
           ),
         ),
       ],
