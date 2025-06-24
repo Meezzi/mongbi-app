@@ -14,7 +14,15 @@ void main() {
     when(() {
       return mockAlarmDataSource.fetchAlarms();
     }).thenAnswer((invocation) async {
-      return [AlarmDto(type: '타입', date: '날짜', content: '내용')];
+      return [
+        AlarmDto(
+          id: 1,
+          type: '타입',
+          date: DateTime(2025, 11, 11),
+          content: '내용',
+          isConfirm: false,
+        ),
+      ];
     });
 
     final alarmRepository = RemoteAlarmRepository(mockAlarmDataSource);
