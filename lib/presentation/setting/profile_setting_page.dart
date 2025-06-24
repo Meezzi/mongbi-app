@@ -4,8 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/font.dart';
-import 'package:mongbi_app/presentation/common/custom_snack_bar.dart';
 import 'package:mongbi_app/presentation/setting/widgets/logout_confirm_dialog.dart';
+import 'package:mongbi_app/presentation/setting/widgets/remove_accont_modal.dart';
 import 'package:mongbi_app/presentation/setting/widgets/setting_rounded_list_tile_item.dart';
 import 'package:mongbi_app/providers/auth_provider.dart' as auth2;
 import 'package:mongbi_app/providers/user_info_provider.dart';
@@ -16,7 +16,6 @@ class ProfileSettingPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.read(auth2.authViewModelProvider.notifier);
     final userInfo = ref.watch(splashViewModelProvider);
     final userResult = userInfo.userList?.first;
     final nickname = userResult?.userNickname ?? '비회원';
@@ -143,23 +142,18 @@ class ProfileSettingPage extends ConsumerWidget {
             title: '계정 탈퇴',
             isFirst: false,
             isLast: false,
-            onTap: () async {
+            onTap: () {
               FirebaseAnalytics.instance.logEvent(
                 name: 'account_deletion_tapped',
                 parameters: {'screen': 'ProfileSettingPage'},
               );
 
-              final isRemoved = await user.removeAccount();
-
-              if (context.mounted) {
-                if (isRemoved) {
-                  context.go('/social_login');
-                } else {
-                  ScaffoldMessenger.of(
-                    context,
-                  ).showSnackBar(customSnackBar('오류로 인해 탈퇴가 중지 되었습니다'));
-                }
-              }
+              showDialog(
+                context: context,
+                barrierDismissible: false, // 배경 터치로 닫히지 않음!
+                barrierColor: Colors.black.withValues(alpha: 0.6),
+                builder: (context) => RemoveAccontModal(),
+              );
             },
           ),
         ],
