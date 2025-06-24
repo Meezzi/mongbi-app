@@ -9,12 +9,12 @@ import 'package:mongbi_app/presentation/alarm/widgets/delete_modal.dart';
 class AlarmPage extends StatelessWidget {
   AlarmPage({super.key});
 
-  final List alArmList = List.filled(10, 1);
+  final alArmList = List.filled(10, 1);
 
   @override
   Widget build(BuildContext context) {
     // TODO : alArmList대신 데이터의 길이로 변경하기. 1은 마지막 인덱스때 다른 위젯을 리턴하기 위해 추가한 것
-    final totalLength = alArmList.length + 1;
+    final totalLength = (alArmList.length ?? 0) + 1;
 
     return Scaffold(
       backgroundColor: Color(0xFFFAFAFA),
