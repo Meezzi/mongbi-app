@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/date_formatter.dart';
 import 'package:mongbi_app/core/font.dart';
+import 'package:mongbi_app/domain/entities/alarm.dart';
+import 'package:mongbi_app/presentation/alarm/models/alarm_model.dart';
 import 'package:mongbi_app/presentation/alarm/widgets/alarm_item.dart';
 import 'package:mongbi_app/presentation/alarm/widgets/alarm_type.dart';
 import 'package:mongbi_app/providers/alarm_provider.dart';
@@ -13,10 +15,33 @@ class AlarmBody extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // TODO : ref.watch를 스플레쉬에서 하기
+    final alarmState = ref.watch(alarmViewModelProvider);
+    final alarmList = alarmState.alarmList;
+    final alarmVm = ref.read(alarmViewModelProvider.notifier);
+    final filterType = alarmState.filterType;
+
+    List<Alarm>? filteredAlarmList;
+
+    switch (filterType) {
+      case FilterType.all:
+        filteredAlarmList = List.from(alarmList ?? []);
+        break;
+      case FilterType.remind:
+        filteredAlarmList =
+            alarmList?.where((e) => e.fcmType == 'REMIND').toList() ?? [];
+        break;
+      case FilterType.challenge:
+        filteredAlarmList =
+            alarmList?.where((e) => e.fcmType == 'CHALLENGE').toList() ?? [];
+        break;
+      case FilterType.report:
+        filteredAlarmList =
+            alarmList?.where((e) => e.fcmType == 'REPORT').toList() ?? [];
+        break;
+    }
+
     // +1은 마지막 인덱스때 보관 메시지 위젯을 리턴하기 위해 추가한 것
-    final alarmList = ref.watch(alarmViewModelProvider);
-    final alarmVm = ref.watch(alarmViewModelProvider.notifier);
-    final totalLength = (alarmList?.length ?? 0) + 1;
+    final totalLength = (filteredAlarmList.length) + 1;
 
     return SafeArea(
       child: SizedBox(

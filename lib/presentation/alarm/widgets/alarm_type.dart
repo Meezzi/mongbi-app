@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mongbi_app/core/font.dart';
+import 'package:mongbi_app/presentation/alarm/models/alarm_model.dart';
+import 'package:mongbi_app/providers/alarm_provider.dart';
 
-class AlarmType extends StatefulWidget {
+class AlarmType extends ConsumerStatefulWidget {
   const AlarmType({super.key});
 
   @override
-  State<AlarmType> createState() => _AlarmTypeState();
+  ConsumerState<AlarmType> createState() => _AlarmTypeState();
 }
 
-class _AlarmTypeState extends State<AlarmType> {
+class _AlarmTypeState extends ConsumerState<AlarmType> {
   final alarmTypeList = const ['전체', '리마인드', '진행 중인 선물', '주간 꿈 리포트'];
   int seletedIndex = 0;
   final ScrollController scrollController = ScrollController();
@@ -35,9 +38,29 @@ class _AlarmTypeState extends State<AlarmType> {
             return GestureDetector(
               key: alarmTypeKeyList[index],
               onTap: () {
+                final alarmVm = ref.read(alarmViewModelProvider.notifier);
+                FilterType? type;
+
                 setState(() {
                   seletedIndex = index;
                 });
+
+                switch (index) {
+                  case 0:
+                    type = FilterType.all;
+                    break;
+                  case 1:
+                    type = FilterType.remind;
+                    break;
+                  case 2:
+                    type = FilterType.challenge;
+                    break;
+                  case 3:
+                    type = FilterType.report;
+                    break;
+                }
+
+                alarmVm.filterAlarmList(type!);
 
                 scrollToIndex(index);
               },

@@ -1,19 +1,20 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mongbi_app/domain/entities/alarm.dart';
+import 'package:mongbi_app/presentation/alarm/models/alarm_model.dart';
 import 'package:mongbi_app/providers/alarm_provider.dart';
 
-class AlarmViewModel extends Notifier<List<Alarm>?> {
+class AlarmViewModel extends Notifier<AlarmModel> {
   @override
-  List<Alarm>? build() {
+  AlarmModel build() {
     fetchAlarms();
-    return null;
+    return AlarmModel();
   }
 
   Future<void> fetchAlarms() async {
     final fetchAlarmsUseCase = ref.read(fetchAlarmUseCaseProvider);
     final alarmList = await fetchAlarmsUseCase.execute();
 
-    state = alarmList;
+    state = state.copyWith(alarmList: alarmList);
   }
 
   Future<void> updateIsReadStatus(int id) async {
@@ -21,9 +22,9 @@ class AlarmViewModel extends Notifier<List<Alarm>?> {
       updateIsReadStatusUseCaseProvider,
     );
 
-    if (state != null) {
-      state =
-          state?.map((e) {
+    if (state.alarmList != null) {
+      final newAlarmList =
+          state.alarmList?.map((e) {
             if (e.fcmId == id) {
               e.updateIsReadStatus();
             }
@@ -31,11 +32,17 @@ class AlarmViewModel extends Notifier<List<Alarm>?> {
             return e;
           }).toList();
 
+      state = state.copyWith(alarmList: newAlarmList);
+
       await updateIsReadStatusUseCase.execute(id);
     }
   }
 
   void clearAlarmList() {
-    state = null;
+    state = state.copyWith(alarmList: null);
+  }
+
+  void filterAlarmList(FilterType type) {
+    state = state.copyWith(filterType: type);
   }
 }
