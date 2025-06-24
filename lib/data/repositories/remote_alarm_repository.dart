@@ -29,7 +29,7 @@ class RemoteAlarmRepository implements AlarmRepository {
   }
 
   @override
-  Future<bool> updateConfirmStatus(int id) async {
-    return await dataSource.updateConfirmStatus(id);
+  Future<bool> updateIsReadStatus(int id) async {
+    return await dataSource.updateIsReadStatus(id);
   }
 }

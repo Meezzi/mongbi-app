@@ -28,7 +28,7 @@ class RemoteAlarmDataSource implements AlarmDataSource {
   }
 
   @override
-  Future<bool> updateConfirmStatus(int id) async {
+  Future<bool> updateIsReadStatus(int id) async {
     try {
       // TODO : userIdx로 변경하기
       // TODO : idToken 유저 엔티티에서 받아오기
