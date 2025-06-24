@@ -9,6 +9,8 @@ import 'package:mongbi_app/firebase_optiopns.dart';
 import 'package:mongbi_app/presentation/remind/view_model/remind_time_setting_view_model.dart';
 import 'package:mongbi_app/providers/background_music_provider.dart';
 import 'package:mongbi_app/providers/setting_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,7 +24,17 @@ void main() async {
     nativeAppKey: dotenv.env['KAKAO_NATIVE_APP_KEY'],
     javaScriptAppKey: dotenv.env['KAKAO_JAVA_SCRIPT_APP_KEY'],
   );
-  runApp(const ProviderScope(child: MyApp()));
+  await SentryFlutter.init(
+    (options) {
+      options.dsn =
+          'https://8d16495c497563cc341db965785f3374@o4509553500422144.ingest.de.sentry.io/4509553530830928';
+  
+      options.tracesSampleRate = 1.0;
+      options.profilesSampleRate = 1.0;
+    },
+    appRunner:
+        () => runApp(SentryWidget(child: const ProviderScope(child: MyApp()))),
+  );
 }
 
 class MyApp extends ConsumerStatefulWidget {

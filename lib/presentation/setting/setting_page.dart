@@ -10,6 +10,7 @@ import 'package:mongbi_app/presentation/setting/widgets/setting_user_info_header
 import 'package:mongbi_app/providers/setting_provider.dart';
 import 'package:mongbi_app/providers/user_info_provider.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingPage extends ConsumerStatefulWidget {
