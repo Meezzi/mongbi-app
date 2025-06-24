@@ -10,6 +10,8 @@ class ChallengeCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final challenge = ref.watch(homeViewModelProvider);
+    final homeViewModel = ref.watch(homeViewModelProvider.notifier);
+
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       decoration: ShapeDecoration(
@@ -92,60 +94,62 @@ class ChallengeCard extends ConsumerWidget {
             spacing: 8,
             children: [
               Expanded(
-                child: Container(
-                  height: 36,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 8,
-                  ),
-                  decoration: ShapeDecoration(
-                    color: const Color(0xFFE8F9F7),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(999),
-                    ),
-                    shadows: [
-                      BoxShadow(
-                        color: Color(0x191A181B),
-                        blurRadius: 10,
-                        offset: Offset(2, 2),
-                        spreadRadius: 0,
+                child: GestureDetector(
+                  onTap:
+                      () => homeViewModel.completeChallenge(isComplete: false),
+                  child: Container(
+                    height: 36,
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    decoration: ShapeDecoration(
+                      color: const Color(0xFFE8F9F7),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(999),
                       ),
-                    ],
-                  ),
-                  child: Text(
-                    '포기',
-                    textAlign: TextAlign.center,
-                    style: Font.title14.copyWith(
-                      color: const Color(0xFF17BFAB),
+                      shadows: [
+                        BoxShadow(
+                          color: Color(0x191A181B),
+                          blurRadius: 10,
+                          offset: Offset(2, 2),
+                          spreadRadius: 0,
+                        ),
+                      ],
+                    ),
+                    child: Text(
+                      '포기',
+                      textAlign: TextAlign.center,
+                      style: Font.title14.copyWith(
+                        color: const Color(0xFF17BFAB),
+                      ),
                     ),
                   ),
                 ),
               ),
               Expanded(
-                child: Container(
-                  height: 36,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 8,
-                  ),
-                  decoration: ShapeDecoration(
-                    color: const Color(0xFF17BFAB),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(999),
-                    ),
-                    shadows: [
-                      BoxShadow(
-                        color: Color(0x331A181B),
-                        blurRadius: 10,
-                        offset: Offset(2, 2),
-                        spreadRadius: 0,
+                child: GestureDetector(
+                  onTap:
+                      () => homeViewModel.completeChallenge(isComplete: true),
+                  child: Container(
+                    height: 36,
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    decoration: ShapeDecoration(
+                      color: const Color(0xFF17BFAB),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(999),
                       ),
-                    ],
-                  ),
-                  child: Text(
-                    '완료',
-                    textAlign: TextAlign.center,
-                    style: Font.title14.copyWith(color: Colors.white),
+                      shadows: [
+                        BoxShadow(
+                          color: Color(0x331A181B),
+                          blurRadius: 10,
+                          offset: Offset(2, 2),
+                          spreadRadius: 0,
+                        ),
+                      ],
+                    ),
+                    child: Text(
+                      '완료',
+                      textAlign: TextAlign.center,
+                      style: Font.title14.copyWith(color: Colors.white),
+                    ),
                   ),
                 ),
               ),
