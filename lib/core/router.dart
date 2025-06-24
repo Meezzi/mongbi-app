@@ -28,23 +28,32 @@ final GoRouter router = GoRouter(
   observers: [routeObserver],
   initialLocation: '/',
   routes: [
-    GoRoute(path: '/', redirect: (_, __) => '/nickname_input'),
+    GoRoute(path: '/', redirect: (_, __) => '/home'),
 
     ShellRoute(
       builder: (context, state, child) {
         return MainScaffold(child: child);
       },
       routes: [
-        GoRoute(path: '/home', builder: (context, state) => const HomePage()),
+        GoRoute(
+          path: '/home',
+          pageBuilder: (context, state) => NoTransitionPage(child: HomePage()),
+        ),
         GoRoute(
           path: '/history',
-          builder: (context, state) => const HistoryPage(),
+          pageBuilder:
+              (context, state) => NoTransitionPage(child: HistoryPage()),
         ),
         GoRoute(
           path: '/statistics',
-          builder: (context, state) => const StatisticsPage(),
+          pageBuilder:
+              (context, state) => NoTransitionPage(child: StatisticsPage()),
         ),
-        GoRoute(path: '/setting', builder: (context, state) => SettingPage()),
+        GoRoute(
+          path: '/setting',
+          pageBuilder:
+              (context, state) => NoTransitionPage(child: SettingPage()),
+        ),
       ],
     ),
     GoRoute(path: '/splash', builder: (context, state) => SplashPage()),

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/secure_storage_service.dart';
-import 'package:mongbi_app/presentation/setting/widgets/nickname_submit_button.dart';
+import 'package:mongbi_app/presentation/common/button_type.dart';
+import 'package:mongbi_app/presentation/common/filled_button_widget.dart';
 import 'package:mongbi_app/presentation/setting/widgets/nickname_text_field.dart';
 import 'package:mongbi_app/presentation/setting/widgets/nickname_title.dart';
 import 'package:mongbi_app/providers/nickname_provider.dart';
@@ -20,10 +21,18 @@ class _NicknameInputPageState extends ConsumerState<NicknameInputPage> {
 
   @override
   Widget build(BuildContext context) {
-    final isButtonEnabled = nickname.trim().isNotEmpty;
+    final isButtonEnabled = nickname.trim().length >= 2;
 
     return Scaffold(
-      backgroundColor: Color(0xFFFAFAFA),
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new),
+          onPressed: () => Navigator.pop(context),
+        ),
+        backgroundColor: const Color(0xFFFAFAFA),
+        elevation: 0,
+      ),
+      backgroundColor: const Color(0xFFFAFAFA),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(24, 140, 24, 0),
         child: Column(
@@ -33,41 +42,48 @@ class _NicknameInputPageState extends ConsumerState<NicknameInputPage> {
             const SizedBox(height: 32),
             NicknameTextField(
               onChanged: (value) => setState(() => nickname = value),
-              nickname: nickname,
             ),
             const Spacer(),
-            NicknameSubmitButton(
-              enabled: isButtonEnabled,
-              onTap: () async {
-                if (!isButtonEnabled) return;
+            FilledButtonWidget(
+              type: ButtonType.primary,
+              text: '내가 꾼 꿈이야',
+              onPress:
+                  isButtonEnabled
+                      ? () async {
+                        try {
+                          final userId =
+                              await SecureStorageService().getUserIdx();
+                          if (userId == null) {
+                            if (mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('로그인이 필요합니다.')),
+                              );
+                            }
+                            return;
+                          }
 
-                try {
-                  final userId = await SecureStorageService().getUserIdx();
-                  if (userId == null) {
-                    if (mounted) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('로그인이 필요합니다.')),
-                      );
-                    }
-                    return;
-                  }
-                  await ref
-                      .read(nicknameViewModelProvider.notifier)
-                      .updateNickname(userId: userId, nickname: nickname);
-                  await ref
-                      .read(splashViewModelProvider.notifier)
-                      .checkLoginAndFetchUserInfo();
-                  if (mounted) {
-                    context.go('/remindtime_setting');
-                  }
-                } catch (e) {
-                  if (mounted) {
-                    ScaffoldMessenger.of(
-                      context,
-                    ).showSnackBar(SnackBar(content: Text('닉네임 저장 실패: $e')));
-                  }
-                }
-              },
+                          await ref
+                              .read(nicknameViewModelProvider.notifier)
+                              .updateNickname(
+                                userId: userId,
+                                nickname: nickname,
+                              );
+                          await ref
+                              .read(splashViewModelProvider.notifier)
+                              .checkLoginAndFetchUserInfo();
+
+                          if (mounted) {
+                            context.go('/remindtime_setting');
+                          }
+                        } catch (e) {
+                          if (mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('닉네임 저장 실패: $e')),
+                            );
+                          }
+                        }
+                      }
+                      : null,
             ),
             const SizedBox(height: 24),
           ],
