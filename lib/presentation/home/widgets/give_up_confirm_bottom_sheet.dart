@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/presentation/common/action_button_row.dart';
 
@@ -51,11 +50,9 @@ class GiveUpConfirmBottomSheet extends StatelessWidget {
                   leftText: '계속할래',
                   rightText: '포기할래',
                   onLeftPressed: () {
-                    context.pop();
                     onContinue();
                   },
                   onRightPressed: () {
-                    context.pop();
                     onGiveUp();
                   },
                 ),

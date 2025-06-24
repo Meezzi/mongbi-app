@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/calculate_time_remaining.dart';
 import 'package:mongbi_app/core/font.dart';
+import 'package:mongbi_app/presentation/home/widgets/completion_bottom_sheet.dart';
+import 'package:mongbi_app/presentation/home/widgets/give_up_confirm_bottom_sheet.dart';
 import 'package:mongbi_app/providers/challenge_provider.dart';
 
 class ChallengeCard extends ConsumerWidget {
@@ -95,8 +98,27 @@ class ChallengeCard extends ConsumerWidget {
             children: [
               Expanded(
                 child: GestureDetector(
-                  onTap:
-                      () => homeViewModel.completeChallenge(isComplete: false),
+                  onTap: () {
+                    showModalBottomSheet(
+                      context: context,
+                      backgroundColor: Colors.transparent,
+                      isScrollControlled: true,
+                      builder:
+                          (context) => GiveUpConfirmBottomSheet(
+                            title: '정말로 포기할거야몽?',
+                            subTitle: '소소한 행동으로 더 좋은 하루를 만들어보세요.',
+                            onContinue: () {
+                              context.pop();
+                            },
+                            onGiveUp: () {
+                              context.pop();
+                              homeViewModel.completeChallenge(
+                                isComplete: false,
+                              );
+                            },
+                          ),
+                    );
+                  },
                   child: Container(
                     height: 36,
                     padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
