@@ -5,7 +5,7 @@ class CompleteChallengeUseCase {
 
   final ChallengeRepository repository;
 
-  Future<bool> completeChallenge({
+  Future<bool> execute({
     required int uid,
     required int dreamId,
     required int challengeId,
