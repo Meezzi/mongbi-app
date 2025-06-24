@@ -144,7 +144,6 @@ class MainScaffold extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-              // TODO: 알림 화면으로 이동
               context.push('/alarm');
             },
             padding: EdgeInsets.only(right: 24),
