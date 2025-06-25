@@ -22,8 +22,11 @@ class _DreamInterpretationPageState
     final dream = ref.watch(dreamInterpretationViewModelProvider);
 
     return Scaffold(
-      appBar: AppBar(),
-      backgroundColor: Color(0xfffcf6ff),
+      appBar: AppBar(
+        title: Text('오늘 꿈은 말이야...', style: Font.title20),
+        titleSpacing: 24,
+      ),
+      backgroundColor: Color(0xFFFCF6FF),
       body: SingleChildScrollView(
         child: SafeArea(
           child: Padding(
@@ -40,7 +43,7 @@ class _DreamInterpretationPageState
                 ),
                 SizedBox(height: 24),
                 DreamSectionCard(
-                  title: '심리 상태는',
+                  title: '따라서 너의 심리는',
                   subTitle: dream.psychologicalSubTitle,
                   content: dream.psychologicalStateInterpretation,
                   keywords: dream.psychologicalStateKeywords,
