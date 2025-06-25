@@ -41,19 +41,19 @@ class _DreamInterpretationPageState
                   content: dream.dreamInterpretation,
                   keywords: dream.dreamKeywords,
                 ),
-                SizedBox(height: 24),
+                SizedBox(height: 32),
                 DreamSectionCard(
                   title: '따라서 너의 심리는',
                   subTitle: dream.psychologicalSubTitle,
                   content: dream.psychologicalStateInterpretation,
                   keywords: dream.psychologicalStateKeywords,
                 ),
-                SizedBox(height: 24),
+                SizedBox(height: 32),
                 MongbiCommentCard(
                   title: '몽비의 한마디',
                   comment: dream.mongbiComment,
                 ),
-                SizedBox(height: 24),
+                SizedBox(height: 40),
                 CustomButton(
                   text: '오 맞아!',
                   onSubmit: () => context.pushReplacement('/challenge_intro'),
