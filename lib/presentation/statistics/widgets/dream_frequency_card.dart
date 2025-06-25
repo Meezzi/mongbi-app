@@ -53,7 +53,12 @@ class DreamFrequencyCard extends StatelessWidget {
                   ),
                 ),
                 SizedBox(width: getResponsiveRatioByWidth(context, 4)),
-                Text('/$totalDays일', style: Font.subTitle12),
+                Text(
+                  '/$totalDays일',
+                  style: Font.subTitle12.copyWith(
+                    color: isFirst ? Color(0xFF57525B) : Color(0xFF1A181B),
+                  ),
+                ),
               ],
             ),
           ],
