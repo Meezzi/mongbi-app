@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/presentation/common/button_type.dart';
-import 'package:mongbi_app/presentation/common/custom_snack_bar.dart';
 import 'package:mongbi_app/presentation/common/filled_button_widget.dart';
 import 'package:mongbi_app/presentation/common/ghost_button_widget.dart';
 import 'package:mongbi_app/providers/auth_provider.dart' as auth2;
@@ -72,6 +71,13 @@ class LogoutAccontModal extends ConsumerWidget {
                                           auth2.authViewModelProvider.notifier,
                                         )
                                         .logoutWithKakao();
+                              } else if (loginType == 'apple') {
+                                success =
+                                    await ref
+                                        .read(
+                                          auth2.authViewModelProvider.notifier,
+                                        )
+                                        .logoutWithApple();
                               }
 
                               if (success && context.mounted) {
