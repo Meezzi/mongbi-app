@@ -18,6 +18,15 @@ class DreamInterpretationViewModel extends Notifier<DreamInterpretationState> {
       psychologicalStateInterpretation: dream.psychologicalStateInterpretation,
       psychologicalStateKeywords: dream.psychologicalStateKeywords,
       mongbiComment: dream.mongbiComment,
+      interpretationCount: state.interpretationCount,
     );
+  }
+
+  void incrementInterpretationCount() {
+    state = state.copyWith(interpretationCount: state.interpretationCount + 1);
+  }
+
+  void resetInterpretationCount() {
+    state = state.copyWith(interpretationCount: 1);
   }
 }
