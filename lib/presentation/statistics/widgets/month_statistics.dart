@@ -102,7 +102,6 @@ class _MonthStatisticsState extends ConsumerState<MonthStatistics>
                     return Center(child: CircularProgressIndicator());
                   },
                   data: (data) {
-                    print('1221312312313123123123123132');
                     final monthStatistics = data?.month;
                     final now = DateTime.now();
                     final yearMonth =
