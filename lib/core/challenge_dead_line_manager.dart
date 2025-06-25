@@ -6,9 +6,9 @@ class DeadlineManager {
   bool _isDeadlinePassed = false;
   VoidCallback? _onDeadlineReached;
 
-  static const int _deadlineHour = 10;
-  static const int _deadlineMinute = 53;
-  static const int _deadlineSecond = 5;
+  static const int _deadlineHour = 23;
+  static const int _deadlineMinute = 59;
+  static const int _deadlineSecond = 59;
 
   bool get isDeadlinePassed => _isDeadlinePassed;
 
