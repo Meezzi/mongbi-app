@@ -1,3 +1,5 @@
+
+// AlarmSettingPage.dart
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,6 +22,12 @@ class AlarmSettingPage extends ConsumerWidget {
       name: 'alarm_setting_viewed',
       parameters: {'screen': 'AlarmSettingPage'},
     );
+
+    if (!alarmState.isInitialized) {
+      return const Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -49,9 +57,7 @@ class AlarmSettingPage extends ConsumerWidget {
             },
             enableInkWell: false,
           ),
-
           const Divider(height: 0, thickness: 8, color: Color(0xFFF3F2F4)),
-
           RoundedListTileItem(
             title: '리마인드 알림',
             isFirst: true,
@@ -69,24 +75,6 @@ class AlarmSettingPage extends ConsumerWidget {
             },
             enableInkWell: false,
           ),
-
-          // RoundedListTileItem(
-          //   title: '챌린지 알림',
-          //   isFirst: false,
-          //   isLast: true,
-          //   trailing: ToggleSwitch(value: alarmState.isChallenge),
-          //   onTap: () {
-          //     alarmViewModel.toggleChallenge();
-          //     FirebaseAnalytics.instance.logEvent(
-          //       name: 'alarm_toggle_changed',
-          //       parameters: {
-          //         'type': 'challenge',
-          //         'enabled': !alarmState.isChallenge,
-          //       },
-          //     );
-          //   },
-          //   enableInkWell: false,
-          // ),//TODO 추후 업데이트 때 새로 진행
         ],
       ),
     );

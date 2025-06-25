@@ -28,15 +28,18 @@ class AlarmSettingViewModel extends Notifier<AlarmSettingState> {
           isReminder: isReminder,
           isChallenge: isChallenge,
           isAll: false,
+          isInitialized: true,
         ).recalculateIsAll();
   }
 
   void toggleAll() {
     final next = !state.isAll;
+
     final nextState = AlarmSettingState(
       isAll: next,
       isReminder: next,
       isChallenge: next,
+      isInitialized: true,
     );
 
     state = nextState;
@@ -54,6 +57,7 @@ class AlarmSettingViewModel extends Notifier<AlarmSettingState> {
 
   void toggleReminder() async {
     final next = !state.isReminder;
+
     final nextState = state.copyWith(isReminder: next).recalculateIsAll();
 
     state = nextState;
