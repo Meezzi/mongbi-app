@@ -3,6 +3,7 @@ import 'package:flutter_naver_login/flutter_naver_login.dart';
 import 'package:flutter_naver_login/interface/types/naver_login_result.dart';
 import 'package:flutter_naver_login/interface/types/naver_login_status.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart' as kakao;
 import 'package:mongbi_app/domain/entities/user.dart';
 import 'package:mongbi_app/domain/use_cases/login_with_apple.dart';
@@ -18,7 +19,7 @@ class AuthViewModel extends Notifier<User?> {
   late final LoginWithNaver _loginWithNaver;
   late final LoginWithKakao _loginWithKakao;
   late final LoginWithApple _loginWithApple;
-
+  final _secureStorage = const FlutterSecureStorage();
   late final Future<SharedPreferences> _prefsFuture;
   @override
   User? build() {
@@ -141,6 +142,7 @@ class AuthViewModel extends Notifier<User?> {
       final prefs = await _prefsFuture;
       await prefs.setBool('isLoginState', false);
       await prefs.setBool('isLogined', false);
+      await _secureStorage.deleteAll();
       ref.read(splashViewModelProvider.notifier).logout();
       return true;
     } catch (error) {
@@ -156,6 +158,7 @@ class AuthViewModel extends Notifier<User?> {
         final prefs = await _prefsFuture;
         await prefs.setBool('isLoginState', false);
         await prefs.setBool('isLogined', false);
+        await _secureStorage.deleteAll();
         ref.read(splashViewModelProvider.notifier).logout();
         return true;
       }
@@ -170,7 +173,7 @@ class AuthViewModel extends Notifier<User?> {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setBool('isLogined', false);
       await prefs.setBool('isLoginState', false);
-
+      await _secureStorage.deleteAll();
       ref.read(splashViewModelProvider.notifier).logout();
 
       return true;
