@@ -95,6 +95,7 @@ class SocialLoginPage extends ConsumerWidget {
                                       '',
                                     ),
                                     40,
+                                    2,
                                   ),
                                 );
                               }
@@ -154,6 +155,7 @@ class SocialLoginPage extends ConsumerWidget {
                                 customSnackBar(
                                   e.toString().replaceFirst('Exception: ', ''),
                                   40,
+                                  2,
                                 ),
                               );
                             }
@@ -212,6 +214,7 @@ class SocialLoginPage extends ConsumerWidget {
                                 customSnackBar(
                                   e.toString().replaceFirst('Exception: ', ''),
                                   40,
+                                  2,
                                 ),
                               );
                             }
