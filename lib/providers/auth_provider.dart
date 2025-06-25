@@ -46,3 +46,4 @@ final loginWithAppleUseCaseProvider = Provider<LoginWithApple>(
 final authViewModelProvider = NotifierProvider<AuthViewModel, User?>(
   () => AuthViewModel(),
 );
+final lastLoginTypeProvider = StateProvider<String?>((ref) => null);

@@ -53,6 +53,8 @@ class AuthViewModel extends Notifier<User?> {
 
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('lastLoginType', 'apple');
+      
+      ref.read(lastLoginTypeProvider.notifier).state = 'apple';
     } catch (e) {
       rethrow;
     } finally {
@@ -80,7 +82,7 @@ class AuthViewModel extends Notifier<User?> {
       final prefs = await _prefsFuture;
       await prefs.setString('lastLoginType', 'naver');
       await prefs.setBool('isLogined', true);
-
+      ref.read(lastLoginTypeProvider.notifier).state = 'naver';
       final getUserUseCase = ref.read(getUserInfoUseCaseProvider);
       final userInfo = await getUserUseCase.execute();
       state = userInfo[0];
@@ -115,7 +117,7 @@ class AuthViewModel extends Notifier<User?> {
       final prefs = await _prefsFuture;
       await prefs.setString('lastLoginType', 'kakao');
       await prefs.setBool('isLogined', true);
-
+      ref.read(lastLoginTypeProvider.notifier).state = 'kakao';
       final getUserUseCase = ref.read(getUserInfoUseCaseProvider);
       final userInfo = await getUserUseCase.execute();
 
@@ -138,6 +140,7 @@ class AuthViewModel extends Notifier<User?> {
       await kakao.UserApi.instance.unlink();
       final prefs = await _prefsFuture;
       await prefs.setBool('isLoginState', false);
+      await prefs.setBool('isLogined', false);
       ref.read(splashViewModelProvider.notifier).logout();
       return true;
     } catch (error) {
@@ -152,6 +155,7 @@ class AuthViewModel extends Notifier<User?> {
       if (res.status == NaverLoginStatus.loggedOut) {
         final prefs = await _prefsFuture;
         await prefs.setBool('isLoginState', false);
+        await prefs.setBool('isLogined', false);
         ref.read(splashViewModelProvider.notifier).logout();
         return true;
       }
