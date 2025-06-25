@@ -47,13 +47,16 @@ class AuthViewModel extends Notifier<User?> {
       final identityToken = credential.identityToken;
 
       if (identityToken != null) {
-        final result = await _loginWithApple.excute(identityToken);
+        final result = await _loginWithApple.execute(identityToken);
         state = result;
         final prefs = await SharedPreferences.getInstance();
         await prefs.setString('lastLoginType', 'apple');
-
+        await prefs.setBool('isLogined', true);
         ref.read(lastLoginTypeProvider.notifier).state = 'apple';
 
+        final getUserUseCase = ref.read(getUserInfoUseCaseProvider);
+        final userInfo = await getUserUseCase.execute();
+        state = userInfo[0];
         return result.hasAgreedLatestTerms;
       } else {
         throw const AuthFailedException('Apple identity_token 없음');
