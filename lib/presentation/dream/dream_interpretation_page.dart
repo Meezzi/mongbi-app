@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/font.dart';
+import 'package:mongbi_app/presentation/common/action_button_row.dart';
 import 'package:mongbi_app/presentation/dream/widgets/custom_button.dart';
 import 'package:mongbi_app/presentation/dream/widgets/dream_section_card.dart';
 import 'package:mongbi_app/presentation/dream/widgets/mongbi_comment_card.dart';
@@ -56,10 +57,27 @@ class _DreamInterpretationPageState
                   comment: dream.mongbiComment,
                 ),
                 SizedBox(height: 40),
-                CustomButton(
-                  text: '오 맞아!',
-                  onSubmit: () => context.pushReplacement('/challenge_intro'),
-                ),
+
+                if (dream.interpretationCount == 1) ...[
+                  ActionButtonRow(
+                    leftText: '음... 아닌데?',
+                    rightText: '오 맞아!',
+                    onLeftPressed: () {
+                      ref
+                          .read(dreamInterpretationViewModelProvider.notifier)
+                          .incrementInterpretationCount();
+                      context.pushReplacement('/dream_write');
+                    },
+                    onRightPressed:
+                        () => context.pushReplacement('/challenge_intro'),
+                  ),
+                ] else ...[
+                  CustomButton(
+                    text: '고마워',
+                    onSubmit: () => context.pushReplacement('/challenge_intro'),
+                  ),
+                ],
+
                 SizedBox(height: 24),
               ],
             ),
