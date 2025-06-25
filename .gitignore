@@ -47,6 +47,7 @@ app.*.map.json
 # Environment variables
 .env
 ios/Runner/GoogleService-info.plist
+ios/build/
 sentry.properties
 google-services.json
 firebase_options.dart
