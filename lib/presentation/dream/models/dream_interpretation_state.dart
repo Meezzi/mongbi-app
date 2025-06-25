@@ -22,4 +22,34 @@ class DreamInterpretationState {
   final String mongbiComment;
   final String dreamCategory;
   final int interpretationCount;
+
+  DreamInterpretationState copyWith({
+    int? dreamId,
+    String? dreamSubTitle,
+    String? dreamInterpretation,
+    List<String>? dreamKeywords,
+    String? psychologicalSubTitle,
+    String? psychologicalStateInterpretation,
+    List<String>? psychologicalStateKeywords,
+    String? mongbiComment,
+    String? dreamCategory,
+    int? interpretationCount,
+  }) {
+    return DreamInterpretationState(
+      dreamId: dreamId ?? this.dreamId,
+      dreamSubTitle: dreamSubTitle ?? this.dreamSubTitle,
+      dreamInterpretation: dreamInterpretation ?? this.dreamInterpretation,
+      dreamKeywords: dreamKeywords ?? this.dreamKeywords,
+      psychologicalSubTitle:
+          psychologicalSubTitle ?? this.psychologicalSubTitle,
+      psychologicalStateInterpretation:
+          psychologicalStateInterpretation ??
+          this.psychologicalStateInterpretation,
+      psychologicalStateKeywords:
+          psychologicalStateKeywords ?? this.psychologicalStateKeywords,
+      mongbiComment: mongbiComment ?? this.mongbiComment,
+      dreamCategory: dreamCategory ?? this.dreamCategory,
+      interpretationCount: interpretationCount ?? this.interpretationCount,
+    );
+  }
 }
