@@ -23,11 +23,12 @@ class AlarmSettingViewModel extends Notifier<AlarmSettingState> {
     final isReminder = _prefs.getBool('alarm_isReminder') ?? false;
     final isChallenge = _prefs.getBool('alarm_isChallenge') ?? false;
 
-    state = AlarmSettingState(
-      isReminder: isReminder,
-      isChallenge: isChallenge,
-      isAll: isReminder && isChallenge,
-    );
+    state =
+        AlarmSettingState(
+          isReminder: isReminder,
+          isChallenge: isChallenge,
+          isAll: false,
+        ).recalculateIsAll();
   }
 
   void toggleAll() {
@@ -66,7 +67,6 @@ class AlarmSettingViewModel extends Notifier<AlarmSettingState> {
     } else {
       await notificationService.cancelReminderNotification();
     }
-  
   }
 
   void toggleChallenge() {
