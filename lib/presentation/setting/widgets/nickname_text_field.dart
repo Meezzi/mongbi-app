@@ -49,7 +49,7 @@ class _NicknameTextFieldState extends State<NicknameTextField> {
           height: 56,
           decoration: BoxDecoration(
             color:
-                isFocused ? const Color(0xFFF4EAFF) : const Color(0xFFF9F8F8),
+                isFocused ? const Color(0xFFF4EAFF) : const Color(0xF5F5F4F5),
             borderRadius: BorderRadius.circular(40),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 24),

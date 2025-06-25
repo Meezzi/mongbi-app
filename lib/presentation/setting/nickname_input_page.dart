@@ -70,24 +70,29 @@ class _NicknameInputPageState extends ConsumerState<NicknameInputPage> {
               )
               : null,
       backgroundColor: const Color(0xFFFAFAFA),
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(24, 140, 24, 0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const NicknameTitle(),
-            const SizedBox(height: 32),
-            NicknameTextField(
-              onChanged: (value) => setState(() => nickname = value),
-            ),
-            const Spacer(),
-            FilledButtonWidget(
-              type: ButtonType.primary,
-              text: '이렇게 불러줘',
-              onPress: isButtonEnabled ? _handleNicknameSubmit : null,
-            ),
-            const SizedBox(height: 24),
-          ],
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(height: 140),
+              const NicknameTitle(),
+              SizedBox(height: 32),
+              NicknameTextField(
+                onChanged: (value) => setState(() => nickname = value),
+              ),
+              const Spacer(),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: FilledButtonWidget(
+                  type: ButtonType.primary,
+                  text: '이렇게 불러줘',
+                  onPress: isButtonEnabled ? _handleNicknameSubmit : null,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

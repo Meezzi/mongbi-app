@@ -62,128 +62,123 @@ class _RemindTimePickerPageState extends State<RemindTimePickerPage> {
         ),
       ),
       body: SafeArea(
-        child: Stack(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: Column(
-                children: [
-                  const SizedBox(height: 72),
-                  const OnboardingText(
-                    text: '몽비와 함께할 시간을 알려줘!',
-                    type: RemindTimeSettingTextType.title,
-                  ),
-                  const SizedBox(height: 8),
-                  const OnboardingText(
-                    text: '원하는 리마인드 시간을\n설정해주세요.',
-                    type: RemindTimeSettingTextType.description,
-                    align: TextAlign.center,
-                  ),
-                  const SizedBox(height: 89),
-                  SizedBox(
-                    height: 188,
-                    child: CustomTimePicker(
-                      onChanged: (time, amPm) {
-                        selectedTime = time;
-                      },
-                    ),
-                  ),
-                ],
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: Column(
+            children: [
+              const SizedBox(height: 72),
+              const OnboardingText(
+                text: '몽비와 함께할 시간을 알려줘!',
+                type: RemindTimeSettingTextType.title,
               ),
-            ),
-            Positioned(
-              bottom: 108,
-              left: 0,
-              right: 0,
-              child: Center(
-                child: Text(
-                  '나중에 다시 설정할 수 있어요',
-                  style: Font.subTitle14.copyWith(
-                    color: const Color(0xFFA6A1AA),
+              const SizedBox(height: 8),
+              const OnboardingText(
+                text: '원하는 리마인드 시간을\n설정해주세요.',
+                type: RemindTimeSettingTextType.description,
+                align: TextAlign.center,
+              ),
+              const SizedBox(height: 89),
+              SizedBox(
+                height: 188,
+                child: CustomTimePicker(
+                  onChanged: (time, amPm) {
+                    selectedTime = time;
+                  },
+                ),
+              ),
+              Spacer(),
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  child: Text(
+                    '나중에 다시 설정할 수 있어요',
+                    style: Font.subTitle14.copyWith(
+                      color: const Color(0xFFA6A1AA),
+                    ),
                   ),
                 ),
               ),
-            ),
-            Positioned(
-              bottom: 32,
-              left: 24,
-              right: 24,
-              child: FilledButtonWidget(
-                type: ButtonType.primary,
-                text: '정했어',
-                onPress: () async {
-                  try {
-                    final status = await Permission.notification.status;
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: FilledButtonWidget(
+                  type: ButtonType.primary,
+                  text: '정했어',
+                  onPress: () async {
+                    try {
+                      final status = await Permission.notification.status;
 
-                    final granted =
-                        await NotificationService()
-                            .requestNotificationPermission();
+                      final granted =
+                          await NotificationService()
+                              .requestNotificationPermission();
 
-                    if (!granted) {
-                      if (status.isPermanentlyDenied) {
-                        await FirebaseAnalytics.instance.logEvent(
-                          name: 'remind_permission_permanent_denied',
-                          parameters: {
-                            'screen': 'RemindTimePickerPage',
-                            'permanently': true,
-                          },
-                        );
+                      if (!granted) {
+                        if (status.isPermanentlyDenied) {
+                          await FirebaseAnalytics.instance.logEvent(
+                            name: 'remind_permission_permanent_denied',
+                            parameters: {
+                              'screen': 'RemindTimePickerPage',
+                              'permanently': true,
+                            },
+                          );
 
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text(
-                              '알림 권한이 영구적으로 거부되었습니다. 설정 > 몽비 > 알림에서 직접 허용해주세요.',
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(
+                                '알림 권한이 영구적으로 거부되었습니다. 설정 > 몽비 > 알림에서 직접 허용해주세요.',
+                              ),
                             ),
+                          );
+                          await NotificationService().openAppSettingsIfNeeded();
+                        } else {
+                          await FirebaseAnalytics.instance.logEvent(
+                            name: 'remind_permission_denied',
+                            parameters: {
+                              'screen': 'RemindTimePickerPage',
+                              'permanently': false,
+                            },
+                          );
+
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('알림 권한이 거부되었습니다.')),
+                          );
+                        }
+                        return;
+                      }
+
+                      // ✅ 알림 설정 시간 저장 로그
+                      await FirebaseAnalytics.instance.logEvent(
+                        name: 'remind_time_selected',
+                        parameters: {
+                          'hour': selectedTime.hour,
+                          'minute': selectedTime.minute,
+                          'screen': 'RemindTimePickerPage',
+                        },
+                      );
+
+                      await NotificationService().scheduleDailyReminder(
+                        selectedTime,
+                      );
+                      final prefs = await SharedPreferences.getInstance();
+                      await prefs.setBool('alarm_isReminder', true);
+                      context.go('/onbording_page');
+                    } catch (e) {
+                      if (e is PlatformException &&
+                          e.code == 'exact_alarms_not_permitted') {
+                        await NotificationService()
+                            .openExactAlarmSettingsIfNeeded();
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('알림 예약 중 오류: ${e.toString()}'),
                           ),
                         );
-                        await NotificationService().openAppSettingsIfNeeded();
-                      } else {
-                        await FirebaseAnalytics.instance.logEvent(
-                          name: 'remind_permission_denied',
-                          parameters: {
-                            'screen': 'RemindTimePickerPage',
-                            'permanently': false,
-                          },
-                        );
-
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('알림 권한이 거부되었습니다.')),
-                        );
                       }
-                      return;
                     }
-
-                    // ✅ 알림 설정 시간 저장 로그
-                    await FirebaseAnalytics.instance.logEvent(
-                      name: 'remind_time_selected',
-                      parameters: {
-                        'hour': selectedTime.hour,
-                        'minute': selectedTime.minute,
-                        'screen': 'RemindTimePickerPage',
-                      },
-                    );
-
-                    await NotificationService().scheduleDailyReminder(
-                      selectedTime,
-                    );
-                    final prefs = await SharedPreferences.getInstance();
-                    await prefs.setBool('alarm_isReminder', true);
-                    context.go('/onbording_page');
-                  } catch (e) {
-                    if (e is PlatformException &&
-                        e.code == 'exact_alarms_not_permitted') {
-                      await NotificationService()
-                          .openExactAlarmSettingsIfNeeded();
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('알림 예약 중 오류: ${e.toString()}')),
-                      );
-                    }
-                  }
-                },
+                  },
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
