@@ -25,6 +25,7 @@ class AlarmSettingPage extends ConsumerWidget {
       appBar: AppBar(
         title: Text('알림 설정', style: Font.title20),
         titleSpacing: 0,
+        centerTitle: false,
         leading: IconButton(
           onPressed: () => context.pop(),
           icon: SvgPicture.asset('assets/icons/back-arrow.svg'),
