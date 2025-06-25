@@ -29,7 +29,9 @@ class _DreamInterpretationPageState
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                SizedBox(height: 16),
                 DreamSectionCard(
                   title: '꿈을 해석 해보자면',
                   subTitle: dream.dreamSubTitle,
