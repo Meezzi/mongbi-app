@@ -12,30 +12,28 @@ class TermsDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    FirebaseAnalytics.instance.logEvent(
-      name: 'terms_detail_viewed',
-      parameters: {
-        'terms': termsList.map((t) => t.name).toList(),
-      },
-    );
-
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          children: [
-            IconButton(
-              icon: SvgPicture.asset(
-                'assets/icons/back-arrow.svg',
-                width: 24,
-                height: 24,
+        centerTitle: false,
+        titleSpacing: 0,
+        automaticallyImplyLeading: false,
+        title: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: Row(
+            children: [
+              GestureDetector(
+                onTap: () => context.pop(),
+                child: SvgPicture.asset(
+                  'assets/icons/back-arrow.svg',
+                  width: 24,
+                  height: 24,
+                  fit: BoxFit.cover,
+                ),
               ),
-              onPressed: () {
-                context.pop();
-              },
-            ),
-            const SizedBox(width: 8),
-            Text('서비스 약관', style: Font.title20),
-          ],
+              SizedBox(width: 8),
+              Expanded(child: Text('서비스 약관', style: Font.title20)),
+            ],
+          ),
         ),
         elevation: 0,
         backgroundColor: const Color(0xFFFAFAFA),
