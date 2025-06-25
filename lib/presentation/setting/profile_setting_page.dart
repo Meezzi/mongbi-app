@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/font.dart';
+import 'package:mongbi_app/presentation/setting/widgets/logout_account_modal.dart';
 import 'package:mongbi_app/presentation/setting/widgets/logout_confirm_dialog.dart';
 import 'package:mongbi_app/presentation/setting/widgets/remove_accont_modal.dart';
 import 'package:mongbi_app/presentation/setting/widgets/setting_rounded_list_tile_item.dart';
@@ -80,60 +81,11 @@ class ProfileSettingPage extends ConsumerWidget {
                 name: 'logout_attempted',
                 parameters: {'screen': 'ProfileSettingPage'},
               );
-
               showDialog(
                 context: context,
-                barrierDismissible: true,
-                builder:
-                    (context) => LogoutConfirmDialog(
-                      onConfirm: () async {
-                        final prefs = await SharedPreferences.getInstance();
-                        final loginType = prefs.getString('lastLoginType');
-                        bool success = false;
-
-                        try {
-                          if (loginType == 'naver') {
-                            success =
-                                await ref
-                                    .read(auth2.authViewModelProvider.notifier)
-                                    .logoutWithNaver();
-                          } else if (loginType == 'kakao') {
-                            success =
-                                await ref
-                                    .read(auth2.authViewModelProvider.notifier)
-                                    .logoutWithKakao();
-                          }
-
-                          if (success && context.mounted) {
-                            await FirebaseAnalytics.instance.logEvent(
-                              name: 'logout_success',
-                              parameters: {'method': loginType ?? 'unknown'},
-                            );
-                            context.go('/social_login');
-                          } else {
-                            await FirebaseAnalytics.instance.logEvent(
-                              name: 'logout_failed',
-                              parameters: {
-                                'error': 'logout_failed_or_context_unmounted',
-                              },
-                            );
-                            Navigator.pop(context);
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('로그아웃에 실패했습니다.')),
-                            );
-                          }
-                        } catch (e) {
-                          await FirebaseAnalytics.instance.logEvent(
-                            name: 'logout_failed',
-                            parameters: {'error': e.toString()},
-                          );
-                          Navigator.pop(context);
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('로그아웃 중 오류가 발생했습니다.')),
-                          );
-                        }
-                      },
-                    ),
+                barrierDismissible: false, // 배경 터치로 닫히지 않음!
+                barrierColor: Colors.black.withValues(alpha: 0.6),
+                builder: (context) => LogoutAccontModal(),
               );
             },
           ),
