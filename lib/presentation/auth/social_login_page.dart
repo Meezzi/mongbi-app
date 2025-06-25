@@ -41,7 +41,7 @@ class SocialLoginPage extends ConsumerWidget {
                     children: [
                       if (Platform.isIOS) ...[
                         _SocialLoginItem(
-                          showRecentBubble: lastLoginProvider == 'apple',
+                          //showRecentBubble: lastLoginProvider == 'apple',
                           child: AppleLoginButton(
                             onTap: () async {
                               final authViewModel = ref.read(
@@ -103,7 +103,7 @@ class SocialLoginPage extends ConsumerWidget {
                         const SizedBox(width: 24),
                       ],
                       _SocialLoginItem(
-                        showRecentBubble: lastLoginProvider == 'kakao',
+                        //showRecentBubble: lastLoginProvider == 'kakao',
                         child: KakaoLoginButton(
                           onTap: () async {
                             final authViewModel = ref.read(
@@ -162,7 +162,7 @@ class SocialLoginPage extends ConsumerWidget {
                       ),
                       const SizedBox(width: 24),
                       _SocialLoginItem(
-                        showRecentBubble: lastLoginProvider == 'naver',
+                        //showRecentBubble: lastLoginProvider == 'naver',
                         child: NaverLoginButton(
                           onTap: () async {
                             final authViewModel = ref.read(
