@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:mongbi_app/presentation/auth/viewmodels/auth_view_model.dart';
 import 'package:mongbi_app/presentation/auth/widgets/apple_login_button_widget.dart';
 import 'package:mongbi_app/presentation/auth/widgets/kakao_login_button_widget.dart';
 import 'package:mongbi_app/presentation/auth/widgets/last_login_state_weiget.dart';
@@ -55,8 +57,8 @@ class SocialLoginPage extends ConsumerWidget {
                                 },
                               );
                               try {
-                                await authViewModel.loginWithApple();
-
+                                final isAgreed =
+                                    await authViewModel.loginWithApple();
                                 await FirebaseAnalytics.instance.logEvent(
                                   name: 'login_success',
                                   parameters: {
@@ -64,18 +66,22 @@ class SocialLoginPage extends ConsumerWidget {
                                     'screen': 'SocialLoginPage',
                                   },
                                 );
-                                await showModalBottomSheet(
-                                  context: context,
-                                  isScrollControlled: false,
-                                  isDismissible: false,
-                                  backgroundColor: const Color.fromARGB(
-                                    60,
-                                    0,
-                                    0,
-                                    0,
-                                  ),
-                                  builder: (_) => const TermsBottomSheet(),
-                                );
+                                if (isAgreed) {
+                                  context.go('/home');
+                                } else {
+                                  await showModalBottomSheet(
+                                    context: context,
+                                    isScrollControlled: false,
+                                    isDismissible: false,
+                                    backgroundColor: const Color.fromARGB(
+                                      60,
+                                      0,
+                                      0,
+                                      0,
+                                    ),
+                                    builder: (_) => const TermsBottomSheet(),
+                                  );
+                                }
                               } catch (e) {
                                 // await FirebaseAnalytics.instance.logEvent(
                                 //   name: 'login_failure',
@@ -118,7 +124,8 @@ class SocialLoginPage extends ConsumerWidget {
                             );
 
                             try {
-                              await authViewModel.loginWithKakao();
+                              final isAgreed =
+                                  await authViewModel.loginWithKakao();
                               await FirebaseAnalytics.instance.logEvent(
                                 name: 'login_success',
                                 parameters: {
@@ -126,19 +133,22 @@ class SocialLoginPage extends ConsumerWidget {
                                   'screen': 'SocialLoginPage',
                                 },
                               );
-
-                              await showModalBottomSheet(
-                                context: context,
-                                isScrollControlled: false,
-                                isDismissible: false,
-                                backgroundColor: const Color.fromARGB(
-                                  60,
-                                  0,
-                                  0,
-                                  0,
-                                ),
-                                builder: (_) => const TermsBottomSheet(),
-                              );
+                              if (isAgreed) {
+                                context.go('/home');
+                              } else {
+                                await showModalBottomSheet(
+                                  context: context,
+                                  isScrollControlled: false,
+                                  isDismissible: false,
+                                  backgroundColor: const Color.fromARGB(
+                                    60,
+                                    0,
+                                    0,
+                                    0,
+                                  ),
+                                  builder: (_) => const TermsBottomSheet(),
+                                );
+                              }
                             } catch (e) {
                               await FirebaseAnalytics.instance.logEvent(
                                 name: 'login_failure',
@@ -175,7 +185,8 @@ class SocialLoginPage extends ConsumerWidget {
                                 'screen': 'SocialLoginPage',
                               },
                             );
-
+                            final isAgreed =
+                                await authViewModel.loginWithNaver();
                             try {
                               await authViewModel.loginWithNaver();
                               await FirebaseAnalytics.instance.logEvent(
@@ -185,19 +196,22 @@ class SocialLoginPage extends ConsumerWidget {
                                   'screen': 'SocialLoginPage',
                                 },
                               );
-
-                              await showModalBottomSheet(
-                                context: context,
-                                isScrollControlled: false,
-                                isDismissible: false,
-                                backgroundColor: const Color.fromARGB(
-                                  60,
-                                  0,
-                                  0,
-                                  0,
-                                ),
-                                builder: (_) => const TermsBottomSheet(),
-                              );
+                              if (isAgreed) {
+                                context.go('/home');
+                              } else {
+                                await showModalBottomSheet(
+                                  context: context,
+                                  isScrollControlled: false,
+                                  isDismissible: false,
+                                  backgroundColor: const Color.fromARGB(
+                                    60,
+                                    0,
+                                    0,
+                                    0,
+                                  ),
+                                  builder: (_) => const TermsBottomSheet(),
+                                );
+                              }
                             } catch (e) {
                               // await FirebaseAnalytics.instance.logEvent(
                               //   name: 'login_failure',
