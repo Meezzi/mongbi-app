@@ -179,12 +179,17 @@ class MonthYearPickerState extends ConsumerState<MonthYearPicker> {
         ),
         child: Text(
           content,
-          style: Font.body14.copyWith(
+          style: TextStyle(
+            fontFamily: 'NanumSquareRound',
+            fontWeight: FontWeight.w400,
+            fontSize: getResponsiveRatioByWidth(context, 14),
+            height:
+                getResponsiveRatioByWidth(context, 20) /
+                getResponsiveRatioByWidth(context, 14),
             color:
                 (isAfterCurrentMonth ?? false)
                     ? Color(0xFFA6A1AA)
                     : Color(0xFF1A181B),
-            fontSize: getResponsiveRatioByWidth(context, 14),
           ),
         ),
       ),
