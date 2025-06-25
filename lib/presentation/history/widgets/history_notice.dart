@@ -65,13 +65,14 @@ class HistoryNotice extends StatelessWidget {
             tagList: history.psychologicalStateKeywords,
           ),
           HistoryItem(label: '몽비의 한마디', content: history.mongbiComment),
-          HistoryItem(
-            label: '몽비의 선물',
-            content: removeHtmlTags(history.challengeDesc),
-            isChallenge: true,
-            challengeType: history.challengeType,
-            challengeStatus: history.challengeStatus,
-          ),
+          if (history.challengeDesc != null)
+            HistoryItem(
+              label: '몽비의 선물',
+              content: removeHtmlTags(history.challengeDesc!),
+              isChallenge: true,
+              challengeType: history.challengeType!,
+              challengeStatus: history.challengeStatus!,
+            ),
         ],
       );
     }
