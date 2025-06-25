@@ -102,7 +102,11 @@ final GoRouter router = GoRouter(
       pageBuilder:
           (context, state) => buildFadeTransitionPage(
             key: state.pageKey,
-            child: DreamWritePage(),
+            child: DreamWritePage(
+              isFirst:
+                  bool.tryParse('${state.uri.queryParameters['isFirst']}') ??
+                  true,
+            ),
           ),
     ),
     GoRoute(
@@ -110,7 +114,11 @@ final GoRouter router = GoRouter(
       pageBuilder:
           (context, state) => buildFadeTransitionPage(
             key: state.pageKey,
-            child: DreamAnalysisLoadingPage(),
+            child: DreamAnalysisLoadingPage(
+              isFirst:
+                  bool.tryParse('${state.uri.queryParameters['isFirst']}') ??
+                  true,
+            ),
           ),
     ),
     GoRoute(
@@ -118,12 +126,21 @@ final GoRouter router = GoRouter(
       pageBuilder:
           (context, state) => buildFadeTransitionPage(
             key: state.pageKey,
-            child: DreamAnalysisResultPage(),
+            child: DreamAnalysisResultPage(
+              isFirst:
+                  bool.tryParse('${state.uri.queryParameters['isFirst']}') ??
+                  true,
+            ),
           ),
     ),
     GoRoute(
       path: '/dream_interpretation',
-      builder: (context, state) => DreamInterpretationPage(),
+      builder:
+          (context, state) => DreamInterpretationPage(
+            isFirst:
+                bool.tryParse('${state.uri.queryParameters['isFirst']}') ??
+                true,
+          ),
     ),
     GoRoute(
       path: '/challenge_intro',
