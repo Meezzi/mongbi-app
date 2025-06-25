@@ -116,36 +116,37 @@ class _YearStatisticsState extends ConsumerState<YearStatistics>
                     final isFirst = frequency == 0;
                     final isCurrent = now.year == int.parse(year);
 
+                    // TODO : 통계 스낵바 사용하지 않으니 일단 주석
                     // 년이 바뀌었거나, 같은 년을 다시 선택했을 때 항상 스낵바를 hide
-                    final currentYear = yearStatistics?.year; // "2025"
+                    // final currentYear = yearStatistics?.year; // "2025"
 
-                    if (prevDisplayedYear != null &&
-                        prevDisplayedYear != currentYear) {
-                      WidgetsBinding.instance.addPostFrameCallback((_) {
-                        yearSnackBarKey.currentState?.hide();
-                      });
-                    }
+                    // if (prevDisplayedYear != null &&
+                    //     prevDisplayedYear != currentYear) {
+                    //   WidgetsBinding.instance.addPostFrameCallback((_) {
+                    //     yearSnackBarKey.currentState?.hide();
+                    //   });
+                    // }
 
                     // 이전 년(현재가 아닌 년) 선택 시 무조건 스낵바 제거
-                    if (!isCurrent) {
-                      WidgetsBinding.instance.addPostFrameCallback((_) {
-                        yearSnackBarKey.currentState?.hide();
-                      });
-                    }
+                    // if (!isCurrent) {
+                    //   WidgetsBinding.instance.addPostFrameCallback((_) {
+                    //     yearSnackBarKey.currentState?.hide();
+                    //   });
+                    // }
 
                     // 현재 년 + isFirst + 라우트 확인 => 스낵바 표시
-                    if (isCurrent && isFirst) {
-                      WidgetsBinding.instance.addPostFrameCallback((_) {
-                        if (ModalRoute.of(context)?.isCurrent == true &&
-                            mounted) {
-                          yearSnackBarKey.currentState?.hide(); // 항상 hide 후
-                          yearSnackBarKey.currentState?.show(); // 다시 show
-                        }
-                      });
-                    }
+                    // if (isCurrent && isFirst) {
+                    //   WidgetsBinding.instance.addPostFrameCallback((_) {
+                    //     if (ModalRoute.of(context)?.isCurrent == true &&
+                    //         mounted) {
+                    //       yearSnackBarKey.currentState?.hide(); // 항상 hide 후
+                    //       yearSnackBarKey.currentState?.show(); // 다시 show
+                    //     }
+                    //   });
+                    // }
 
                     // 현재 표시 년 갱신
-                    prevDisplayedYear = currentYear;
+                    // prevDisplayedYear = currentYear;
 
                     return Column(
                       children: [

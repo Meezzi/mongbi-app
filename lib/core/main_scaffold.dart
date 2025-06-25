@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/font.dart';
+import 'package:mongbi_app/core/main_navi_tab_bar.dart';
 import 'package:mongbi_app/core/secure_storage_service.dart';
 import 'package:mongbi_app/presentation/common/custom_snack_bar.dart';
 import 'package:mongbi_app/providers/alarm_provider.dart';
@@ -16,7 +17,6 @@ class MainScaffold extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final String location = GoRouterState.of(context).uri.toString();
-
     int selectedIndex = switch (location) {
       _ when location.startsWith('/history') => 1,
       _ when location.startsWith('/statistics') => 2,
@@ -38,6 +38,22 @@ class MainScaffold extends ConsumerWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            // MainNaviTabBar(
+            //   path: '/home',
+            //   iconName: 'home',
+            //   selected: selectedIndex == 0,
+            //   isHistory: isHistory,
+            //   isStatistics: isStatistics,
+            //   location: location,
+            // ),
+            // MainNaviTabBar(
+            //   path: '/history',
+            //   iconName: 'record',
+            //   selected: selectedIndex == 1,
+            //   isHistory: isHistory,
+            //   isStatistics: isStatistics,
+            //   location: location,
+            // ),
             _buildTab(
               context,
               0,
@@ -56,7 +72,8 @@ class MainScaffold extends ConsumerWidget {
             ),
             GestureDetector(
               onTap: () async {
-                ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                // TODO : 통계 스낵바 사용하지 않으니 일단 주석
+                // ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
                 final uid = await SecureStorageService().getUserIdx();
 
@@ -105,6 +122,22 @@ class MainScaffold extends ConsumerWidget {
                 ),
               ),
             ),
+            // MainNaviTabBar(
+            //   path: '/statistics',
+            //   iconName: 'statistics',
+            //   selected: selectedIndex == 2,
+            //   isHistory: isHistory,
+            //   isStatistics: isStatistics,
+            //   location: location,
+            // ),
+            // MainNaviTabBar(
+            //   path: '/setting',
+            //   iconName: 'user',
+            //   selected: selectedIndex == 3,
+            //   isHistory: isHistory,
+            //   isStatistics: isStatistics,
+            //   location: location,
+            // ),
             _buildTab(
               context,
               2,
@@ -229,7 +262,8 @@ class MainScaffold extends ConsumerWidget {
 
     return GestureDetector(
       onTap: () {
-        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        // TODO : 통계 스낵바 사용하지 않으니 일단 주석
+        // ScaffoldMessenger.of(context).hideCurrentSnackBar();
         context.go(path);
       },
       child: SvgPicture.asset(
