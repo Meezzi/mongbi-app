@@ -53,7 +53,7 @@ class AuthViewModel extends Notifier<User?> {
 
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('lastLoginType', 'apple');
-      
+
       ref.read(lastLoginTypeProvider.notifier).state = 'apple';
     } catch (e) {
       rethrow;
@@ -161,6 +161,20 @@ class AuthViewModel extends Notifier<User?> {
       }
       return false;
     } catch (error) {
+      return false;
+    }
+  }
+
+  Future<bool> logoutWithApple(WidgetRef ref) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isLogined', false);
+      await prefs.setBool('isLoginState', false);
+
+      ref.read(splashViewModelProvider.notifier).logout();
+
+      return true;
+    } catch (e) {
       return false;
     }
   }
