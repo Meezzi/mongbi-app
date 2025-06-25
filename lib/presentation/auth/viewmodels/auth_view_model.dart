@@ -34,7 +34,7 @@ class AuthViewModel extends Notifier<User?> {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
-  Future<void> loginWithApple() async {
+  Future<bool> loginWithApple() async {
     _isLoading = true;
     try {
       final credential = await SignInWithApple.getAppleIDCredential(
@@ -48,14 +48,15 @@ class AuthViewModel extends Notifier<User?> {
       if (identity_token != null) {
         final result = await _loginWithApple.excute(identity_token);
         state = result;
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString('lastLoginType', 'apple');
+
+        ref.read(lastLoginTypeProvider.notifier).state = 'apple';
+
+        return result.hasAgreedLatestTerms;
       } else {
         throw Exception('Apple identity_token 없음');
       }
-
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setString('lastLoginType', 'apple');
-
-      ref.read(lastLoginTypeProvider.notifier).state = 'apple';
     } catch (e) {
       rethrow;
     } finally {
@@ -63,7 +64,7 @@ class AuthViewModel extends Notifier<User?> {
     }
   }
 
-  Future<void> loginWithNaver() async {
+  Future<bool> loginWithNaver() async {
     _isLoading = true;
     try {
       final loginResult = await FlutterNaverLogin.logIn();
@@ -87,6 +88,8 @@ class AuthViewModel extends Notifier<User?> {
       final getUserUseCase = ref.read(getUserInfoUseCaseProvider);
       final userInfo = await getUserUseCase.execute();
       state = userInfo[0];
+
+      return user.hasAgreedLatestTerms;
     } catch (e) {
       rethrow;
     } finally {
@@ -94,7 +97,7 @@ class AuthViewModel extends Notifier<User?> {
     }
   }
 
-  Future<void> loginWithKakao() async {
+  Future<bool> loginWithKakao() async {
     _isLoading = true;
     try {
       kakao.OAuthToken token;
@@ -104,7 +107,7 @@ class AuthViewModel extends Notifier<User?> {
           token = await kakao.UserApi.instance.loginWithKakaoTalk();
         } catch (error) {
           if (error is PlatformException && error.code == 'CANCELED') {
-            return;
+            return false;
           }
           token = await kakao.UserApi.instance.loginWithKakaoAccount();
         }
@@ -114,7 +117,7 @@ class AuthViewModel extends Notifier<User?> {
 
       final result = await _loginWithKakao.execute(token.accessToken);
       state = result;
-
+      // await handleLoginResult(result.hasAgreedLatestTerms);
       final prefs = await _prefsFuture;
       await prefs.setString('lastLoginType', 'kakao');
       await prefs.setBool('isLogined', true);
@@ -123,6 +126,7 @@ class AuthViewModel extends Notifier<User?> {
       final userInfo = await getUserUseCase.execute();
 
       state = userInfo[0];
+      return result.hasAgreedLatestTerms;
     } catch (e) {
       rethrow;
     } finally {
@@ -186,4 +190,8 @@ class AuthViewModel extends Notifier<User?> {
     final removeAccountUseCase = ref.read(removeAccountUseCaseProvider);
     return await removeAccountUseCase.execute();
   }
+}
+
+Future<bool> handleLoginResult(bool hasAgreedLatestTerms) async {
+  return hasAgreedLatestTerms;
 }
