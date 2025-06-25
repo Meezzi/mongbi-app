@@ -4,7 +4,9 @@ import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/presentation/common/floating_animation_widget.dart';
 
 class DreamAnalysisResultPage extends StatefulWidget {
-  const DreamAnalysisResultPage({super.key});
+  const DreamAnalysisResultPage({super.key, required this.isFirst});
+
+  final bool isFirst;
 
   @override
   State<DreamAnalysisResultPage> createState() =>
@@ -18,7 +20,9 @@ class _DreamAnalysisResultPageState extends State<DreamAnalysisResultPage> {
 
     Future.delayed(const Duration(seconds: 1), () {
       if (mounted) {
-        context.pushReplacement('/dream_interpretation');
+        context.pushReplacement(
+          '/dream_interpretation?isFirst=${widget.isFirst}',
+        );
       }
     });
   }

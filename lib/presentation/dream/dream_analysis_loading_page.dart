@@ -6,7 +6,9 @@ import 'package:mongbi_app/presentation/common/floating_animation_widget.dart';
 import 'package:mongbi_app/providers/dream_provider.dart';
 
 class DreamAnalysisLoadingPage extends ConsumerStatefulWidget {
-  const DreamAnalysisLoadingPage({super.key});
+  const DreamAnalysisLoadingPage({super.key, required this.isFirst});
+
+  final bool isFirst;
 
   @override
   ConsumerState<DreamAnalysisLoadingPage> createState() =>
@@ -70,7 +72,9 @@ class _DreamAnalysisLoadingPageState
     try {
       await ref.read(dreamWriteViewModelProvider.notifier).submitDream();
       if (mounted) {
-        context.pushReplacement('/dream_analysis_result');
+        context.pushReplacement(
+          '/dream_analysis_result?isFirst=${widget.isFirst}',
+        );
       }
     } catch (e) {
       if (mounted) {

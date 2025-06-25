@@ -9,7 +9,9 @@ import 'package:mongbi_app/presentation/dream/widgets/mongbi_comment_card.dart';
 import 'package:mongbi_app/providers/dream_provider.dart';
 
 class DreamInterpretationPage extends ConsumerStatefulWidget {
-  const DreamInterpretationPage({super.key});
+  const DreamInterpretationPage({super.key, required this.isFirst});
+
+  final bool isFirst;
 
   @override
   ConsumerState<DreamInterpretationPage> createState() =>
@@ -58,15 +60,12 @@ class _DreamInterpretationPageState
                 ),
                 SizedBox(height: 40),
 
-                if (dream.interpretationCount == 1) ...[
+                if (widget.isFirst) ...[
                   ActionButtonRow(
                     leftText: '음... 아닌데?',
                     rightText: '오 맞아!',
                     onLeftPressed: () {
-                      ref
-                          .read(dreamInterpretationViewModelProvider.notifier)
-                          .incrementInterpretationCount();
-                      context.pushReplacement('/dream_write');
+                      context.pushReplacement('/dream_write?isFirst=false');
                     },
                     onRightPressed:
                         () => context.pushReplacement('/challenge_intro'),
