@@ -165,7 +165,7 @@ class AuthViewModel extends Notifier<User?> {
     }
   }
 
-  Future<bool> logoutWithApple(WidgetRef ref) async {
+  Future<bool> logoutWithApple() async {
     try {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setBool('isLogined', false);
