@@ -9,11 +9,17 @@ class HistoryItem extends StatefulWidget {
     required this.label,
     required this.content,
     this.tagList,
+    this.isChallenge = false,
+    this.challengeType = '',
+    this.challengeStatus = '',
   });
 
   final String label;
   final String content;
   final List<String>? tagList;
+  final bool isChallenge;
+  final String challengeType;
+  final String challengeStatus;
 
   @override
   State<HistoryItem> createState() => _HistoryItemState();
@@ -55,19 +61,15 @@ class _HistoryItemState extends State<HistoryItem> {
                 style: Font.title16.copyWith(color: Color(0xFF4D198C)),
               ),
               SizedBox(width: 4),
-              // TODO : 몽비의 한마디의 상태를 받아와야 함 => 아직 필드에 없는 듯
-              // Container(
-              //   padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-              //   decoration: BoxDecoration(
-              //     border: Border.all(color: Color(0xFFCDF4ED)),
-              //     borderRadius: BorderRadius.circular(999),
-              //     color: Color(0xFFEFFCF9),
-              //   ),
-              //   child: Text(
-              //     '완료',
-              //     style: Font.subTitle12.copyWith(color: Color(0xFF56C9B4)),
-              //   ),
-              // ),
+              if (widget.isChallenge && widget.challengeStatus == 'COMPLETED')
+                circleTag(
+                  borderColor: Color(0xFFCDF4ED),
+                  bgColor: Color(0xFFEFFCF9),
+                  text: Text(
+                    '완료',
+                    style: Font.subTitle12.copyWith(color: Color(0xFF56C9B4)),
+                  ),
+                ),
             ],
           ),
           trailing: SvgPicture.asset(
@@ -82,6 +84,18 @@ class _HistoryItemState extends State<HistoryItem> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  if (widget.isChallenge)
+                    circleTag(
+                      borderColor: Color(0xFFB273FF),
+                      bgColor: Color(0xFFF4EAFF),
+                      text: Text(
+                        widget.challengeType,
+                        style: Font.subTitle12.copyWith(
+                          color: Color(0xFF7F2AE8),
+                        ),
+                      ),
+                    ),
+                  if (widget.isChallenge) SizedBox(height: 8),
                   Text(
                     widget.content,
                     style: Font.body14.copyWith(color: Color(0xFF1A181B)),
@@ -120,6 +134,22 @@ class _HistoryItemState extends State<HistoryItem> {
         '#$text',
         style: Font.body12.copyWith(color: Color(0xFF57525B)),
       ),
+    );
+  }
+
+  Widget circleTag({
+    required Color borderColor,
+    required Color bgColor,
+    required Text text,
+  }) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+      decoration: BoxDecoration(
+        border: Border.all(color: borderColor),
+        borderRadius: BorderRadius.circular(999),
+        color: bgColor,
+      ),
+      child: text,
     );
   }
 }

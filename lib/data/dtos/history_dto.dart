@@ -11,6 +11,9 @@ class HistoryDto {
     required this.dreamIdx,
     required this.userIdx,
     required this.challengeIdx,
+    required this.challengeDesc,
+    required this.challengeType,
+    required this.challengeStatus,
   });
 
   factory HistoryDto.fromJson(Map<String, dynamic> json) => HistoryDto(
@@ -27,7 +30,10 @@ class HistoryDto {
     dreamRegDate: DateTime.parse(json['DREAM_REG_DATE']),
     dreamIdx: json['DREAM_IDX'],
     userIdx: json['USER_IDX'],
-    challengeIdx: json['CHALLENGE_IDX'] ?? 0,
+    challengeIdx: json['CHALLENGE_IDX'],
+    challengeDesc: json['CHALLENGE_DESC'],
+    challengeType: json['CHALLENGE_TYPE'],
+    challengeStatus: json['CHALLENGE_STATUS'],
   );
 
   final String dreamContent;
@@ -41,6 +47,9 @@ class HistoryDto {
   final int dreamIdx;
   final int userIdx;
   final int challengeIdx;
+  final String challengeDesc;
+  final String challengeType;
+  final String challengeStatus;
 
   Map<String, dynamic> toJson() => {
     'DREAM_CONTENT': dreamContent,
@@ -56,5 +65,8 @@ class HistoryDto {
     'DREAM_IDX': dreamIdx,
     'USER_IDX': userIdx,
     'CHALLENGE_IDX': challengeIdx,
+    'CHALLENGE_DESC': challengeDesc,
+    'CHALLENGE_TYPE': challengeType,
+    'CHALLENGE_STATUS': challengeStatus,
   };
 }
