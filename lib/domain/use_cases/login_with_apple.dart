@@ -5,7 +5,7 @@ class LoginWithApple {
   LoginWithApple(this.repository);
   final AuthRepository repository;
 
-  Future<User> excute(String identity_token) {
+  Future<User> execute(String identity_token) {
     return repository.loginWithApple(identity_token);
   }
 }
