@@ -71,7 +71,7 @@ class MainScaffold extends ConsumerWidget {
                 } else {
                   ScaffoldMessenger.of(
                     context,
-                  ).showSnackBar(customSnackBar('오늘은 이미 했어, 배불러몽!', 16));
+                  ).showSnackBar(customSnackBar('오늘은 이미 했어, 배불러몽!', 16, 2));
                 }
               },
               child: Container(

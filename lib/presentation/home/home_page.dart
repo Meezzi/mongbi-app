@@ -2,6 +2,8 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mongbi_app/core/challenge_dead_line_manager.dart';
+import 'package:mongbi_app/presentation/common/custom_snack_bar.dart';
 import 'package:mongbi_app/presentation/common/floating_animation_widget.dart';
 import 'package:mongbi_app/presentation/home/widgets/challenge_card.dart';
 import 'package:mongbi_app/presentation/home/widgets/mongbi_message_list.dart';
@@ -17,14 +19,23 @@ class HomePage extends ConsumerStatefulWidget {
 
 class _HomePageState extends ConsumerState<HomePage> {
   late String selectedMessage;
+  final DeadlineManager _deadlineManager = DeadlineManager();
+  bool _shouldShowChallenge = true;
 
   @override
   void initState() {
     super.initState();
     selectedMessage = (List.of(mongbiMessages)..shuffle()).first;
 
+    _deadlineManager.checkInitialDeadlineStatus();
+    _shouldShowChallenge = !_deadlineManager.isDeadlinePassed;
+
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await ref.read(homeViewModelProvider.notifier).fetchActiveChallenge();
+
+      if (!_deadlineManager.isDeadlinePassed) {
+        _deadlineManager.setupTimer(_onDeadlineReached);
+      }
     });
 
     FirebaseAnalytics.instance.logEvent(
@@ -36,6 +47,12 @@ class _HomePageState extends ConsumerState<HomePage> {
       name: 'message_shown',
       parameters: {'message': selectedMessage},
     );
+  }
+
+  @override
+  void dispose() {
+    _deadlineManager.dispose();
+    super.dispose();
   }
 
   @override
@@ -92,11 +109,26 @@ class _HomePageState extends ConsumerState<HomePage> {
             ),
           ),
 
-          // 챌린지가 있을 때만 ChallengeCard 표시
-          if (challengeState.challenge != null)
+          if (challengeState.challenge != null && _shouldShowChallenge)
             Positioned(bottom: 24, left: 24, right: 24, child: ChallengeCard()),
         ],
       ),
     );
+  }
+
+  void _onDeadlineReached() {
+    if (mounted) {
+      setState(() {
+        _shouldShowChallenge = false;
+      });
+
+      _showDeadlineReachedMessage();
+    }
+  }
+
+  void _showDeadlineReachedMessage() {
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(customSnackBar('앗, 오늘 선물 받을 수 있는 시간이 끝났다몽!', 30, 3));
   }
 }
