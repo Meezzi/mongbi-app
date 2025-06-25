@@ -16,6 +16,8 @@ class UserDto {
               ? DateTime.parse(json['USER_LAST_LOGIN_DATE'])
               : null,
       userIdState: json['USER_ID_STATE'],
+
+      hasAgreedLatestTerms: json['HAS_AGREED_LATEST_TERMS'] ?? false,
     );
   }
 
@@ -30,7 +32,10 @@ class UserDto {
     required this.userRegDate,
     this.userLastLoginDate,
     required this.userIdState,
+
+    required this.hasAgreedLatestTerms,
   });
+
   final int userIdx;
   final String userName;
   final String? userNickname;
@@ -41,6 +46,8 @@ class UserDto {
   final DateTime userRegDate;
   final DateTime? userLastLoginDate;
   final String userIdState;
+
+  final bool hasAgreedLatestTerms;
 
   User toEntity() {
     return User(
@@ -54,6 +61,7 @@ class UserDto {
       userRegDate: userRegDate,
       userLastLoginDate: userLastLoginDate,
       userIdState: userIdState,
+      hasAgreedLatestTerms: hasAgreedLatestTerms,
     );
   }
 }

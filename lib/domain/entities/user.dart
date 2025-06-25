@@ -10,6 +10,7 @@ class User {
     required this.userRegDate,
     this.userLastLoginDate,
     required this.userIdState,
+    required this.hasAgreedLatestTerms,
   });
   final int userIdx;
   final String userName;
@@ -21,4 +22,5 @@ class User {
   final DateTime userRegDate;
   final DateTime? userLastLoginDate;
   final String userIdState;
+   final bool hasAgreedLatestTerms;
 }
