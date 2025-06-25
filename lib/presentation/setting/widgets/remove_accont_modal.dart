@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/presentation/common/button_type.dart';
 import 'package:mongbi_app/presentation/common/custom_snack_bar.dart';
 import 'package:mongbi_app/presentation/common/filled_button_widget.dart';
@@ -15,10 +14,9 @@ class RemoveAccontModal extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.read(authViewModelProvider.notifier);
 
-    return Scaffold(
-      // Scaffold는 자체 배경이 있으므로 showDialog의 배경을 보이게 하기 위해 투명으로 설정
-      backgroundColor: Colors.transparent,
-      body: Padding(
+    return DefaultTextStyle(
+      style: TextStyle(),
+      child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24),
         child: Container(
           width: double.infinity,
@@ -35,13 +33,25 @@ class RemoveAccontModal extends ConsumerWidget {
               children: [
                 Text(
                   '정말 몽비를 탈퇴 하시겠어요?',
-                  style: Font.title18,
+                  style: TextStyle(
+                    fontFamily: 'NanumSquareRound',
+                    fontWeight: FontWeight.w800,
+                    fontSize: 18,
+                    height: 24 / 18,
+                    color: Color(0xff1A181B),
+                  ),
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 4),
                 Text(
                   '탈퇴 후 30일간 회원가입이 불가합니다.',
-                  style: Font.subTitle12.copyWith(color: Color(0xFF76717A)),
+                  style: TextStyle(
+                    fontFamily: 'NanumSquareRound',
+                    fontWeight: FontWeight.w700,
+                    fontSize: 12,
+                    height: 16 / 12,
+                    color: Color(0xFF76717A),
+                  ),
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 16),
