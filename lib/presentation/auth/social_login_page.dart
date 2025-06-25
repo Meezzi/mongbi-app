@@ -54,7 +54,6 @@ class SocialLoginPage extends ConsumerWidget {
                                   'screen': 'SocialLoginPage',
                                 },
                               );
-
                               try {
                                 await authViewModel.loginWithApple();
 
@@ -65,7 +64,6 @@ class SocialLoginPage extends ConsumerWidget {
                                     'screen': 'SocialLoginPage',
                                   },
                                 );
-
                                 await showModalBottomSheet(
                                   context: context,
                                   isScrollControlled: false,
