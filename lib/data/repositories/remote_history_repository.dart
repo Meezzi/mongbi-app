@@ -22,6 +22,9 @@ class RemoteHistoryRepository implements HistoryRepository {
             psychologicalStateKeywords: e.psychologicalStateKeywords,
             mongbiComment: e.mongbiComment,
             dreamRegDate: e.dreamRegDate,
+            challengeDesc: e.challengeDesc,
+            challengeType: e.challengeType,
+            challengeStatus: e.challengeStatus,
           ),
         )
         .toList();

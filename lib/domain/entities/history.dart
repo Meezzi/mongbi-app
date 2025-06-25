@@ -8,6 +8,9 @@ class History {
     required this.psychologicalStateKeywords,
     required this.mongbiComment,
     required this.dreamRegDate,
+    required this.challengeDesc,
+    required this.challengeType,
+    required this.challengeStatus,
   });
 
   final String dreamContent;
@@ -18,4 +21,7 @@ class History {
   final List<String> psychologicalStateKeywords;
   final String mongbiComment;
   final DateTime dreamRegDate;
+  final String challengeDesc;
+  final String challengeType;
+  final String challengeStatus;
 }

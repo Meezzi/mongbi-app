@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mongbi_app/core/date_formatter.dart';
 import 'package:mongbi_app/core/font.dart';
+import 'package:mongbi_app/core/remove_html_tags.dart';
 import 'package:mongbi_app/presentation/history/models/calendar_model.dart';
 import 'package:mongbi_app/presentation/history/widgets/history_item.dart';
 
@@ -64,6 +65,13 @@ class HistoryNotice extends StatelessWidget {
             tagList: history.psychologicalStateKeywords,
           ),
           HistoryItem(label: '몽비의 한마디', content: history.mongbiComment),
+          HistoryItem(
+            label: '몽비의 선물',
+            content: removeHtmlTags(history.challengeDesc),
+            isChallenge: true,
+            challengeType: history.challengeType,
+            challengeStatus: history.challengeStatus,
+          ),
         ],
       );
     }
