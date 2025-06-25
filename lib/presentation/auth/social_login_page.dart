@@ -79,17 +79,23 @@ class SocialLoginPage extends ConsumerWidget {
                                   builder: (_) => const TermsBottomSheet(),
                                 );
                               } catch (e) {
-                                await FirebaseAnalytics.instance.logEvent(
-                                  name: 'login_failure',
-                                  parameters: {
-                                    'provider': 'apple',
-                                    'screen': 'SocialLoginPage',
-                                    'error': e.toString().substring(0, 100),
-                                  },
-                                );
+                                // await FirebaseAnalytics.instance.logEvent(
+                                //   name: 'login_failure',
+                                //   parameters: {
+                                //     'provider': 'apple',
+                                //     'screen': 'SocialLoginPage',
+                                //     'error': e.toString().substring(0, 100),
+                                //   },
+                                // );
 
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text('애플 로그인 실패 $e')),
+                                  customSnackBar(
+                                    e.toString().replaceFirst(
+                                      'Exception: ',
+                                      '',
+                                    ),
+                                    40,
+                                  ),
                                 );
                               }
                             },
@@ -193,17 +199,20 @@ class SocialLoginPage extends ConsumerWidget {
                                 builder: (_) => const TermsBottomSheet(),
                               );
                             } catch (e) {
-                              await FirebaseAnalytics.instance.logEvent(
-                                name: 'login_failure',
-                                parameters: {
-                                  'provider': 'naver',
-                                  'screen': 'SocialLoginPage',
-                                  'error': e.toString().substring(0, 100),
-                                },
-                              );
+                              // await FirebaseAnalytics.instance.logEvent(
+                              //   name: 'login_failure',
+                              //   parameters: {
+                              //     'provider': 'naver',
+                              //     'screen': 'SocialLoginPage',
+                              //     'error': e.toString().substring(0, 100),
+                              //   },
+                              // );
 
                               ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('네이버 로그인 실패 $e')),
+                                customSnackBar(
+                                  e.toString().replaceFirst('Exception: ', ''),
+                                  40,
+                                ),
                               );
                             }
                           },

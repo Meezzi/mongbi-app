@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:mongbi_app/data/dtos/login_response_dto.dart';
 import 'package:mongbi_app/data/dtos/user_dto.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sentry_flutter/sentry_flutter.dart'; // ✅ 추가
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 class RemoteAppleAuthDataSource {
   RemoteAppleAuthDataSource(this.dio);
@@ -18,13 +18,14 @@ class RemoteAppleAuthDataSource {
       );
 
       if (response.statusCode != 201 || response.data['token'] == null) {
-        throw Exception('서버 로그인 실패: ${response.data}');
+        final error = Exception('서버 로그인 실패: ${response.data}');
+        await Sentry.captureException(error);
+        throw error;
       }
 
       final jwt = response.data['token'];
       final userDto = UserDto.fromJson(response.data['user']);
-      final userMap = response.data['user'];
-      final int userIdx = userMap['USER_IDX'];
+      final int userIdx = response.data['user']['USER_IDX'];
 
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('jwt_token', jwt);
@@ -32,6 +33,27 @@ class RemoteAppleAuthDataSource {
       await prefs.setBool('isLogined', true);
 
       return LoginResponseDto(token: jwt, user: userDto);
+    } on DioException catch (e, s) {
+      final errorData = e.response?.data;
+      final errorMessage =
+          errorData is Map ? errorData['message'] : '알 수 없는 오류';
+      final errorCode = errorData is Map ? errorData['code'] : null;
+
+      await Sentry.captureException(
+        e,
+        stackTrace: s,
+        withScope: (scope) {
+          scope.setTag('auth', 'apple');
+          scope.setExtra('code', errorCode);
+          scope.setExtra('message', errorMessage);
+        },
+      );
+
+      if (errorCode == 1259) {
+        throw Exception('탈퇴한 회원입니다. 재가입이 불가합니다.');
+      }
+
+      throw Exception(null);
     } catch (e, s) {
       await Sentry.captureException(
         e,
@@ -40,7 +62,7 @@ class RemoteAppleAuthDataSource {
           scope.setExtra('context', '🚨 애플 로그인 에러 발생');
         },
       );
-      throw Exception('애플 로그인 오류: $e \n$s');
+      throw Exception(null);
     }
   }
 }
