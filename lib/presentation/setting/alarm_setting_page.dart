@@ -1,6 +1,8 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/presentation/setting/widgets/setting_rounded_list_tile_item.dart';
 import 'package:mongbi_app/presentation/setting/widgets/setting_toggle_switch.dart';
@@ -23,6 +25,10 @@ class AlarmSettingPage extends ConsumerWidget {
       appBar: AppBar(
         title: Text('알림 설정', style: Font.title20),
         titleSpacing: 0,
+        leading: IconButton(
+          onPressed: () => context.pop(),
+          icon: SvgPicture.asset('assets/icons/back-arrow.svg'),
+        ),
         backgroundColor: const Color(0xFFFAFAFA),
       ),
       backgroundColor: const Color(0xFFFAFAFA),
