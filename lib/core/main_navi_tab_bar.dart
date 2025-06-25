@@ -28,7 +28,6 @@ class MainNaviTabBar extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        print('123 - $location');
         ScaffoldMessenger.of(context).hideCurrentSnackBar();
         context.go(path);
       },

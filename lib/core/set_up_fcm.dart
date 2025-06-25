@@ -9,9 +9,6 @@ Future<void> setupFCM() async {
       .requestPermission(provisional: true);
   await FirebaseMessaging.instance.setAutoInitEnabled(true);
   final fcmToken = await FirebaseMessaging.instance.getToken();
-  print('✅');
-  print(fcmToken);
-  print('✅');
 
   /*
 
