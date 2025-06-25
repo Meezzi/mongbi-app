@@ -61,23 +61,28 @@ class _DreamInterpretationPageState
                 SizedBox(height: 40),
 
                 if (widget.isFirst) ...[
-                  ActionButtonRow(
-                    leftText: '음... 아닌데?',
-                    rightText: '오 맞아!',
-                    onLeftPressed: () {
-                      context.pushReplacement('/dream_write?isFirst=false');
-                    },
-                    onRightPressed:
-                        () => context.pushReplacement('/challenge_intro'),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    child: ActionButtonRow(
+                      leftText: '음... 아닌데?',
+                      rightText: '오 맞아!',
+                      onLeftPressed: () {
+                        context.pushReplacement('/dream_write?isFirst=false');
+                      },
+                      onRightPressed:
+                          () => context.pushReplacement('/challenge_intro'),
+                    ),
                   ),
                 ] else ...[
-                  CustomButton(
-                    text: '고마워',
-                    onSubmit: () => context.pushReplacement('/challenge_intro'),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    child: CustomButton(
+                      text: '고마워',
+                      onSubmit:
+                          () => context.pushReplacement('/challenge_intro'),
+                    ),
                   ),
                 ],
-
-                SizedBox(height: 24),
               ],
             ),
           ),
