@@ -6,6 +6,7 @@ import 'package:mongbi_app/presentation/statistics/widgets/month_statistics.dart
 import 'package:mongbi_app/presentation/statistics/widgets/tab_bar_title.dart';
 import 'package:mongbi_app/presentation/statistics/widgets/year_statistics.dart';
 import 'package:mongbi_app/providers/statistics_provider.dart';
+import 'package:mongbi_app/providers/user_info_provider.dart';
 
 class StatisticsPage extends ConsumerStatefulWidget {
   const StatisticsPage({super.key});
@@ -41,6 +42,8 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage>
     final double tabBarHeight =
         getResponsiveRatioByWidth(context, 48) + // TabBar 높이
         getResponsiveRatioByWidth(context, 8) * 2; // Padding Vertical
+    final splashState = ref.watch(splashViewModelProvider);
+    final nickname = splashState.userList![0].userNickname;
 
     return SafeArea(
       child: NestedScrollView(
@@ -57,7 +60,7 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage>
                     top: 15,
                     bottom: 16,
                   ),
-                  child: Text('모몽의 꿈 통계', style: Font.title20),
+                  child: Text('$nickname의 꿈 통계', style: Font.title20),
                 ),
               ),
             ),
