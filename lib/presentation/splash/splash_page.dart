@@ -50,10 +50,6 @@ class _SplashPageState extends ConsumerState<SplashPage>
           name: 'splash_error',
           parameters: {'status': 'error'},
         );
-
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(const SnackBar(content: Text('오류 발생')));
         context.go('/social_login');
       }
     });
