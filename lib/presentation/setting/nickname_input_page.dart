@@ -54,23 +54,18 @@ class _NicknameInputPageState extends ConsumerState<NicknameInputPage> {
           nicknameChanged
               ? AppBar(
                 backgroundColor: const Color(0xFFFAFAFA),
-                elevation: 0,
+                title: Text('별명 수정', style: Font.title20),
                 titleSpacing: 0,
-                title: Row(
-                  children: [
-                    IconButton(
-                      icon: SvgPicture.asset(
-                        'assets/icons/back-arrow.svg',
-                        width: 24,
-                        height: 24,
-                      ),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                    const SizedBox(width: 8),
-                    Text('별명 수정', style: Font.title20),
-                  ],
+                centerTitle: false,
+                leading: IconButton(
+                  icon: SvgPicture.asset(
+                    'assets/icons/back-arrow.svg',
+                    width: 24,
+                    height: 24,
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                 ),
               )
               : null,
