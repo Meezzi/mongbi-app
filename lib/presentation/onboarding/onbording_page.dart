@@ -1,4 +1,4 @@
-import 'package:firebase_analytics/firebase_analytics.dart'; 
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/presentation/common/button_type.dart';
@@ -131,22 +131,26 @@ class _OnboardingPageState extends State<OnboardingPage> {
                               const OnboardingExitImage(
                                 assetPath: 'assets/images/mongbi.webp',
                               ),
-                              const SizedBox(height: 130),
-                              FilledButtonWidget(
-                                type: ButtonType.primary,
-                                text: '시작할게',
-                                onPress: () async {
-                                  // ✅ 추적: 온보딩 완료
-                                  await FirebaseAnalytics.instance.logEvent(
-                                    name: 'onboarding_completed',
-                                    parameters: {
-                                      'total_pages': onboardingData.length,
-                                    },
-                                  );
-                                  context.go('/home');
-                                },
+                              Spacer(),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 8,
+                                ),
+                                child: FilledButtonWidget(
+                                  type: ButtonType.primary,
+                                  text: '시작할게',
+                                  onPress: () async {
+                                    // ✅ 추적: 온보딩 완료
+                                    await FirebaseAnalytics.instance.logEvent(
+                                      name: 'onboarding_completed',
+                                      parameters: {
+                                        'total_pages': onboardingData.length,
+                                      },
+                                    );
+                                    context.go('/home');
+                                  },
+                                ),
                               ),
-                              const SizedBox(height: 32),
                             ],
                           ),
                         );
