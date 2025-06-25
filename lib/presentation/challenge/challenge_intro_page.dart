@@ -19,7 +19,7 @@ class ChallengeIntroPage extends ConsumerWidget {
           children: [
             Expanded(child: MongbiMessageView()),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24.0),
+              padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 8),
               child: ActionButtonRow(
                 leftText: '괜찮아',
                 rightText: '선물이 뭐야?',
@@ -34,7 +34,6 @@ class ChallengeIntroPage extends ConsumerWidget {
                 },
               ),
             ),
-            const SizedBox(height: 24),
           ],
         ),
       ),
