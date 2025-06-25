@@ -24,7 +24,7 @@ class DreamWriteViewModel extends AutoDisposeNotifier<DreamWriteState> {
     state = state.copyWith(isFocused: focused);
   }
 
-  Future<void> submitDream() async {
+  Future<void> submitDream({bool isReInterpretation = false}) async {
     if (state.dreamContent.trim().length < 10) return;
     if (state.selectedIndex == -1) return;
     final uid = await SecureStorageService().getUserIdx();
@@ -33,6 +33,14 @@ class DreamWriteViewModel extends AutoDisposeNotifier<DreamWriteState> {
     final dream = await ref
         .read(analyzeAndSaveDreamUseCaseProvider)
         .execute(uid, state.dreamContent, state.selectedIndex + 1);
+
+    // 재해석이 아닌 경우 해석 횟수 리셋
+    if (!isReInterpretation) {
+      ref
+          .read(dreamInterpretationViewModelProvider.notifier)
+          .resetInterpretationCount();
+    }
+
     ref.read(dreamInterpretationViewModelProvider.notifier).setDream(dream);
 
     // 작성 후 기록, 통계 갱신
