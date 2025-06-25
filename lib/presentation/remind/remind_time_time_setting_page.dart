@@ -37,26 +37,29 @@ class _RemindTimePickerPageState extends State<RemindTimePickerPage> {
     return Scaffold(
       backgroundColor: const Color(0xFFFAFAFA),
       appBar: AppBar(
-        backgroundColor: const Color(0xFFFAFAFA),
-        surfaceTintColor: Colors.transparent,
+        centerTitle: false,
+        titleSpacing: 0,
+        automaticallyImplyLeading: false,
         elevation: 0,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 24, top: 16),
-          child: IconButton(
-            icon: SvgPicture.asset(
-              'assets/icons/back-arrow.svg',
-              width: 24,
-              height: 24,
-            ),
-            onPressed: () => Navigator.pop(context),
-            iconSize: 24,
-            padding: EdgeInsets.zero,
-            constraints: const BoxConstraints(),
-            splashRadius: 20,
+        backgroundColor: Colors.transparent,
+        foregroundColor: Colors.black,
+        toolbarHeight: 56,
+        title: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: Row(
+            children: [
+              GestureDetector(
+                onTap: () => context.pop(),
+                child: SvgPicture.asset(
+                  'assets/icons/back-arrow.svg',
+                  width: 24,
+                  height: 24,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ],
           ),
         ),
-        toolbarHeight: 56,
-        titleSpacing: 0,
       ),
       body: SafeArea(
         child: Stack(
