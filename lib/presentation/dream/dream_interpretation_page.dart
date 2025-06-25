@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/presentation/dream/widgets/custom_button.dart';
@@ -25,6 +26,8 @@ class _DreamInterpretationPageState
       appBar: AppBar(
         title: Text('오늘 꿈은 말이야...', style: Font.title20),
         titleSpacing: 24,
+        centerTitle: false,
+        automaticallyImplyLeading: false,
       ),
       backgroundColor: Color(0xFFFCF6FF),
       body: SingleChildScrollView(
