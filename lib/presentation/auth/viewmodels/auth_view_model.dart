@@ -5,6 +5,7 @@ import 'package:flutter_naver_login/interface/types/naver_login_status.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart' as kakao;
+import 'package:mongbi_app/core/exceptions/auth_custom_exception.dart';
 import 'package:mongbi_app/domain/entities/user.dart';
 import 'package:mongbi_app/domain/use_cases/login_with_apple.dart';
 import 'package:mongbi_app/domain/use_cases/login_with_kakao.dart';
@@ -43,10 +44,10 @@ class AuthViewModel extends Notifier<User?> {
           AppleIDAuthorizationScopes.email,
         ],
       );
-      final identity_token = credential.identityToken;
+      final identityToken = credential.identityToken;
 
-      if (identity_token != null) {
-        final result = await _loginWithApple.excute(identity_token);
+      if (identityToken != null) {
+        final result = await _loginWithApple.excute(identityToken);
         state = result;
         final prefs = await SharedPreferences.getInstance();
         await prefs.setString('lastLoginType', 'apple');
@@ -55,8 +56,13 @@ class AuthViewModel extends Notifier<User?> {
 
         return result.hasAgreedLatestTerms;
       } else {
-        throw Exception('Apple identity_token 없음');
+        throw const AuthFailedException('Apple identity_token 없음');
       }
+    } on SignInWithAppleAuthorizationException catch (e) {
+      if (e.code == AuthorizationErrorCode.canceled) {
+        throw const AuthCancelledException('로그인이 취소되었습니다.');
+      }
+      throw const AuthFailedException('로그인에 실패했습니다.');
     } catch (e) {
       rethrow;
     } finally {
@@ -72,10 +78,10 @@ class AuthViewModel extends Notifier<User?> {
 
       if (accessToken == null || accessToken.isEmpty) {
         final tokenResult = await FlutterNaverLogin.getCurrentAccessToken();
-        accessToken = tokenResult?.accessToken;
+        accessToken = tokenResult.accessToken;
       }
-      if (accessToken == null || accessToken.isEmpty) {
-        throw Exception('네이버 accessToken 없음');
+      if (accessToken.isEmpty) {
+        throw const AuthFailedException('네이버 accessToken 없음');
       }
 
       final user = await _loginWithNaver.execute(accessToken);
@@ -107,7 +113,7 @@ class AuthViewModel extends Notifier<User?> {
           token = await kakao.UserApi.instance.loginWithKakaoTalk();
         } catch (error) {
           if (error is PlatformException && error.code == 'CANCELED') {
-            return false;
+            throw const AuthCancelledException('로그인이 취소되었습니다.');
           }
           token = await kakao.UserApi.instance.loginWithKakaoAccount();
         }
@@ -127,6 +133,11 @@ class AuthViewModel extends Notifier<User?> {
 
       state = userInfo[0];
       return result.hasAgreedLatestTerms;
+    } on PlatformException catch (e) {
+      if (e.code == 'CANCELED') {
+        throw const AuthCancelledException('로그인이 취소되었습니다.');
+      }
+      throw const AuthFailedException('로그인에 실패했습니다.');
     } catch (e) {
       rethrow;
     } finally {

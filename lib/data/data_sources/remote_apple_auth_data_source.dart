@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
+import 'package:mongbi_app/core/exceptions/auth_custom_exception.dart';
 import 'package:mongbi_app/core/secure_storage_service.dart';
 import 'package:mongbi_app/data/dtos/login_response_dto.dart';
 import 'package:mongbi_app/data/dtos/user_dto.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class RemoteAppleAuthDataSource {
   RemoteAppleAuthDataSource(this.dio);
@@ -21,7 +23,7 @@ class RemoteAppleAuthDataSource {
       if (response.statusCode != 201 || response.data['token'] == null) {
         final error = Exception('서버 로그인 실패: ${response.data}');
         await Sentry.captureException(error);
-        throw error;
+        throw const AuthFailedException('로그인에 실패했습니다.');
       }
 
       final jwt = response.data['token'];
@@ -50,11 +52,17 @@ class RemoteAppleAuthDataSource {
       );
 
       if (errorCode == 1259) {
-        throw Exception('탈퇴한 회원입니다. 재가입이 불가합니다.');
+        throw const WithdrawnUserException('탈퇴한 회원입니다. 재가입이 불가합니다.');
       }
 
-      throw Exception(null);
+      throw const AuthFailedException('로그인에 실패했습니다.');
     } catch (e, s) {
+      if (e is SignInWithAppleAuthorizationException) {
+        if (e.code == AuthorizationErrorCode.canceled) {
+          throw const AuthCancelledException('로그인이 취소되었습니다.');
+        }
+      }
+
       await Sentry.captureException(
         e,
         stackTrace: s,
@@ -62,7 +70,7 @@ class RemoteAppleAuthDataSource {
           scope.setExtra('context', '🚨 애플 로그인 에러 발생');
         },
       );
-      throw Exception(null);
+      throw const AuthFailedException('로그인에 실패했습니다.');
     }
   }
 }

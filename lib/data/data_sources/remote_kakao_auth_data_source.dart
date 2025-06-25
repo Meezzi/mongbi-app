@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
+import 'package:flutter/services.dart';
+import 'package:mongbi_app/core/exceptions/auth_custom_exception.dart';
 import 'package:mongbi_app/core/secure_storage_service.dart';
 import 'package:mongbi_app/data/dtos/login_response_dto.dart';
 import 'package:mongbi_app/data/dtos/user_dto.dart';
@@ -27,7 +29,7 @@ class RemoteKakaoAuthDataSource {
             scope.setExtra('response', response.data);
           },
         );
-        throw error;
+        throw const AuthFailedException('로그인에 실패했습니다.');
       }
 
       final jwt = response.data['token'];
@@ -56,13 +58,18 @@ class RemoteKakaoAuthDataSource {
       );
 
       if (errorCode == 1259) {
-        throw Exception('탈퇴한 회원입니다. 재가입이 불가합니다.');
+        throw const WithdrawnUserException('탈퇴한 회원입니다. 재가입이 불가합니다.');
       }
 
-      throw Exception(null);
+      throw const AuthFailedException('로그인에 실패했습니다.');
+    } on PlatformException catch (e) {
+      if (e.code == 'CANCELED') {
+        throw const AuthCancelledException('로그인이 취소되었습니다.');
+      }
+      throw const AuthFailedException('로그인에 실패했습니다.');
     } catch (e, s) {
       await Sentry.captureException(e, stackTrace: s);
-      throw Exception('카카오 로그인 예외 발생: $e');
+      throw const AuthFailedException('로그인에 실패했습니다.');
     }
   }
 }

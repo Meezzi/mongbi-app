@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_naver_login/flutter_naver_login.dart';
+import 'package:mongbi_app/core/exceptions/auth_custom_exception.dart';
 import 'package:mongbi_app/core/secure_storage_service.dart';
 import 'package:mongbi_app/data/dtos/login_response_dto.dart';
 import 'package:mongbi_app/data/dtos/user_dto.dart';
@@ -38,7 +39,7 @@ class RemoteNaverAuthDataSource {
         } else {
           final error = Exception('로그인 응답에 user 정보가 없습니다.');
           await Sentry.captureException(error);
-          throw error;
+          throw const AuthFailedException('로그인에 실패했습니다.');
         }
       } else {
         final error = Exception('로그인 실패: 토큰이 없거나 잘못된 응답입니다.');
@@ -49,7 +50,7 @@ class RemoteNaverAuthDataSource {
             scope.setTag('auth', 'naver');
           },
         );
-        throw error;
+        throw const AuthFailedException('로그인에 실패했습니다.');
       }
     } on DioException catch (e, s) {
       final errorData = e.response?.data;
@@ -68,13 +69,19 @@ class RemoteNaverAuthDataSource {
       );
 
       if (errorCode == 1259) {
-        throw Exception('탈퇴한 회원입니다. 재가입이 불가합니다.');
+        throw const WithdrawnUserException('탈퇴한 회원입니다. 재가입이 불가합니다.');
       }
 
-      throw Exception(null);
+      throw const AuthFailedException('로그인에 실패했습니다.');
     } catch (e, s) {
+      if (e is AuthCancelledException ||
+          e is AuthFailedException ||
+          e is WithdrawnUserException) {
+        rethrow;
+      }
+
       await Sentry.captureException(e, stackTrace: s);
-      throw Exception(null);
+      throw const AuthFailedException('로그인에 실패했습니다.');
     }
 
     return LoginResponseDto(token: jwt, user: userDto!);

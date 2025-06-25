@@ -1,10 +1,10 @@
 import 'dart:io';
-
+import 'dart:math';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mongbi_app/presentation/auth/viewmodels/auth_view_model.dart';
+import 'package:mongbi_app/core/exceptions/auth_custom_exception.dart';
 import 'package:mongbi_app/presentation/auth/widgets/apple_login_button_widget.dart';
 import 'package:mongbi_app/presentation/auth/widgets/kakao_login_button_widget.dart';
 import 'package:mongbi_app/presentation/auth/widgets/last_login_state_weiget.dart';
@@ -43,7 +43,6 @@ class SocialLoginPage extends ConsumerWidget {
                     children: [
                       if (Platform.isIOS) ...[
                         _SocialLoginItem(
-                          //showRecentBubble: lastLoginProvider == 'apple',
                           child: AppleLoginButton(
                             onTap: () async {
                               final authViewModel = ref.read(
@@ -83,25 +82,21 @@ class SocialLoginPage extends ConsumerWidget {
                                   );
                                 }
                               } catch (e) {
-                                // await FirebaseAnalytics.instance.logEvent(
-                                //   name: 'login_failure',
-                                //   parameters: {
-                                //     'provider': 'apple',
-                                //     'screen': 'SocialLoginPage',
-                                //     'error': e.toString().substring(0, 100),
-                                //   },
-                                // );
-
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  customSnackBar(
-                                    e.toString().replaceFirst(
-                                      'Exception: ',
-                                      '',
-                                    ),
-                                    40,
-                                    2,
-                                  ),
-                                );
+                                // 취소가 아닌 경우에만 실패 로그 전송
+                                if (e is! AuthCancelledException) {
+                                  await FirebaseAnalytics.instance.logEvent(
+                                    name: 'login_failure',
+                                    parameters: {
+                                      'provider': 'apple',
+                                      'screen': 'SocialLoginPage',
+                                      'error': _safeSubstring(
+                                        e.toString(),
+                                        100,
+                                      ),
+                                    },
+                                  );
+                                }
+                                _handleLoginError(context, e);
                               }
                             },
                           ),
@@ -109,7 +104,6 @@ class SocialLoginPage extends ConsumerWidget {
                         const SizedBox(width: 24),
                       ],
                       _SocialLoginItem(
-                        //showRecentBubble: lastLoginProvider == 'kakao',
                         child: KakaoLoginButton(
                           onTap: () async {
                             final authViewModel = ref.read(
@@ -150,29 +144,24 @@ class SocialLoginPage extends ConsumerWidget {
                                 );
                               }
                             } catch (e) {
-                              await FirebaseAnalytics.instance.logEvent(
-                                name: 'login_failure',
-                                parameters: {
-                                  'provider': 'kakao',
-                                  'screen': 'SocialLoginPage',
-                                  'error': e.toString().substring(0, 100),
-                                },
-                              );
-
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                customSnackBar(
-                                  e.toString().replaceFirst('Exception: ', ''),
-                                  40,
-                                  2,
-                                ),
-                              );
+                              // 취소가 아닌 경우에만 실패 로그 전송
+                              if (e is! AuthCancelledException) {
+                                await FirebaseAnalytics.instance.logEvent(
+                                  name: 'login_failure',
+                                  parameters: {
+                                    'provider': 'kakao',
+                                    'screen': 'SocialLoginPage',
+                                    'error': _safeSubstring(e.toString(), 100),
+                                  },
+                                );
+                              }
+                              _handleLoginError(context, e);
                             }
                           },
                         ),
                       ),
                       const SizedBox(width: 24),
                       _SocialLoginItem(
-                        //showRecentBubble: lastLoginProvider == 'naver',
                         child: NaverLoginButton(
                           onTap: () async {
                             final authViewModel = ref.read(
@@ -185,10 +174,10 @@ class SocialLoginPage extends ConsumerWidget {
                                 'screen': 'SocialLoginPage',
                               },
                             );
-                            final isAgreed =
-                                await authViewModel.loginWithNaver();
+
                             try {
-                              await authViewModel.loginWithNaver();
+                              final isAgreed =
+                                  await authViewModel.loginWithNaver();
                               await FirebaseAnalytics.instance.logEvent(
                                 name: 'login_success',
                                 parameters: {
@@ -196,6 +185,7 @@ class SocialLoginPage extends ConsumerWidget {
                                   'screen': 'SocialLoginPage',
                                 },
                               );
+
                               if (isAgreed) {
                                 context.go('/home');
                               } else {
@@ -213,22 +203,18 @@ class SocialLoginPage extends ConsumerWidget {
                                 );
                               }
                             } catch (e) {
-                              // await FirebaseAnalytics.instance.logEvent(
-                              //   name: 'login_failure',
-                              //   parameters: {
-                              //     'provider': 'naver',
-                              //     'screen': 'SocialLoginPage',
-                              //     'error': e.toString().substring(0, 100),
-                              //   },
-                              // );
-
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                customSnackBar(
-                                  e.toString().replaceFirst('Exception: ', ''),
-                                  40,
-                                  2,
-                                ),
-                              );
+                              // 취소가 아닌 경우에만 실패 로그 전송
+                              if (e is! AuthCancelledException) {
+                                await FirebaseAnalytics.instance.logEvent(
+                                  name: 'login_failure',
+                                  parameters: {
+                                    'provider': 'naver',
+                                    'screen': 'SocialLoginPage',
+                                    'error': _safeSubstring(e.toString(), 100),
+                                  },
+                                );
+                              }
+                              _handleLoginError(context, e);
                             }
                           },
                         ),
@@ -242,6 +228,26 @@ class SocialLoginPage extends ConsumerWidget {
         error: (e, _) => Center(child: Text('에러 발생: $e')),
       ),
     );
+  }
+
+  void _handleLoginError(BuildContext context, dynamic error) {
+    String message;
+
+    if (error is AuthCancelledException) {
+      message = '로그인이 취소되었습니다.';
+    } else if (error is WithdrawnUserException) {
+      message = error.message;
+    } else if (error is AuthFailedException) {
+      message = error.message;
+    } else {
+      message = '로그인 중 오류가 발생했습니다.';
+    }
+
+    ScaffoldMessenger.of(context).showSnackBar(customSnackBar(message, 40, 2));
+  }
+
+  String _safeSubstring(String text, int maxLength) {
+    return text.substring(0, min(text.length, maxLength));
   }
 }
 
