@@ -35,7 +35,7 @@ class DreamSectionCard extends StatelessWidget {
               SizedBox(height: 16),
               Text(
                 content,
-                style: Font.body14.copyWith(color: Colors.grey[900]),
+                style: Font.body14.copyWith(color: Color(0xFF1A181B)),
               ),
               SizedBox(height: 16),
               SizedBox(
@@ -46,14 +46,18 @@ class DreamSectionCard extends StatelessWidget {
                   separatorBuilder: (context, index) => SizedBox(width: 8),
                   itemBuilder:
                       (context, index) => Container(
-                        padding: EdgeInsets.all(8),
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 4,
+                          horizontal: 8,
+                        ),
                         decoration: BoxDecoration(
-                          color: Colors.grey[100],
+                          color: Color(0xF5F5F4F5),
                           borderRadius: BorderRadius.circular(999),
                         ),
                         child: Text(
                           '#${keywords[index]}',
-                          style: Font.body12.copyWith(color: Colors.grey[600]),
+                          style: Font.body12.copyWith(color: Color(0xFF57525B)),
                         ),
                       ),
                 ),
