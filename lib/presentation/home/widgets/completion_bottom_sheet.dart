@@ -9,12 +9,14 @@ class CompletionBottomSheet extends StatelessWidget {
     required this.title,
     required this.subTitle,
     required this.buttonText,
+    required this.mongbiImagePath,
     required this.onButtonPressed,
   });
 
   final String title;
   final String subTitle;
   final String buttonText;
+  final String mongbiImagePath;
   final VoidCallback onButtonPressed;
 
   @override
@@ -35,16 +37,12 @@ class CompletionBottomSheet extends StatelessWidget {
             style: Font.subTitle12.copyWith(color: Color(0xFF76717A)),
           ),
           SizedBox(height: 8),
-          Image.asset(
-            'assets/images/happy_mongbi.webp',
-            width: 144,
-            height: 144,
-          ),
+          Image.asset(mongbiImagePath, width: 144, height: 144),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
             child: FilledButtonWidget(
               type: ButtonType.primary,
-              text: '고마워',
+              text: buttonText,
               onPress: onButtonPressed,
             ),
           ),

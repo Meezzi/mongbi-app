@@ -6,6 +6,7 @@ import 'package:mongbi_app/presentation/common/action_button_row.dart';
 import 'package:mongbi_app/presentation/dream/widgets/custom_button.dart';
 import 'package:mongbi_app/presentation/dream/widgets/dream_section_card.dart';
 import 'package:mongbi_app/presentation/dream/widgets/mongbi_comment_card.dart';
+import 'package:mongbi_app/presentation/home/widgets/completion_bottom_sheet.dart';
 import 'package:mongbi_app/providers/dream_provider.dart';
 
 class DreamInterpretationPage extends ConsumerStatefulWidget {
@@ -67,7 +68,25 @@ class _DreamInterpretationPageState
                       leftText: '음... 아닌데?',
                       rightText: '오 맞아!',
                       onLeftPressed: () {
-                        context.pushReplacement('/dream_write?isFirst=false');
+                        showModalBottomSheet(
+                          context: context,
+                          backgroundColor: Colors.transparent,
+                          isScrollControlled: true,
+                          useRootNavigator: true,
+                          builder:
+                              (context) => CompletionBottomSheet(
+                                title: '앗, 다시 해석해줄게몽',
+                                subTitle: '한 번만 다시 할 수 있습니다.',
+                                buttonText: '다시할게',
+                                mongbiImagePath: 'assets/images/mongbi.webp',
+
+                                onButtonPressed: () {
+                                  context.pushReplacement(
+                                    '/dream_write?isFirst=false',
+                                  );
+                                },
+                              ),
+                        );
                       },
                       onRightPressed:
                           () => context.pushReplacement('/challenge_intro'),
