@@ -16,10 +16,9 @@ class LogoutAccontModal extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.read(auth2.authViewModelProvider.notifier);
 
-    return Scaffold(
-      // Scaffold는 자체 배경이 있으므로 showDialog의 배경을 보이게 하기 위해 투명으로 설정
-      backgroundColor: Colors.transparent,
-      body: Padding(
+    return DefaultTextStyle(
+      style: TextStyle(),
+      child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24),
         child: Container(
           width: double.infinity,
@@ -36,7 +35,13 @@ class LogoutAccontModal extends ConsumerWidget {
               children: [
                 Text(
                   '로그아웃하시겠어요?',
-                  style: Font.subTitle12.copyWith(color: Color(0xFF76717A)),
+                  style: TextStyle(
+                    fontFamily: 'NanumSquareRound',
+                    fontWeight: FontWeight.w800,
+                    fontSize: 18,
+                    height: 24 / 18,
+                    color: Color(0xff1A181B),
+                  ),
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 16),
@@ -49,6 +54,17 @@ class LogoutAccontModal extends ConsumerWidget {
                     children: [
                       Expanded(
                         child: GhostButtonWidget(
+                          type: ButtonType.primary,
+                          text: '취소',
+                          onPress: () {
+                            context.pop();
+                          },
+                        ),
+                      ),
+
+                      SizedBox(width: 8),
+                      Expanded(
+                        child: FilledButtonWidget(
                           type: ButtonType.primary,
                           text: '로그아웃',
                           onPress: () async {
@@ -115,16 +131,6 @@ class LogoutAccontModal extends ConsumerWidget {
                                 ),
                               );
                             }
-                          },
-                        ),
-                      ),
-                      SizedBox(width: 8),
-                      Expanded(
-                        child: FilledButtonWidget(
-                          type: ButtonType.primary,
-                          text: '취소',
-                          onPress: () {
-                            context.pop();
                           },
                         ),
                       ),

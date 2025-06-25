@@ -90,7 +90,7 @@ class ProfileSettingPage extends ConsumerWidget {
               );
               showDialog(
                 context: context,
-                barrierDismissible: false, // 배경 터치로 닫히지 않음!
+                barrierDismissible: true,
                 barrierColor: Colors.black.withValues(alpha: 0.6),
                 builder: (context) => LogoutAccontModal(),
               );
@@ -109,7 +109,7 @@ class ProfileSettingPage extends ConsumerWidget {
 
               showDialog(
                 context: context,
-                barrierDismissible: false, // 배경 터치로 닫히지 않음!
+                barrierDismissible: true,
                 barrierColor: Colors.black.withValues(alpha: 0.6),
                 builder: (context) => RemoveAccontModal(),
               );
