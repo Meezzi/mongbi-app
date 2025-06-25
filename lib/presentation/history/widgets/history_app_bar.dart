@@ -45,6 +45,7 @@ class HistoryAppBar extends ConsumerWidget {
             fontSize: 20,
             height: 28 / 20,
             color: isActive ? Colors.white : Color(0xff1A181B),
+            letterSpacing: 0.23,
           ),
 
           child: Text('$nickname의 꿈 기록'),
