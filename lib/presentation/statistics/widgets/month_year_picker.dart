@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/core/get_responsive_ratio_by_width.dart';
 import 'package:mongbi_app/providers/statistics_provider.dart';
 
