@@ -46,10 +46,10 @@ class HistoryDto {
   final DateTime dreamRegDate;
   final int dreamIdx;
   final int userIdx;
-  final int challengeIdx;
-  final String challengeDesc;
-  final String challengeType;
-  final String challengeStatus;
+  final int? challengeIdx;
+  final String? challengeDesc;
+  final String? challengeType;
+  final String? challengeStatus;
 
   Map<String, dynamic> toJson() => {
     'DREAM_CONTENT': dreamContent,

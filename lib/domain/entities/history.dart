@@ -21,7 +21,7 @@ class History {
   final List<String> psychologicalStateKeywords;
   final String mongbiComment;
   final DateTime dreamRegDate;
-  final String challengeDesc;
-  final String challengeType;
-  final String challengeStatus;
+  final String? challengeDesc;
+  final String? challengeType;
+  final String? challengeStatus;
 }
