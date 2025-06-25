@@ -84,7 +84,7 @@ class AuthViewModel extends Notifier<User?> {
         accessToken = tokenResult.accessToken;
       }
       if (accessToken.isEmpty) {
-        throw const AuthFailedException('네이버 accessToken 없음');
+        throw const AuthCancelledException('로그인이 취소되었습니다.');
       }
 
       final user = await _loginWithNaver.execute(accessToken);
