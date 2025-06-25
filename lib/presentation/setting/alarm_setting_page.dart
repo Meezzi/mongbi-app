@@ -63,23 +63,23 @@ class AlarmSettingPage extends ConsumerWidget {
             enableInkWell: false,
           ),
 
-          RoundedListTileItem(
-            title: '챌린지 알림',
-            isFirst: false,
-            isLast: true,
-            trailing: ToggleSwitch(value: alarmState.isChallenge),
-            onTap: () {
-              alarmViewModel.toggleChallenge();
-              FirebaseAnalytics.instance.logEvent(
-                name: 'alarm_toggle_changed',
-                parameters: {
-                  'type': 'challenge',
-                  'enabled': !alarmState.isChallenge,
-                },
-              );
-            },
-            enableInkWell: false,
-          ),
+          // RoundedListTileItem(
+          //   title: '챌린지 알림',
+          //   isFirst: false,
+          //   isLast: true,
+          //   trailing: ToggleSwitch(value: alarmState.isChallenge),
+          //   onTap: () {
+          //     alarmViewModel.toggleChallenge();
+          //     FirebaseAnalytics.instance.logEvent(
+          //       name: 'alarm_toggle_changed',
+          //       parameters: {
+          //         'type': 'challenge',
+          //         'enabled': !alarmState.isChallenge,
+          //       },
+          //     );
+          //   },
+          //   enableInkWell: false,
+          // ),//TODO 추후 업데이트 때 새로 진행
         ],
       ),
     );

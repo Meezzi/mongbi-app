@@ -10,6 +10,7 @@ import 'package:mongbi_app/presentation/remind/view_model/remind_time_setting_vi
 import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_text_widget.dart';
 import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_widget.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RemindTimePickerPage extends StatefulWidget {
   const RemindTimePickerPage({super.key});
@@ -162,7 +163,8 @@ class _RemindTimePickerPageState extends State<RemindTimePickerPage> {
                     await NotificationService().scheduleDailyReminder(
                       selectedTime,
                     );
-
+                    final prefs = await SharedPreferences.getInstance();
+                    await prefs.setBool('alarm_isReminder', true);
                     context.go('/onbording_page');
                   } catch (e) {
                     if (e is PlatformException &&
