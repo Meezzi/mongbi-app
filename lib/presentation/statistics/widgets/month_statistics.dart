@@ -29,7 +29,7 @@ class _MonthStatisticsState extends ConsumerState<MonthStatistics>
   bool isMonth = true;
   double? monthPickerButtonPosition;
   final ScrollController scrollController = ScrollController();
-  String? prevDisplayedMonth; // 이전에 표시된 월
+  // String? prevDisplayedMonth; // 이전에 표시된 월
 
   @override
   void initState() {
@@ -102,6 +102,7 @@ class _MonthStatisticsState extends ConsumerState<MonthStatistics>
                     return Center(child: CircularProgressIndicator());
                   },
                   data: (data) {
+                    print('1221312312313123123123123132');
                     final monthStatistics = data?.month;
                     final now = DateTime.now();
                     final yearMonth =
@@ -121,36 +122,37 @@ class _MonthStatisticsState extends ConsumerState<MonthStatistics>
                         now.year == int.parse(yearMonth[0]) &&
                         now.month == int.parse(yearMonth[1]);
 
+                    // TODO : 통계 스낵바 사용하지 않으니 일단 주석
                     // 월이 바뀌었거나, 같은 월을 다시 선택했을 때 항상 스낵바를 hide
-                    final currentMonth = monthStatistics?.month; // "2025-06"
+                    // final currentMonth = monthStatistics?.month; // "2025-06"
 
-                    if (prevDisplayedMonth != null &&
-                        prevDisplayedMonth != currentMonth) {
-                      WidgetsBinding.instance.addPostFrameCallback((_) {
-                        monthSnackBarKey.currentState?.hide();
-                      });
-                    }
+                    // if (prevDisplayedMonth != null &&
+                    //     prevDisplayedMonth != currentMonth) {
+                    //   WidgetsBinding.instance.addPostFrameCallback((_) {
+                    //     monthSnackBarKey.currentState?.hide();
+                    //   });
+                    // }
 
                     // 이전 월(현재가 아닌 월) 선택 시 무조건 스낵바 제거
-                    if (!isCurrent) {
-                      WidgetsBinding.instance.addPostFrameCallback((_) {
-                        monthSnackBarKey.currentState?.hide();
-                      });
-                    }
+                    // if (!isCurrent) {
+                    //   WidgetsBinding.instance.addPostFrameCallback((_) {
+                    //     monthSnackBarKey.currentState?.hide();
+                    //   });
+                    // }
 
                     // 현재 월 + isFirst + 라우트 확인 => 스낵바 표시
-                    if (isCurrent && isFirst) {
-                      WidgetsBinding.instance.addPostFrameCallback((_) {
-                        if (ModalRoute.of(context)?.isCurrent == true &&
-                            mounted) {
-                          monthSnackBarKey.currentState?.hide(); // 항상 hide 후
-                          monthSnackBarKey.currentState?.show(); // 다시 show
-                        }
-                      });
-                    }
+                    // if (isCurrent && isFirst) {
+                    //   WidgetsBinding.instance.addPostFrameCallback((_) {
+                    //     if (ModalRoute.of(context)?.isCurrent == true &&
+                    //         mounted) {
+                    //       monthSnackBarKey.currentState?.hide(); // 항상 hide 후
+                    //       monthSnackBarKey.currentState?.show(); // 다시 show
+                    //     }
+                    //   });
+                    // }
 
                     // 현재 표시 월 갱신
-                    prevDisplayedMonth = currentMonth;
+                    // prevDisplayedMonth = currentMonth;
 
                     return Column(
                       children: [

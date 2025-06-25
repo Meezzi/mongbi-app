@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/core/get_responsive_ratio_by_width.dart';
 import 'package:mongbi_app/providers/statistics_provider.dart';
 
@@ -179,12 +178,17 @@ class MonthYearPickerState extends ConsumerState<MonthYearPicker> {
         ),
         child: Text(
           content,
-          style: Font.body14.copyWith(
+          style: TextStyle(
+            fontFamily: 'NanumSquareRound',
+            fontWeight: FontWeight.w400,
+            fontSize: getResponsiveRatioByWidth(context, 14),
+            height:
+                getResponsiveRatioByWidth(context, 20) /
+                getResponsiveRatioByWidth(context, 14),
             color:
                 (isAfterCurrentMonth ?? false)
                     ? Color(0xFFA6A1AA)
                     : Color(0xFF1A181B),
-            fontSize: getResponsiveRatioByWidth(context, 14),
           ),
         ),
       ),

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mongbi_app/providers/user_info_provider.dart';
 
-class HistoryAppBar extends StatelessWidget {
+class HistoryAppBar extends ConsumerWidget {
   const HistoryAppBar({
     super.key,
     required this.isActive,
@@ -12,7 +14,10 @@ class HistoryAppBar extends StatelessWidget {
   final double horizontalPadding;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final splashState = ref.watch(splashViewModelProvider);
+    final nickname = splashState.userList![0].userNickname;
+
     return AnimatedContainer(
       duration: Duration(milliseconds: 200),
       decoration: BoxDecoration(
@@ -40,10 +45,10 @@ class HistoryAppBar extends StatelessWidget {
             fontSize: 20,
             height: 28 / 20,
             color: isActive ? Colors.white : Color(0xff1A181B),
+            letterSpacing: 0.23,
           ),
 
-          // TODO : 나중에 사용자 닉네임으로 변경
-          child: Text('모몽의 꿈 기록'),
+          child: Text('$nickname의 꿈 기록'),
         ),
       ),
     );

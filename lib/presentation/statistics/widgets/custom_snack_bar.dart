@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mongbi_app/core/font.dart';
+import 'package:mongbi_app/core/get_responsive_ratio_by_width.dart';
 
 class CustomSnackBar extends StatefulWidget {
   const CustomSnackBar({super.key, this.message = '보여줄 꿈이 없다. 꿈을 알려달라몽!'});
@@ -23,7 +24,10 @@ class CustomSnackBarState extends State<CustomSnackBar> {
       behavior: SnackBarBehavior.floating,
       content: speechBubbleSnackBar(),
       duration: const Duration(hours: 12),
-      margin: EdgeInsets.symmetric(horizontal: 0, vertical: 2),
+      margin: EdgeInsets.symmetric(
+        horizontal: 0,
+        vertical: getResponsiveRatioByWidth(context, 8),
+      ),
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
@@ -33,37 +37,43 @@ class CustomSnackBarState extends State<CustomSnackBar> {
   }
 
   Widget speechBubbleSnackBar() {
-    return Stack(
-      clipBehavior: Clip.none,
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        // 아래쪽 삼각형 꼭지
-        Positioned(
-          bottom: -12,
-          left: 0,
-          right: 0,
-          child: Center(
-            child: CustomPaint(
-              size: const Size(24, 32),
-              painter: _BubblePointerPainter(color: Color(0xFF8C2EFF)),
+        Stack(
+          clipBehavior: Clip.none,
+          children: [
+            Positioned(
+              bottom: -12,
+              left: 0,
+              right: 0,
+              child: Center(
+                child: CustomPaint(
+                  size: const Size(24, 32),
+                  painter: _BubblePointerPainter(color: Color(0xFF8C2EFF)),
+                ),
+              ),
             ),
-          ),
-        ),
-        // 말풍선 본체
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 50),
-          child: Container(
-            width: double.infinity,
-            padding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-            decoration: BoxDecoration(
-              color: Color(0xFF8C2EFF), // 이미지와 유사한 진한 보라색
-              borderRadius: BorderRadius.circular(32),
+            Container(
+              padding: EdgeInsets.symmetric(
+                vertical: getResponsiveRatioByWidth(context, 8),
+                horizontal: getResponsiveRatioByWidth(context, 12),
+              ),
+              decoration: BoxDecoration(
+                color: Color(0xFF8C2EFF),
+                borderRadius: BorderRadius.circular(32),
+              ),
+              child: Text(
+                widget.message,
+                style: Font.title14.copyWith(
+                  fontSize: getResponsiveRatioByWidth(context, 14),
+                  color: Colors.white,
+                ),
+                textAlign: TextAlign.center,
+              ),
             ),
-            child: Text(
-              widget.message,
-              style: Font.title14.copyWith(fontSize: 14, color: Colors.white),
-              textAlign: TextAlign.center,
-            ),
-          ),
+          ],
         ),
       ],
     );
