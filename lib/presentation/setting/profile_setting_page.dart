@@ -29,6 +29,13 @@ class ProfileSettingPage extends ConsumerWidget {
       appBar: AppBar(
         title: Text('프로필 설정', style: Font.title20),
         titleSpacing: 0,
+        centerTitle: false,
+        leading: IconButton(
+          onPressed: () {
+            context.pop();
+          },
+          icon: SvgPicture.asset('assets/icons/back-arrow.svg'),
+        ),
         backgroundColor: const Color(0xFFFAFAFA),
       ),
       backgroundColor: const Color(0xFFFAFAFA),
@@ -44,7 +51,7 @@ class ProfileSettingPage extends ConsumerWidget {
 
               final prefs = await SharedPreferences.getInstance();
               await prefs.setBool('nicknameChangeState', true);
-              context.push('/nickname_input');
+              await context.push('/nickname_input');
             },
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
