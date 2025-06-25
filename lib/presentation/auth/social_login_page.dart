@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -36,62 +38,64 @@ class SocialLoginPage extends ConsumerWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      _SocialLoginItem(
-                        showRecentBubble: lastLoginProvider == 'apple',
-                        child: AppleLoginButton(
-                          onTap: () async {
-                            final authViewModel = ref.read(
-                              authViewModelProvider.notifier,
-                            );
-                            await FirebaseAnalytics.instance.logEvent(
-                              name: 'button_click',
-                              parameters: {
-                                'button_name': 'apple_login',
-                                'screen': 'SocialLoginPage',
-                              },
-                            );
-
-                            try {
-                              await authViewModel.loginWithApple();
-
+                      if (Platform.isIOS) ...[
+                        _SocialLoginItem(
+                          showRecentBubble: lastLoginProvider == 'apple',
+                          child: AppleLoginButton(
+                            onTap: () async {
+                              final authViewModel = ref.read(
+                                authViewModelProvider.notifier,
+                              );
                               await FirebaseAnalytics.instance.logEvent(
-                                name: 'login_success',
+                                name: 'button_click',
                                 parameters: {
-                                  'provider': 'apple',
+                                  'button_name': 'apple_login',
                                   'screen': 'SocialLoginPage',
                                 },
                               );
 
-                              await showModalBottomSheet(
-                                context: context,
-                                isScrollControlled: false,
-                                isDismissible: false,
-                                backgroundColor: const Color.fromARGB(
-                                  60,
-                                  0,
-                                  0,
-                                  0,
-                                ),
-                                builder: (_) => const TermsBottomSheet(),
-                              );
-                            } catch (e) {
-                              await FirebaseAnalytics.instance.logEvent(
-                                name: 'login_failure',
-                                parameters: {
-                                  'provider': 'apple',
-                                  'screen': 'SocialLoginPage',
-                                  'error': e.toString().substring(0, 100),
-                                },
-                              );
+                              try {
+                                await authViewModel.loginWithApple();
 
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('애플 로그인 실패 $e')),
-                              );
-                            }
-                          },
+                                await FirebaseAnalytics.instance.logEvent(
+                                  name: 'login_success',
+                                  parameters: {
+                                    'provider': 'apple',
+                                    'screen': 'SocialLoginPage',
+                                  },
+                                );
+
+                                await showModalBottomSheet(
+                                  context: context,
+                                  isScrollControlled: false,
+                                  isDismissible: false,
+                                  backgroundColor: const Color.fromARGB(
+                                    60,
+                                    0,
+                                    0,
+                                    0,
+                                  ),
+                                  builder: (_) => const TermsBottomSheet(),
+                                );
+                              } catch (e) {
+                                await FirebaseAnalytics.instance.logEvent(
+                                  name: 'login_failure',
+                                  parameters: {
+                                    'provider': 'apple',
+                                    'screen': 'SocialLoginPage',
+                                    'error': e.toString().substring(0, 100),
+                                  },
+                                );
+
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text('애플 로그인 실패 $e')),
+                                );
+                              }
+                            },
+                          ),
                         ),
-                      ),
-                      const SizedBox(width: 24),
+                        const SizedBox(width: 24),
+                      ],
                       _SocialLoginItem(
                         showRecentBubble: lastLoginProvider == 'kakao',
                         child: KakaoLoginButton(
@@ -135,10 +139,7 @@ class SocialLoginPage extends ConsumerWidget {
                                 parameters: {
                                   'provider': 'kakao',
                                   'screen': 'SocialLoginPage',
-                                  'error': e.toString().substring(
-                                    0,
-                                    100,
-                                  ), // 너무 길면 잘라줌
+                                  'error': e.toString().substring(0, 100),
                                 },
                               );
 
@@ -167,7 +168,6 @@ class SocialLoginPage extends ConsumerWidget {
 
                             try {
                               await authViewModel.loginWithNaver();
-
                               await FirebaseAnalytics.instance.logEvent(
                                 name: 'login_success',
                                 parameters: {
@@ -175,6 +175,7 @@ class SocialLoginPage extends ConsumerWidget {
                                   'screen': 'SocialLoginPage',
                                 },
                               );
+
                               await showModalBottomSheet(
                                 context: context,
                                 isScrollControlled: false,
@@ -193,12 +194,10 @@ class SocialLoginPage extends ConsumerWidget {
                                 parameters: {
                                   'provider': 'naver',
                                   'screen': 'SocialLoginPage',
-                                  'error': e.toString().substring(
-                                    0,
-                                    100,
-                                  ), // 길면 자름
+                                  'error': e.toString().substring(0, 100),
                                 },
                               );
+
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(content: Text('네이버 로그인 실패 $e')),
                               );
