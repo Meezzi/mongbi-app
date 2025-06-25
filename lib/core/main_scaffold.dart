@@ -194,47 +194,48 @@ class MainScaffold extends ConsumerWidget {
         backgroundColor: Colors.transparent,
         titleSpacing: 24,
         elevation: 0,
-        actions: [
-          IconButton(
-            onPressed: () {
-              context.push('/alarm');
-            },
-            padding: EdgeInsets.only(right: 24),
-            icon: Consumer(
-              builder: (context, ref, child) {
-                final alarmState = ref.watch(alarmViewModelProvider);
-                final alarmList = alarmState.alarmList;
-                final isNotRead =
-                    alarmList?.any((e) => e.fcmIsRead == false) ?? false;
+        // TODO : FCM 사용 전까지 숨김
+        // actions: [
+        //   IconButton(
+        //     onPressed: () {
+        //       context.push('/alarm');
+        //     },
+        //     padding: EdgeInsets.only(right: 24),
+        //     icon: Consumer(
+        //       builder: (context, ref, child) {
+        //         final alarmState = ref.watch(alarmViewModelProvider);
+        //         final alarmList = alarmState.alarmList;
+        //         final isNotRead =
+        //             alarmList?.any((e) => e.fcmIsRead == false) ?? false;
 
-                return Stack(
-                  clipBehavior: Clip.none,
-                  children: [
-                    SvgPicture.asset(
-                      'assets/icons/bell.svg',
-                      width: 24,
-                      height: 24,
-                      fit: BoxFit.none,
-                    ),
-                    if (isNotRead)
-                      Positioned(
-                        right: 0,
-                        top: 0,
-                        child: Container(
-                          width: 6,
-                          height: 6,
-                          decoration: BoxDecoration(
-                            color: Color(0xFFEA4D57),
-                            shape: BoxShape.circle,
-                          ),
-                        ),
-                      ),
-                  ],
-                );
-              },
-            ),
-          ),
-        ],
+        //         return Stack(
+        //           clipBehavior: Clip.none,
+        //           children: [
+        //             SvgPicture.asset(
+        //               'assets/icons/bell.svg',
+        //               width: 24,
+        //               height: 24,
+        //               fit: BoxFit.none,
+        //             ),
+        //             if (isNotRead)
+        //               Positioned(
+        //                 right: 0,
+        //                 top: 0,
+        //                 child: Container(
+        //                   width: 6,
+        //                   height: 6,
+        //                   decoration: BoxDecoration(
+        //                     color: Color(0xFFEA4D57),
+        //                     shape: BoxShape.circle,
+        //                   ),
+        //                 ),
+        //               ),
+        //           ],
+        //         );
+        //       },
+        //     ),
+        //   ),
+        // ],
       );
     } else if (location.startsWith('/setting')) {
       return AppBar(
