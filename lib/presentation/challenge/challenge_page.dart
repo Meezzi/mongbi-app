@@ -126,75 +126,77 @@ class ChallengePage extends ConsumerWidget {
                       ),
                 ),
               ),
-              ActionButtonRow(
-                leftText: '흠 안할래',
-                rightText: '이걸로 할래',
-                onLeftPressed: () {
-                  FirebaseAnalytics.instance.logEvent(
-                    name: 'challenge_cancel',
-                    parameters: {'screen': 'ChallengePage'},
-                  );
-                  showDialog(
-                    context: context,
-                    builder:
-                        (context) => MongbiDialog(
-                          content: '아앗, 아쉬워라\n꿈 잘먹었몽! 오늘도 힘내라몽',
-                          buttonText: '고마워',
-                          onSubmit: () {
-                            context.pushReplacement('/home');
-                          },
-                        ),
-                  );
-                },
-                onRightPressed: () async {
-                  if (selectedIndex == null) {
-                    await FirebaseAnalytics.instance.logEvent(
-                      name: 'challenge_not_selected',
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: ActionButtonRow(
+                  leftText: '흠 안할래',
+                  rightText: '이걸로 할래',
+                  onLeftPressed: () {
+                    FirebaseAnalytics.instance.logEvent(
+                      name: 'challenge_cancel',
                       parameters: {'screen': 'ChallengePage'},
                     );
-                    ScaffoldMessenger.of(
-                      context,
-                    ).showSnackBar(customSnackBar('선물을 먼저 골라줘', 80, 2));
-                    return;
-                  }
+                    showDialog(
+                      context: context,
+                      builder:
+                          (context) => MongbiDialog(
+                            content: '아앗, 아쉬워라\n꿈 잘먹었몽! 오늘도 힘내라몽',
+                            buttonText: '고마워',
+                            onSubmit: () {
+                              context.pushReplacement('/home');
+                            },
+                          ),
+                    );
+                  },
+                  onRightPressed: () async {
+                    if (selectedIndex == null) {
+                      await FirebaseAnalytics.instance.logEvent(
+                        name: 'challenge_not_selected',
+                        parameters: {'screen': 'ChallengePage'},
+                      );
+                      ScaffoldMessenger.of(
+                        context,
+                      ).showSnackBar(customSnackBar('선물을 먼저 골라줘', 80, 2));
+                      return;
+                    }
 
-                  final selectedChallenge =
-                      ref
-                          .read(challengeViewModelProvider)
-                          .value![selectedIndex];
+                    final selectedChallenge =
+                        ref
+                            .read(challengeViewModelProvider)
+                            .value![selectedIndex];
 
-                  await ref
-                      .read(challengeViewModelProvider.notifier)
-                      .saveChallenge();
+                    await ref
+                        .read(challengeViewModelProvider.notifier)
+                        .saveChallenge();
 
-                  await FirebaseAnalytics.instance.logEvent(
-                    name: 'challenge_completed',
-                    parameters: {
-                      'index': selectedIndex,
-                      'type': selectedChallenge.type,
-                      'screen': 'ChallengePage',
-                    },
-                  );
+                    await FirebaseAnalytics.instance.logEvent(
+                      name: 'challenge_completed',
+                      parameters: {
+                        'index': selectedIndex,
+                        'type': selectedChallenge.type,
+                        'screen': 'ChallengePage',
+                      },
+                    );
 
-                  await FirebaseAnalytics.instance.setUserProperty(
-                    name: 'challenge_type',
-                    value: selectedChallenge.type,
-                  );
+                    await FirebaseAnalytics.instance.setUserProperty(
+                      name: 'challenge_type',
+                      value: selectedChallenge.type,
+                    );
 
-                  await showDialog(
-                    context: context,
-                    builder:
-                        (context) => MongbiDialog(
-                          content: '꿈 잘먹었몽!\n선물 완료하고, 오늘도 힘내라몽',
-                          buttonText: '고마워',
-                          onSubmit: () {
-                            context.pushReplacement('/home');
-                          },
-                        ),
-                  );
-                },
+                    await showDialog(
+                      context: context,
+                      builder:
+                          (context) => MongbiDialog(
+                            content: '꿈 잘먹었몽!\n선물 완료하고, 오늘도 힘내라몽',
+                            buttonText: '고마워',
+                            onSubmit: () {
+                              context.pushReplacement('/home');
+                            },
+                          ),
+                    );
+                  },
+                ),
               ),
-              const SizedBox(height: 24),
             ],
           ),
         ),
