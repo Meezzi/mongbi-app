@@ -90,17 +90,20 @@ class _DreamWritePageState extends ConsumerState<DreamWritePage> {
                   child: Column(
                     children: [
                       const Spacer(),
-                      FilledButtonWidget(
-                        type: ButtonType.primary,
-                        text: '내가 꾼 꿈이야',
-                        onPress:
-                            isButtonEnabled
-                                ? () {
-                                  context.pushReplacement(
-                                    '/dream_analysis_loading?isFirst=${widget.isFirst}',
-                                  );
-                                }
-                                : null,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        child: FilledButtonWidget(
+                          type: ButtonType.primary,
+                          text: '내가 꾼 꿈이야',
+                          onPress:
+                              isButtonEnabled
+                                  ? () {
+                                    context.pushReplacement(
+                                      '/dream_analysis_loading?isFirst=${widget.isFirst}',
+                                    );
+                                  }
+                                  : null,
+                        ),
                       ),
                     ],
                   ),
