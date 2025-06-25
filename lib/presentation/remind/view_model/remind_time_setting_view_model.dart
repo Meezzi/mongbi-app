@@ -143,4 +143,5 @@ class NotificationService {
   Future<void> cancelReminderNotification() async {
     await flutterLocalNotificationsPlugin.cancel(0);
   }
+  
 }

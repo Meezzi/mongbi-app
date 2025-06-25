@@ -66,12 +66,12 @@ class AlarmSettingViewModel extends Notifier<AlarmSettingState> {
     } else {
       await notificationService.cancelReminderNotification();
     }
+  
   }
 
   void toggleChallenge() {
-    final nextState = state
-        .copyWith(isChallenge: !state.isChallenge)
-        .recalculateIsAll();
+    final nextState =
+        state.copyWith(isChallenge: !state.isChallenge).recalculateIsAll();
 
     state = nextState;
     _saveState(nextState);
