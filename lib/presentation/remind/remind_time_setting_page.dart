@@ -68,20 +68,22 @@ class RemindTimeSettingPage extends StatelessWidget {
                 assetPath: 'assets/images/remind_bell.webp',
               ),
               const Spacer(),
-              FilledButtonWidget(
-                type: ButtonType.primary,
-                text: '알겠어',
-                onPress: () async {
-                  // ✅ 알림 수락 클릭 로그
-                  await FirebaseAnalytics.instance.logEvent(
-                    name: 'remind_intro_confirmed',
-                    parameters: {'screen': 'RemindTimeSettingPage'},
-                  );
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: FilledButtonWidget(
+                  type: ButtonType.primary,
+                  text: '알겠어',
+                  onPress: () async {
+                    // ✅ 알림 수락 클릭 로그
+                    await FirebaseAnalytics.instance.logEvent(
+                      name: 'remind_intro_confirmed',
+                      parameters: {'screen': 'RemindTimeSettingPage'},
+                    );
 
-                  context.go('/remindtime_time_setting');
-                },
+                    context.go('/remindtime_time_setting');
+                  },
+                ),
               ),
-              const SizedBox(height: 32),
             ],
           ),
         ),
