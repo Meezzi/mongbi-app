@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:ui';
+import 'package:timezone/timezone.dart' as tz;
 
 class DeadlineManager {
   Timer? _timer;
@@ -12,11 +13,16 @@ class DeadlineManager {
 
   bool get isDeadlinePassed => _isDeadlinePassed;
 
-  DateTime get _koreaTime => DateTime.now().toUtc().add(Duration(hours: 9));
+  tz.TZDateTime get _koreaTime {
+    final seoul = tz.getLocation('Asia/Seoul');
+    return tz.TZDateTime.now(seoul);
+  }
 
-  DateTime get _endOfDay {
+  tz.TZDateTime get _endOfDay {
     final koreaTime = _koreaTime;
-    return DateTime(
+    final seoul = tz.getLocation('Asia/Seoul');
+    return tz.TZDateTime(
+      seoul,
       koreaTime.year,
       koreaTime.month,
       koreaTime.day,
