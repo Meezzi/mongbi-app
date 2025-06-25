@@ -3,7 +3,7 @@ import 'package:flutter_naver_login/flutter_naver_login.dart';
 import 'package:mongbi_app/core/secure_storage_service.dart';
 import 'package:mongbi_app/data/dtos/login_response_dto.dart';
 import 'package:mongbi_app/data/dtos/user_dto.dart';
-import 'package:sentry_flutter/sentry_flutter.dart'; // ✅ Sentry 추가
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 class RemoteNaverAuthDataSource {
   RemoteNaverAuthDataSource(this.dio);
@@ -51,15 +51,30 @@ class RemoteNaverAuthDataSource {
         );
         throw error;
       }
-    } catch (e, s) {
+    } on DioException catch (e, s) {
+      final errorData = e.response?.data;
+      final errorMessage =
+          errorData is Map ? errorData['message'] : '알 수 없는 오류';
+      final errorCode = errorData is Map ? errorData['code'] : null;
+
       await Sentry.captureException(
         e,
         stackTrace: s,
         withScope: (scope) {
           scope.setTag('auth', 'naver');
+          scope.setExtra('code', errorCode);
+          scope.setExtra('message', errorMessage);
         },
       );
-      rethrow;
+
+      if (errorCode == 1259) {
+        throw Exception('탈퇴한 회원입니다. 재가입이 불가합니다.');
+      }
+
+      throw Exception(null);
+    } catch (e, s) {
+      await Sentry.captureException(e, stackTrace: s);
+      throw Exception(null);
     }
 
     return LoginResponseDto(token: jwt, user: userDto!);

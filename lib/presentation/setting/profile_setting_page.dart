@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/presentation/setting/widgets/logout_confirm_dialog.dart';
+import 'package:mongbi_app/presentation/setting/widgets/remove_accont_modal.dart';
 import 'package:mongbi_app/presentation/setting/widgets/setting_rounded_list_tile_item.dart';
 import 'package:mongbi_app/providers/auth_provider.dart' as auth2;
 import 'package:mongbi_app/providers/user_info_provider.dart';
@@ -15,7 +16,6 @@ class ProfileSettingPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.read(auth2.authViewModelProvider);
     final userInfo = ref.watch(splashViewModelProvider);
     final userResult = userInfo.userList?.first;
     final nickname = userResult?.userNickname ?? '비회원';
@@ -148,7 +148,12 @@ class ProfileSettingPage extends ConsumerWidget {
                 parameters: {'screen': 'ProfileSettingPage'},
               );
 
-              // TODO: 계정 탈퇴
+              showDialog(
+                context: context,
+                barrierDismissible: false, // 배경 터치로 닫히지 않음!
+                barrierColor: Colors.black.withValues(alpha: 0.6),
+                builder: (context) => RemoveAccontModal(),
+              );
             },
           ),
         ],
