@@ -1,4 +1,3 @@
-
 // AlarmSettingPage.dart
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
@@ -24,9 +23,7 @@ class AlarmSettingPage extends ConsumerWidget {
     );
 
     if (!alarmState.isInitialized) {
-      return const Scaffold(
-        body: Center(child: CircularProgressIndicator()),
-      );
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
 
     return Scaffold(
@@ -43,21 +40,22 @@ class AlarmSettingPage extends ConsumerWidget {
       backgroundColor: const Color(0xFFFAFAFA),
       body: Column(
         children: [
-          RoundedListTileItem(
-            title: '전체 알림',
-            isFirst: true,
-            isLast: false,
-            trailing: ToggleSwitch(value: alarmState.isAll),
-            onTap: () {
-              alarmViewModel.toggleAll();
-              FirebaseAnalytics.instance.logEvent(
-                name: 'alarm_toggle_changed',
-                parameters: {'type': 'all', 'enabled': !alarmState.isAll},
-              );
-            },
-            enableInkWell: false,
-          ),
-          const Divider(height: 0, thickness: 8, color: Color(0xFFF3F2F4)),
+          // TODO : 일단 숨김
+          // RoundedListTileItem(
+          //   title: '전체 알림',
+          //   isFirst: true,
+          //   isLast: false,
+          //   trailing: ToggleSwitch(value: alarmState.isAll),
+          //   onTap: () {
+          //     alarmViewModel.toggleAll();
+          //     FirebaseAnalytics.instance.logEvent(
+          //       name: 'alarm_toggle_changed',
+          //       parameters: {'type': 'all', 'enabled': !alarmState.isAll},
+          //     );
+          //   },
+          //   enableInkWell: false,
+          // ),
+          // const Divider(height: 0, thickness: 8, color: Color(0xFFF3F2F4)),
           RoundedListTileItem(
             title: '리마인드 알림',
             isFirst: true,
