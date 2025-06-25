@@ -44,7 +44,7 @@ class CompletionBottomSheet extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 24),
             child: FilledButtonWidget(
               type: ButtonType.primary,
-              text: '내가 꾼 꿈이야',
+              text: '고마워',
               onPress: onButtonPressed,
             ),
           ),
