@@ -1,13 +1,14 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
+import 'package:mongbi_app/core/secure_storage_service.dart';
 import 'package:mongbi_app/data/dtos/login_response_dto.dart';
 import 'package:mongbi_app/data/dtos/user_dto.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 class RemoteAppleAuthDataSource {
   RemoteAppleAuthDataSource(this.dio);
   final Dio dio;
+  final storageService = SecureStorageService();
 
   Future<LoginResponseDto> login(String identity_token) async {
     try {
@@ -24,13 +25,12 @@ class RemoteAppleAuthDataSource {
       }
 
       final jwt = response.data['token'];
+      final refreshToken = response.data['refreshToken'];
       final userDto = UserDto.fromJson(response.data['user']);
-      final int userIdx = response.data['user']['USER_IDX'];
 
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setString('jwt_token', jwt);
-      await prefs.setInt('user_id', userIdx);
-      await prefs.setBool('isLogined', true);
+      await storageService.saveAccessToken(jwt);
+      await storageService.saveRefreshToken(refreshToken);
+      await storageService.saveUserIdx(userDto.userIdx);
 
       return LoginResponseDto(token: jwt, user: userDto);
     } on DioException catch (e, s) {
