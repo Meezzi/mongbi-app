@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/font.dart';
+import 'package:mongbi_app/presentation/common/action_button_row.dart';
 import 'package:mongbi_app/presentation/dream/widgets/custom_button.dart';
 import 'package:mongbi_app/presentation/dream/widgets/dream_section_card.dart';
 import 'package:mongbi_app/presentation/dream/widgets/mongbi_comment_card.dart';
 import 'package:mongbi_app/providers/dream_provider.dart';
 
 class DreamInterpretationPage extends ConsumerStatefulWidget {
-  const DreamInterpretationPage({super.key});
+  const DreamInterpretationPage({super.key, required this.isFirst});
+
+  final bool isFirst;
 
   @override
   ConsumerState<DreamInterpretationPage> createState() =>
@@ -56,10 +59,24 @@ class _DreamInterpretationPageState
                   comment: dream.mongbiComment,
                 ),
                 SizedBox(height: 40),
-                CustomButton(
-                  text: '오 맞아!',
-                  onSubmit: () => context.pushReplacement('/challenge_intro'),
-                ),
+
+                if (widget.isFirst) ...[
+                  ActionButtonRow(
+                    leftText: '음... 아닌데?',
+                    rightText: '오 맞아!',
+                    onLeftPressed: () {
+                      context.pushReplacement('/dream_write?isFirst=false');
+                    },
+                    onRightPressed:
+                        () => context.pushReplacement('/challenge_intro'),
+                  ),
+                ] else ...[
+                  CustomButton(
+                    text: '고마워',
+                    onSubmit: () => context.pushReplacement('/challenge_intro'),
+                  ),
+                ],
+
                 SizedBox(height: 24),
               ],
             ),

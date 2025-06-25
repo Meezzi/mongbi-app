@@ -9,7 +9,9 @@ import 'package:mongbi_app/presentation/dream/widgets/mood_selection_row.dart';
 import 'package:mongbi_app/providers/dream_provider.dart';
 
 class DreamWritePage extends ConsumerStatefulWidget {
-  const DreamWritePage({super.key});
+  const DreamWritePage({super.key, required this.isFirst});
+
+  final bool isFirst;
 
   @override
   ConsumerState<DreamWritePage> createState() => _DreamWritePageState();
@@ -95,7 +97,7 @@ class _DreamWritePageState extends ConsumerState<DreamWritePage> {
                             isButtonEnabled
                                 ? () {
                                   context.pushReplacement(
-                                    '/dream_analysis_loading',
+                                    '/dream_analysis_loading?isFirst=${widget.isFirst}',
                                   );
                                 }
                                 : null,
