@@ -27,7 +27,7 @@ class DreamTypeMoodStateRow extends StatelessWidget {
       children: [
         // 라벨
         Expanded(
-          flex: 825,
+          flex: 900,
           child:
               _isString(label)
                   ? Center(child: Text(label!, style: Font.subTitle12))
