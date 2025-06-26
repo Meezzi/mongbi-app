@@ -38,6 +38,7 @@ class TabBarTitle extends StatelessWidget {
               onTap: (value) {
                 ScaffoldMessenger.of(context).hideCurrentSnackBar();
                 statisticsVm.onChangetabBarIndex(value);
+                ref.read(snackBarStatusProvider.notifier).state = false;
                 if (value == 0) {
                   statisticsVm.fetchMonthStatistics();
                 } else {
