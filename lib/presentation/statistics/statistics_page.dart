@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/core/get_responsive_ratio_by_width.dart';
+import 'package:mongbi_app/presentation/statistics/widgets/custom_snack_bar.dart';
 import 'package:mongbi_app/presentation/statistics/widgets/month_statistics.dart';
 import 'package:mongbi_app/presentation/statistics/widgets/tab_bar_title.dart';
 import 'package:mongbi_app/presentation/statistics/widgets/year_statistics.dart';
@@ -43,58 +44,65 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage>
         getResponsiveRatioByWidth(context, 48) + // TabBar 높이
         getResponsiveRatioByWidth(context, 8) * 2; // Padding Vertical
     final splashState = ref.watch(splashViewModelProvider);
-    final nickname = splashState.userList![0].userNickname;
+    final nickname = splashState.userList?[0].userNickname ?? '몽비';
+    final snackBarState = ref.watch(snackBarStatusProvider);
 
     return SafeArea(
-      child: NestedScrollView(
-        headerSliverBuilder: (context, innerBoxIsScrolled) {
-          return [
-            // 상단 제목 필요 시 사용
-            SliverToBoxAdapter(
-              child: Container(
-                color: Colors.white,
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    left: horizontalPadding,
-                    right: horizontalPadding,
-                    top: 15,
-                    bottom: 16,
+      child: Stack(
+        children: [
+          NestedScrollView(
+            headerSliverBuilder: (context, innerBoxIsScrolled) {
+              return [
+                // 상단 제목 필요 시 사용
+                SliverToBoxAdapter(
+                  child: Container(
+                    color: Colors.white,
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        left: horizontalPadding,
+                        right: horizontalPadding,
+                        top: 15,
+                        bottom: 16,
+                      ),
+                      child: Text('$nickname의 꿈 통계', style: Font.title20),
+                    ),
                   ),
-                  child: Text('$nickname의 꿈 통계', style: Font.title20),
                 ),
-              ),
-            ),
 
-            // 커스텀 탭바 고정
-            SliverPersistentHeader(
-              pinned: true,
-              delegate: _SliverTabBarDelegate(
-                TabBarTitle(
-                  tabController: tabController,
-                  horizontalPadding: horizontalPadding,
+                // 커스텀 탭바 고정
+                SliverPersistentHeader(
+                  pinned: true,
+                  delegate: _SliverTabBarDelegate(
+                    TabBarTitle(
+                      tabController: tabController,
+                      horizontalPadding: horizontalPadding,
+                    ),
+                    tabBarHeight,
+                  ),
                 ),
-                tabBarHeight,
+              ];
+            },
+            body: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [Colors.white, Color(0xFFF4EAFF)],
+                ),
+              ),
+              child: TabBarView(
+                controller: tabController,
+                physics: NeverScrollableScrollPhysics(),
+                children: [
+                  MonthStatistics(horizontalPadding: horizontalPadding),
+                  YearStatistics(horizontalPadding: horizontalPadding),
+                ],
               ),
             ),
-          ];
-        },
-        body: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [Colors.white, Color(0xFFF4EAFF)],
-            ),
           ),
-          child: TabBarView(
-            controller: tabController,
-            physics: NeverScrollableScrollPhysics(),
-            children: [
-              MonthStatistics(horizontalPadding: horizontalPadding),
-              YearStatistics(horizontalPadding: horizontalPadding),
-            ],
-          ),
-        ),
+          if (snackBarState)
+            Positioned(bottom: 18, left: 0, right: 0, child: CustomSnackBar()),
+        ],
       ),
     );
   }
