@@ -97,9 +97,9 @@ class MonthYearPickerState extends ConsumerState<MonthYearPicker> {
                                 pickerVm.onChangedMonth(
                                   DateTime(DateTime.now().year, month),
                                 );
-                                ScaffoldMessenger.of(
-                                  context,
-                                ).hideCurrentSnackBar();
+                                ref
+                                    .read(snackBarStatusProvider.notifier)
+                                    .state = false;
                                 hide();
                               },
                             );
@@ -124,9 +124,9 @@ class MonthYearPickerState extends ConsumerState<MonthYearPicker> {
                                   pickerViewModelProvider.notifier,
                                 );
                                 pickerVm.onChangedYear(DateTime(year));
-                                ScaffoldMessenger.of(
-                                  context,
-                                ).hideCurrentSnackBar();
+                                ref
+                                    .read(snackBarStatusProvider.notifier)
+                                    .state = false;
                                 hide();
                               },
                             );

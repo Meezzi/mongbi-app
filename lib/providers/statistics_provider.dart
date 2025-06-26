@@ -41,3 +41,7 @@ final statisticsViewModelProvider =
     AsyncNotifierProvider<StatisticsViewModel, StatisticsModel?>(() {
       return StatisticsViewModel();
     });
+
+final snackBarStatusProvider = StateProvider<bool>((ref) {
+  return false;
+});

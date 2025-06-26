@@ -47,7 +47,7 @@ class _NicknameInputPageState extends ConsumerState<NicknameInputPage> {
 
   @override
   Widget build(BuildContext context) {
-    final isButtonEnabled = nickname.trim().length >= 2;
+    final isButtonEnabled = RegExp(r'^[가-힣]{2,10}$').hasMatch(nickname.trim());
 
     return Scaffold(
       appBar:
