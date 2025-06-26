@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mongbi_app/core/get_responsive_ratio_by_width.dart';
 import 'package:mongbi_app/core/get_widget_info.dart';
 import 'package:mongbi_app/data/dtos/statistics_dto.dart';
 import 'package:mongbi_app/presentation/statistics/statistics_key/statistics_key.dart';
@@ -106,9 +105,7 @@ class _YearStatisticsState extends ConsumerState<YearStatistics>
                 return Column(
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(
-                        top: getResponsiveRatioByWidth(context, 16),
-                      ),
+                      padding: EdgeInsets.only(top: 16),
                       child: Row(
                         children: [
                           DreamFrequencyCard(
@@ -116,9 +113,7 @@ class _YearStatisticsState extends ConsumerState<YearStatistics>
                             frequency: frequency,
                             totalDays: totalDays,
                           ),
-                          SizedBox(
-                            width: getResponsiveRatioByWidth(context, 16),
-                          ),
+                          SizedBox(width: 16),
                           GiftFrequencyCard(isFirst: isFirst, frequency: 0),
                         ],
                       ),

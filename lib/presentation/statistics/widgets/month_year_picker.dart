@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mongbi_app/core/get_responsive_ratio_by_width.dart';
 import 'package:mongbi_app/providers/statistics_provider.dart';
 
 class MonthYearPicker extends ConsumerStatefulWidget {
@@ -51,8 +50,8 @@ class MonthYearPickerState extends ConsumerState<MonthYearPicker> {
                   top: widget.top,
                   child: Container(
                     padding: const EdgeInsets.only(right: 12),
-                    width: getResponsiveRatioByWidth(context, 100),
-                    height: getResponsiveRatioByWidth(context, 189),
+                    width: 100,
+                    height: 189,
                     decoration: BoxDecoration(
                       boxShadow: [
                         BoxShadow(
@@ -161,13 +160,10 @@ class MonthYearPickerState extends ConsumerState<MonthYearPicker> {
       onTap: (isAfterCurrentMonth ?? false) ? null : onTap,
       child: Container(
         padding: EdgeInsets.only(
-          top: getResponsiveRatioByWidth(context, 8),
-          bottom:
-              isLast
-                  ? getResponsiveRatioByWidth(context, 8)
-                  : getResponsiveRatioByWidth(context, 7),
-          left: getResponsiveRatioByWidth(context, 16),
-          right: getResponsiveRatioByWidth(context, 16),
+          top: 8,
+          bottom: isLast ? 8 : 7,
+          left: 16,
+          right: 16,
         ),
         decoration: BoxDecoration(
           color: isActive ? const Color(0xF5F5F4F5) : Colors.transparent,
@@ -181,10 +177,8 @@ class MonthYearPickerState extends ConsumerState<MonthYearPicker> {
           style: TextStyle(
             fontFamily: 'NanumSquareRound',
             fontWeight: FontWeight.w400,
-            fontSize: getResponsiveRatioByWidth(context, 14),
-            height:
-                getResponsiveRatioByWidth(context, 20) /
-                getResponsiveRatioByWidth(context, 14),
+            fontSize: 14,
+            height: 20 / 14,
             color:
                 (isAfterCurrentMonth ?? false)
                     ? Color(0xFFA6A1AA)
