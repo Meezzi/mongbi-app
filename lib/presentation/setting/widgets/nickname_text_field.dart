@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mongbi_app/core/font.dart';
 
 class NicknameTextField extends StatefulWidget {
-  final void Function(String) onChanged;
   const NicknameTextField({super.key, required this.onChanged});
+  final void Function(String) onChanged;
 
   @override
   State<NicknameTextField> createState() => _NicknameTextFieldState();
