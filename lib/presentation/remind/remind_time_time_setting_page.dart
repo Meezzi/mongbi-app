@@ -128,14 +128,6 @@ class _RemindTimePickerPageState extends State<RemindTimePickerPage> {
 
                       if (!granted) {
                         if (status.isPermanentlyDenied) {
-                          await FirebaseAnalytics.instance.logEvent(
-                            name: 'remind_permission_permanent_denied',
-                            parameters: {
-                              'screen': 'RemindTimePickerPage',
-                              'permanently': true,
-                            },
-                          );
-
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text(
@@ -145,14 +137,6 @@ class _RemindTimePickerPageState extends State<RemindTimePickerPage> {
                           );
                           await NotificationService().openAppSettingsIfNeeded();
                         } else {
-                          await FirebaseAnalytics.instance.logEvent(
-                            name: 'remind_permission_denied',
-                            parameters: {
-                              'screen': 'RemindTimePickerPage',
-                              'permanently': false,
-                            },
-                          );
-
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(content: Text('알림 권한이 거부되었습니다.')),
                           );
@@ -161,14 +145,6 @@ class _RemindTimePickerPageState extends State<RemindTimePickerPage> {
                       }
 
                       // ✅ 알림 설정 시간 저장 로그
-                      await FirebaseAnalytics.instance.logEvent(
-                        name: 'remind_time_selected',
-                        parameters: {
-                          'hour': selectedTime.hour,
-                          'minute': selectedTime.minute,
-                          'screen': 'RemindTimePickerPage',
-                        },
-                      );
 
                       await NotificationService().scheduleDailyReminder(
                         selectedTime,
