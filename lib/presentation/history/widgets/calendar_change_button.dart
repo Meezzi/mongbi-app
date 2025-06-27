@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mongbi_app/core/date_formatter.dart';
 import 'package:mongbi_app/core/font.dart';
-import 'package:mongbi_app/core/get_responsive_ratio_by_width.dart';
 import 'package:mongbi_app/presentation/history/widgets/calendar_bottom_sheet.dart';
 import 'package:mongbi_app/providers/history_provider.dart';
 
@@ -35,15 +34,13 @@ class CalendarChangeButton extends ConsumerWidget {
               children: [
                 Text(
                   DateFormatter.formatYearMonth(calendarState.focusedDay),
-                  style: Font.title16.copyWith(
-                    fontSize: getResponsiveRatioByWidth(context, 16),
-                  ),
+                  style: Font.title16.copyWith(fontSize: 16),
                 ),
                 SizedBox(width: 4),
                 SvgPicture.asset(
                   'assets/icons/chevron-down.svg',
                   fit: BoxFit.cover,
-                  width: getResponsiveRatioByWidth(context, 24),
+                  width: 24,
                 ),
               ],
             ),
