@@ -63,13 +63,13 @@ class AlarmSettingPage extends ConsumerWidget {
             trailing: ToggleSwitch(value: alarmState.isReminder),
             onTap: () {
               alarmViewModel.toggleReminder();
-              FirebaseAnalytics.instance.logEvent(
-                name: 'alarm_toggle_changed',
-                parameters: {
-                  'type': 'reminder',
-                  'enabled': !alarmState.isReminder,
-                },
-              );
+              // FirebaseAnalytics.instance.logEvent(
+              //   name: 'alarm_toggle_changed',
+              //   parameters: {
+              //     'type': 'reminder',
+              //     'enabled': !alarmState.isReminder,
+              //   },
+              // );
             },
             enableInkWell: false,
           ),
