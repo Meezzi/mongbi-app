@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/presentation/common/action_button_row.dart';
@@ -31,6 +34,26 @@ class _DreamInterpretationPageState
         titleSpacing: 24,
         centerTitle: false,
         automaticallyImplyLeading: false,
+        actions: [
+          IconButton(
+            icon: SvgPicture.asset(
+              'assets/icons/share.svg',
+              width: 24,
+              height: 24,
+            ),
+            onPressed: () {
+              final viewModel = ref.read(
+                dreamInterpretationViewModelProvider.notifier,
+              );
+
+              final summary = '''
+              ${dream.dreamSubTitle}
+              ${dream.dreamInterpretation}
+              ''';
+              viewModel.shareDreamInterpretation(summary.trim());
+            },
+          ),
+        ],
       ),
       backgroundColor: Color(0xFFFCF6FF),
       body: SingleChildScrollView(
