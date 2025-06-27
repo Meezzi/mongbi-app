@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mongbi_app/core/font.dart';
-import 'package:mongbi_app/core/get_responsive_ratio_by_width.dart';
 
 class MoodStateInfoModal {
   OverlayEntry? _overlayEntry;
@@ -44,10 +43,7 @@ class MoodStateInfoModal {
                   alignment: Alignment.center,
                   padding: const EdgeInsets.symmetric(horizontal: 24),
                   child: Container(
-                    padding: EdgeInsets.symmetric(
-                      vertical: getResponsiveRatioByWidth(context, 24),
-                      horizontal: getResponsiveRatioByWidth(context, 20),
-                    ),
+                    padding: EdgeInsets.symmetric(vertical: 24, horizontal: 20),
                     decoration: BoxDecoration(
                       color: Color(0xFFFAFAFA),
                       borderRadius: BorderRadius.circular(16),
@@ -58,15 +54,7 @@ class MoodStateInfoModal {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              '꿈 유형별 기분 상태',
-                              style: Font.title14.copyWith(
-                                fontSize: getResponsiveRatioByWidth(
-                                  context,
-                                  14,
-                                ),
-                              ),
-                            ),
+                            Text('꿈 유형별 기분 상태', style: Font.title14),
                             GestureDetector(
                               onTap: () {
                                 hide();
@@ -74,30 +62,26 @@ class MoodStateInfoModal {
                               child: SvgPicture.asset(
                                 'assets/icons/cancel.svg',
                                 fit: BoxFit.cover,
-                                width: getResponsiveRatioByWidth(context, 20),
+                                width: 20,
                               ),
                             ),
                           ],
                         ),
-                        SizedBox(height: getResponsiveRatioByWidth(context, 8)),
+                        SizedBox(height: 8),
                         _descriptionWidget(
                           context: context,
                           label: '행',
                           content: '꿈 유형 (길몽, 일상몽, 악몽)',
                         ),
-                        SizedBox(
-                          height: getResponsiveRatioByWidth(context, 16),
-                        ),
+                        SizedBox(height: 16),
                         _descriptionWidget(
                           context: context,
                           label: '열',
                           content: '기분상태 (기분 이모티콘의 색상으로 표현함)',
                         ),
-                        SizedBox(height: getResponsiveRatioByWidth(context, 6)),
+                        SizedBox(height: 6),
                         Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: getResponsiveRatioByWidth(context, 18),
-                          ),
+                          padding: EdgeInsets.symmetric(horizontal: 18),
                           child: Row(
                             children: [
                               ...List.generate(iconPathList.length, (index) {
@@ -105,40 +89,26 @@ class MoodStateInfoModal {
 
                                 return Container(
                                   padding:
-                                      isLast
-                                          ? null
-                                          : EdgeInsets.only(
-                                            right: getResponsiveRatioByWidth(
-                                              context,
-                                              4,
-                                            ),
-                                          ),
+                                      isLast ? null : EdgeInsets.only(right: 4),
                                   child: SvgPicture.asset(
                                     iconPathList[index],
                                     fit: BoxFit.cover,
-                                    width: getResponsiveRatioByWidth(
-                                      context,
-                                      20,
-                                    ),
+                                    width: 20,
                                   ),
                                 );
                               }),
                             ],
                           ),
                         ),
-                        SizedBox(
-                          height: getResponsiveRatioByWidth(context, 16),
-                        ),
+                        SizedBox(height: 16),
                         _descriptionWidget(
                           context: context,
                           label: '칸',
                           content: '기분 상태 빈도 (짙을수록 많이 해당됨)',
                         ),
-                        SizedBox(height: getResponsiveRatioByWidth(context, 6)),
+                        SizedBox(height: 6),
                         Padding(
-                          padding: EdgeInsets.only(
-                            left: getResponsiveRatioByWidth(context, 18),
-                          ),
+                          padding: EdgeInsets.only(left: 18),
                           child: Row(
                             children: [
                               ...List.generate(5, (index) {
@@ -181,24 +151,15 @@ class MoodStateInfoModal {
     required bool isLast,
   }) {
     return Container(
-      margin:
-          isLast
-              ? null
-              : EdgeInsets.only(right: getResponsiveRatioByWidth(context, 4)),
-      padding: EdgeInsets.symmetric(
-        vertical: getResponsiveRatioByWidth(context, 2),
-        horizontal: getResponsiveRatioByWidth(context, 4),
-      ),
+      margin: isLast ? null : EdgeInsets.only(right: 4),
+      padding: EdgeInsets.symmetric(vertical: 2, horizontal: 4),
       decoration: BoxDecoration(
         color: color,
-        borderRadius: BorderRadius.circular(
-          getResponsiveRatioByWidth(context, 4),
-        ),
+        borderRadius: BorderRadius.circular(4),
       ),
       child: Text(
         text,
         style: Font.body12.copyWith(
-          fontSize: getResponsiveRatioByWidth(context, 12),
           color: text == '1~2회' || text == '1~10회' ? null : Colors.white,
         ),
       ),
@@ -212,19 +173,9 @@ class MoodStateInfoModal {
   }) {
     return Row(
       children: [
-        Text(
-          label,
-          style: Font.subTitle14.copyWith(
-            fontSize: getResponsiveRatioByWidth(context, 14),
-          ),
-        ),
-        SizedBox(width: getResponsiveRatioByWidth(context, 4)),
-        Text(
-          content,
-          style: Font.body14.copyWith(
-            fontSize: getResponsiveRatioByWidth(context, 14),
-          ),
-        ),
+        Text(label, style: Font.subTitle14),
+        SizedBox(width: 4),
+        Text(content, style: Font.body14),
       ],
     );
   }

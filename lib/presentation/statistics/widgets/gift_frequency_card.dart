@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mongbi_app/core/font.dart';
-import 'package:mongbi_app/core/get_responsive_ratio_by_width.dart';
 
 class GiftFrequencyCard extends StatelessWidget {
   const GiftFrequencyCard({
@@ -16,8 +15,8 @@ class GiftFrequencyCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
-        height: getResponsiveRatioByWidth(context, 124),
-        padding: EdgeInsets.all(getResponsiveRatioByWidth(context, 24)),
+        height: 124,
+        padding: EdgeInsets.all(24),
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
@@ -33,17 +32,12 @@ class GiftFrequencyCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              '선물 달성률',
-              style: Font.title14.copyWith(
-                fontSize: getResponsiveRatioByWidth(context, 14),
-              ),
-            ),
+            Text('선물 달성률', style: Font.title14.copyWith(fontSize: 14)),
             Text(
               '$frequency%',
               style: Font.title28.copyWith(
                 color: isFirst ? Color(0xFFA6A1AA) : Color(0xFF1A181B),
-                fontSize: getResponsiveRatioByWidth(context, 28),
+                fontSize: 28,
               ),
             ),
           ],

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mongbi_app/core/font.dart';
-import 'package:mongbi_app/core/get_responsive_ratio_by_width.dart';
 import 'package:mongbi_app/providers/statistics_provider.dart';
 
 class TabBarTitle extends StatelessWidget {
@@ -18,17 +17,14 @@ class TabBarTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: horizontalPadding,
-        vertical: getResponsiveRatioByWidth(context, 8),
-      ),
+      padding: EdgeInsets.symmetric(horizontal: horizontalPadding, vertical: 8),
       child: Container(
-        padding: EdgeInsets.all(getResponsiveRatioByWidth(context, 4)),
+        padding: const EdgeInsets.all(4),
         decoration: BoxDecoration(
           color: const Color(0xFFF4EAFF),
           borderRadius: BorderRadius.circular(999),
         ),
-        height: getResponsiveRatioByWidth(context, 48),
+        height: 48,
         child: Consumer(
           builder: (context, ref, child) {
             final statisticsVm = ref.read(statisticsViewModelProvider.notifier);
@@ -54,13 +50,9 @@ class TabBarTitle extends StatelessWidget {
               ),
               indicatorSize: TabBarIndicatorSize.tab,
               labelColor: const Color(0xFF3B136B),
-              labelStyle: Font.title14.copyWith(
-                fontSize: getResponsiveRatioByWidth(context, 14),
-              ),
+              labelStyle: Font.title14.copyWith(fontSize: 14),
               unselectedLabelColor: const Color(0xFFB273FF),
-              unselectedLabelStyle: Font.title14.copyWith(
-                fontSize: getResponsiveRatioByWidth(context, 14),
-              ),
+              unselectedLabelStyle: Font.title14.copyWith(fontSize: 14),
               splashFactory: NoSplash.splashFactory,
               overlayColor: const WidgetStatePropertyAll(Colors.transparent),
               dividerHeight: 0,

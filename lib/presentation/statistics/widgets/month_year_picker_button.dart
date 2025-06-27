@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mongbi_app/core/date_formatter.dart';
 import 'package:mongbi_app/core/font.dart';
-import 'package:mongbi_app/core/get_responsive_ratio_by_width.dart';
 import 'package:mongbi_app/presentation/statistics/statistics_key/statistics_key.dart';
 import 'package:mongbi_app/providers/statistics_provider.dart';
 
@@ -27,9 +26,7 @@ class MonthYearPickerButton extends ConsumerWidget {
 
     return Padding(
       key: isMonth ? monthPickerButton : yearPickerButton,
-      padding: EdgeInsets.symmetric(
-        vertical: getResponsiveRatioByWidth(context, 8),
-      ),
+      padding: EdgeInsets.symmetric(vertical: 8),
       child: GestureDetector(
         onTap: () {
           final pickerKey = isMonth ? monthPickerKey : yearPickerKey;
@@ -45,15 +42,13 @@ class MonthYearPickerButton extends ConsumerWidget {
                 isMonth
                     ? DateFormatter.formatMonth(pickerState.focusedMonth)
                     : DateFormatter.formatYear(pickerState.focusedYear),
-                style: Font.title16.copyWith(
-                  fontSize: getResponsiveRatioByWidth(context, 16),
-                ),
+                style: Font.title16.copyWith(fontSize: 16),
               ),
             ),
             SvgPicture.asset(
               'assets/icons/chevron-down.svg',
               fit: BoxFit.cover,
-              width: getResponsiveRatioByWidth(context, 24),
+              width: 24,
             ),
           ],
         ),

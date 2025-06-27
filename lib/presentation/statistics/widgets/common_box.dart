@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mongbi_app/core/get_responsive_ratio_by_width.dart';
 
 class CommonBox extends StatelessWidget {
   const CommonBox({
@@ -16,11 +15,9 @@ class CommonBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(top: getResponsiveRatioByWidth(context, 16)),
+      padding: EdgeInsets.only(top: 16),
       child: Container(
-        padding: EdgeInsets.only(
-          bottom: getResponsiveRatioByWidth(context, 32),
-        ),
+        padding: EdgeInsets.only(bottom: 32),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(24),
@@ -37,13 +34,10 @@ class CommonBox extends StatelessWidget {
           children: [
             Padding(
               padding: EdgeInsets.only(
-                top: getResponsiveRatioByWidth(context, 24),
-                left: getResponsiveRatioByWidth(context, 24),
-                right: getResponsiveRatioByWidth(context, 24),
-                bottom:
-                    applyBottomPadding
-                        ? getResponsiveRatioByWidth(context, 16)
-                        : 0,
+                top: 24,
+                left: 24,
+                right: 24,
+                bottom: applyBottomPadding ? 16 : 0,
               ),
               child: title, // 타이틀 영역을 위젯으로 받음
             ),
