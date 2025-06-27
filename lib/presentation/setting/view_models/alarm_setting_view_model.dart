@@ -4,36 +4,27 @@ import 'package:mongbi_app/presentation/remind/view_model/remind_time_setting_vi
 import 'package:mongbi_app/presentation/setting/models/alarm_setting_state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class AlarmSettingViewModel extends Notifier<AlarmSettingState> {
+class AlarmSettingViewModel extends AsyncNotifier<AlarmSettingState> {
   late SharedPreferences _prefs;
 
   @override
-  AlarmSettingState build() {
-    _initPrefs();
-    return AlarmSettingState(
-      isAll: false,
-      isReminder: false,
-      isChallenge: false,
-    );
-  }
-
-  Future<void> _initPrefs() async {
+  Future<AlarmSettingState> build() async {
     _prefs = await SharedPreferences.getInstance();
 
     final isReminder = _prefs.getBool('alarm_isReminder') ?? false;
     final isChallenge = _prefs.getBool('alarm_isChallenge') ?? false;
 
-    state =
-        AlarmSettingState(
-          isReminder: isReminder,
-          isChallenge: isChallenge,
-          isAll: false,
-          isInitialized: true,
-        ).recalculateIsAll();
+    return AlarmSettingState(
+      isReminder: isReminder,
+      isChallenge: isChallenge,
+      isAll: isReminder && isChallenge,
+      isInitialized: true,
+    );
   }
 
-  void toggleAll() {
-    final next = !state.isAll;
+  Future<void> toggleAll() async {
+    final prev = state.value!;
+    final next = !prev.isAll;
 
     final nextState = AlarmSettingState(
       isAll: next,
@@ -42,26 +33,26 @@ class AlarmSettingViewModel extends Notifier<AlarmSettingState> {
       isInitialized: true,
     );
 
-    state = nextState;
+    state = AsyncValue.data(nextState);
     _saveState(nextState);
 
     final notificationService = NotificationService();
     if (next) {
-      notificationService.scheduleDailyReminder(
+      await notificationService.scheduleDailyReminder(
         const TimeOfDay(hour: 8, minute: 0),
       );
     } else {
-      notificationService.cancelReminderNotification();
+      await notificationService.cancelReminderNotification();
     }
   }
 
-  // 토글버튼 터치 했을 때 true이면 리마인드 설정 페이지로 가기 위해 bool 리턴
   Future<bool> toggleReminder() async {
-    final next = !state.isReminder;
+    final prev = state.value!;
+    final next = !prev.isReminder;
 
-    final nextState = state.copyWith(isReminder: next).recalculateIsAll();
+    final nextState = prev.copyWith(isReminder: next).recalculateIsAll();
 
-    state = nextState;
+    state = AsyncValue.data(nextState);
     _saveState(nextState);
 
     final notificationService = NotificationService();
@@ -76,11 +67,11 @@ class AlarmSettingViewModel extends Notifier<AlarmSettingState> {
     return next;
   }
 
-  void toggleChallenge() {
-    final nextState =
-        state.copyWith(isChallenge: !state.isChallenge).recalculateIsAll();
+  Future<void> toggleChallenge() async {
+    final prev = state.value!;
+    final nextState = prev.copyWith(isChallenge: !prev.isChallenge).recalculateIsAll();
 
-    state = nextState;
+    state = AsyncValue.data(nextState);
     _saveState(nextState);
   }
 
