@@ -52,7 +52,7 @@ class _SettingPageState extends ConsumerState<SettingPage> {
       children: [
         UserInfoHeader(
           nickname: splashState.userList![0].userNickname!,
-          loginType: splashState.userList![0].userSocialType!,
+          loginType: splashState.userList![0].userSocialType,
           onTap: () => context.push('/profile_setting'),
         ),
         const SizedBox(height: 24),
