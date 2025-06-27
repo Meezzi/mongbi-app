@@ -31,16 +31,17 @@ final fetchYearStatisticsUseCaseProvider = Provider((ref) {
   return FetchYearStatisticsUseCase(repository);
 });
 
-final pickerViewModelProvider = NotifierProvider<PickerViewModel, PickerModel>(
-  () {
-    return PickerViewModel();
-  },
-);
+final pickerViewModelProvider =
+    NotifierProvider.autoDispose<PickerViewModel, PickerModel>(() {
+      return PickerViewModel();
+    });
 
 final statisticsViewModelProvider =
-    AsyncNotifierProvider<StatisticsViewModel, StatisticsModel?>(() {
-      return StatisticsViewModel();
-    });
+    AsyncNotifierProvider.autoDispose<StatisticsViewModel, StatisticsModel?>(
+      () {
+        return StatisticsViewModel();
+      },
+    );
 
 final snackBarStatusProvider = StateProvider<bool>((ref) {
   return false;
