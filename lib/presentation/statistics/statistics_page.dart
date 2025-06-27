@@ -45,6 +45,7 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage>
     final splashState = ref.watch(splashViewModelProvider);
     final nickname = splashState.userList?[0].userNickname ?? '몽비';
     final snackBarState = ref.watch(snackBarStatusProvider);
+    final statisticsAsync = ref.watch(statisticsViewModelProvider);
 
     return SafeArea(
       child: Stack(
@@ -99,6 +100,8 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage>
               ),
             ),
           ),
+          if (statisticsAsync.isLoading)
+            Center(child: CircularProgressIndicator()),
           if (snackBarState)
             Positioned(bottom: 18, left: 0, right: 0, child: CustomSnackBar()),
         ],

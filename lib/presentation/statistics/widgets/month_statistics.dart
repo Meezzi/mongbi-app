@@ -81,7 +81,7 @@ class _MonthStatisticsState extends ConsumerState<MonthStatistics>
 
                 statisticsAsync.when(
                   loading: () {
-                    return Center(child: CircularProgressIndicator());
+                    return SizedBox();
                   },
                   data: (data) {
                     final monthStatistics = data?.month;
@@ -153,7 +153,6 @@ class _MonthStatisticsState extends ConsumerState<MonthStatistics>
                 ),
               ],
             ),
-            // CustomSnackBar(key: monthSnackBarKey),
           ],
         ),
       ],

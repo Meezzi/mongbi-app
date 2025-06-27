@@ -1,7 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:mongbi_app/core/font.dart';
-import 'package:mongbi_app/core/get_responsive_ratio_by_width.dart';
 import 'package:mongbi_app/data/dtos/statistics_dto.dart';
 import 'package:mongbi_app/presentation/statistics/widgets/common_box.dart';
 import 'package:mongbi_app/presentation/statistics/widgets/custom_fl_dot_painter.dart';

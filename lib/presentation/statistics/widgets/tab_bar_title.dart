@@ -26,19 +26,25 @@ class TabBarTitle extends StatelessWidget {
         ),
         height: 48,
         child: Consumer(
-          builder: (context, ref, child) {
+          builder: (consumerContext, ref, child) {
+            final statisticsAsync = ref.watch(statisticsViewModelProvider);
             final statisticsVm = ref.read(statisticsViewModelProvider.notifier);
 
             return TabBar(
               controller: tabController,
-              onTap: (value) {
-                ScaffoldMessenger.of(context).hideCurrentSnackBar();
+              onTap: (value) async {
+                if (statisticsAsync.isLoading) {
+                  // 로딩 중이면 탭 이동 막기
+                  tabController.animateTo(statisticsAsync.value!.tabBarIndex);
+                  return;
+                }
+
                 statisticsVm.onChangetabBarIndex(value);
                 ref.read(snackBarStatusProvider.notifier).state = false;
                 if (value == 0) {
-                  statisticsVm.fetchMonthStatistics();
+                  await statisticsVm.fetchMonthStatistics();
                 } else {
-                  statisticsVm.fetchYearStatistics();
+                  await statisticsVm.fetchYearStatistics();
                 }
               },
               tabs: const [Tab(child: Text('월간')), Tab(child: Text('연간'))],
