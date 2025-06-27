@@ -79,7 +79,7 @@ class _YearStatisticsState extends ConsumerState<YearStatistics>
 
             statisticsAsync.when(
               loading: () {
-                return Center(child: CircularProgressIndicator());
+                return SizedBox();
               },
               data: (data) {
                 final yearStatistics = data?.year;
