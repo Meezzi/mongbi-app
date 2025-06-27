@@ -88,6 +88,8 @@ class _YearStatisticsState extends ConsumerState<YearStatistics>
                     yearStatistics?.year ??
                     pickerState.focusedYear.year.toString(); // "2025"
                 final frequency = yearStatistics?.frequency ?? 0;
+                final challengeSuccessRate =
+                    yearStatistics?.challengeSuccessRate ?? 0;
                 final totalDays = yearStatistics?.totalDays ?? 0;
                 final distribution =
                     yearStatistics?.distribution ?? DreamScore();
@@ -114,7 +116,10 @@ class _YearStatisticsState extends ConsumerState<YearStatistics>
                             totalDays: totalDays,
                           ),
                           SizedBox(width: 16),
-                          GiftFrequencyCard(isFirst: isFirst, frequency: 0),
+                          GiftFrequencyCard(
+                            isFirst: isFirst,
+                            challengeSuccessRate: challengeSuccessRate,
+                          ),
                         ],
                       ),
                     ),

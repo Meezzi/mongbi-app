@@ -93,6 +93,8 @@ class _MonthStatisticsState extends ConsumerState<MonthStatistics>
                           pickerState.focusedMonth.month.toString(),
                         ]; // "2025-06"
                     final frequency = monthStatistics?.frequency ?? 0;
+                    final challengeSuccessRate =
+                        monthStatistics?.challengeSuccessRate ?? 0;
                     final totalDays = monthStatistics?.totalDays ?? 0;
                     final distribution =
                         monthStatistics?.distribution ?? DreamScore();
@@ -121,8 +123,10 @@ class _MonthStatisticsState extends ConsumerState<MonthStatistics>
                                 totalDays: totalDays,
                               ),
                               SizedBox(width: 16),
-                              // TODO : 챌린지 달성률 아직 데이터 없음
-                              GiftFrequencyCard(isFirst: isFirst, frequency: 0),
+                              GiftFrequencyCard(
+                                isFirst: isFirst,
+                                challengeSuccessRate: challengeSuccessRate,
+                              ),
                             ],
                           ),
                         ),
