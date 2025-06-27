@@ -2,7 +2,6 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/presentation/setting/widgets/setting_rounded_list_tile_item.dart';
 import 'package:mongbi_app/presentation/setting/widgets/setting_section_card.dart';
@@ -11,7 +10,6 @@ import 'package:mongbi_app/presentation/setting/widgets/setting_user_info_header
 import 'package:mongbi_app/providers/setting_provider.dart';
 import 'package:mongbi_app/providers/user_info_provider.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingPage extends ConsumerStatefulWidget {
@@ -53,7 +51,7 @@ class _SettingPageState extends ConsumerState<SettingPage> {
       children: [
         UserInfoHeader(
           nickname: splashState.userList![0].userNickname!,
-          loginType: splashState.userList![0].userSocialType!,
+          loginType: splashState.userList![0].userSocialType,
           onTap: () => context.push('/profile_setting'),
         ),
         const SizedBox(height: 24),
@@ -69,8 +67,10 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                 final toggledOn = !isBgmOn;
                 toggledOn ? bgmNotifier.turnOn() : bgmNotifier.turnOff();
                 FirebaseAnalytics.instance.logEvent(
-                  name: 'bgm_toggled',
-                  parameters: {'enabled': toggledOn},
+                  name: 'bgm_toggle',
+                  parameters: {
+                    'enabled': true.toString(),
+                  },
                 );
               },
             ),
