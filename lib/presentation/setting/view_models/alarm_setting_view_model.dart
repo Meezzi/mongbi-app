@@ -55,7 +55,8 @@ class AlarmSettingViewModel extends Notifier<AlarmSettingState> {
     }
   }
 
-  void toggleReminder() async {
+  // 토글버튼 터치 했을 때 true이면 리마인드 설정 페이지로 가기 위해 bool 리턴
+  Future<bool> toggleReminder() async {
     final next = !state.isReminder;
 
     final nextState = state.copyWith(isReminder: next).recalculateIsAll();
@@ -71,6 +72,8 @@ class AlarmSettingViewModel extends Notifier<AlarmSettingState> {
     } else {
       await notificationService.cancelReminderNotification();
     }
+
+    return next;
   }
 
   void toggleChallenge() {

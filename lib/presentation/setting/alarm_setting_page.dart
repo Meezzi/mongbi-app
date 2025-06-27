@@ -1,4 +1,6 @@
 // AlarmSettingPage.dart
+import 'dart:async';
+
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -61,9 +63,20 @@ class AlarmSettingPage extends ConsumerWidget {
             isFirst: true,
             isLast: false,
             trailing: ToggleSwitch(value: alarmState.isReminder),
-            onTap: () {
-              alarmViewModel.toggleReminder();
-              // FirebaseAnalytics.instance.logEvent(
+            onTap: () async {
+              final isRemindEnabled = await alarmViewModel.toggleReminder();
+
+              if (context.mounted) {
+                if (isRemindEnabled) {
+                  unawaited(
+                    context.push(
+                      '/remindtime_time_setting?isRemindEnabled=$isRemindEnabled',
+                    ),
+                  );
+                }
+              }
+
+              // await FirebaseAnalytics.instance.logEvent(
               //   name: 'alarm_toggle_changed',
               //   parameters: {
               //     'type': 'reminder',

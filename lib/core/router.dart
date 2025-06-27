@@ -79,7 +79,12 @@ final GoRouter router = GoRouter(
 
     GoRoute(
       path: '/remindtime_time_setting',
-      builder: (context, state) => RemindTimePickerPage(),
+      builder:
+          (context, state) => RemindTimePickerPage(
+            isRemindEnabled: bool.tryParse(
+              '${state.uri.queryParameters['isRemindEnabled']}',
+            ),
+          ),
     ),
     GoRoute(
       path: '/onbording_page',
