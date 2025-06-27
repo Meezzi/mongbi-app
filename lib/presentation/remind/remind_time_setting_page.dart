@@ -33,7 +33,7 @@ class RemindTimeSettingPage extends StatelessWidget {
           child: Row(
             children: [
               GestureDetector(
-                onTap: () => context.go('/home'),
+                onTap: () => context.pop(),
                 child: SvgPicture.asset(
                   'assets/icons/back-arrow.svg',
                   width: 24,
