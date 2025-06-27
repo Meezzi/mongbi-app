@@ -5,11 +5,11 @@ class GiftFrequencyCard extends StatelessWidget {
   const GiftFrequencyCard({
     super.key,
     required this.isFirst,
-    required this.frequency,
+    required this.challengeSuccessRate,
   });
 
   final bool isFirst;
-  final int frequency;
+  final int challengeSuccessRate;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class GiftFrequencyCard extends StatelessWidget {
           children: [
             Text('선물 달성률', style: Font.title14.copyWith(fontSize: 14)),
             Text(
-              '$frequency%',
+              '$challengeSuccessRate%',
               style: Font.title28.copyWith(
                 color: isFirst ? Color(0xFFA6A1AA) : Color(0xFF1A181B),
                 fontSize: 28,

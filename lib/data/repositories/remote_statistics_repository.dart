@@ -26,6 +26,7 @@ class RemoteStatisticsRepository implements StatisticsRepository {
         distribution: statisticsDto.distribution,
         moodState: statisticsDto.moodState,
         keywords: statisticsDto.keywords,
+        challengeSuccessRate: statisticsDto.challengeSuccessRate,
       );
     }
 
@@ -47,6 +48,7 @@ class RemoteStatisticsRepository implements StatisticsRepository {
         distribution: statisticsDto.distribution,
         moodState: statisticsDto.moodState,
         keywords: statisticsDto.keywords,
+        challengeSuccessRate: statisticsDto.challengeSuccessRate,
       );
     }
 

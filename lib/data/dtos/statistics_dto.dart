@@ -6,6 +6,7 @@ class StatisticsDto {
     DreamScore? distribution,
     MoodState? moodState,
     List<Keyword>? keywords,
+    this.challengeSuccessRate = 0,
   }) : distribution = distribution ?? DreamScore(),
        moodState = moodState ?? MoodState(),
        keywords = keywords ?? [];
@@ -16,6 +17,7 @@ class StatisticsDto {
   final DreamScore distribution;
   final MoodState moodState;
   final List<Keyword> keywords;
+  final int challengeSuccessRate;
 
   factory StatisticsDto.fromJson(Map<String, dynamic>? json) => StatisticsDto(
     month: json?['MONTH'],
@@ -28,6 +30,7 @@ class StatisticsDto {
             ?.map((x) => Keyword.fromJson(x as Map<String, dynamic>?))
             .toList() ??
         [],
+    challengeSuccessRate: json?['CHALLENGE_SUCCESS_RATE'] ?? 0,
   );
 
   Map<String, dynamic> toJson() => {
@@ -37,6 +40,7 @@ class StatisticsDto {
     'DISTRIBUTION': distribution.toJson(),
     'MOOD_STATE': moodState.toJson(),
     'KEYWORDS': keywords.map((x) => x.toJson()).toList(),
+    'CHALLENGE_SUCCESS_RATE': challengeSuccessRate,
   };
 }
 

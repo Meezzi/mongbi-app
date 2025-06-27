@@ -9,6 +9,7 @@ class Statistics {
     required this.distribution,
     required this.moodState,
     required this.keywords,
+    required this.challengeSuccessRate,
   });
 
   final String? month;
@@ -18,4 +19,5 @@ class Statistics {
   final DreamScore distribution;
   final MoodState moodState;
   final List<Keyword> keywords;
+  final int challengeSuccessRate;
 }
