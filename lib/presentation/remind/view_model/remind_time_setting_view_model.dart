@@ -97,7 +97,7 @@ class NotificationService {
       priority: Priority.high,
       icon: 'ic_mongbi_icon',
       styleInformation: BigTextStyleInformation(
-        '잘잤어? 꿈을 꿨다면 나에게 나에게 말해줘몽!',
+        '잘잤어? 꿈을 꿨다면 나에게 말해줘몽!',
         contentTitle: '<b>몽비</b>',
         htmlFormatContent: true,
         htmlFormatContentTitle: true,
@@ -107,7 +107,7 @@ class NotificationService {
     await flutterLocalNotificationsPlugin.zonedSchedule(
       0,
       '몽비',
-      '잘잤어? 꿈을 꿨다면 나에게 나에게 말해줘몽!',
+      '잘잤어? 꿈을 꿨다면 나에게 말해줘몽!',
       tzTime,
       const NotificationDetails(
         android: androidDetails,
