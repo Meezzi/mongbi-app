@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mongbi_app/core/font.dart';
-import 'package:mongbi_app/core/get_responsive_ratio_by_width.dart';
 
 class CalendarBottomSheetYearSelector extends StatelessWidget {
   const CalendarBottomSheetYearSelector({
@@ -36,16 +35,11 @@ class CalendarBottomSheetYearSelector extends StatelessWidget {
             child: SvgPicture.asset(
               'assets/icons/chevron-left.svg',
               fit: BoxFit.cover,
-              width: getResponsiveRatioByWidth(context, 24),
+              width: 24,
             ),
           ),
         ),
-        Text(
-          '$selectedYear년',
-          style: Font.title16.copyWith(
-            fontSize: getResponsiveRatioByWidth(context, 16),
-          ),
-        ),
+        Text('$selectedYear년', style: Font.title16.copyWith(fontSize: 16)),
         GestureDetector(
           onTap: () {
             // 오른쪽(다음 년도로 이동, reverse:true이므로 -1)
@@ -58,7 +52,7 @@ class CalendarBottomSheetYearSelector extends StatelessWidget {
             child: SvgPicture.asset(
               'assets/icons/chevron-right.svg',
               fit: BoxFit.cover,
-              width: getResponsiveRatioByWidth(context, 24),
+              width: 24,
             ),
           ),
         ),
