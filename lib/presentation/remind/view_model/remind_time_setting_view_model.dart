@@ -21,9 +21,9 @@ class NotificationService {
 
     const androidInit = AndroidInitializationSettings('@mipmap/ic_launcher');
     const iosInit = DarwinInitializationSettings(
-      requestAlertPermission: true,
-      requestBadgePermission: true,
-      requestSoundPermission: true,
+      requestAlertPermission: false,
+      requestBadgePermission: false,
+      requestSoundPermission: false,
     );
 
     const initSettings = InitializationSettings(
@@ -143,5 +143,20 @@ class NotificationService {
   Future<void> cancelReminderNotification() async {
     await flutterLocalNotificationsPlugin.cancel(0);
   }
-  
+
+  Future<bool> requestNotificationPermissionWithSettingsFallback() async {
+    final status = await Permission.notification.status;
+
+    if (status.isGranted) return true;
+
+    final result = await Permission.notification.request();
+
+    if (result.isPermanentlyDenied) {
+      // 앱 설정으로 유도
+      await AppSettings.openAppSettings();
+      return false;
+    }
+
+    return result.isGranted;
+  }
 }
