@@ -17,7 +17,7 @@ void main() async {
   await dotenv.load(fileName: '.env');
   // 캘린더 한글화
   await initializeDateFormatting();
-
+  
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   KakaoSdk.init(
@@ -28,7 +28,7 @@ void main() async {
     (options) {
       options.dsn =
           'https://8d16495c497563cc341db965785f3374@o4509553500422144.ingest.de.sentry.io/4509553530830928';
-  
+
       options.tracesSampleRate = 1.0;
       options.profilesSampleRate = 1.0;
     },
@@ -72,7 +72,10 @@ class _MyAppState extends ConsumerState<MyApp> with WidgetsBindingObserver {
         state == AppLifecycleState.detached) {
       bgm.fadeOutAndPause();
     } else if (state == AppLifecycleState.resumed) {
-      bgm.resumeBgm();
+      final isBgmOn = ref.read(bgmProvider);
+      if (isBgmOn) {
+        bgm.resumeBgm();
+      }
     }
   }
 
