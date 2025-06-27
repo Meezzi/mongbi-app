@@ -2,11 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
- <key>LSApplicationQueriesSchemes</key>
-  <array>
-    <string>https</string>
-    <string>http</string>
-  </array>
   <key>CFBundleDevelopmentRegion</key>
   <string>$(DEVELOPMENT_LANGUAGE)</string>
   <key>CFBundleDisplayName</key>
@@ -33,14 +28,12 @@
   <string>LaunchScreen</string>
   <key>UIMainStoryboardFile</key>
   <string>Main</string>
-
   <key>UISupportedInterfaceOrientations</key>
   <array>
     <string>UIInterfaceOrientationPortrait</string>
     <string>UIInterfaceOrientationLandscapeLeft</string>
     <string>UIInterfaceOrientationLandscapeRight</string>
   </array>
-
   <key>UISupportedInterfaceOrientations~ipad</key>
   <array>
     <string>UIInterfaceOrientationPortrait</string>
@@ -48,13 +41,13 @@
     <string>UIInterfaceOrientationLandscapeLeft</string>
     <string>UIInterfaceOrientationLandscapeRight</string>
   </array>
-
   <key>CADisableMinimumFrameDurationOnPhone</key>
   <true/>
   <key>UIApplicationSupportsIndirectInputEvents</key>
   <true/>
-
-  <!-- ✅ 소셜 로그인 URL 스킴 -->
+  <key>FirebaseAppDelegateProxyEnabled</key>
+  <false/>
+  <!-- :흰색_확인_표시: 소셜 로그인 URL 스킴 -->
   <key>CFBundleURLTypes</key>
   <array>
     <dict>
@@ -62,27 +55,25 @@
       <string>Editor</string>
       <key>CFBundleURLSchemes</key>
       <array>
-        <!-- ✅ Google 로그인 -->
+        <!-- Google 로그인 -->
         <string>com.googleusercontent.apps.39071088784-0b15ml3kplm7ktt3b64119o845f1mfvg.apps.googleusercontent.com</string>
-
-        <!-- ✅ Kakao 로그인 -->
-        <string>kakao-your-native-key</string>
-
-        <!-- ✅ Naver 로그인 -->
+        <!-- Kakao 로그인 -->
+        <string>323f653e5d7d80bf1551baeb82d49e23</string>
+        <!-- Naver 로그인 -->
         <string>mongbi-login</string>
       </array>
     </dict>
   </array>
-
-  <!-- ✅ 외부 앱 쿼리 허용 (Naver + Kakao) -->
+  <!-- :흰색_확인_표시: 외부 앱 쿼리 허용 (Kakao, Naver) -->
   <key>LSApplicationQueriesSchemes</key>
   <array>
+    <string>https</string>
+    <string>http</string>
     <string>naversearchapp</string>
     <string>naversearchthirdlogin</string>
     <string>kakaokompassauth</string>
   </array>
-
-  <!-- ✅ Naver 최신 설정키 (flutter_naver_login 2.1.0 기준) -->
+  <!-- :흰색_확인_표시: Naver 로그인 관련 설정 -->
   <key>NidUrlScheme</key>
   <string>mongbi-login</string>
   <key>NidClientID</key>
@@ -91,14 +82,12 @@
   <string>k0ylbPhyvg</string>
   <key>NidAppName</key>
   <string>몽비</string>
-
-  <!-- ✅ 알림 및 네트워크 예외 허용 -->
+  <!-- :흰색_확인_표시: 알림 및 네트워크 설정 -->
   <key>UIBackgroundModes</key>
   <array>
     <string>fetch</string>
     <string>remote-notification</string>
   </array>
-
   <key>NSUserNotificationUsageDescription</key>
   <string>앱에서 알림을 보내기 위해 권한이 필요합니다.</string>
   <key>NSAppTransportSecurity</key>
@@ -123,46 +112,7 @@
       </dict>
     </dict>
   </dict>
-	<key>LSRequiresIPhoneOS</key>
-	<true/>
-	<key>NidAppName</key>
-	<string>몽비</string>
-	<key>NidClientID</key>
-	<string>84HmkP_Ac_kc2H1hqQ4s</string>
-	<key>NidClientSecret</key>
-	<string>k0ylbPhyvg</string>
-	<key>NidUrlScheme</key>
-	<string>mongbi-login</string>
-	<key>UIApplicationSupportsIndirectInputEvents</key>
-	<true/>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>fetch</string>
-		<string>remote-notification</string>
-	</array>
-	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
-	<key>UIMainStoryboardFile</key>
-	<string>Main</string>
-	<key>UISupportedInterfaceOrientations</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
-	<key>UISupportedInterfaceOrientations~ipad</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationPortraitUpsideDown</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
-	<key>FirebaseAppDelegateProxyEnabled</key>
-	<false/>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>remote-notification</string>
-	</array>
+  <!-- :흰색_확인_표시: 암호화 여부 (필수) -->
   <key>ITSAppUsesNonExemptEncryption</key>
   <false/>
 </dict>
