@@ -21,9 +21,9 @@ class NotificationService {
 
     const androidInit = AndroidInitializationSettings('@mipmap/ic_launcher');
     const iosInit = DarwinInitializationSettings(
-      requestAlertPermission: true,
-      requestBadgePermission: true,
-      requestSoundPermission: true,
+      requestAlertPermission: false,
+      requestBadgePermission: false,
+      requestSoundPermission: false,
     );
 
     const initSettings = InitializationSettings(
@@ -143,5 +143,4 @@ class NotificationService {
   Future<void> cancelReminderNotification() async {
     await flutterLocalNotificationsPlugin.cancel(0);
   }
-  
 }
