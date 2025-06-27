@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mongbi_app/core/get_responsive_ratio_by_width.dart';
 import 'package:mongbi_app/core/get_widget_info.dart';
 import 'package:mongbi_app/data/dtos/statistics_dto.dart';
 import 'package:mongbi_app/presentation/statistics/statistics_key/statistics_key.dart';
@@ -80,7 +79,7 @@ class _YearStatisticsState extends ConsumerState<YearStatistics>
 
             statisticsAsync.when(
               loading: () {
-                return Center(child: CircularProgressIndicator());
+                return SizedBox();
               },
               data: (data) {
                 final yearStatistics = data?.year;
@@ -89,6 +88,8 @@ class _YearStatisticsState extends ConsumerState<YearStatistics>
                     yearStatistics?.year ??
                     pickerState.focusedYear.year.toString(); // "2025"
                 final frequency = yearStatistics?.frequency ?? 0;
+                final challengeSuccessRate =
+                    yearStatistics?.challengeSuccessRate ?? 0;
                 final totalDays = yearStatistics?.totalDays ?? 0;
                 final distribution =
                     yearStatistics?.distribution ?? DreamScore();
@@ -100,15 +101,15 @@ class _YearStatisticsState extends ConsumerState<YearStatistics>
                 WidgetsBinding.instance.addPostFrameCallback((_) {
                   if (isFirst && isCurrent) {
                     ref.read(snackBarStatusProvider.notifier).state = true;
+                  } else {
+                    ref.read(snackBarStatusProvider.notifier).state = false;
                   }
                 });
 
                 return Column(
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(
-                        top: getResponsiveRatioByWidth(context, 16),
-                      ),
+                      padding: EdgeInsets.only(top: 16),
                       child: Row(
                         children: [
                           DreamFrequencyCard(
@@ -116,10 +117,11 @@ class _YearStatisticsState extends ConsumerState<YearStatistics>
                             frequency: frequency,
                             totalDays: totalDays,
                           ),
-                          SizedBox(
-                            width: getResponsiveRatioByWidth(context, 16),
+                          SizedBox(width: 16),
+                          GiftFrequencyCard(
+                            isFirst: isFirst,
+                            challengeSuccessRate: challengeSuccessRate,
                           ),
-                          GiftFrequencyCard(isFirst: isFirst, frequency: 0),
                         ],
                       ),
                     ),

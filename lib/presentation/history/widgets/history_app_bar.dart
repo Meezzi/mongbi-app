@@ -16,7 +16,7 @@ class HistoryAppBar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final splashState = ref.watch(splashViewModelProvider);
-    final nickname = splashState.userList![0].userNickname;
+    final nickname = splashState.userList?[0].userNickname ?? '몽비';
 
     return AnimatedContainer(
       duration: Duration(milliseconds: 200),

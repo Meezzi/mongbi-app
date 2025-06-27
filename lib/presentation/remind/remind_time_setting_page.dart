@@ -33,7 +33,7 @@ class RemindTimeSettingPage extends StatelessWidget {
           child: Row(
             children: [
               GestureDetector(
-                onTap: () => context.go('/home'),
+                onTap: () => context.pop(),
                 child: SvgPicture.asset(
                   'assets/icons/back-arrow.svg',
                   width: 24,
@@ -79,8 +79,7 @@ class RemindTimeSettingPage extends StatelessWidget {
                       name: 'remind_intro_confirmed',
                       parameters: {'screen': 'RemindTimeSettingPage'},
                     );
-
-                    context.go('/remindtime_time_setting');
+                    context.push('/remindtime_time_setting');
                   },
                 ),
               ),

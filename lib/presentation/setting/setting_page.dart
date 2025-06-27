@@ -1,4 +1,4 @@
-import 'package:firebase_analytics/firebase_analytics.dart'; 
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -10,7 +10,6 @@ import 'package:mongbi_app/presentation/setting/widgets/setting_user_info_header
 import 'package:mongbi_app/providers/setting_provider.dart';
 import 'package:mongbi_app/providers/user_info_provider.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingPage extends ConsumerStatefulWidget {
@@ -52,7 +51,7 @@ class _SettingPageState extends ConsumerState<SettingPage> {
       children: [
         UserInfoHeader(
           nickname: splashState.userList![0].userNickname!,
-          loginType: splashState.userList![0].userSocialType!,
+          loginType: splashState.userList![0].userSocialType,
           onTap: () => context.push('/profile_setting'),
         ),
         const SizedBox(height: 24),
@@ -68,8 +67,8 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                 final toggledOn = !isBgmOn;
                 toggledOn ? bgmNotifier.turnOn() : bgmNotifier.turnOff();
                 FirebaseAnalytics.instance.logEvent(
-                  name: 'bgm_toggled',
-                  parameters: {'enabled': toggledOn},
+                  name: 'bgm_toggle',
+                  parameters: {'enabled': true.toString()},
                 );
               },
             ),
@@ -92,6 +91,18 @@ class _SettingPageState extends ConsumerState<SettingPage> {
         SectionCard(
           title: '기타',
           children: [
+            RoundedListTileItem(
+              title: '고객센터',
+              isFirst: false,
+              isLast: true,
+              onTap: () async {
+                await FirebaseAnalytics.instance.logEvent(
+                  name: 'help_center_opened',
+                  parameters: {'screen': 'SettingPage'},
+                );
+                await launchUrl(Uri.parse('http://pf.kakao.com/_VGzxin'));
+              },
+            ),
             RoundedListTileItem(
               title: '이용 약관',
               isFirst: true,

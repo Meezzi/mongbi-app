@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mongbi_app/core/get_responsive_ratio_by_width.dart';
 import 'package:mongbi_app/core/get_widget_info.dart';
 import 'package:mongbi_app/data/dtos/statistics_dto.dart';
 import 'package:mongbi_app/presentation/statistics/statistics_key/statistics_key.dart';
@@ -82,7 +81,7 @@ class _MonthStatisticsState extends ConsumerState<MonthStatistics>
 
                 statisticsAsync.when(
                   loading: () {
-                    return Center(child: CircularProgressIndicator());
+                    return SizedBox();
                   },
                   data: (data) {
                     final monthStatistics = data?.month;
@@ -94,6 +93,8 @@ class _MonthStatisticsState extends ConsumerState<MonthStatistics>
                           pickerState.focusedMonth.month.toString(),
                         ]; // "2025-06"
                     final frequency = monthStatistics?.frequency ?? 0;
+                    final challengeSuccessRate =
+                        monthStatistics?.challengeSuccessRate ?? 0;
                     final totalDays = monthStatistics?.totalDays ?? 0;
                     final distribution =
                         monthStatistics?.distribution ?? DreamScore();
@@ -107,15 +108,15 @@ class _MonthStatisticsState extends ConsumerState<MonthStatistics>
                     WidgetsBinding.instance.addPostFrameCallback((_) {
                       if (isFirst && isCurrent) {
                         ref.read(snackBarStatusProvider.notifier).state = true;
+                      } else {
+                        ref.read(snackBarStatusProvider.notifier).state = false;
                       }
                     });
 
                     return Column(
                       children: [
                         Padding(
-                          padding: EdgeInsets.only(
-                            top: getResponsiveRatioByWidth(context, 16),
-                          ),
+                          padding: EdgeInsets.only(top: 16),
                           child: Row(
                             children: [
                               DreamFrequencyCard(
@@ -123,11 +124,11 @@ class _MonthStatisticsState extends ConsumerState<MonthStatistics>
                                 frequency: frequency,
                                 totalDays: totalDays,
                               ),
-                              SizedBox(
-                                width: getResponsiveRatioByWidth(context, 16),
+                              SizedBox(width: 16),
+                              GiftFrequencyCard(
+                                isFirst: isFirst,
+                                challengeSuccessRate: challengeSuccessRate,
                               ),
-                              // TODO : 챌린지 달성률 아직 데이터 없음
-                              GiftFrequencyCard(isFirst: isFirst, frequency: 0),
                             ],
                           ),
                         ),
@@ -152,7 +153,6 @@ class _MonthStatisticsState extends ConsumerState<MonthStatistics>
                 ),
               ],
             ),
-            // CustomSnackBar(key: monthSnackBarKey),
           ],
         ),
       ],

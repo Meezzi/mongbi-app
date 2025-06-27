@@ -133,7 +133,7 @@ class _NicknameInputPageState extends ConsumerState<NicknameInputPage> {
           await prefs.setBool('nicknameChangeState', false);
           context.pop();
         } else {
-          context.go('/remindtime_setting');
+          await context.push('/remindtime_setting');
         }
       }
     } catch (e) {

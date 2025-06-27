@@ -6,5 +6,9 @@
 	<array>
 		<string>Default</string>
 	</array>
+	<key>com.apple.developer.associated-domains</key>
+	<array>
+		<string>applinks:kakao323f653e5d7d80bf1551baeb82d49e23.kakao.com</string>
+	</array>
 </dict>
 </plist>

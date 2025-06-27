@@ -31,7 +31,7 @@ class TermsDetailPage extends StatelessWidget {
                 ),
               ),
               SizedBox(width: 8),
-              Expanded(child: Text('서비스 약관', style: Font.title20)),
+              Expanded(child: Text(termsList.map((t) => t.name).join('\n'), style: Font.title20)),
             ],
           ),
         ),
@@ -45,13 +45,6 @@ class TermsDetailPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 8),
-              const Text(
-                '서비스 약관',
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 8),
-              Text(termsList.map((t) => '• ${t.name}').join('\n')),
               const SizedBox(height: 24),
               ...termsList.map(
                 (term) => Column(

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mongbi_app/core/font.dart';
-import 'package:mongbi_app/core/get_responsive_ratio_by_width.dart';
 import 'package:mongbi_app/presentation/statistics/widgets/custom_snack_bar.dart';
 import 'package:mongbi_app/presentation/statistics/widgets/month_statistics.dart';
 import 'package:mongbi_app/presentation/statistics/widgets/tab_bar_title.dart';
@@ -41,11 +40,12 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage>
   @override
   Widget build(BuildContext context) {
     final double tabBarHeight =
-        getResponsiveRatioByWidth(context, 48) + // TabBar 높이
-        getResponsiveRatioByWidth(context, 8) * 2; // Padding Vertical
+        48 + // TabBar 높이
+        8 * 2; // Padding Vertical
     final splashState = ref.watch(splashViewModelProvider);
     final nickname = splashState.userList?[0].userNickname ?? '몽비';
     final snackBarState = ref.watch(snackBarStatusProvider);
+    final statisticsAsync = ref.watch(statisticsViewModelProvider);
 
     return SafeArea(
       child: Stack(
@@ -100,6 +100,8 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage>
               ),
             ),
           ),
+          if (statisticsAsync.isLoading)
+            Center(child: CircularProgressIndicator()),
           if (snackBarState)
             Positioned(bottom: 18, left: 0, right: 0, child: CustomSnackBar()),
         ],

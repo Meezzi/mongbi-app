@@ -1,7 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:mongbi_app/core/font.dart';
-import 'package:mongbi_app/core/get_responsive_ratio_by_width.dart';
 import 'package:mongbi_app/data/dtos/statistics_dto.dart';
 import 'package:mongbi_app/presentation/statistics/widgets/common_box.dart';
 import 'package:mongbi_app/presentation/statistics/widgets/custom_fl_dot_painter.dart';
@@ -24,7 +23,7 @@ class PsychologyKeywordChart extends StatelessWidget {
       kwLength == 2 ? 6.8 : 7.2,
       kwLength == 3 ? 3.9 : 2.5,
       5.4,
-      7.5,
+      7,
     ];
     final List<double> yList = [
       kwLength == 1 ? 5 : 6.8,
@@ -33,13 +32,7 @@ class PsychologyKeywordChart extends StatelessWidget {
       1.3,
       7.5,
     ];
-    final List<double> radiusList = [
-      getResponsiveRatioByWidth(context, 68),
-      getResponsiveRatioByWidth(context, 52),
-      getResponsiveRatioByWidth(context, 44),
-      getResponsiveRatioByWidth(context, 44),
-      getResponsiveRatioByWidth(context, 36),
-    ];
+    final List<double> radiusList = [68, 52, 44, 44, 36];
     final List<Color> colorList = [
       Color(0xFF7F2AE8),
       Color(0xFF15AE9C),
@@ -94,28 +87,21 @@ class PsychologyKeywordChart extends StatelessWidget {
 
     return CommonBox(
       applyBottomPadding: false,
-      title: Text(
-        '몽비가 분석해준 심리 키워드',
-        style: Font.title14.copyWith(
-          fontSize: getResponsiveRatioByWidth(context, 14),
-        ),
-      ),
+      title: Text('몽비가 분석해준 심리 키워드', style: Font.title14),
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: getResponsiveRatioByWidth(context, 24),
-          ),
+          padding: EdgeInsets.symmetric(horizontal: 24),
           child: SizedBox(
             width: double.maxFinite,
-            height: getResponsiveRatioByWidth(context, 308),
+            height: 308,
             child: ScatterChart(
               ScatterChartData(
                 // 자체적으로 Positioned처럼 동작
                 // 인덱스가 클수록 다른 위젯 위에 쌓일 수 있다
                 scatterSpots: List.generate(isFirst ? 5 : kwLength, (index) {
                   return ScatterSpot(
-                    getResponsiveRatioByWidth(context, xList[index]),
-                    getResponsiveRatioByWidth(context, yList[index]),
+                    xList[index],
+                    yList[index],
                     dotPainter: CustomFlDotPainter(
                       radius: radiusList[index],
                       color: isFirst ? Color(0xFFD6D4D8) : colorList[index],
@@ -138,9 +124,9 @@ class PsychologyKeywordChart extends StatelessWidget {
                   // 각 축 별로 라벨 보이기 여부를 설정할 수 있음
                 ),
                 minX: 0,
-                maxX: getResponsiveRatioByWidth(context, 10),
+                maxX: 10,
                 minY: 0,
-                maxY: getResponsiveRatioByWidth(context, 10),
+                maxY: 10,
               ),
             ),
           ),
