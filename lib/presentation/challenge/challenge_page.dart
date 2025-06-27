@@ -165,10 +165,6 @@ class ChallengePage extends ConsumerWidget {
                             .read(challengeViewModelProvider)
                             .value![selectedIndex];
 
-                    await ref
-                        .read(challengeViewModelProvider.notifier)
-                        .saveChallenge();
-
                     await FirebaseAnalytics.instance.logEvent(
                       name: 'challenge_completed',
                       parameters: {
@@ -189,7 +185,11 @@ class ChallengePage extends ConsumerWidget {
                           (context) => MongbiDialog(
                             content: '꿈 잘먹었몽!\n선물 완료하고, 오늘도 힘내라몽',
                             buttonText: '고마워',
-                            onSubmit: () {
+                            onSubmit: () async {
+                              await ref
+                                  .read(challengeViewModelProvider.notifier)
+                                  .saveChallenge();
+
                               context.pushReplacement('/home');
                             },
                           ),
