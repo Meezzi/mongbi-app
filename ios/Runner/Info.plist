@@ -82,6 +82,10 @@
   <string>k0ylbPhyvg</string>
   <key>NidAppName</key>
   <string>몽비</string>
+  <key>UIDeviceFamily</key>
+  <array>
+    <integer>1</integer>
+  </array>
   <!-- :흰색_확인_표시: 알림 및 네트워크 설정 -->
   <key>UIBackgroundModes</key>
   <array>
