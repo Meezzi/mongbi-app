@@ -68,9 +68,7 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                 toggledOn ? bgmNotifier.turnOn() : bgmNotifier.turnOff();
                 FirebaseAnalytics.instance.logEvent(
                   name: 'bgm_toggle',
-                  parameters: {
-                    'enabled': true.toString(),
-                  },
+                  parameters: {'enabled': true.toString()},
                 );
               },
             ),
@@ -91,7 +89,7 @@ class _SettingPageState extends ConsumerState<SettingPage> {
         ),
         const SizedBox(height: 16),
         SectionCard(
-          title: '고객센터',
+          title: '기타',
           children: [
             RoundedListTileItem(
               title: '고객센터',
@@ -105,12 +103,6 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                 await launchUrl(Uri.parse('http://pf.kakao.com/_VGzxin'));
               },
             ),
-          ],
-        ),
-        const SizedBox(height: 16),
-        SectionCard(
-          title: '기타',
-          children: [
             RoundedListTileItem(
               title: '이용 약관',
               isFirst: true,
