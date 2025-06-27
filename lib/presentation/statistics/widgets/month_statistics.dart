@@ -108,6 +108,8 @@ class _MonthStatisticsState extends ConsumerState<MonthStatistics>
                     WidgetsBinding.instance.addPostFrameCallback((_) {
                       if (isFirst && isCurrent) {
                         ref.read(snackBarStatusProvider.notifier).state = true;
+                      } else {
+                        ref.read(snackBarStatusProvider.notifier).state = false;
                       }
                     });
 

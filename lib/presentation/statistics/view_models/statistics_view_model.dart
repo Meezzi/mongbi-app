@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mongbi_app/presentation/statistics/models/statistics_model.dart';
 import 'package:mongbi_app/providers/statistics_provider.dart';
 
-class StatisticsViewModel extends AsyncNotifier<StatisticsModel?> {
+class StatisticsViewModel extends AutoDisposeAsyncNotifier<StatisticsModel?> {
   @override
   Future<StatisticsModel?> build() async {
     // 초기 데이터 로딩
