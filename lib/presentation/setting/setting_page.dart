@@ -102,14 +102,7 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                   name: 'help_center_opened',
                   parameters: {'screen': 'SettingPage'},
                 );
-                try {
-                  await TalkApi.instance.followChannel('_VGzxin');
-                } catch (e) {
-                  await Sentry.captureException(
-                    e,
-                    stackTrace: StackTrace.current,
-                  );
-                }
+                await launchUrl(Uri.parse('http://pf.kakao.com/_VGzxin'));
               },
             ),
           ],
