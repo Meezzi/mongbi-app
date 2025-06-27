@@ -23,12 +23,15 @@ class MonthYearPickerButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final pickerState = ref.watch(pickerViewModelProvider);
+    final statisticsAsync = ref.watch(statisticsViewModelProvider);
 
     return Padding(
       key: isMonth ? monthPickerButton : yearPickerButton,
       padding: EdgeInsets.symmetric(vertical: 8),
       child: GestureDetector(
         onTap: () {
+          if (statisticsAsync.isLoading) return;
+
           final pickerKey = isMonth ? monthPickerKey : yearPickerKey;
           pickerKey.currentState?.show();
         },
