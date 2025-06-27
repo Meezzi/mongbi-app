@@ -97,7 +97,7 @@ class NotificationService {
       priority: Priority.high,
       icon: 'ic_mongbi_icon',
       styleInformation: BigTextStyleInformation(
-        '잘잤어? 꿈을 꿨다면 나에게 나에게 말해줘몽!',
+        '잘잤어? 꿈을 꿨다면 나에게 말해줘몽!',
         contentTitle: '<b>몽비</b>',
         htmlFormatContent: true,
         htmlFormatContentTitle: true,
@@ -107,7 +107,7 @@ class NotificationService {
     await flutterLocalNotificationsPlugin.zonedSchedule(
       0,
       '몽비',
-      '잘잤어? 꿈을 꿨다면 나에게 나에게 말해줘몽!',
+      '잘잤어? 꿈을 꿨다면 나에게 말해줘몽!',
       tzTime,
       const NotificationDetails(
         android: androidDetails,
@@ -143,5 +143,20 @@ class NotificationService {
   Future<void> cancelReminderNotification() async {
     await flutterLocalNotificationsPlugin.cancel(0);
   }
-  
+
+  Future<bool> requestNotificationPermissionWithSettingsFallback() async {
+    final status = await Permission.notification.status;
+
+    if (status.isGranted) return true;
+
+    final result = await Permission.notification.request();
+
+    if (result.isPermanentlyDenied) {
+      // 앱 설정으로 유도
+      await AppSettings.openAppSettings();
+      return false;
+    }
+
+    return result.isGranted;
+  }
 }

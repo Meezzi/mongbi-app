@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mongbi_app/core/font.dart';
-import 'package:mongbi_app/core/get_responsive_ratio_by_width.dart';
 import 'package:mongbi_app/presentation/history/models/calendar_model.dart';
 import 'package:mongbi_app/providers/history_provider.dart';
 
@@ -46,9 +45,9 @@ class CalendarBottomSheetMonthSelector extends ConsumerWidget {
             itemCount: 12,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 4,
-              crossAxisSpacing: getResponsiveRatioByWidth(context, 45),
-              mainAxisSpacing: getResponsiveRatioByWidth(context, 8),
-              mainAxisExtent: getResponsiveRatioByWidth(context, 48),
+              crossAxisSpacing: 45,
+              mainAxisSpacing: 8,
+              mainAxisExtent: 48,
             ),
             itemBuilder: (context, index) {
               final month = index + 1;
@@ -99,8 +98,8 @@ class CalendarBottomSheetMonthSelector extends ConsumerWidget {
                   child: Opacity(
                     opacity: opacity,
                     child: Container(
-                      width: getResponsiveRatioByWidth(context, 48),
-                      height: getResponsiveRatioByWidth(context, 48),
+                      width: 48,
+                      height: 48,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         color: isActive ? Color(0xFF8C2EFF) : null,
@@ -110,7 +109,7 @@ class CalendarBottomSheetMonthSelector extends ConsumerWidget {
                         '$month월',
                         style: Font.title16.copyWith(
                           color: isActive ? Colors.white : null,
-                          fontSize: getResponsiveRatioByWidth(context, 16),
+                          fontSize: 16,
                         ),
                       ),
                     ),

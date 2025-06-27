@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mongbi_app/core/get_responsive_ratio_by_width.dart';
 import 'package:mongbi_app/presentation/history/models/calendar_model.dart';
 import 'package:mongbi_app/presentation/history/widgets/calendar_bottom_sheet_month_selector.dart';
 import 'package:mongbi_app/presentation/history/widgets/calendar_bottom_sheet_year_selector.dart';
@@ -61,7 +60,7 @@ class _MonthBottomSheetState extends ConsumerState<MonthBottomSheet> {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: getResponsiveRatioByWidth(context, 282),
+      height: 282,
       padding: EdgeInsets.only(top: 24, bottom: 24 + 34, left: 24, right: 24),
       decoration: BoxDecoration(
         color: Colors.white,

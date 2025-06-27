@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mongbi_app/core/font.dart';
-import 'package:mongbi_app/core/get_responsive_ratio_by_width.dart';
 
 class CustomSnackBar extends StatelessWidget {
   const CustomSnackBar({super.key, this.message = '보여줄 꿈이 없다. 꿈을 알려달라몽!'});
@@ -28,20 +27,14 @@ class CustomSnackBar extends StatelessWidget {
               ),
             ),
             Container(
-              padding: EdgeInsets.symmetric(
-                vertical: getResponsiveRatioByWidth(context, 8),
-                horizontal: getResponsiveRatioByWidth(context, 12),
-              ),
+              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
               decoration: BoxDecoration(
                 color: Color(0xFF8C2EFF),
                 borderRadius: BorderRadius.circular(32),
               ),
               child: Text(
                 message,
-                style: Font.title14.copyWith(
-                  fontSize: getResponsiveRatioByWidth(context, 14),
-                  color: Colors.white,
-                ),
+                style: Font.title14.copyWith(fontSize: 14, color: Colors.white),
                 textAlign: TextAlign.center,
               ),
             ),

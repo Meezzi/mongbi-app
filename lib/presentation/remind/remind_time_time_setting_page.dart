@@ -1,6 +1,7 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/font.dart';
@@ -9,11 +10,14 @@ import 'package:mongbi_app/presentation/common/filled_button_widget.dart';
 import 'package:mongbi_app/presentation/remind/view_model/remind_time_setting_view_model.dart';
 import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_text_widget.dart';
 import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_widget.dart';
+import 'package:mongbi_app/providers/setting_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class RemindTimePickerPage extends StatefulWidget {
-  const RemindTimePickerPage({super.key});
+  const RemindTimePickerPage({super.key, required this.isRemindEnabled});
+
+  final bool? isRemindEnabled;
 
   @override
   State<RemindTimePickerPage> createState() => _RemindTimePickerPageState();
@@ -46,18 +50,29 @@ class _RemindTimePickerPageState extends State<RemindTimePickerPage> {
         toolbarHeight: 56,
         title: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Row(
-            children: [
-              GestureDetector(
-                onTap: () => context.pop(),
-                child: SvgPicture.asset(
-                  'assets/icons/back-arrow.svg',
-                  width: 24,
-                  height: 24,
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ],
+          child: Consumer(
+            builder: (context, ref, child) {
+              final alarmViewModel = ref.read(alarmSettingProvider.notifier);
+
+              return Row(
+                children: [
+                  GestureDetector(
+                    onTap: () async {
+                      if (widget.isRemindEnabled ?? false) {
+                        await alarmViewModel.toggleReminder();
+                      }
+                      context.pop();
+                    },
+                    child: SvgPicture.asset(
+                      'assets/icons/back-arrow.svg',
+                      width: 24,
+                      height: 24,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ],
+              );
+            },
           ),
         ),
       ),
@@ -113,14 +128,6 @@ class _RemindTimePickerPageState extends State<RemindTimePickerPage> {
 
                       if (!granted) {
                         if (status.isPermanentlyDenied) {
-                          await FirebaseAnalytics.instance.logEvent(
-                            name: 'remind_permission_permanent_denied',
-                            parameters: {
-                              'screen': 'RemindTimePickerPage',
-                              'permanently': true,
-                            },
-                          );
-
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text(
@@ -130,14 +137,6 @@ class _RemindTimePickerPageState extends State<RemindTimePickerPage> {
                           );
                           await NotificationService().openAppSettingsIfNeeded();
                         } else {
-                          await FirebaseAnalytics.instance.logEvent(
-                            name: 'remind_permission_denied',
-                            parameters: {
-                              'screen': 'RemindTimePickerPage',
-                              'permanently': false,
-                            },
-                          );
-
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(content: Text('알림 권한이 거부되었습니다.')),
                           );
@@ -146,20 +145,19 @@ class _RemindTimePickerPageState extends State<RemindTimePickerPage> {
                       }
 
                       // ✅ 알림 설정 시간 저장 로그
-                      await FirebaseAnalytics.instance.logEvent(
-                        name: 'remind_time_selected',
-                        parameters: {
-                          'hour': selectedTime.hour,
-                          'minute': selectedTime.minute,
-                          'screen': 'RemindTimePickerPage',
-                        },
-                      );
 
                       await NotificationService().scheduleDailyReminder(
                         selectedTime,
                       );
                       final prefs = await SharedPreferences.getInstance();
                       await prefs.setBool('alarm_isReminder', true);
+
+                      // 알림 설정 페이지에서 이 페이지로 이동됐는지 파악
+                      if (widget.isRemindEnabled ?? false) {
+                        context.pop();
+                        return;
+                      }
+
                       context.go('/onbording_page');
                     } catch (e) {
                       if (e is PlatformException &&
