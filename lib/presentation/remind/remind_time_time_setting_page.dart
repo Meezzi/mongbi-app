@@ -14,16 +14,17 @@ import 'package:mongbi_app/providers/setting_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class RemindTimePickerPage extends StatefulWidget {
+class RemindTimePickerPage extends ConsumerStatefulWidget {
   const RemindTimePickerPage({super.key, required this.isRemindEnabled});
 
   final bool? isRemindEnabled;
 
   @override
-  State<RemindTimePickerPage> createState() => _RemindTimePickerPageState();
+  ConsumerState<RemindTimePickerPage> createState() =>
+      _RemindTimePickerPageState();
 }
 
-class _RemindTimePickerPageState extends State<RemindTimePickerPage> {
+class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage> {
   TimeOfDay selectedTime = const TimeOfDay(hour: 8, minute: 0);
 
   @override
@@ -157,7 +158,7 @@ class _RemindTimePickerPageState extends State<RemindTimePickerPage> {
                         context.pop();
                         return;
                       }
-
+                      ref.read(alarmSettingProvider.notifier).setReminder(true);
                       context.go('/onbording_page');
                     } catch (e) {
                       if (e is PlatformException &&
