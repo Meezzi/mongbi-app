@@ -12,7 +12,6 @@ import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_text_
 import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_widget.dart';
 import 'package:mongbi_app/providers/setting_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class RemindTimePickerPage extends ConsumerStatefulWidget {
   const RemindTimePickerPage({super.key, required this.isRemindEnabled});
@@ -150,15 +149,13 @@ class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage> {
                       await NotificationService().scheduleDailyReminder(
                         selectedTime,
                       );
-                      final prefs = await SharedPreferences.getInstance();
-                      await prefs.setBool('alarm_isReminder', true);
+                      ref.read(alarmSettingProvider.notifier).setReminder(true);
 
                       // 알림 설정 페이지에서 이 페이지로 이동됐는지 파악
                       if (widget.isRemindEnabled ?? false) {
                         context.pop();
                         return;
                       }
-                      ref.read(alarmSettingProvider.notifier).setReminder(true);
                       context.go('/onbording_page');
                     } catch (e) {
                       if (e is PlatformException &&
