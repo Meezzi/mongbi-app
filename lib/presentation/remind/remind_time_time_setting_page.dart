@@ -125,6 +125,14 @@ class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage> {
 
                       if (!granted) {
                         if (status.isPermanentlyDenied) {
+                          await AnalyticsHelper.logEvent(
+                            '리마인드_권한_영구_거부',
+                            {
+                              '화면_이름': '리마인드_시간_설정_페이지',
+                              '영구_거부': true,
+                            },
+                          );
+
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text(
@@ -134,6 +142,14 @@ class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage> {
                           );
                           await NotificationService().openAppSettingsIfNeeded();
                         } else {
+                          await AnalyticsHelper.logEvent(
+                            '리마인드_권한_거부',
+                            {
+                              '화면_이름': '리마인드_시간_설정_페이지',
+                              '영구_거부': false,
+                            },
+                          );
+
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(content: Text('알림 권한이 거부되었습니다.')),
                           );
@@ -141,7 +157,14 @@ class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage> {
                         return;
                       }
 
-                      // ✅ 알림 설정 시간 저장 로그
+                      await AnalyticsHelper.logEvent(
+                        '리마인드_시간_선택',
+                        {
+                          '시간': selectedTime.hour,
+                          '분': selectedTime.minute,
+                          '화면_이름': '리마인드_시간_설정_페이지',
+                        },
+                      );
 
                       await NotificationService().scheduleDailyReminder(
                         selectedTime,

@@ -63,9 +63,12 @@ class _SettingPageState extends ConsumerState<SettingPage> {
               onTap: () {
                 final toggledOn = !isBgmOn;
                 toggledOn ? bgmNotifier.turnOn() : bgmNotifier.turnOff();
-                FirebaseAnalytics.instance.logEvent(
-                  name: 'bgm_toggle',
-                  parameters: {'enabled': true.toString()},
+                AnalyticsHelper.logEvent(
+                  '배경음악_토글',
+                  {
+                    '활성화': toggledOn.toString(),
+                    '화면_이름': '설정_페이지',
+                  },
                 );
               },
             ),

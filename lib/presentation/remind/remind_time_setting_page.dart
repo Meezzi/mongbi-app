@@ -70,12 +70,9 @@ class RemindTimeSettingPage extends StatelessWidget {
                   type: ButtonType.primary,
                   text: '알겠어',
                   onPress: () async {
-                    // ✅ 알림 수락 클릭 로그
-                    await FirebaseAnalytics.instance.logEvent(
-                      name: 'remind_intro_confirmed',
-                      parameters: {'screen': 'RemindTimeSettingPage'},
-                    );
-                    context.push('/remindtime_time_setting');
+                    await AnalyticsHelper.logButtonClick(
+                        '리마인드_소개_확인', '리마인드_소개_페이지');
+                    context.go('/remindtime_time_setting');
                   },
                 ),
               ),
