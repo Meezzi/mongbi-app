@@ -1,9 +1,9 @@
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mongbi_app/core/analytics_helper.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/presentation/common/button_type.dart';
 import 'package:mongbi_app/presentation/common/filled_button_widget.dart';
@@ -30,10 +30,7 @@ class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage> {
   void initState() {
     super.initState();
 
-    FirebaseAnalytics.instance.logEvent(
-      name: 'remind_time_page_viewed',
-      parameters: {'screen': 'RemindTimePickerPage'},
-    );
+    AnalyticsHelper.logScreenView('리마인드_시간_설정_페이지');
   }
 
   @override
@@ -151,7 +148,6 @@ class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage> {
                       );
                       ref.read(alarmSettingProvider.notifier).setReminder(true);
 
-                      // 알림 설정 페이지에서 이 페이지로 이동됐는지 파악
                       if (widget.isRemindEnabled ?? false) {
                         context.pop();
                         return;

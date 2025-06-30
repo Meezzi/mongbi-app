@@ -1,8 +1,8 @@
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mongbi_app/core/analytics_helper.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/core/secure_storage_service.dart';
 import 'package:mongbi_app/presentation/common/button_type.dart';
@@ -38,16 +38,15 @@ class _NicknameInputPageState extends ConsumerState<NicknameInputPage> {
       nicknameChanged = changed;
     });
 
-    // ✅ 진입 로그
-    await FirebaseAnalytics.instance.logEvent(
-      name: 'nickname_input_viewed',
-      parameters: {'from': changed ? 'profile_setting' : 'onboarding'},
+    await AnalyticsHelper.logScreenView(
+      changed ? '별명_수정_페이지' : '별명_입력_페이지',
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final isButtonEnabled = RegExp(r'^[가-힣]{2,10}$').hasMatch(nickname.trim());
+    final isButtonEnabled = RegExp(r'^[가-힣]{2,10}
+).hasMatch(nickname.trim());
 
     return Scaffold(
       appBar:
@@ -118,12 +117,11 @@ class _NicknameInputPageState extends ConsumerState<NicknameInputPage> {
           .read(splashViewModelProvider.notifier)
           .checkLoginAndFetchUserInfo();
 
-      // ✅ 성공 로그
-      await FirebaseAnalytics.instance.logEvent(
-        name: 'nickname_submitted',
-        parameters: {
-          'nickname': nickname,
-          'changed': nicknameChanged.toString(),
+      await AnalyticsHelper.logEvent(
+        '별명_저장_성공',
+        {
+          '별명': nickname,
+          '수정_여부': nicknameChanged.toString(),
         },
       );
 
@@ -137,12 +135,11 @@ class _NicknameInputPageState extends ConsumerState<NicknameInputPage> {
         }
       }
     } catch (e) {
-      // ✅ 실패 로그
-      await FirebaseAnalytics.instance.logEvent(
-        name: 'nickname_submit_failed',
-        parameters: {
-          'nickname': nickname,
-          'changed': nicknameChanged.toString(),
+      await AnalyticsHelper.logEvent(
+        '별명_저장_실패',
+        {
+          '별명': nickname,
+          '수정_여부': nicknameChanged.toString(),
         },
       );
 
