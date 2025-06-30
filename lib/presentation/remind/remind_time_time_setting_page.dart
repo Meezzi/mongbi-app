@@ -152,7 +152,6 @@ class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage> {
                         context.pop();
                         return;
                       }
-                      ref.read(alarmSettingProvider.notifier).setReminder(true);
                       context.go('/onbording_page');
                     } catch (e) {
                       if (e is PlatformException &&
