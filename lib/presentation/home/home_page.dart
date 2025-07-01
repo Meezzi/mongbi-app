@@ -127,6 +127,15 @@ class _HomePageState extends ConsumerState<HomePage> {
       selectedMongbiImage = (List.of(mongbiImages)..shuffle()).first;
       selectedMessage = (List.of(mongbiMessages)..shuffle()).first;
     });
+
+    // 터치 이벤트 로깅
+    FirebaseAnalytics.instance.logEvent(
+      name: 'mongbi_touched',
+      parameters: {
+        'new_image': selectedMongbiImage,
+        'new_message': selectedMessage,
+      },
+    );
   }
 
   void _onDeadlineReached() {
