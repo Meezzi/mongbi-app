@@ -125,13 +125,17 @@ class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage> {
 
                       if (!granted) {
                         if (status.isPermanentlyDenied) {
-                          await AnalyticsHelper.logEvent(
-                            '리마인드_권한_영구_거부',
-                            {
-                              '화면_이름': '리마인드_시간_설정_페이지',
-                              '영구_거부': true,
-                            },
-                          );
+                          try {
+                            await AnalyticsHelper.logEvent(
+                              '리마인드_권한_영구_거부',
+                              {
+                                '화면_이름': '리마인드_시간_설정_페이지',
+                                '영구_거부': true,
+                              },
+                            );
+                          } catch (e) {
+                            print('Failed to log event: $e');
+                          }
 
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
@@ -142,13 +146,17 @@ class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage> {
                           );
                           await NotificationService().openAppSettingsIfNeeded();
                         } else {
-                          await AnalyticsHelper.logEvent(
-                            '리마인드_권한_거부',
-                            {
-                              '화면_이름': '리마인드_시간_설정_페이지',
-                              '영구_거부': false,
-                            },
-                          );
+                          try {
+                            await AnalyticsHelper.logEvent(
+                              '리마인드_권한_거부',
+                              {
+                                '화면_이름': '리마인드_시간_설정_페이지',
+                                '영구_거부': false,
+                              },
+                            );
+                          } catch (e) {
+                            print('Failed to log event: $e');
+                          }
 
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(content: Text('알림 권한이 거부되었습니다.')),
