@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mongbi_app/core/challenge_dead_line_manager.dart';
 import 'package:mongbi_app/presentation/common/custom_snack_bar.dart';
 import 'package:mongbi_app/presentation/common/floating_animation_widget.dart';
+import 'package:mongbi_app/presentation/common/ratating_animation_widget.dart';
 import 'package:mongbi_app/presentation/home/widgets/challenge_card.dart';
 import 'package:mongbi_app/presentation/home/widgets/mongbi_constants.dart';
 import 'package:mongbi_app/presentation/home/widgets/speech_bubble.dart';
@@ -99,7 +100,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                   child: Column(
                     children: [
                       CustomSpeechBubble(text: selectedMessage),
-                      GestureDetector(
+                      TouchScaleWidget(
                         onTap: _changeMongbiImage,
                         child: Image.asset(
                           selectedMongbiImage,
