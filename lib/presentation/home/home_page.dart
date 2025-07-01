@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mongbi_app/core/challenge_dead_line_manager.dart';
+import 'package:mongbi_app/core/constants/mongbi_constants.dart';
 import 'package:mongbi_app/presentation/common/custom_snack_bar.dart';
 import 'package:mongbi_app/presentation/common/floating_animation_widget.dart';
 import 'package:mongbi_app/presentation/common/touch_scale_widget.dart';
 import 'package:mongbi_app/presentation/home/widgets/challenge_card.dart';
-import 'package:mongbi_app/presentation/home/widgets/mongbi_constants.dart';
 import 'package:mongbi_app/presentation/home/widgets/speech_bubble.dart';
 import 'package:mongbi_app/providers/challenge_provider.dart';
 
