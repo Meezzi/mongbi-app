@@ -144,7 +144,8 @@ class ChallengePage extends ConsumerWidget {
                           context: context,
                           builder:
                               (context) => MongbiDialog(
-                                content: '아앗, 아쉬워라\n꿈 잘먹었몽! 오늘도 힘내라몽',
+                                title: '홈으로 돌아갈래몽?',
+                                content: '선물을 선택하지 않아도,\n오늘 꿈은 더 이상 먹지 못해!',
                                 buttonText: '고마워',
                                 onSubmit: () {
                                   context.go('/home');
@@ -183,7 +184,8 @@ class ChallengePage extends ConsumerWidget {
                           context: context,
                           builder:
                               (context) => MongbiDialog(
-                                content: '꿈 잘먹었몽!\n선물 완료하고, 오늘도 힘내라몽',
+                                title: '꿈 잘먹었어몽!',
+                                content: '선물을 완료해서\n더 행복한 하루 보내자!',
                                 buttonText: '고마워',
                                 onSubmit: () async {
                                   await ref
