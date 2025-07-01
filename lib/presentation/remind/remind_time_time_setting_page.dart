@@ -126,13 +126,10 @@ class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage> {
                       if (!granted) {
                         if (status.isPermanentlyDenied) {
                           try {
-                            await AnalyticsHelper.logEvent(
-                              '리마인드_권한_영구_거부',
-                              {
-                                '화면_이름': '리마인드_시간_설정_페이지',
-                                '영구_거부': true,
-                              },
-                            );
+                            await AnalyticsHelper.logEvent('리마인드_권한_영구_거부', {
+                              '화면_이름': '리마인드_시간_설정_페이지',
+                              '영구_거부': true,
+                            });
                           } catch (e) {
                             print('Failed to log event: $e');
                           }
@@ -147,13 +144,10 @@ class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage> {
                           await NotificationService().openAppSettingsIfNeeded();
                         } else {
                           try {
-                            await AnalyticsHelper.logEvent(
-                              '리마인드_권한_거부',
-                              {
-                                '화면_이름': '리마인드_시간_설정_페이지',
-                                '영구_거부': false,
-                              },
-                            );
+                            await AnalyticsHelper.logEvent('리마인드_권한_거부', {
+                              '화면_이름': '리마인드_시간_설정_페이지',
+                              '영구_거부': false,
+                            });
                           } catch (e) {
                             print('Failed to log event: $e');
                           }
@@ -165,14 +159,11 @@ class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage> {
                         return;
                       }
 
-                      await AnalyticsHelper.logEvent(
-                        '리마인드_시간_선택',
-                        {
-                          '시간': selectedTime.hour,
-                          '분': selectedTime.minute,
-                          '화면_이름': '리마인드_시간_설정_페이지',
-                        },
-                      );
+                      await AnalyticsHelper.logEvent('리마인드_시간_선택', {
+                        '시간': selectedTime.hour,
+                        '분': selectedTime.minute,
+                        '화면_이름': '리마인드_시간_설정_페이지',
+                      });
 
                       await NotificationService().scheduleDailyReminder(
                         selectedTime,

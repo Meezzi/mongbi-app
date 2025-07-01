@@ -131,12 +131,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
                                   type: ButtonType.primary,
                                   text: '시작할게',
                                   onPress: () async {
-                                    await AnalyticsHelper.logEvent(
-                                      '온보딩_완료',
-                                      {
-                                        '전체_페이지': onboardingData.length,
-                                      },
-                                    );
+                                    await AnalyticsHelper.logEvent('온보딩_완료', {
+                                      '전체_페이지': onboardingData.length,
+                                    });
                                     context.go('/home');
                                   },
                                 ),

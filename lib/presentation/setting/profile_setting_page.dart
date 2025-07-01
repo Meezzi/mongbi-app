@@ -5,10 +5,8 @@ import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/analytics_helper.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/presentation/setting/widgets/logout_account_modal.dart';
-import 'package:mongbi_app/presentation/setting/widgets/logout_confirm_dialog.dart';
 import 'package:mongbi_app/presentation/setting/widgets/remove_accont_modal.dart';
 import 'package:mongbi_app/presentation/setting/widgets/setting_rounded_list_tile_item.dart';
-import 'package:mongbi_app/providers/auth_provider.dart' as auth2;
 import 'package:mongbi_app/providers/user_info_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

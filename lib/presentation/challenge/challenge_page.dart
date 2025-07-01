@@ -50,14 +50,11 @@ class ChallengePage extends ConsumerWidget {
                                   ref
                                       .read(challengeViewModelProvider.notifier)
                                       .selectChallenge(0);
-                                  AnalyticsHelper.logEvent(
-                                    '챌린지_선택',
-                                    {
-                                      '인덱스': 0,
-                                      '타입': challenges[0].type,
-                                      '화면_이름': 'ChallengePage',
-                                    },
-                                  );
+                                  AnalyticsHelper.logEvent('챌린지_선택', {
+                                    '인덱스': 0,
+                                    '타입': challenges[0].type,
+                                    '화면_이름': 'ChallengePage',
+                                  });
                                 },
                                 child: ChallengeContainer(
                                   title: challenges[0].type,
@@ -76,14 +73,11 @@ class ChallengePage extends ConsumerWidget {
                                   ref
                                       .read(challengeViewModelProvider.notifier)
                                       .selectChallenge(1);
-                                  AnalyticsHelper.logEvent(
-                                    '챌린지_선택',
-                                    {
-                                      '인덱스': 1,
-                                      '타입': challenges[1].type,
-                                      '화면_이름': 'ChallengePage',
-                                    },
-                                  );
+                                  AnalyticsHelper.logEvent('챌린지_선택', {
+                                    '인덱스': 1,
+                                    '타입': challenges[1].type,
+                                    '화면_이름': 'ChallengePage',
+                                  });
                                 },
                                 child: ChallengeContainer(
                                   title: challenges[1].type,
@@ -102,14 +96,11 @@ class ChallengePage extends ConsumerWidget {
                                   ref
                                       .read(challengeViewModelProvider.notifier)
                                       .selectChallenge(2);
-                                  AnalyticsHelper.logEvent(
-                                    '챌린지_선택',
-                                    {
-                                      '인덱스': 2,
-                                      '타입': challenges[2].type,
-                                      '화면_이름': 'ChallengePage',
-                                    },
-                                  );
+                                  AnalyticsHelper.logEvent('챌린지_선택', {
+                                    '인덱스': 2,
+                                    '타입': challenges[2].type,
+                                    '화면_이름': 'ChallengePage',
+                                  });
                                 },
                                 child: ChallengeContainer(
                                   title: challenges[2].type,
@@ -147,7 +138,9 @@ class ChallengePage extends ConsumerWidget {
                   },
                   onRightPressed: () async {
                     if (selectedIndex == null) {
-                      AnalyticsHelper.logEvent('챌린지_미선택', {'화면_이름': 'ChallengePage'});
+                      AnalyticsHelper.logEvent('챌린지_미선택', {
+                        '화면_이름': 'ChallengePage',
+                      });
                       ScaffoldMessenger.of(
                         context,
                       ).showSnackBar(customSnackBar('선물을 먼저 골라줘', 80, 2));
@@ -159,22 +152,16 @@ class ChallengePage extends ConsumerWidget {
                             .read(challengeViewModelProvider)
                             .value![selectedIndex];
 
-                    await AnalyticsHelper.logEvent(
-                      '챌린지_완료',
-                      {
-                        '인덱스': selectedIndex,
-                        '타입': selectedChallenge.type,
-                        '화면_이름': 'ChallengePage',
-                      },
-                    );
+                    await AnalyticsHelper.logEvent('챌린지_완료', {
+                      '인덱스': selectedIndex,
+                      '타입': selectedChallenge.type,
+                      '화면_이름': 'ChallengePage',
+                    });
 
-                    await AnalyticsHelper.logEvent(
-                      '유저_속성_설정',
-                      {
-                        '속성_이름': 'challenge_type',
-                        '속성_값': selectedChallenge.type,
-                      },
-                    );
+                    await AnalyticsHelper.logEvent('유저_속성_설정', {
+                      '속성_이름': 'challenge_type',
+                      '속성_값': selectedChallenge.type,
+                    });
 
                     await showDialog(
                       context: context,

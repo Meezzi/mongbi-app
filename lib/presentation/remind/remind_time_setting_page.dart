@@ -71,7 +71,9 @@ class RemindTimeSettingPage extends StatelessWidget {
                   text: '알겠어',
                   onPress: () async {
                     await AnalyticsHelper.logButtonClick(
-                        '리마인드_소개_확인', '리마인드_소개_페이지');
+                      '리마인드_소개_확인',
+                      '리마인드_소개_페이지',
+                    );
                     context.go('/remindtime_time_setting');
                   },
                 ),

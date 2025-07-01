@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/analytics_helper.dart';
-import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/presentation/common/button_type.dart';
 import 'package:mongbi_app/presentation/common/filled_button_widget.dart';
 import 'package:mongbi_app/presentation/common/ghost_button_widget.dart';
@@ -97,23 +96,16 @@ class LogoutAccontModal extends ConsumerWidget {
                               }
 
                               if (success && context.mounted) {
-                                await AnalyticsHelper.logEvent(
-                                  '로그아웃_성공',
-                                  {
-                                    '로그인_방식': loginType ?? '알수없음',
-                                    '화면_이름': '로그아웃_모달',
-                                  },
-                                );
+                                await AnalyticsHelper.logEvent('로그아웃_성공', {
+                                  '로그인_방식': loginType ?? '알수없음',
+                                  '화면_이름': '로그아웃_모달',
+                                });
                                 context.go('/social_login');
                               } else {
-                                await AnalyticsHelper.logEvent(
-                                  '로그아웃_실패',
-                                  {
-                                    '에러':
-                                        '로그아웃_실패_또는_컨텍스트_언마운트됨',
-                                    '화면_이름': '로그아웃_모달',
-                                  },
-                                );
+                                await AnalyticsHelper.logEvent('로그아웃_실패', {
+                                  '에러': '로그아웃_실패_또는_컨텍스트_언마운트됨',
+                                  '화면_이름': '로그아웃_모달',
+                                });
                                 Navigator.pop(context);
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
@@ -122,10 +114,10 @@ class LogoutAccontModal extends ConsumerWidget {
                                 );
                               }
                             } catch (e) {
-                              await AnalyticsHelper.logEvent(
-                                '로그아웃_실패',
-                                {'에러': e.toString(), '화면_이름': '로그아웃_모달'},
-                              );
+                              await AnalyticsHelper.logEvent('로그아웃_실패', {
+                                '에러': e.toString(),
+                                '화면_이름': '로그아웃_모달',
+                              });
                               Navigator.pop(context);
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(

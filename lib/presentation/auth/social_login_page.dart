@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -26,7 +25,10 @@ class SocialLoginPage extends ConsumerWidget {
     String provider,
   ) async {
     final authViewModel = ref.read(authViewModelProvider.notifier);
-    await AnalyticsHelper.logButtonClick('${provider}_login', 'SocialLoginPage');
+    await AnalyticsHelper.logButtonClick(
+      '${provider}_login',
+      'SocialLoginPage',
+    );
     try {
       final isAgreed = await loginMethod();
       await AnalyticsHelper.logLogin(provider, 'SocialLoginPage');
@@ -44,7 +46,10 @@ class SocialLoginPage extends ConsumerWidget {
     } catch (e) {
       if (e is! AuthCancelledException) {
         await AnalyticsHelper.logLoginFailure(
-            provider, 'SocialLoginPage', e.toString());
+          provider,
+          'SocialLoginPage',
+          e.toString(),
+        );
       }
       _handleLoginError(context, e);
     }
@@ -57,59 +62,69 @@ class SocialLoginPage extends ConsumerWidget {
     return Scaffold(
       backgroundColor: const Color(0xFFFAFAFA),
       body: asyncLastProvider.when(
-        data: (lastLoginProvider) => Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              CustomText(text: '반가워몽!', type: TextType.title),
-              CustomText(text: '몽비랑 같이 꿈 보러 갈래?', type: TextType.title),
-              const SizedBox(height: 62),
-              const MongbiCharacter(size: 288),
-              const SizedBox(height: 62),
-              CustomText(text: '간편 로그인', type: TextType.login_info),
-              const SizedBox(height: 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+        data:
+            (lastLoginProvider) => Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  if (Platform.isIOS) ...[
-                    _SocialLoginItem(
-                      child: AppleLoginButton(
-                        onTap: () => _login(
-                          ref,
-                          context,
-                          ref.read(authViewModelProvider.notifier).loginWithApple,
-                          'apple',
+                  CustomText(text: '반가워몽!', type: TextType.title),
+                  CustomText(text: '몽비랑 같이 꿈 보러 갈래?', type: TextType.title),
+                  const SizedBox(height: 62),
+                  const MongbiCharacter(size: 288),
+                  const SizedBox(height: 62),
+                  CustomText(text: '간편 로그인', type: TextType.login_info),
+                  const SizedBox(height: 16),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      if (Platform.isIOS) ...[
+                        _SocialLoginItem(
+                          child: AppleLoginButton(
+                            onTap:
+                                () => _login(
+                                  ref,
+                                  context,
+                                  ref
+                                      .read(authViewModelProvider.notifier)
+                                      .loginWithApple,
+                                  'apple',
+                                ),
+                          ),
+                        ),
+                        const SizedBox(width: 24),
+                      ],
+                      _SocialLoginItem(
+                        child: KakaoLoginButton(
+                          onTap:
+                              () => _login(
+                                ref,
+                                context,
+                                ref
+                                    .read(authViewModelProvider.notifier)
+                                    .loginWithKakao,
+                                'kakao',
+                              ),
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 24),
-                  ],
-                  _SocialLoginItem(
-                    child: KakaoLoginButton(
-                      onTap: () => _login(
-                        ref,
-                        context,
-                        ref.read(authViewModelProvider.notifier).loginWithKakao,
-                        'kakao',
+                      const SizedBox(width: 24),
+                      _SocialLoginItem(
+                        child: NaverLoginButton(
+                          onTap:
+                              () => _login(
+                                ref,
+                                context,
+                                ref
+                                    .read(authViewModelProvider.notifier)
+                                    .loginWithNaver,
+                                'naver',
+                              ),
+                        ),
                       ),
-                    ),
-                  ),
-                  const SizedBox(width: 24),
-                  _SocialLoginItem(
-                    child: NaverLoginButton(
-                      onTap: () => _login(
-                        ref,
-                        context,
-                        ref.read(authViewModelProvider.notifier).loginWithNaver,
-                        'naver',
-                      ),
-                    ),
+                    ],
                   ),
                 ],
               ),
-            ],
-          ),
-        ),
+            ),
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => Center(child: Text('에러 발생: $e')),
       ),
