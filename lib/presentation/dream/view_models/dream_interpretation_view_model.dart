@@ -23,18 +23,17 @@ class DreamInterpretationViewModel extends Notifier<DreamInterpretationState> {
   }
 
   void shareDreamInterpretation(String dreamSummary) {
-    // Branch에서 생성한 단축 URL 사용 (예시)
     const branchShortLink = 'https://xpgig.app.link//appstoreLink';
 
     final message = '''
-🌙 [몽비] 오늘 꾼 꿈, 이런 의미래요!
+    🌙 [몽비] 오늘 꾼 꿈, 이런 의미래요!
 
-"$dreamSummary"
+    "$dreamSummary"
 
-👇 당신의 꿈도 해석해보세요!
-📱 몽비 앱 설치하기
-$branchShortLink
-''';
+    👇 당신의 꿈도 해석해보세요!
+    📱 몽비 앱 설치하기
+    $branchShortLink
+    ''';
 
     Share.share(message);
   }
