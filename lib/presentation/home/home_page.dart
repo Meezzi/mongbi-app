@@ -6,7 +6,7 @@ import 'package:mongbi_app/core/challenge_dead_line_manager.dart';
 import 'package:mongbi_app/presentation/common/custom_snack_bar.dart';
 import 'package:mongbi_app/presentation/common/floating_animation_widget.dart';
 import 'package:mongbi_app/presentation/home/widgets/challenge_card.dart';
-import 'package:mongbi_app/presentation/home/widgets/mongbi_message_list.dart';
+import 'package:mongbi_app/presentation/home/widgets/mongbi_constants.dart';
 import 'package:mongbi_app/presentation/home/widgets/speech_bubble.dart';
 import 'package:mongbi_app/providers/challenge_provider.dart';
 
@@ -19,6 +19,7 @@ class HomePage extends ConsumerStatefulWidget {
 
 class _HomePageState extends ConsumerState<HomePage> {
   late String selectedMessage;
+  late String selectedMongbiImage;
   final DeadlineManager _deadlineManager = DeadlineManager();
   bool _shouldShowChallenge = true;
 
@@ -26,6 +27,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   void initState() {
     super.initState();
     selectedMessage = (List.of(mongbiMessages)..shuffle()).first;
+    selectedMongbiImage = (List.of(mongbiImages)..shuffle()).first;
 
     _deadlineManager.checkInitialDeadlineStatus();
     _shouldShowChallenge = !_deadlineManager.isDeadlinePassed;
@@ -97,10 +99,13 @@ class _HomePageState extends ConsumerState<HomePage> {
                   child: Column(
                     children: [
                       CustomSpeechBubble(text: selectedMessage),
-                      Image.asset(
-                        'assets/images/mongbi.webp',
-                        width: screenHeight * 0.32,
-                        height: screenHeight * 0.32,
+                      GestureDetector(
+                        onTap: _changeMongbiImage,
+                        child: Image.asset(
+                          selectedMongbiImage,
+                          width: screenHeight * 0.32,
+                          height: screenHeight * 0.32,
+                        ),
                       ),
                     ],
                   ),
@@ -114,6 +119,13 @@ class _HomePageState extends ConsumerState<HomePage> {
         ],
       ),
     );
+  }
+
+  void _changeMongbiImage() {
+    setState(() {
+      selectedMongbiImage = (List.of(mongbiImages)..shuffle()).first;
+      selectedMessage = (List.of(mongbiMessages)..shuffle()).first;
+    });
   }
 
   void _onDeadlineReached() {
