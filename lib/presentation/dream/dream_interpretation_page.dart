@@ -1,8 +1,5 @@
 import 'dart:io';
-<<<<<<< HEAD
 
-=======
->>>>>>> 3dc9ca4 (feat: 꿈 해석 공유 기능 추가 및 관련 패키지 의존성 추가)
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
@@ -48,17 +45,12 @@ class _DreamInterpretationPageState
               final viewModel = ref.read(
                 dreamInterpretationViewModelProvider.notifier,
               );
-<<<<<<< HEAD
 
               final summary = '''
               ${dream.dreamSubTitle}
               ${dream.dreamInterpretation}
               ''';
               viewModel.shareDreamInterpretation(summary.trim());
-=======
-              final summary = dream.dreamInterpretation;
-              viewModel.shareDreamInterpretation(summary);
->>>>>>> 3dc9ca4 (feat: 꿈 해석 공유 기능 추가 및 관련 패키지 의존성 추가)
             },
           ),
         ],
@@ -146,4 +138,4 @@ class _DreamInterpretationPageState
       context,
     ).showSnackBar(SnackBar(content: Text(message, style: Font.body14)));
   }
-} 
+}

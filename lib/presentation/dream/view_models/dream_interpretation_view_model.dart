@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mongbi_app/domain/entities/dream.dart';
 import 'package:mongbi_app/presentation/dream/models/dream_interpretation_state.dart';
@@ -25,8 +23,8 @@ class DreamInterpretationViewModel extends Notifier<DreamInterpretationState> {
   }
 
   void shareDreamInterpretation(String dreamSummary) {
-    final storeLink =
-        Platform.isAndroid ? '' : 'https://apps.apple.com/app/id6747565007';
+    // Branch에서 생성한 단축 URL 사용 (예시)
+    const branchShortLink = 'https://xpgig.app.link//appstoreLink';
 
     final message = '''
 🌙 [몽비] 오늘 꾼 꿈, 이런 의미래요!
@@ -35,7 +33,7 @@ class DreamInterpretationViewModel extends Notifier<DreamInterpretationState> {
 
 👇 당신의 꿈도 해석해보세요!
 📱 몽비 앱 설치하기
-$storeLink
+$branchShortLink
 ''';
 
     Share.share(message);
