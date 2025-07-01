@@ -1,5 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:mongbi_app/data/data_sources/active_challenge_data_source.dart';
+import 'package:mongbi_app/data/data_sources/challenge_detail_data_source.dart';
 import 'package:mongbi_app/data/data_sources/fetch_challenge_data_source.dart';
 import 'package:mongbi_app/data/data_sources/remote_complete_challenge_data_source.dart';
 import 'package:mongbi_app/data/data_sources/remote_save_challenge_data_source.dart';
@@ -10,16 +12,22 @@ void main() {
   late MockChallengeDataSource challengeDataSource;
   late MockSaveChallengeDataSource mockSaveChallengeDataSource;
   late MockCompleteChallengeDataSource mockCompleteChallengeDataSource;
+  late MockActiveChallengeDataSource mockActiveChallengeDataSource;
+  late MockChallengeDetailDataSource mockChallengeDetailDataSource;
   late RemoteChallengeRepository remoteChallengeRepository;
 
   setUp(() {
     challengeDataSource = MockChallengeDataSource();
     mockSaveChallengeDataSource = MockSaveChallengeDataSource();
     mockCompleteChallengeDataSource = MockCompleteChallengeDataSource();
+    mockActiveChallengeDataSource = MockActiveChallengeDataSource();
+    mockChallengeDetailDataSource = MockChallengeDetailDataSource();
     remoteChallengeRepository = RemoteChallengeRepository(
       challengeDataSource: challengeDataSource,
       saveChallengeDataSource: mockSaveChallengeDataSource,
       completeChallengeDataSource: mockCompleteChallengeDataSource,
+      activeChallengeDataSource: mockActiveChallengeDataSource,
+      challengeDetailDataSource: mockChallengeDetailDataSource,
     );
   });
 
@@ -94,16 +102,16 @@ void main() {
     when(
       () => mockCompleteChallengeDataSource.completeChallenge(
         uid: 1,
-        dreamId: 1,
         challengeId: 1,
+        challengeStatus: 'COMPLETED',
       ),
     ).thenAnswer((_) async => true);
 
     // Act
     final response = await remoteChallengeRepository.completeChallenge(
       uid: 1,
-      dreamId: 1,
       challengeId: 1,
+      challengeStatus: 'COMPLETED',
     );
 
     // Assert
@@ -119,3 +127,9 @@ class MockSaveChallengeDataSource extends Mock
 
 class MockCompleteChallengeDataSource extends Mock
     implements RemoteCompleteChallengeDataSource {}
+
+class MockActiveChallengeDataSource extends Mock
+    implements ActiveChallengeDataSource {}
+
+class MockChallengeDetailDataSource extends Mock
+    implements ChallengeDetailDataSource {}
