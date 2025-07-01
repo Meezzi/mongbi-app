@@ -26,8 +26,7 @@ class ChallengeContainer extends StatelessWidget {
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
       child: AnimatedRotation(
-        turns:
-            (isSelected ? 0.0 : rotationAngle),
+        turns: (isSelected ? 0.0 : rotationAngle) / (2 * 3.14159),
         duration: Duration(milliseconds: 300),
         curve: Curves.easeInOut,
         child: Container(
