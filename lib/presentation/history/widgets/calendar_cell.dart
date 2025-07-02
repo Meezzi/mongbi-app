@@ -37,8 +37,8 @@ class CalendarCell extends ConsumerWidget {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: type == 'seleted' ? Color(0xFF3B136B) : null,
-        borderRadius: type == 'seleted' ? BorderRadius.circular(999) : null,
+        color: type == 'selected' ? Color(0xFF3B136B) : null,
+        borderRadius: type == 'selected' ? BorderRadius.circular(999) : null,
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -60,7 +60,7 @@ class CalendarCell extends ConsumerWidget {
             '${day.day}',
             style: Font.subTitle14.copyWith(
               fontSize: fontViewWidth,
-              color: type == 'seleted' ? Colors.white : Color(0xFFB273FF),
+              color: type == 'selected' ? Colors.white : Color(0xFFB273FF),
             ),
           ),
         ],
