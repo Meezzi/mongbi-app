@@ -66,7 +66,7 @@ class Calendar extends ConsumerWidget {
         defaultBuilder: (context, day, focusedDay) {
           return CalendarCell(
             day: day,
-            type: 'default',
+            isSelected: false,
             circleWidth: circleWidth,
             fontViewWidth: fontViewWidth,
           );
@@ -74,7 +74,7 @@ class Calendar extends ConsumerWidget {
         selectedBuilder: (context, day, focusedDay) {
           return CalendarCell(
             day: day,
-            type: 'selected',
+            isSelected: true,
             circleWidth: circleWidth,
             fontViewWidth: fontViewWidth,
           );
