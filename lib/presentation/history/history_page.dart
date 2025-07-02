@@ -8,13 +8,13 @@ import 'package:mongbi_app/providers/history_provider.dart';
 
 class HistoryPage extends ConsumerStatefulWidget {
   const HistoryPage({super.key});
-
   @override
   ConsumerState<HistoryPage> createState() => _HistoryPageState();
 }
 
 class _HistoryPageState extends ConsumerState<HistoryPage> {
   final double horizontalPadding = 24;
+  final ScrollController scrollController = ScrollController();
 
   late final Size deviceSize;
   late final EdgeInsets devicePadding;
@@ -30,6 +30,12 @@ class _HistoryPageState extends ConsumerState<HistoryPage> {
       devicePadding = MediaQuery.of(context).padding;
       appBarHeight = AppBar().preferredSize.height;
     });
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -56,6 +62,7 @@ class _HistoryPageState extends ConsumerState<HistoryPage> {
             onScroll: onScroll,
             calendarState: calendarState,
             horizontalPadding: horizontalPadding,
+            scrollController: scrollController,
           );
         },
         error: (error, stackTrace) {

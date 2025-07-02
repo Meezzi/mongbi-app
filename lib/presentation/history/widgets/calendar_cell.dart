@@ -9,13 +9,13 @@ class CalendarCell extends ConsumerWidget {
   const CalendarCell({
     super.key,
     required this.day,
-    required this.type,
+    required this.isSelected,
     required this.circleWidth,
     required this.fontViewWidth,
   });
 
   final DateTime day;
-  final String type;
+  final bool isSelected;
   final double circleWidth;
   final double fontViewWidth;
   final Map<String, String> iconPathMap = const {
@@ -37,8 +37,8 @@ class CalendarCell extends ConsumerWidget {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: type == 'seleted' ? Color(0xFF3B136B) : null,
-        borderRadius: type == 'seleted' ? BorderRadius.circular(999) : null,
+        color: isSelected ? Color(0xFF3B136B) : null,
+        borderRadius: isSelected ? BorderRadius.circular(999) : null,
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -60,7 +60,7 @@ class CalendarCell extends ConsumerWidget {
             '${day.day}',
             style: Font.subTitle14.copyWith(
               fontSize: fontViewWidth,
-              color: type == 'seleted' ? Colors.white : Color(0xFFB273FF),
+              color: isSelected ? Colors.white : Color(0xFFB273FF),
             ),
           ),
         ],
