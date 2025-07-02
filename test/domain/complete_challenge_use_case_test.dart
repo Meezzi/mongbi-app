@@ -15,24 +15,24 @@ void main() {
   });
 
   final uid = 1;
-  final dreamId = 1;
   final challengeId = 1;
+  final challengeStatus = 'COMPLETED';
 
   test('챌린지가 성공적으로 완료되었는지 테스트', () async {
     // Arrange
     when(
       () => mockRepository.completeChallenge(
         uid: uid,
-        dreamId: dreamId,
         challengeId: challengeId,
+        challengeStatus: challengeStatus,
       ),
     ).thenAnswer((_) async => true);
 
     // Act
-    final response = await completeChallengeUseCase.completeChallenge(
+    final response = await completeChallengeUseCase.execute(
       uid: uid,
-      dreamId: dreamId,
       challengeId: challengeId,
+      challengeStatus: challengeStatus,
     );
 
     // Assert

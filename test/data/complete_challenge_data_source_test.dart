@@ -16,24 +16,19 @@ void main() {
 
   test('챌린지 완료를 성공적으로 저장', () async {
     // Arrange
-    final response = {
-      'success': true,
-      'code': 201,
-      'message': '챌린지 완료 저장 성공',
-      'data': {'USER_ID': 1, 'CHALLENGE_ID': 3, 'DREAM_ID': 55},
-    };
+    final response = {'success': true, 'message': '상태가 성공적으로 변경되었습니다.'};
 
     final uid = 1;
     final challengeId = 1;
-    final dreamId = 1;
+    final challengeStatus = 'COMPLETED';
 
     when(
-      () => mockDio.post('/api/user-challenges', data: any(named: 'data')),
+      () => mockDio.patch('/challenge-status', data: any(named: 'data')),
     ).thenAnswer(
       (_) async => Response(
         data: response,
         statusCode: 201,
-        requestOptions: RequestOptions(path: '/api/user-challenges'),
+        requestOptions: RequestOptions(path: '/challenge-status'),
       ),
     );
 
@@ -41,7 +36,7 @@ void main() {
     final result = await remoteCompleteChallengeDataSource.completeChallenge(
       uid: uid,
       challengeId: challengeId,
-      dreamId: dreamId,
+      challengeStatus: challengeStatus,
     );
 
     // Assert
