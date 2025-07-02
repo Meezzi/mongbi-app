@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mongbi_app/core/font.dart';
+import 'package:mongbi_app/domain/entities/history.dart';
 import 'package:mongbi_app/presentation/history/widgets/calendar_cell.dart';
 import 'package:mongbi_app/providers/history_provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class Calendar extends ConsumerWidget {
-  const Calendar({super.key, required this.horizontalPadding});
+  const Calendar({
+    super.key,
+    required this.horizontalPadding,
+    required this.scrollController,
+  });
 
   final double horizontalPadding;
+  final ScrollController scrollController;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -42,6 +48,11 @@ class Calendar extends ConsumerWidget {
       },
       onDaySelected: (selectedDay, focusedDay) {
         calendarVm.onDaySelected(selectedDay, focusedDay);
+        onScrollToTop(
+          data: calendarState.searchedHistory,
+          selectedDay: selectedDay,
+          scrollController: scrollController,
+        );
       },
       onPageChanged: (focusedDay) {
         calendarVm.onPageChanged(focusedDay);
@@ -63,12 +74,37 @@ class Calendar extends ConsumerWidget {
         selectedBuilder: (context, day, focusedDay) {
           return CalendarCell(
             day: day,
-            type: 'seleted',
+            type: 'selected',
             circleWidth: circleWidth,
             fontViewWidth: fontViewWidth,
           );
         },
       ),
     );
+  }
+
+  void onScrollToTop({
+    required List<History> data,
+    required DateTime selectedDay,
+    required ScrollController scrollController,
+  }) {
+    final hasRecord = data.any(
+      (record) =>
+          record.dreamRegDate.year == selectedDay.year &&
+          record.dreamRegDate.month == selectedDay.month &&
+          record.dreamRegDate.day == selectedDay.day,
+    );
+    if (!hasRecord) {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        if (scrollController.hasClients) {
+          await Future.delayed(Duration(milliseconds: 1));
+          await scrollController.animateTo(
+            0.0,
+            duration: const Duration(milliseconds: 100),
+            curve: Curves.linear,
+          );
+        }
+      });
+    }
   }
 }
