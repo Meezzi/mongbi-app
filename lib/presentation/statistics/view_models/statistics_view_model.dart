@@ -32,7 +32,7 @@ class StatisticsViewModel extends AutoDisposeAsyncNotifier<StatisticsModel?> {
       final useCase = ref.read(fetchMonthStatisticsUseCaseProvider);
       final monthStats = await useCase.execute(pickerState.focusedMonth);
 
-      if (monthStats == null) throw Exception('통신 등 예기치 못한 오류 발생');
+      if (monthStats == null) throw Exception('앗! 통신 오류가 발생했다몽!');
 
       return StatisticsModel(month: monthStats);
     } catch (_) {
@@ -49,7 +49,7 @@ class StatisticsViewModel extends AutoDisposeAsyncNotifier<StatisticsModel?> {
       final useCase = ref.read(fetchYearStatisticsUseCaseProvider);
       final yearStats = await useCase.execute(pickerState.focusedYear);
 
-      if (yearStats == null) throw Exception('통신 등 예기치 못한 오류 발생');
+      if (yearStats == null) throw Exception('앗! 통신 오류가 발생했다몽!');
 
       return StatisticsModel(year: yearStats);
     } catch (_) {
