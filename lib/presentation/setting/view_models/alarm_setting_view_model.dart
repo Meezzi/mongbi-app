@@ -85,7 +85,7 @@ class AlarmSettingViewModel extends AsyncNotifier<AlarmSettingState> {
   }
 
   void _saveState(AlarmSettingState s) {
-    _prefs.setBool('alarm_isReminder', s.isReminder);
-    _prefs.setBool('alarm_isChallenge', s.isChallenge);
+    _prefs.setBool('isReminder', s.isReminder);
+    _prefs.setBool('isChallenge', s.isChallenge);
   }
 }
