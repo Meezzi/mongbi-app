@@ -64,7 +64,6 @@ dependencies:
   firebase_analytics: ^11.5.0
   firebase_messaging: ^15.2.7
 
-
 dev_dependencies:
   sentry_dart_plugin: ^2.4.1
   flutter_test:
@@ -96,6 +95,7 @@ flutter:
     - assets/icons/
     - assets/images/
     - assets/logo/
+    - assets/screenshots/
     - .env
   #   - images/a_dot_ham.jpeg
 
