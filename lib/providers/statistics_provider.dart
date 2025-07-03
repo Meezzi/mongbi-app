@@ -31,10 +31,11 @@ final fetchYearStatisticsUseCaseProvider = Provider((ref) {
   return FetchYearStatisticsUseCase(repository);
 });
 
-final pickerViewModelProvider =
-    NotifierProvider.autoDispose<PickerViewModel, PickerModel>(() {
-      return PickerViewModel();
-    });
+final pickerViewModelProvider = NotifierProvider<PickerViewModel, PickerModel>(
+  () {
+    return PickerViewModel();
+  },
+);
 
 final statisticsViewModelProvider =
     AsyncNotifierProvider.autoDispose<StatisticsViewModel, StatisticsModel?>(
@@ -45,4 +46,8 @@ final statisticsViewModelProvider =
 
 final snackBarStatusProvider = StateProvider<bool>((ref) {
   return false;
+});
+
+final tabBarIndexProvider = StateProvider<int>((ref) {
+  return 0;
 });
