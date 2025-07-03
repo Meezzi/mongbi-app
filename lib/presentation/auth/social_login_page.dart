@@ -100,7 +100,6 @@ class SocialLoginPage extends ConsumerWidget {
     Future<bool> Function() loginMethod,
     String provider,
   ) async {
-    final authViewModel = ref.read(authViewModelProvider.notifier);
     await AnalyticsHelper.logButtonClick(
       '${provider}_login',
       'SocialLoginPage',
