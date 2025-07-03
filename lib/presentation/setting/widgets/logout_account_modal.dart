@@ -13,8 +13,6 @@ class LogoutAccontModal extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.read(auth2.authViewModelProvider.notifier);
-
     return DefaultTextStyle(
       style: TextStyle(),
       child: Padding(
