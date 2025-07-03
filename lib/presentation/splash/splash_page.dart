@@ -1,7 +1,7 @@
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mongbi_app/core/analytics_helper.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/presentation/common/floating_animation_widget.dart';
 import 'package:mongbi_app/presentation/splash/view_models/splash_status.dart';
@@ -20,10 +20,7 @@ class _SplashPageState extends ConsumerState<SplashPage>
   void initState() {
     super.initState();
 
-    FirebaseAnalytics.instance.logEvent(
-      name: 'splash_viewed',
-      parameters: {'screen': 'SplashPage'},
-    );
+    AnalyticsHelper.logScreenView('스플래시_페이지');
 
     Future.delayed(const Duration(seconds: 3), () async {
       final viewModel = ref.read(splashViewModelProvider.notifier);
@@ -34,21 +31,21 @@ class _SplashPageState extends ConsumerState<SplashPage>
       if (!context.mounted) return;
 
       if (splashState.status == SplashStatus.success) {
-        await FirebaseAnalytics.instance.logEvent(
-          name: 'splash_routed_home',
-          parameters: {'status': 'success'},
+        await AnalyticsHelper.logEvent(
+          '스플래시_홈_이동',
+          {'상태': '성공'},
         );
         context.go('/home');
       } else if (splashState.status == SplashStatus.needLogin) {
-        await FirebaseAnalytics.instance.logEvent(
-          name: 'splash_routed_login',
-          parameters: {'status': 'needLogin'},
+        await AnalyticsHelper.logEvent(
+          '스플래시_로그인_필요',
+          {'상태': '로그인_필요'},
         );
         context.go('/social_login');
       } else {
-        await FirebaseAnalytics.instance.logEvent(
-          name: 'splash_error',
-          parameters: {'status': 'error'},
+        await AnalyticsHelper.logEvent(
+          '스플래시_에러',
+          {'상태': '에러'},
         );
         context.go('/social_login');
       }
@@ -111,3 +108,4 @@ class _SplashPageState extends ConsumerState<SplashPage>
     );
   }
 }
+

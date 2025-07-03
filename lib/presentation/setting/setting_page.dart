@@ -1,7 +1,7 @@
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mongbi_app/core/analytics_helper.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/presentation/setting/widgets/setting_rounded_list_tile_item.dart';
 import 'package:mongbi_app/presentation/setting/widgets/setting_section_card.dart';
@@ -27,10 +27,7 @@ class _SettingPageState extends ConsumerState<SettingPage> {
     super.initState();
     _loadVersion();
 
-    FirebaseAnalytics.instance.logEvent(
-      name: 'settings_viewed',
-      parameters: {'screen': 'SettingPage'},
-    );
+    AnalyticsHelper.logScreenView('설정_페이지');
   }
 
   Future<void> _loadVersion() async {
@@ -66,9 +63,12 @@ class _SettingPageState extends ConsumerState<SettingPage> {
               onTap: () {
                 final toggledOn = !isBgmOn;
                 toggledOn ? bgmNotifier.turnOn() : bgmNotifier.turnOff();
-                FirebaseAnalytics.instance.logEvent(
-                  name: 'bgm_toggle',
-                  parameters: {'enabled': true.toString()},
+                AnalyticsHelper.logEvent(
+                  '배경음악_토글',
+                  {
+                    '활성화': toggledOn.toString(),
+                    '화면_이름': '설정_페이지',
+                  },
                 );
               },
             ),
@@ -77,10 +77,7 @@ class _SettingPageState extends ConsumerState<SettingPage> {
               isFirst: false,
               isLast: true,
               onTap: () {
-                FirebaseAnalytics.instance.logEvent(
-                  name: 'notification_setting_opened',
-                  parameters: {'screen': 'SettingPage'},
-                );
+                AnalyticsHelper.logButtonClick('알림_설정_열림', '설정_페이지');
 
                 context.push('/alarm_setting');
               },
@@ -96,10 +93,7 @@ class _SettingPageState extends ConsumerState<SettingPage> {
               isFirst: false,
               isLast: true,
               onTap: () async {
-                await FirebaseAnalytics.instance.logEvent(
-                  name: 'help_center_opened',
-                  parameters: {'screen': 'SettingPage'},
-                );
+                await AnalyticsHelper.logButtonClick('고객센터_열림', '설정_페이지');
                 await launchUrl(Uri.parse('http://pf.kakao.com/_VGzxin'));
               },
             ),
@@ -108,10 +102,7 @@ class _SettingPageState extends ConsumerState<SettingPage> {
               isFirst: true,
               isLast: false,
               onTap: () {
-                FirebaseAnalytics.instance.logEvent(
-                  name: 'terms_opened',
-                  parameters: {'screen': 'SettingPage'},
-                );
+                AnalyticsHelper.logButtonClick('이용약관_열림', '설정_페이지');
 
                 final uri = Uri.parse(
                   'https://destiny-yam-088.notion.site/MONGBI-21b1c082f0ac804a8de8f5e499b00078?source=copy_link',
@@ -124,10 +115,7 @@ class _SettingPageState extends ConsumerState<SettingPage> {
               isFirst: false,
               isLast: false,
               onTap: () {
-                FirebaseAnalytics.instance.logEvent(
-                  name: 'license_opened',
-                  parameters: {'screen': 'SettingPage'},
-                );
+                AnalyticsHelper.logButtonClick('오픈소스_라이선스_열림', '설정_페이지');
                 context.push('/license_page');
               },
             ),
@@ -146,10 +134,7 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                 ],
               ),
               onTap: () {
-                FirebaseAnalytics.instance.logEvent(
-                  name: 'version_info_tapped',
-                  parameters: {'screen': 'SettingPage'},
-                );
+                AnalyticsHelper.logButtonClick('버전_정보_탭', '설정_페이지');
               },
             ),
           ],
@@ -158,3 +143,4 @@ class _SettingPageState extends ConsumerState<SettingPage> {
     );
   }
 }
+

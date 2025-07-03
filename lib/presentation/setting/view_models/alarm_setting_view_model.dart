@@ -69,14 +69,23 @@ class AlarmSettingViewModel extends AsyncNotifier<AlarmSettingState> {
 
   Future<void> toggleChallenge() async {
     final prev = state.value!;
-    final nextState = prev.copyWith(isChallenge: !prev.isChallenge).recalculateIsAll();
+    final nextState =
+        prev.copyWith(isChallenge: !prev.isChallenge).recalculateIsAll();
 
     state = AsyncValue.data(nextState);
     _saveState(nextState);
   }
 
+  void setReminder(bool value) {
+    final prev = state.requireValue;
+
+    final newState = prev.copyWith(isReminder: value).recalculateIsAll();
+    state = AsyncValue.data(newState);
+    _saveState(newState);
+  }
+
   void _saveState(AlarmSettingState s) {
-    _prefs.setBool('alarm_isReminder', s.isReminder);
-    _prefs.setBool('alarm_isChallenge', s.isChallenge);
+    _prefs.setBool('isReminder', s.isReminder);
+    _prefs.setBool('isChallenge', s.isChallenge);
   }
 }

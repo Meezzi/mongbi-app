@@ -1,7 +1,7 @@
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mongbi_app/core/analytics_helper.dart';
 import 'package:mongbi_app/core/challenge_dead_line_manager.dart';
 import 'package:mongbi_app/core/constants/mongbi_constants.dart';
 import 'package:mongbi_app/presentation/common/custom_snack_bar.dart';
@@ -41,15 +41,8 @@ class _HomePageState extends ConsumerState<HomePage> {
       }
     });
 
-    FirebaseAnalytics.instance.logEvent(
-      name: 'home_viewed',
-      parameters: {'screen': 'HomePage'},
-    );
-
-    FirebaseAnalytics.instance.logEvent(
-      name: 'message_shown',
-      parameters: {'message': selectedMessage},
-    );
+    AnalyticsHelper.logScreenView('HomePage');
+    AnalyticsHelper.logEvent('메시지_표시', {'메시지': selectedMessage});
   }
 
   @override
@@ -128,14 +121,7 @@ class _HomePageState extends ConsumerState<HomePage> {
       selectedMessage = (List.of(mongbiMessages)..shuffle()).first;
     });
 
-    // 터치 이벤트 로깅
-    FirebaseAnalytics.instance.logEvent(
-      name: 'mongbi_touched',
-      parameters: {
-        'new_image': selectedMongbiImage,
-        'new_message': selectedMessage,
-      },
-    );
+    AnalyticsHelper.logEvent('홈_화면', {'상태': '몽비_터치'});
   }
 
   void _onDeadlineReached() {

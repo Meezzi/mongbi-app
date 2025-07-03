@@ -1,9 +1,8 @@
 import 'dart:io';
-import 'dart:math';
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mongbi_app/core/analytics_helper.dart';
 import 'package:mongbi_app/core/exceptions/auth_custom_exception.dart';
 import 'package:mongbi_app/presentation/auth/widgets/apple_login_button_widget.dart';
 import 'package:mongbi_app/presentation/auth/widgets/kakao_login_button_widget.dart';
@@ -44,179 +43,44 @@ class SocialLoginPage extends ConsumerWidget {
                       if (Platform.isIOS) ...[
                         _SocialLoginItem(
                           child: AppleLoginButton(
-                            onTap: () async {
-                              final authViewModel = ref.read(
-                                authViewModelProvider.notifier,
-                              );
-                              await FirebaseAnalytics.instance.logEvent(
-                                name: 'button_click',
-                                parameters: {
-                                  'button_name': 'apple_login',
-                                  'screen': 'SocialLoginPage',
-                                },
-                              );
-                              try {
-                                final isAgreed =
-                                    await authViewModel.loginWithApple();
-                                await FirebaseAnalytics.instance.logEvent(
-                                  name: 'login_success',
-                                  parameters: {
-                                    'provider': 'apple',
-                                    'screen': 'SocialLoginPage',
-                                  },
-                                );
-                                if (isAgreed) {
-                                  context.go('/home');
-                                } else {
-                                  await showModalBottomSheet(
-                                    context: context,
-                                    isScrollControlled: false,
-                                    isDismissible: false,
-                                    backgroundColor: const Color.fromARGB(
-                                      60,
-                                      0,
-                                      0,
-                                      0,
-                                    ),
-                                    builder: (_) => const TermsBottomSheet(),
-                                  );
-                                }
-                              } catch (e) {
-                                // 취소가 아닌 경우에만 실패 로그 전송
-                                if (e is! AuthCancelledException) {
-                                  await FirebaseAnalytics.instance.logEvent(
-                                    name: 'login_failure',
-                                    parameters: {
-                                      'provider': 'apple',
-                                      'screen': 'SocialLoginPage',
-                                      'error': _safeSubstring(
-                                        e.toString(),
-                                        100,
-                                      ),
-                                    },
-                                  );
-                                }
-                                _handleLoginError(context, e);
-                              }
-                            },
+                            onTap:
+                                () => _login(
+                                  ref,
+                                  context,
+                                  ref
+                                      .read(authViewModelProvider.notifier)
+                                      .loginWithApple,
+                                  'apple',
+                                ),
                           ),
                         ),
                         const SizedBox(width: 24),
                       ],
                       _SocialLoginItem(
                         child: KakaoLoginButton(
-                          onTap: () async {
-                            final authViewModel = ref.read(
-                              authViewModelProvider.notifier,
-                            );
-                            await FirebaseAnalytics.instance.logEvent(
-                              name: 'button_click',
-                              parameters: {
-                                'button_name': 'kakao_login',
-                                'screen': 'SocialLoginPage',
-                              },
-                            );
-
-                            try {
-                              final isAgreed =
-                                  await authViewModel.loginWithKakao();
-                              await FirebaseAnalytics.instance.logEvent(
-                                name: 'login_success',
-                                parameters: {
-                                  'provider': 'kakao',
-                                  'screen': 'SocialLoginPage',
-                                },
-                              );
-                              if (isAgreed) {
-                                context.go('/home');
-                              } else {
-                                await showModalBottomSheet(
-                                  context: context,
-                                  isScrollControlled: false,
-                                  isDismissible: false,
-                                  backgroundColor: const Color.fromARGB(
-                                    60,
-                                    0,
-                                    0,
-                                    0,
-                                  ),
-                                  builder: (_) => const TermsBottomSheet(),
-                                );
-                              }
-                            } catch (e) {
-                              // 취소가 아닌 경우에만 실패 로그 전송
-                              if (e is! AuthCancelledException) {
-                                await FirebaseAnalytics.instance.logEvent(
-                                  name: 'login_failure',
-                                  parameters: {
-                                    'provider': 'kakao',
-                                    'screen': 'SocialLoginPage',
-                                    'error': _safeSubstring(e.toString(), 100),
-                                  },
-                                );
-                              }
-                              _handleLoginError(context, e);
-                            }
-                          },
+                          onTap:
+                              () => _login(
+                                ref,
+                                context,
+                                ref
+                                    .read(authViewModelProvider.notifier)
+                                    .loginWithKakao,
+                                'kakao',
+                              ),
                         ),
                       ),
                       const SizedBox(width: 24),
                       _SocialLoginItem(
                         child: NaverLoginButton(
-                          onTap: () async {
-                            final authViewModel = ref.read(
-                              authViewModelProvider.notifier,
-                            );
-                            await FirebaseAnalytics.instance.logEvent(
-                              name: 'button_click',
-                              parameters: {
-                                'button_name': 'naver_login',
-                                'screen': 'SocialLoginPage',
-                              },
-                            );
-
-                            try {
-                              final isAgreed =
-                                  await authViewModel.loginWithNaver();
-                              await FirebaseAnalytics.instance.logEvent(
-                                name: 'login_success',
-                                parameters: {
-                                  'provider': 'naver',
-                                  'screen': 'SocialLoginPage',
-                                },
-                              );
-
-                              if (isAgreed) {
-                                context.go('/home');
-                              } else {
-                                await showModalBottomSheet(
-                                  context: context,
-                                  isScrollControlled: false,
-                                  isDismissible: false,
-                                  backgroundColor: const Color.fromARGB(
-                                    60,
-                                    0,
-                                    0,
-                                    0,
-                                  ),
-                                  builder: (_) => const TermsBottomSheet(),
-                                );
-                              }
-                            } catch (e) {
-                              // 취소가 아닌 경우에만 실패 로그 전송
-                              if (e is! AuthCancelledException) {
-                                await FirebaseAnalytics.instance.logEvent(
-                                  name: 'login_failure',
-                                  parameters: {
-                                    'provider': 'naver',
-                                    'screen': 'SocialLoginPage',
-                                    'error': _safeSubstring(e.toString(), 100),
-                                  },
-                                );
-                              }
-                              _handleLoginError(context, e);
-                            }
-                          },
+                          onTap:
+                              () => _login(
+                                ref,
+                                context,
+                                ref
+                                    .read(authViewModelProvider.notifier)
+                                    .loginWithNaver,
+                                'naver',
+                              ),
                         ),
                       ),
                     ],
@@ -228,6 +92,42 @@ class SocialLoginPage extends ConsumerWidget {
         error: (e, _) => Center(child: Text('에러 발생: $e')),
       ),
     );
+  }
+
+  Future<void> _login(
+    WidgetRef ref,
+    BuildContext context,
+    Future<bool> Function() loginMethod,
+    String provider,
+  ) async {
+    await AnalyticsHelper.logButtonClick(
+      '${provider}_login',
+      'SocialLoginPage',
+    );
+    try {
+      final isAgreed = await loginMethod();
+      await AnalyticsHelper.logLogin(provider, 'SocialLoginPage');
+      if (isAgreed) {
+        context.go('/home');
+      } else {
+        await showModalBottomSheet(
+          context: context,
+          isScrollControlled: false,
+          isDismissible: false,
+          backgroundColor: const Color.fromARGB(60, 0, 0, 0),
+          builder: (_) => const TermsBottomSheet(),
+        );
+      }
+    } catch (e) {
+      if (e is! AuthCancelledException) {
+        await AnalyticsHelper.logLoginFailure(
+          provider,
+          'SocialLoginPage',
+          e.toString(),
+        );
+      }
+      _handleLoginError(context, e);
+    }
   }
 
   void _handleLoginError(BuildContext context, dynamic error) {
@@ -244,10 +144,6 @@ class SocialLoginPage extends ConsumerWidget {
     }
 
     ScaffoldMessenger.of(context).showSnackBar(customSnackBar(message, 40, 2));
-  }
-
-  String _safeSubstring(String text, int maxLength) {
-    return text.substring(0, min(text.length, maxLength));
   }
 }
 

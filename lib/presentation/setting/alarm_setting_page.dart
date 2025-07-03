@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mongbi_app/core/analytics_helper.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/presentation/remind/view_model/remind_time_setting_view_model.dart';
 import 'package:mongbi_app/presentation/setting/widgets/setting_rounded_list_tile_item.dart';
@@ -22,10 +22,7 @@ class AlarmSettingPage extends ConsumerWidget {
     final alarmAsyncState = ref.watch(alarmSettingProvider);
     final alarmViewModel = ref.read(alarmSettingProvider.notifier);
 
-    FirebaseAnalytics.instance.logEvent(
-      name: 'alarm_setting_viewed',
-      parameters: {'screen': 'AlarmSettingPage'},
-    );
+    AnalyticsHelper.logScreenView('알림_설정_페이지');
 
     return alarmAsyncState.when(
       loading:

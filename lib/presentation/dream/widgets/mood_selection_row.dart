@@ -23,7 +23,9 @@ class MoodSelectionRow extends ConsumerWidget {
       children: List.generate(5, (index) {
         return GestureDetector(
           onTap: () {
-            ref.read(dreamWriteViewModelProvider.notifier).setSelectedIndex(index);
+            ref
+                .read(dreamWriteViewModelProvider.notifier)
+                .setSelectedIndex(index);
           },
           child: Opacity(
             opacity: state.selectedIndex == index ? 1.0 : 0.2,
