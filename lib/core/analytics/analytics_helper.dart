@@ -31,7 +31,7 @@ class AnalyticsHelper {
 
   static Future<void> logLoginFailure(String provider, String screenName, String error) async {
     await logEvent('로그인_실패', {
-      '로그in_수단': provider,
+      '로그인_수단': provider,
       '화면_이름': screenName,
       '에러_메시지': error,
     });
