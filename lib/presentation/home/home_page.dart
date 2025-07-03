@@ -121,14 +121,7 @@ class _HomePageState extends ConsumerState<HomePage> {
       selectedMessage = (List.of(mongbiMessages)..shuffle()).first;
     });
 
-    // 터치 이벤트 로깅
-    FirebaseAnalytics.instance.logEvent(
-      name: 'mongbi_touched',
-      parameters: {
-        'new_image': selectedMongbiImage,
-        'new_message': selectedMessage,
-      },
-    );
+    AnalyticsHelper.logEvent('홈_화면', {'상태': '몽비_터치'});
   }
 
   void _onDeadlineReached() {
