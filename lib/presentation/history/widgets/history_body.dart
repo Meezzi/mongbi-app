@@ -12,6 +12,7 @@ class HistoryBody extends StatelessWidget {
     required this.onScroll,
     required this.calendarState,
     required this.horizontalPadding,
+    required this.scrollController,
   });
 
   final bool isActive;
@@ -19,6 +20,7 @@ class HistoryBody extends StatelessWidget {
   final CalendarModel calendarState;
   final double horizontalPadding;
   final double extendPadding = 40;
+  final ScrollController scrollController;
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +50,7 @@ class HistoryBody extends StatelessWidget {
           return false;
         },
         child: SingleChildScrollView(
+          controller: scrollController,
           padding: EdgeInsets.zero,
           child: Column(
             children: [
@@ -74,7 +77,10 @@ class HistoryBody extends StatelessWidget {
                   child: Column(
                     children: [
                       CalendarChangeButton(),
-                      Calendar(horizontalPadding: horizontalPadding),
+                      Calendar(
+                        horizontalPadding: horizontalPadding,
+                        scrollController: scrollController,
+                      ),
                     ],
                   ),
                 ),
@@ -84,6 +90,7 @@ class HistoryBody extends StatelessWidget {
                 child: HistoryList(
                   key: historyKey,
                   horizontalPadding: horizontalPadding,
+                  scrollController: scrollController,
                 ),
               ),
             ],

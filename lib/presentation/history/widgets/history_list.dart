@@ -6,9 +6,14 @@ import 'package:mongbi_app/presentation/history/widgets/history_notice.dart';
 import 'package:mongbi_app/providers/history_provider.dart';
 
 class HistoryList extends ConsumerStatefulWidget {
-  const HistoryList({super.key, required this.horizontalPadding});
+  const HistoryList({
+    super.key,
+    required this.horizontalPadding,
+    required this.scrollController,
+  });
 
   final double horizontalPadding;
+  final ScrollController scrollController;
 
   @override
   ConsumerState<HistoryList> createState() => _HistoryListState();
@@ -65,6 +70,7 @@ class _HistoryListState extends ConsumerState<HistoryList> {
         calendarState: calendarState,
         expandPaddingValue: expandPaddingValue < 0 ? 0 : expandPaddingValue,
         horizontalPadding: widget.horizontalPadding,
+        controller: widget.scrollController,
       ),
     );
   }

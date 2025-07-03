@@ -9,3 +9,10 @@ const List<String> mongbiMessages = [
   '그 꿈, 그냥 넘기면 아깝다몽!',
   '입 벌려! 꿈 먹는다몽~',
 ];
+
+final List<String> mongbiImages = [
+  'assets/images/mongbi_happy.webp',
+  'assets/images/mongbi_joyful.webp',
+  'assets/images/mongbi_surprised.webp',
+  'assets/images/mongbi_brave.webp',
+];
