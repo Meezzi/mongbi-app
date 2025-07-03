@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mongbi_app/presentation/statistics/models/picker_model.dart';
 import 'package:mongbi_app/providers/statistics_provider.dart';
 
-class PickerViewModel extends AutoDisposeNotifier<PickerModel> {
+class PickerViewModel extends Notifier<PickerModel> {
   @override
   PickerModel build() {
     return PickerModel();
