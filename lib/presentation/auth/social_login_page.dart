@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mongbi_app/core/analytics_helper.dart';
+import 'package:mongbi_app/core/analytics/analytics_helper.dart';
 import 'package:mongbi_app/core/exceptions/auth_custom_exception.dart';
 import 'package:mongbi_app/presentation/auth/widgets/apple_login_button_widget.dart';
 import 'package:mongbi_app/presentation/auth/widgets/kakao_login_button_widget.dart';

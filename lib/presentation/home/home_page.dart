@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mongbi_app/core/analytics_helper.dart';
+import 'package:mongbi_app/core/analytics/analytics_helper.dart';
 import 'package:mongbi_app/core/challenge_dead_line_manager.dart';
 import 'package:mongbi_app/core/constants/mongbi_constants.dart';
 import 'package:mongbi_app/presentation/common/custom_snack_bar.dart';
