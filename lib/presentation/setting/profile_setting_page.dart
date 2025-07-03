@@ -40,10 +40,10 @@ class ProfileSettingPage extends ConsumerWidget {
         children: [
           InkWell(
             onTap: () async {
-              await AnalyticsHelper.logEvent(
-                '별명_설정_열림',
-                {'별명': nickname, '화면_이름': '프로필_설정_페이지'},
-              );
+              await AnalyticsHelper.logEvent('별명_설정_열림', {
+                '별명': nickname,
+                '화면_이름': '프로필_설정_페이지',
+              });
 
               final prefs = await SharedPreferences.getInstance();
               await prefs.setBool('nicknameChangeState', true);
@@ -83,7 +83,7 @@ class ProfileSettingPage extends ConsumerWidget {
               showDialog(
                 context: context,
                 barrierDismissible: true,
-                barrierColor: Colors.black.withOpacity(0.6),
+                barrierColor: Colors.black.withValues(alpha: 0.6),
                 builder: (context) => LogoutAccontModal(),
               );
             },
@@ -99,7 +99,7 @@ class ProfileSettingPage extends ConsumerWidget {
               showDialog(
                 context: context,
                 barrierDismissible: true,
-                barrierColor: Colors.black.withOpacity(0.6),
+                barrierColor: Colors.black.withValues(alpha: 0.6),
                 builder: (context) => RemoveAccontModal(),
               );
             },
