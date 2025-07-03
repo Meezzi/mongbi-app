@@ -138,7 +138,7 @@ class ChallengePage extends ConsumerWidget {
                   },
                   onRightPressed: () async {
                     if (selectedIndex == null) {
-                      AnalyticsHelper.logEvent('챌린지_미선택', {
+                      await AnalyticsHelper.logEvent('챌린지_미선택', {
                         '화면_이름': 'ChallengePage',
                       });
                       ScaffoldMessenger.of(
