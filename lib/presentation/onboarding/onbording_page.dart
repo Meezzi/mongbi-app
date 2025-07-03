@@ -1,6 +1,6 @@
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mongbi_app/core/analytics/analytics_helper.dart';
 import 'package:mongbi_app/presentation/common/button_type.dart';
 import 'package:mongbi_app/presentation/common/filled_button_widget.dart';
 import 'package:mongbi_app/presentation/onboarding/data/onboarding_data.dart';
@@ -26,10 +26,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
     if (_currentPage == onboardingData.length) {
       context.go('/home');
     } else {
-      FirebaseAnalytics.instance.logEvent(
-        name: 'onboarding_skipped',
-        parameters: {'from_index': _currentPage},
-      );
+      AnalyticsHelper.logEvent('온보딩_건너뛰기', {'현재_페이지': _currentPage});
 
       _pageController.animateToPage(
         onboardingData.length,
@@ -49,16 +46,10 @@ class _OnboardingPageState extends State<OnboardingPage> {
           _currentPage = page;
         });
 
-        FirebaseAnalytics.instance.logEvent(
-          name: 'onboarding_page_viewed',
-          parameters: {'index': page},
-        );
+        AnalyticsHelper.logEvent('온보딩_페이지_조회', {'페이지_번호': page});
       }
     });
-    FirebaseAnalytics.instance.logEvent(
-      name: 'onboarding_page_viewed',
-      parameters: {'index': 0},
-    );
+    AnalyticsHelper.logEvent('온보딩_페이지_조회', {'페이지_번호': 0});
   }
 
   @override
@@ -140,13 +131,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
                                   type: ButtonType.primary,
                                   text: '시작할게',
                                   onPress: () async {
-                                    // ✅ 추적: 온보딩 완료
-                                    await FirebaseAnalytics.instance.logEvent(
-                                      name: 'onboarding_completed',
-                                      parameters: {
-                                        'total_pages': onboardingData.length,
-                                      },
-                                    );
+                                    await AnalyticsHelper.logEvent('온보딩_완료', {
+                                      '전체_페이지': onboardingData.length,
+                                    });
                                     context.go('/home');
                                   },
                                 ),

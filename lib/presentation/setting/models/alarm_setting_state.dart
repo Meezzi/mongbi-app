@@ -1,5 +1,4 @@
-class AlarmSettingState { 
-
+class AlarmSettingState {
   AlarmSettingState({
     required this.isAll,
     required this.isReminder,
@@ -30,7 +29,7 @@ class AlarmSettingState {
       isAll: value,
       isReminder: value,
       isChallenge: value,
-      isInitialized: true, 
+      isInitialized: true,
     );
   }
 

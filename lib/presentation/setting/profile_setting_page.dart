@@ -1,14 +1,12 @@
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mongbi_app/core/analytics/analytics_helper.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/presentation/setting/widgets/logout_account_modal.dart';
-import 'package:mongbi_app/presentation/setting/widgets/logout_confirm_dialog.dart';
 import 'package:mongbi_app/presentation/setting/widgets/remove_accont_modal.dart';
 import 'package:mongbi_app/presentation/setting/widgets/setting_rounded_list_tile_item.dart';
-import 'package:mongbi_app/providers/auth_provider.dart' as auth2;
 import 'package:mongbi_app/providers/user_info_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -21,10 +19,7 @@ class ProfileSettingPage extends ConsumerWidget {
     final userResult = userInfo.userList?.first;
     final nickname = userResult?.userNickname ?? '비회원';
 
-    FirebaseAnalytics.instance.logEvent(
-      name: 'profile_setting_viewed',
-      parameters: {'screen': 'ProfileSettingPage'},
-    );
+    AnalyticsHelper.logScreenView('프로필_설정_페이지');
 
     return Scaffold(
       appBar: AppBar(
@@ -45,10 +40,10 @@ class ProfileSettingPage extends ConsumerWidget {
         children: [
           InkWell(
             onTap: () async {
-              await FirebaseAnalytics.instance.logEvent(
-                name: 'nickname_setting_opened',
-                parameters: {'nickname': nickname},
-              );
+              await AnalyticsHelper.logEvent('별명_설정_열림', {
+                '별명': nickname,
+                '화면_이름': '프로필_설정_페이지',
+              });
 
               final prefs = await SharedPreferences.getInstance();
               await prefs.setBool('nicknameChangeState', true);
@@ -84,10 +79,7 @@ class ProfileSettingPage extends ConsumerWidget {
             isFirst: false,
             isLast: false,
             onTap: () {
-              FirebaseAnalytics.instance.logEvent(
-                name: 'logout_attempted',
-                parameters: {'screen': 'ProfileSettingPage'},
-              );
+              AnalyticsHelper.logButtonClick('로그아웃', '프로필_설정_페이지');
               showDialog(
                 context: context,
                 barrierDismissible: true,
@@ -102,10 +94,7 @@ class ProfileSettingPage extends ConsumerWidget {
             isFirst: false,
             isLast: false,
             onTap: () {
-              FirebaseAnalytics.instance.logEvent(
-                name: 'account_deletion_tapped',
-                parameters: {'screen': 'ProfileSettingPage'},
-              );
+              AnalyticsHelper.logButtonClick('계정_탈퇴', '프로필_설정_페이지');
 
               showDialog(
                 context: context,

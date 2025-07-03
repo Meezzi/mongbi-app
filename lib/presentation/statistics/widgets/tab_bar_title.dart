@@ -35,12 +35,15 @@ class TabBarTitle extends StatelessWidget {
               onTap: (value) async {
                 if (statisticsAsync.isLoading) {
                   // 로딩 중이면 탭 이동 막기
-                  tabController.animateTo(statisticsAsync.value!.tabBarIndex);
+                  tabController.animateTo(
+                    ref.read(tabBarIndexProvider.notifier).state,
+                  );
                   return;
                 }
 
-                statisticsVm.onChangetabBarIndex(value);
+                ref.read(tabBarIndexProvider.notifier).state = value;
                 ref.read(snackBarStatusProvider.notifier).state = false;
+
                 if (value == 0) {
                   await statisticsVm.fetchMonthStatistics();
                 } else {

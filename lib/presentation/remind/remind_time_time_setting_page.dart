@@ -1,9 +1,9 @@
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mongbi_app/core/analytics/analytics_helper.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/presentation/common/button_type.dart';
 import 'package:mongbi_app/presentation/common/filled_button_widget.dart';
@@ -12,28 +12,25 @@ import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_text_
 import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_widget.dart';
 import 'package:mongbi_app/providers/setting_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-class RemindTimePickerPage extends StatefulWidget {
+class RemindTimePickerPage extends ConsumerStatefulWidget {
   const RemindTimePickerPage({super.key, required this.isRemindEnabled});
 
   final bool? isRemindEnabled;
 
   @override
-  State<RemindTimePickerPage> createState() => _RemindTimePickerPageState();
+  ConsumerState<RemindTimePickerPage> createState() =>
+      _RemindTimePickerPageState();
 }
 
-class _RemindTimePickerPageState extends State<RemindTimePickerPage> {
+class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage> {
   TimeOfDay selectedTime = const TimeOfDay(hour: 8, minute: 0);
 
   @override
   void initState() {
     super.initState();
 
-    FirebaseAnalytics.instance.logEvent(
-      name: 'remind_time_page_viewed',
-      parameters: {'screen': 'RemindTimePickerPage'},
-    );
+    AnalyticsHelper.logScreenView('리마인드_시간_설정_페이지');
   }
 
   @override
@@ -128,6 +125,15 @@ class _RemindTimePickerPageState extends State<RemindTimePickerPage> {
 
                       if (!granted) {
                         if (status.isPermanentlyDenied) {
+                          try {
+                            await AnalyticsHelper.logEvent('리마인드_권한_영구_거부', {
+                              '화면_이름': '리마인드_시간_설정_페이지',
+                              '영구_거부': true,
+                            });
+                          } catch (e) {
+                            print('Failed to log event: $e');
+                          }
+
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text(
@@ -137,6 +143,15 @@ class _RemindTimePickerPageState extends State<RemindTimePickerPage> {
                           );
                           await NotificationService().openAppSettingsIfNeeded();
                         } else {
+                          try {
+                            await AnalyticsHelper.logEvent('리마인드_권한_거부', {
+                              '화면_이름': '리마인드_시간_설정_페이지',
+                              '영구_거부': false,
+                            });
+                          } catch (e) {
+                            print('Failed to log event: $e');
+                          }
+
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(content: Text('알림 권한이 거부되었습니다.')),
                           );
@@ -144,20 +159,21 @@ class _RemindTimePickerPageState extends State<RemindTimePickerPage> {
                         return;
                       }
 
-                      // ✅ 알림 설정 시간 저장 로그
+                      await AnalyticsHelper.logEvent('리마인드_시간_선택', {
+                        '시간': selectedTime.hour,
+                        '분': selectedTime.minute,
+                        '화면_이름': '리마인드_시간_설정_페이지',
+                      });
 
                       await NotificationService().scheduleDailyReminder(
                         selectedTime,
                       );
-                      final prefs = await SharedPreferences.getInstance();
-                      await prefs.setBool('alarm_isReminder', true);
+                      ref.read(alarmSettingProvider.notifier).setReminder(true);
 
-                      // 알림 설정 페이지에서 이 페이지로 이동됐는지 파악
                       if (widget.isRemindEnabled ?? false) {
                         context.pop();
                         return;
                       }
-
                       context.go('/onbording_page');
                     } catch (e) {
                       if (e is PlatformException &&

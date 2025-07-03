@@ -1,7 +1,7 @@
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mongbi_app/core/analytics/analytics_helper.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/presentation/challenge/widgets/challenge_container.dart';
 import 'package:mongbi_app/presentation/challenge/widgets/mongbi_dialog.dart';
@@ -50,14 +50,11 @@ class ChallengePage extends ConsumerWidget {
                                   ref
                                       .read(challengeViewModelProvider.notifier)
                                       .selectChallenge(0);
-                                  FirebaseAnalytics.instance.logEvent(
-                                    name: 'challenge_selected',
-                                    parameters: {
-                                      'index': 0,
-                                      'type': challenges[0].type,
-                                      'screen': 'ChallengePage',
-                                    },
-                                  );
+                                  AnalyticsHelper.logEvent('챌린지_선택', {
+                                    '인덱스': 0,
+                                    '타입': challenges[0].type,
+                                    '화면_이름': 'ChallengePage',
+                                  });
                                 },
                                 child: ChallengeContainer(
                                   title: challenges[0].type,
@@ -76,14 +73,11 @@ class ChallengePage extends ConsumerWidget {
                                   ref
                                       .read(challengeViewModelProvider.notifier)
                                       .selectChallenge(1);
-                                  FirebaseAnalytics.instance.logEvent(
-                                    name: 'challenge_selected',
-                                    parameters: {
-                                      'index': 1,
-                                      'type': challenges[1].type,
-                                      'screen': 'ChallengePage',
-                                    },
-                                  );
+                                  AnalyticsHelper.logEvent('챌린지_선택', {
+                                    '인덱스': 1,
+                                    '타입': challenges[1].type,
+                                    '화면_이름': 'ChallengePage',
+                                  });
                                 },
                                 child: ChallengeContainer(
                                   title: challenges[1].type,
@@ -102,14 +96,11 @@ class ChallengePage extends ConsumerWidget {
                                   ref
                                       .read(challengeViewModelProvider.notifier)
                                       .selectChallenge(2);
-                                  FirebaseAnalytics.instance.logEvent(
-                                    name: 'challenge_selected',
-                                    parameters: {
-                                      'index': 2,
-                                      'type': challenges[2].type,
-                                      'screen': 'ChallengePage',
-                                    },
-                                  );
+                                  AnalyticsHelper.logEvent('챌린지_선택', {
+                                    '인덱스': 2,
+                                    '타입': challenges[2].type,
+                                    '화면_이름': 'ChallengePage',
+                                  });
                                 },
                                 child: ChallengeContainer(
                                   title: challenges[2].type,
@@ -132,10 +123,7 @@ class ChallengePage extends ConsumerWidget {
                   leftText: '흠 안할래',
                   rightText: '이걸로 할래',
                   onLeftPressed: () {
-                    FirebaseAnalytics.instance.logEvent(
-                      name: 'challenge_cancel',
-                      parameters: {'screen': 'ChallengePage'},
-                    );
+                    AnalyticsHelper.logButtonClick('챌린지_취소', 'ChallengePage');
                     showDialog(
                       context: context,
                       builder:
@@ -150,10 +138,9 @@ class ChallengePage extends ConsumerWidget {
                   },
                   onRightPressed: () async {
                     if (selectedIndex == null) {
-                      await FirebaseAnalytics.instance.logEvent(
-                        name: 'challenge_not_selected',
-                        parameters: {'screen': 'ChallengePage'},
-                      );
+                      await AnalyticsHelper.logEvent('챌린지_미선택', {
+                        '화면_이름': 'ChallengePage',
+                      });
                       ScaffoldMessenger.of(
                         context,
                       ).showSnackBar(customSnackBar('선물을 먼저 골라줘', 80, 2));
@@ -165,19 +152,16 @@ class ChallengePage extends ConsumerWidget {
                             .read(challengeViewModelProvider)
                             .value![selectedIndex];
 
-                    await FirebaseAnalytics.instance.logEvent(
-                      name: 'challenge_completed',
-                      parameters: {
-                        'index': selectedIndex,
-                        'type': selectedChallenge.type,
-                        'screen': 'ChallengePage',
-                      },
-                    );
+                    await AnalyticsHelper.logEvent('챌린지_완료', {
+                      '인덱스': selectedIndex,
+                      '타입': selectedChallenge.type,
+                      '화면_이름': 'ChallengePage',
+                    });
 
-                    await FirebaseAnalytics.instance.setUserProperty(
-                      name: 'challenge_type',
-                      value: selectedChallenge.type,
-                    );
+                    await AnalyticsHelper.logEvent('유저_속성_설정', {
+                      '속성_이름': 'challenge_type',
+                      '속성_값': selectedChallenge.type,
+                    });
 
                     await showDialog(
                       context: context,

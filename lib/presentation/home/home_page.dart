@@ -1,12 +1,13 @@
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mongbi_app/core/analytics/analytics_helper.dart';
 import 'package:mongbi_app/core/challenge_dead_line_manager.dart';
+import 'package:mongbi_app/core/constants/mongbi_constants.dart';
 import 'package:mongbi_app/presentation/common/custom_snack_bar.dart';
 import 'package:mongbi_app/presentation/common/floating_animation_widget.dart';
+import 'package:mongbi_app/presentation/common/touch_scale_widget.dart';
 import 'package:mongbi_app/presentation/home/widgets/challenge_card.dart';
-import 'package:mongbi_app/presentation/home/widgets/mongbi_message_list.dart';
 import 'package:mongbi_app/presentation/home/widgets/speech_bubble.dart';
 import 'package:mongbi_app/providers/challenge_provider.dart';
 
@@ -19,6 +20,7 @@ class HomePage extends ConsumerStatefulWidget {
 
 class _HomePageState extends ConsumerState<HomePage> {
   late String selectedMessage;
+  late String selectedMongbiImage;
   final DeadlineManager _deadlineManager = DeadlineManager();
   bool _shouldShowChallenge = true;
 
@@ -26,6 +28,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   void initState() {
     super.initState();
     selectedMessage = (List.of(mongbiMessages)..shuffle()).first;
+    selectedMongbiImage = (List.of(mongbiImages)..shuffle()).first;
 
     _deadlineManager.checkInitialDeadlineStatus();
     _shouldShowChallenge = !_deadlineManager.isDeadlinePassed;
@@ -38,15 +41,8 @@ class _HomePageState extends ConsumerState<HomePage> {
       }
     });
 
-    FirebaseAnalytics.instance.logEvent(
-      name: 'home_viewed',
-      parameters: {'screen': 'HomePage'},
-    );
-
-    FirebaseAnalytics.instance.logEvent(
-      name: 'message_shown',
-      parameters: {'message': selectedMessage},
-    );
+    AnalyticsHelper.logScreenView('HomePage');
+    AnalyticsHelper.logEvent('메시지_표시', {'메시지': selectedMessage});
   }
 
   @override
@@ -97,10 +93,13 @@ class _HomePageState extends ConsumerState<HomePage> {
                   child: Column(
                     children: [
                       CustomSpeechBubble(text: selectedMessage),
-                      Image.asset(
-                        'assets/images/mongbi.webp',
-                        width: screenHeight * 0.32,
-                        height: screenHeight * 0.32,
+                      TouchScaleWidget(
+                        onTap: _changeMongbiImage,
+                        child: Image.asset(
+                          selectedMongbiImage,
+                          width: screenHeight * 0.32,
+                          height: screenHeight * 0.32,
+                        ),
                       ),
                     ],
                   ),
@@ -114,6 +113,15 @@ class _HomePageState extends ConsumerState<HomePage> {
         ],
       ),
     );
+  }
+
+  void _changeMongbiImage() {
+    setState(() {
+      selectedMongbiImage = (List.of(mongbiImages)..shuffle()).first;
+      selectedMessage = (List.of(mongbiMessages)..shuffle()).first;
+    });
+
+    AnalyticsHelper.logEvent('홈_화면', {'상태': '몽비_터치'});
   }
 
   void _onDeadlineReached() {
