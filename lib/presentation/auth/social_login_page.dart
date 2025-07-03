@@ -18,43 +18,6 @@ import 'package:mongbi_app/providers/last_login_provider.dart';
 class SocialLoginPage extends ConsumerWidget {
   const SocialLoginPage({super.key});
 
-  Future<void> _login(
-    WidgetRef ref,
-    BuildContext context,
-    Future<bool> Function() loginMethod,
-    String provider,
-  ) async {
-    final authViewModel = ref.read(authViewModelProvider.notifier);
-    await AnalyticsHelper.logButtonClick(
-      '${provider}_login',
-      'SocialLoginPage',
-    );
-    try {
-      final isAgreed = await loginMethod();
-      await AnalyticsHelper.logLogin(provider, 'SocialLoginPage');
-      if (isAgreed) {
-        context.go('/home');
-      } else {
-        await showModalBottomSheet(
-          context: context,
-          isScrollControlled: false,
-          isDismissible: false,
-          backgroundColor: const Color.fromARGB(60, 0, 0, 0),
-          builder: (_) => const TermsBottomSheet(),
-        );
-      }
-    } catch (e) {
-      if (e is! AuthCancelledException) {
-        await AnalyticsHelper.logLoginFailure(
-          provider,
-          'SocialLoginPage',
-          e.toString(),
-        );
-      }
-      _handleLoginError(context, e);
-    }
-  }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final asyncLastProvider = ref.watch(lastLoginProviderProvider);
@@ -129,6 +92,43 @@ class SocialLoginPage extends ConsumerWidget {
         error: (e, _) => Center(child: Text('에러 발생: $e')),
       ),
     );
+  }
+
+  Future<void> _login(
+    WidgetRef ref,
+    BuildContext context,
+    Future<bool> Function() loginMethod,
+    String provider,
+  ) async {
+    final authViewModel = ref.read(authViewModelProvider.notifier);
+    await AnalyticsHelper.logButtonClick(
+      '${provider}_login',
+      'SocialLoginPage',
+    );
+    try {
+      final isAgreed = await loginMethod();
+      await AnalyticsHelper.logLogin(provider, 'SocialLoginPage');
+      if (isAgreed) {
+        context.go('/home');
+      } else {
+        await showModalBottomSheet(
+          context: context,
+          isScrollControlled: false,
+          isDismissible: false,
+          backgroundColor: const Color.fromARGB(60, 0, 0, 0),
+          builder: (_) => const TermsBottomSheet(),
+        );
+      }
+    } catch (e) {
+      if (e is! AuthCancelledException) {
+        await AnalyticsHelper.logLoginFailure(
+          provider,
+          'SocialLoginPage',
+          e.toString(),
+        );
+      }
+      _handleLoginError(context, e);
+    }
   }
 
   void _handleLoginError(BuildContext context, dynamic error) {
