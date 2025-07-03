@@ -35,7 +35,7 @@ class GiveUpConfirmBottomSheet extends StatelessWidget {
           ),
           SizedBox(height: 8),
           Image.asset(
-            'assets/images/sad_mongbi.webp',
+            'assets/images/mongbi_sad.webp',
             width: 144,
             height: 144,
           ),

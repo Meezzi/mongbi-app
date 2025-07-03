@@ -160,7 +160,7 @@ class ChallengeCard extends ConsumerWidget {
                             title: '정말 잘 했어몽!',
                             subTitle: '오늘 하루도 행복했으면 좋겠어요.',
                             buttonText: '고마워',
-                            mongbiImagePath: 'assets/images/happy_mongbi.webp',
+                            mongbiImagePath: 'assets/images/mongbi_happy.webp',
                             onButtonPressed: () {
                               context.pop();
                               homeViewModel.completeChallenge(isComplete: true);
