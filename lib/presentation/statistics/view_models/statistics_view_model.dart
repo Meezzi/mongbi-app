@@ -3,79 +3,77 @@ import 'package:mongbi_app/presentation/statistics/models/statistics_model.dart'
 import 'package:mongbi_app/providers/statistics_provider.dart';
 
 class StatisticsViewModel extends AutoDisposeAsyncNotifier<StatisticsModel?> {
+  bool _isMounted = true;
+
   @override
   Future<StatisticsModel?> build() async {
-    // 초기 데이터 로딩
-    return fetchMonthStatistics();
+    final tabBarIndex = ref.read(tabBarIndexProvider);
+
+    // dispose시 콜백함수 호출
+    ref.onDispose(() {
+      _isMounted = false;
+    });
+
+    if (tabBarIndex == 0) {
+      return _fetchMonthStatistics();
+    } else if (tabBarIndex == 1) {
+      return _fetchYearStatistics();
+    }
+
+    return StatisticsModel();
   }
 
-  Future<StatisticsModel?> fetchMonthStatistics() async {
-    final pickerState = ref.read(pickerViewModelProvider);
-    final fetchMonthStatisticsUseCase = ref.read(
-      fetchMonthStatisticsUseCaseProvider,
-    );
-
-    // 로딩 상태 설정
-    state = const AsyncValue.loading();
+  /// build 메서드 전용
+  Future<StatisticsModel?> _fetchMonthStatistics() async {
+    await Future.delayed(const Duration(seconds: 1));
 
     try {
-      await Future.delayed(Duration(seconds: 1));
+      final pickerState = ref.read(pickerViewModelProvider);
+      final useCase = ref.read(fetchMonthStatisticsUseCaseProvider);
+      final monthStats = await useCase.execute(pickerState.focusedMonth);
 
-      final monthStatistics = await fetchMonthStatisticsUseCase.execute(
-        pickerState.focusedMonth,
-      );
+      if (monthStats == null) throw Exception('앗! 통신 오류가 발생했다몽!');
 
-      if (monthStatistics == null) throw Exception('통신 등 예기치 못한 오류 발생');
-
-      final currentState = state.value ?? StatisticsModel();
-      final newState = currentState.copyWith(month: monthStatistics);
-
-      // 상태 업데이트
-      state = AsyncValue.data(newState);
-
-      // 값도 반환
-      return newState;
-    } catch (e) {
-      state = AsyncValue.data(StatisticsModel(tabBarIndex: 0));
-      return Future.value(StatisticsModel(tabBarIndex: 0));
+      return StatisticsModel(month: monthStats);
+    } catch (_) {
+      return StatisticsModel();
     }
   }
 
+  /// build 메서드 전용
+  Future<StatisticsModel?> _fetchYearStatistics() async {
+    await Future.delayed(const Duration(seconds: 1));
+
+    try {
+      final pickerState = ref.read(pickerViewModelProvider);
+      final useCase = ref.read(fetchYearStatisticsUseCaseProvider);
+      final yearStats = await useCase.execute(pickerState.focusedYear);
+
+      if (yearStats == null) throw Exception('앗! 통신 오류가 발생했다몽!');
+
+      return StatisticsModel(year: yearStats);
+    } catch (_) {
+      return StatisticsModel();
+    }
+  }
+
+  /// 탭바, 월 선택자 등 수동 호출용
+  Future<void> fetchMonthStatistics() async {
+    state = const AsyncLoading();
+    final result = await _fetchMonthStatistics();
+
+    if (_isMounted) {
+      state = AsyncData(result);
+    }
+  }
+
+  /// 탭바, 년 선택자 등 수동 호출용
   Future<void> fetchYearStatistics() async {
-    final pickerState = ref.read(pickerViewModelProvider);
-    final fetchYearStatisticsUseCase = ref.read(
-      fetchYearStatisticsUseCaseProvider,
-    );
+    state = const AsyncLoading();
+    final result = await _fetchYearStatistics();
 
-    // 로딩 상태 설정
-    state = const AsyncValue.loading();
-
-    try {
-      await Future.delayed(Duration(seconds: 1));
-
-      final yearStatistics = await fetchYearStatisticsUseCase.execute(
-        pickerState.focusedYear,
-      );
-
-      if (yearStatistics == null) {
-        throw Exception('통신 등 예기치 못한 오류 발생');
-      }
-
-      final currentState = state.value ?? StatisticsModel();
-      final newState = currentState.copyWith(year: yearStatistics);
-
-      // 상태 업데이트
-      state = AsyncValue.data(newState);
-    } catch (e) {
-      state = AsyncValue.data(StatisticsModel(tabBarIndex: 1));
+    if (_isMounted) {
+      state = AsyncData(result);
     }
-  }
-
-  void onChangetabBarIndex(int index) {
-    final currentState = state.value ?? StatisticsModel();
-    final newState = currentState.copyWith(tabBarIndex: index);
-
-    // 상태 업데이트
-    state = AsyncValue.data(newState);
   }
 }

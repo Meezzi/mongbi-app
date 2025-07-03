@@ -26,8 +26,7 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage>
     tabController = TabController(
       length: 2,
       vsync: this,
-      initialIndex:
-          ref.read(statisticsViewModelProvider).value?.tabBarIndex ?? 0,
+      initialIndex: ref.read(tabBarIndexProvider),
     );
   }
 
