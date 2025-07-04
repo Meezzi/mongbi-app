@@ -10,6 +10,7 @@ import 'package:mongbi_app/presentation/remind/view_model/remind_time_setting_vi
 import 'package:mongbi_app/providers/background_music_provider.dart';
 import 'package:mongbi_app/providers/setting_provider.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:showcaseview/showcaseview.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,7 +18,7 @@ void main() async {
   await dotenv.load(fileName: '.env');
   // 캘린더 한글화
   await initializeDateFormatting();
-  
+
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   KakaoSdk.init(
@@ -32,8 +33,15 @@ void main() async {
       options.tracesSampleRate = 1.0;
       options.profilesSampleRate = 1.0;
     },
-    appRunner:
-        () => runApp(SentryWidget(child: const ProviderScope(child: MyApp()))),
+    appRunner: () => runApp(
+      SentryWidget(
+        child: ProviderScope(
+          child: ShowCaseWidget(
+            builder: (context) => const MyApp(),
+          ),
+        ),
+      ),
+    ),
   );
 }
 
@@ -95,3 +103,4 @@ class _MyAppState extends ConsumerState<MyApp> with WidgetsBindingObserver {
     );
   }
 }
+
