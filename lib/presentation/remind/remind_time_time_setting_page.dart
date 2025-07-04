@@ -160,9 +160,7 @@ class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage> {
                             .openExactAlarmSettingsIfNeeded();
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('알림 예약 중 오류: ${e.toString()}'),
-                          ),
+                          const SnackBar(content: Text('알림 권한이 거부되었습니다.')),
                         );
                       }
                     }
