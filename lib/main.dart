@@ -5,8 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:mongbi_app/core/router.dart';
+import 'package:mongbi_app/core/set_up_fcm.dart';
 import 'package:mongbi_app/firebase_optiopns.dart';
-import 'package:mongbi_app/presentation/remind/view_model/remind_time_setting_view_model.dart';
 import 'package:mongbi_app/providers/background_music_provider.dart';
 import 'package:mongbi_app/providers/setting_provider.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -20,6 +20,7 @@ void main() async {
   
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await setupFCM();
   KakaoSdk.init(
     nativeAppKey: dotenv.env['KAKAO_NATIVE_APP_KEY'],
     javaScriptAppKey: dotenv.env['KAKAO_JAVA_SCRIPT_APP_KEY'],
