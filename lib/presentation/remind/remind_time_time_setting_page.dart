@@ -24,14 +24,37 @@ class RemindTimePickerPage extends ConsumerStatefulWidget {
       _RemindTimePickerPageState();
 }
 
-class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage> {
+class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage>
+    with WidgetsBindingObserver {
   TimeOfDay selectedTime = const TimeOfDay(hour: 8, minute: 0);
 
   @override
   void initState() {
     super.initState();
-
+    WidgetsBinding.instance.addObserver(this);
     AnalyticsHelper.logScreenView('리마인드_시간_설정_페이지');
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      _checkNotificationPermission();
+    }
+  }
+
+  Future<void> _checkNotificationPermission() async {
+    final status = await Permission.notification.status;
+    if (status.isGranted) {
+      // Permission is granted, schedule the notification
+      await NotificationService().scheduleDailyReminder(selectedTime);
+      ref.read(alarmSettingProvider.notifier).setReminder(true);
+    }
   }
 
   @override
@@ -55,12 +78,7 @@ class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage> {
               return Row(
                 children: [
                   GestureDetector(
-                    onTap: () async {
-                      if (widget.isRemindEnabled ?? false) {
-                        await alarmViewModel.toggleReminder();
-                      }
-                      context.pop();
-                    },
+                    onTap: () => context.pop(),
                     child: SvgPicture.asset(
                       'assets/icons/back-arrow.svg',
                       width: 24,
@@ -123,7 +141,6 @@ class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage> {
                       final granted =
                           await NotificationService()
                               .requestNotificationPermission();
-
                       if (!granted) {
                         if (status.isPermanentlyDenied) {
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -152,9 +169,8 @@ class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage> {
                         return;
                       }
                       context.go('/onbording_page');
-                    } catch (e) {
-                      if (e is PlatformException &&
-                          e.code == 'exact_alarms_not_permitted') {
+                    } on PlatformException catch (e) {
+                      if (e.code == 'exact_alarms_not_permitted') {
                         await NotificationService()
                             .openExactAlarmSettingsIfNeeded();
                       } else {
@@ -162,6 +178,12 @@ class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage> {
                           customSnackBar('알림 권한이 거부되었습니다.', 30, 3),
                         );
                       }
+                    } catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('알림 예약 중 오류가 발생했습니다: $e'),
+                        ),
+                      );
                     }
                   },
                 ),
