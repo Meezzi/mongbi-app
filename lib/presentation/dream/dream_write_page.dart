@@ -91,7 +91,7 @@ class _DreamWritePageState extends ConsumerState<DreamWritePage> {
                     children: [
                       const Spacer(),
                       Padding(
-                        padding: const EdgeInsets.only(bottom: 8),
+                        padding: const EdgeInsets.symmetric(vertical: 8),
                         child: FilledButtonWidget(
                           type: ButtonType.primary,
                           text: '내가 꾼 꿈이야',

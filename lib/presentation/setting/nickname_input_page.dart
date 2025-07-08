@@ -38,9 +38,7 @@ class _NicknameInputPageState extends ConsumerState<NicknameInputPage> {
       nicknameChanged = changed;
     });
 
-    await AnalyticsHelper.logScreenView(
-      changed ? '별명_수정_페이지' : '별명_입력_페이지',
-    );
+    await AnalyticsHelper.logScreenView(changed ? '별명_수정_페이지' : '별명_입력_페이지');
   }
 
   @override
@@ -83,7 +81,7 @@ class _NicknameInputPageState extends ConsumerState<NicknameInputPage> {
               ),
               const Spacer(),
               Padding(
-                padding: const EdgeInsets.only(bottom: 8),
+                padding: const EdgeInsets.symmetric(vertical: 8),
                 child: FilledButtonWidget(
                   type: ButtonType.primary,
                   text: '이렇게 불러줘',
@@ -117,13 +115,10 @@ class _NicknameInputPageState extends ConsumerState<NicknameInputPage> {
           .read(splashViewModelProvider.notifier)
           .checkLoginAndFetchUserInfo();
 
-      await AnalyticsHelper.logEvent(
-        '별명_저장_성공',
-        {
-          '별명': nickname,
-          '수정_여부': nicknameChanged.toString(),
-        },
-      );
+      await AnalyticsHelper.logEvent('별명_저장_성공', {
+        '별명': nickname,
+        '수정_여부': nicknameChanged.toString(),
+      });
 
       if (mounted) {
         if (nicknameChanged) {
@@ -135,13 +130,10 @@ class _NicknameInputPageState extends ConsumerState<NicknameInputPage> {
         }
       }
     } catch (e) {
-      await AnalyticsHelper.logEvent(
-        '별명_저장_실패',
-        {
-          '별명': nickname,
-          '수정_여부': nicknameChanged.toString(),
-        },
-      );
+      await AnalyticsHelper.logEvent('별명_저장_실패', {
+        '별명': nickname,
+        '수정_여부': nicknameChanged.toString(),
+      });
 
       if (mounted) {
         ScaffoldMessenger.of(

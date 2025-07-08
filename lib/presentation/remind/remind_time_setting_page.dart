@@ -72,7 +72,7 @@ class RemindTimeSettingPage extends StatelessWidget {
               ),
               const Spacer(),
               Padding(
-                padding: const EdgeInsets.only(bottom: 8),
+                padding: const EdgeInsets.symmetric(vertical: 8),
                 child: FilledButtonWidget(
                   type: ButtonType.primary,
                   text: '알겠어',
@@ -81,7 +81,10 @@ class RemindTimeSettingPage extends StatelessWidget {
                       '리마인드_소개_확인',
                       '리마인드_소개_페이지',
                     );
-                    await context.push('/remindtime_time_setting', extra: {'isRemindEnabled': false});
+                    await context.push(
+                      '/remindtime_time_setting',
+                      extra: {'isRemindEnabled': false},
+                    );
                   },
                 ),
               ),
