@@ -999,23 +999,7 @@ packages:
       sha256: "759cbead3531c39e1b1f4298c4a09281937e8dd6115b241739fd525b4fb3715c"
       url: "https://pub.dev"
     source: hosted
-    version: "9.0.0"
-  share_plus:
-    dependency: "direct main"
-    description:
-      name: share_plus
-      sha256: b2961506569e28948d75ec346c28775bb111986bb69dc6a20754a457e3d97fa0
-      url: "https://pub.dev"
-    source: hosted
-    version: "11.0.0"
-  share_plus_platform_interface:
-    dependency: transitive
-    description:
-      name: share_plus_platform_interface
-      sha256: "1032d392bc5d2095a77447a805aa3f804d2ae6a4d5eef5e6ebb3bd94c1bc19ef"
-      url: "https://pub.dev"
-    source: hosted
-    version: "6.0.0"
+    version: "9.3.0"
   shared_preferences:
     dependency: "direct main"
     description:

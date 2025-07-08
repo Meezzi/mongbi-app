@@ -143,6 +143,14 @@ class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage>
                               .requestNotificationPermission();
                       if (!granted) {
                         if (status.isPermanentlyDenied) {
+                          try {
+                            await AnalyticsHelper.logEvent('리마인드_권한_영구_거부', {
+                              '화면_이름': '리마인드_시간_설정_페이지',
+                              '영구_거부': true,
+                            });
+                          } catch (e) {
+                          }
+
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text(
@@ -152,6 +160,14 @@ class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage>
                           );
                           await NotificationService().openAppSettingsIfNeeded();
                         } else {
+                          try {
+                            await AnalyticsHelper.logEvent('리마인드_권한_거부', {
+                              '화면_이름': '리마인드_시간_설정_페이지',
+                              '영구_거부': false,
+                            });
+                          } catch (e) {
+                          }
+
                           ScaffoldMessenger.of(context).showSnackBar(
                             customSnackBar('알림 권한이 거부되었습니다.', 30, 3),
                           );
@@ -175,7 +191,9 @@ class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage>
                             .openExactAlarmSettingsIfNeeded();
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          customSnackBar('알림 권한이 거부되었습니다.', 30, 3),
+                          SnackBar(
+                            content: Text('알림 예약 중 오류가 발생했습니다: ${e.message}'),
+                          ),
                         );
                       }
                     } catch (e) {
