@@ -83,7 +83,7 @@ class _NicknameInputPageState extends ConsumerState<NicknameInputPage> {
               ),
               const Spacer(),
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
+                padding: const EdgeInsets.only(bottom: 8),
                 child: FilledButtonWidget(
                   type: ButtonType.primary,
                   text: '이렇게 불러줘',
