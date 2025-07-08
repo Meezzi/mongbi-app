@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/core/secure_storage_service.dart';
 import 'package:mongbi_app/presentation/common/custom_snack_bar.dart';
-import 'package:mongbi_app/providers/alarm_provider.dart';
 import 'package:mongbi_app/providers/dream_provider.dart';
 
 class MainScaffold extends ConsumerWidget {
@@ -29,96 +28,101 @@ class MainScaffold extends ConsumerWidget {
       backgroundColor: _buildScaffoldBackgroundColor(location),
       appBar: _buildAppBar(context, location),
       extendBodyBehindAppBar: location.startsWith('/home') ? true : false,
+      extendBody: true,
       body: child,
-      bottomNavigationBar: BottomAppBar(
-        height: 56,
-        padding: EdgeInsets.symmetric(horizontal: 24),
-        color: _buildBottomAppBarColor(location),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            _buildTab(
-              context,
-              0,
-              selectedIndex == 0,
-              'home',
-              '/home',
-              isHistory,
-            ),
-            _buildTab(
-              context,
-              1,
-              selectedIndex == 1,
-              'record',
-              '/history',
-              isHistory,
-            ),
-            GestureDetector(
-              onTap: () async {
-                final uid = await SecureStorageService().getUserIdx();
+      bottomNavigationBar: MediaQuery.removePadding(
+        context: context,
+        removeBottom: true,
+        child: BottomAppBar(
+          height: 56,
+          padding: EdgeInsets.symmetric(horizontal: 24),
+          color: _buildBottomAppBarColor(location),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              _buildTab(
+                context,
+                0,
+                selectedIndex == 0,
+                'home',
+                '/home',
+                isHistory,
+              ),
+              _buildTab(
+                context,
+                1,
+                selectedIndex == 1,
+                'record',
+                '/history',
+                isHistory,
+              ),
+              GestureDetector(
+                onTap: () async {
+                  final uid = await SecureStorageService().getUserIdx();
 
-                if (uid == null) return;
+                  if (uid == null) return;
 
-                final canWrite = await ref
-                    .read(canWriteDreamTodayUseCaseProvider)
-                    .execute(uid);
+                  final canWrite = await ref
+                      .read(canWriteDreamTodayUseCaseProvider)
+                      .execute(uid);
 
-                if (canWrite) {
-                  await context.push('/dream_intro');
-                } else {
-                  ScaffoldMessenger.of(
-                    context,
-                  ).showSnackBar(customSnackBar('오늘은 이미 했어, 배불러몽!', 16, 2));
-                }
-              },
-              child: Container(
-                width: 48,
-                height: 48,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Color(0xFF1A181B).withValues(alpha: 0.2),
-                      blurRadius: 10,
-                      offset: Offset(2, 2),
-                      spreadRadius: 0,
+                  if (canWrite) {
+                    await context.push('/dream_intro');
+                  } else {
+                    ScaffoldMessenger.of(
+                      context,
+                    ).showSnackBar(customSnackBar('오늘은 이미 했어, 배불러몽!', 16, 2));
+                  }
+                },
+                child: Container(
+                  width: 48,
+                  height: 48,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Color(0xFF1A181B).withValues(alpha: 0.2),
+                        blurRadius: 10,
+                        offset: Offset(2, 2),
+                        spreadRadius: 0,
+                      ),
+                    ],
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      stops: isHistory ? [0.1, 1.0] : [0, 1.0],
+                      colors:
+                          isHistory
+                              ? [Color(0xFFEAC9FA), Color(0xFF8C2EFF)]
+                              : [Color(0xFF8C2EFF), Color(0xFF3B136B)],
                     ),
-                  ],
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    stops: isHistory ? [0.1, 1.0] : [0, 1.0],
-                    colors:
-                        isHistory
-                            ? [Color(0xFFEAC9FA), Color(0xFF8C2EFF)]
-                            : [Color(0xFF8C2EFF), Color(0xFF3B136B)],
+                  ),
+                  child: SvgPicture.asset(
+                    'assets/icons/add.svg',
+                    width: 24,
+                    height: 24,
+                    fit: BoxFit.none,
                   ),
                 ),
-                child: SvgPicture.asset(
-                  'assets/icons/add.svg',
-                  width: 24,
-                  height: 24,
-                  fit: BoxFit.none,
-                ),
               ),
-            ),
-            _buildTab(
-              context,
-              2,
-              selectedIndex == 2,
-              'statistics',
-              '/statistics',
-              isHistory,
-            ),
-            _buildTab(
-              context,
-              3,
-              selectedIndex == 3,
-              'user',
-              '/setting',
-              isHistory,
-            ),
-          ],
+              _buildTab(
+                context,
+                2,
+                selectedIndex == 2,
+                'statistics',
+                '/statistics',
+                isHistory,
+              ),
+              _buildTab(
+                context,
+                3,
+                selectedIndex == 3,
+                'user',
+                '/setting',
+                isHistory,
+              ),
+            ],
+          ),
         ),
       ),
     );

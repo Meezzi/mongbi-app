@@ -73,8 +73,6 @@ class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage>
           padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Consumer(
             builder: (context, ref, child) {
-              final alarmViewModel = ref.read(alarmSettingProvider.notifier);
-
               return Row(
                 children: [
                   GestureDetector(
