@@ -147,9 +147,7 @@ class NotificationService {
       dateTime.minute,
     );
 
-    if (scheduled.isBefore(tzNow)) {
-      scheduled = scheduled.add(const Duration(days: 1));
-    }
+    
 
     return scheduled;
   }
