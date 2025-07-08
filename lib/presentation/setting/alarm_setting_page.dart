@@ -48,12 +48,7 @@ class AlarmSettingPage extends ConsumerWidget {
                 title: '리마인드 알림',
                 isFirst: true,
                 isLast: false,
-                trailing: ToggleSwitch(
-                  value: alarmState.isReminder,
-                  onChanged: (value) async {
-                    await alarmViewModel.toggleReminder();
-                  },
-                ),
+                trailing: ToggleSwitch(value: alarmState.isReminder),
                 onTap: () async {
                   bool granted = false;
 
@@ -122,11 +117,12 @@ class AlarmSettingPage extends ConsumerWidget {
                   }
 
                   // ✅ 권한이 허용된 경우에만 리마인드 알림 처리
-                  if (context.mounted && alarmState.isReminder) {
+                  final isRemindEnabled = await alarmViewModel.toggleReminder();
+
+                  if (context.mounted && isRemindEnabled) {
                     unawaited(
                       context.push(
-                        '/remindtime_time_setting',
-                        extra: {'isRemindEnabled': alarmState.isReminder},
+                        '/remindtime_time_setting?isRemindEnabled=$isRemindEnabled',
                       ),
                     );
                   }
