@@ -21,6 +21,8 @@ class AuthInterceptor extends Interceptor {
     return handler.next(options);
   }
 
+
+
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) async { 
     if (err.requestOptions.path.contains('/auth/refresh')) {

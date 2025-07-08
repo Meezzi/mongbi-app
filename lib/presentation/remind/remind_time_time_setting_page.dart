@@ -24,14 +24,37 @@ class RemindTimePickerPage extends ConsumerStatefulWidget {
       _RemindTimePickerPageState();
 }
 
-class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage> {
+class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage>
+    with WidgetsBindingObserver {
   TimeOfDay selectedTime = const TimeOfDay(hour: 8, minute: 0);
 
   @override
   void initState() {
     super.initState();
-
+    WidgetsBinding.instance.addObserver(this);
     AnalyticsHelper.logScreenView('리마인드_시간_설정_페이지');
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      _checkNotificationPermission();
+    }
+  }
+
+  Future<void> _checkNotificationPermission() async {
+    final status = await Permission.notification.status;
+    if (status.isGranted) {
+      // Permission is granted, schedule the notification
+      await NotificationService().scheduleDailyReminder(selectedTime);
+      ref.read(alarmSettingProvider.notifier).setReminder(true);
+    }
   }
 
   @override
@@ -50,17 +73,10 @@ class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage> {
           padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Consumer(
             builder: (context, ref, child) {
-              final alarmViewModel = ref.read(alarmSettingProvider.notifier);
-
               return Row(
                 children: [
                   GestureDetector(
-                    onTap: () async {
-                      if (widget.isRemindEnabled ?? false) {
-                        await alarmViewModel.toggleReminder();
-                      }
-                      context.pop();
-                    },
+                    onTap: () => context.pop(),
                     child: SvgPicture.asset(
                       'assets/icons/back-arrow.svg',
                       width: 24,
@@ -123,18 +139,30 @@ class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage> {
                       final granted =
                           await NotificationService()
                               .requestNotificationPermission();
-
                       if (!granted) {
                         if (status.isPermanentlyDenied) {
+                          try {
+                            await AnalyticsHelper.logEvent('리마인드_권한_영구_거부', {
+                              '화면_이름': '리마인드_시간_설정_페이지',
+                              '영구_거부': true,
+                            });
+                          } catch (e) {}
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text(
-                                '알림 권한이 영구적으로 거부되었습니다. 설정 > 몽비 > 알림에서 직접 허용해주세요.',
-                              ),
+                            customSnackBar(
+                              '알림 권한이 영구적으로 거부되었습니다. 설정 > 몽비 > 알림에서 직접 허용해주세요.',
+                              30,
+                              3,
                             ),
                           );
                           await NotificationService().openAppSettingsIfNeeded();
                         } else {
+                          try {
+                            await AnalyticsHelper.logEvent('리마인드_권한_거부', {
+                              '화면_이름': '리마인드_시간_설정_페이지',
+                              '영구_거부': false,
+                            });
+                          } catch (e) {}
+
                           ScaffoldMessenger.of(context).showSnackBar(
                             customSnackBar('알림 권한이 거부되었습니다.', 30, 3),
                           );
@@ -152,16 +180,23 @@ class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage> {
                         return;
                       }
                       context.go('/onbording_page');
-                    } catch (e) {
-                      if (e is PlatformException &&
-                          e.code == 'exact_alarms_not_permitted') {
+                    } on PlatformException catch (e) {
+                      if (e.code == 'exact_alarms_not_permitted') {
                         await NotificationService()
                             .openExactAlarmSettingsIfNeeded();
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          customSnackBar('알림 권한이 거부되었습니다.', 30, 3),
+                          customSnackBar(
+                            '알림 예약 중 오류가 발생했습니다: ${e.message}',
+                            30,
+                            3,
+                          ),
                         );
                       }
+                    } catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        customSnackBar('알림 예약 중 오류가 발생했습니다: $e', 30, 3),
+                      );
                     }
                   },
                 ),
