@@ -68,19 +68,19 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 }
 
 Future<void> setupFCM() async {
-  await NotificationService().init(); // 로컬 알림 초기화
+  await NotificationService().init();
 
   final fcm = FirebaseMessaging.instance;
 
   await fcm.requestPermission(alert: true, badge: true, sound: true);
 
-  final fcmToken = await fcm.getToken();
+
 
   fcm.onTokenRefresh.listen((newFcmToken) {
     // TODO: 서버에 새로운 토큰 전송
   });
 
-  FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+  FirebaseMessaging.onMessage.listen((message) async {
 
     if (message.notification == null) {
       await NotificationService().showNotification(
