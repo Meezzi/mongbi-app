@@ -130,7 +130,7 @@ class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage>
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
+                padding: const EdgeInsets.only(bottom: 8),
                 child: FilledButtonWidget(
                   type: ButtonType.primary,
                   text: '정했어',
