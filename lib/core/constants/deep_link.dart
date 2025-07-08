@@ -1,1 +1,1 @@
-const String branchShortLink = "YOUR_BRANCH_SHORT_LINK_HERE";
+const String branchShortLink = 'https://xpgig.app.link//appstoreLink';
