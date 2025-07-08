@@ -34,6 +34,8 @@ class DreamInterpretationViewModel extends Notifier<DreamInterpretationState> {
     $branchShortLink
     ''';
 
-    Share.share(message);
+    SharePlus.instance.share(
+      ShareParams(text: message),
+    );
   }
 }
