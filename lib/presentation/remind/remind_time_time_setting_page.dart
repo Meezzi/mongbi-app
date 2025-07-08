@@ -146,14 +146,12 @@ class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage>
                               '화면_이름': '리마인드_시간_설정_페이지',
                               '영구_거부': true,
                             });
-                          } catch (e) {
-                          }
-
+                          } catch (e) {}
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text(
-                                '알림 권한이 영구적으로 거부되었습니다. 설정 > 몽비 > 알림에서 직접 허용해주세요.',
-                              ),
+                            customSnackBar(
+                              '알림 권한이 영구적으로 거부되었습니다. 설정 > 몽비 > 알림에서 직접 허용해주세요.',
+                              30,
+                              3,
                             ),
                           );
                           await NotificationService().openAppSettingsIfNeeded();
@@ -163,8 +161,7 @@ class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage>
                               '화면_이름': '리마인드_시간_설정_페이지',
                               '영구_거부': false,
                             });
-                          } catch (e) {
-                          }
+                          } catch (e) {}
 
                           ScaffoldMessenger.of(context).showSnackBar(
                             customSnackBar('알림 권한이 거부되었습니다.', 30, 3),
@@ -189,16 +186,16 @@ class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage>
                             .openExactAlarmSettingsIfNeeded();
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('알림 예약 중 오류가 발생했습니다: ${e.message}'),
+                          customSnackBar(
+                            '알림 예약 중 오류가 발생했습니다: ${e.message}',
+                            30,
+                            3,
                           ),
                         );
                       }
                     } catch (e) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('알림 예약 중 오류가 발생했습니다: $e'),
-                        ),
+                        customSnackBar('알림 예약 중 오류가 발생했습니다: $e', 30, 3),
                       );
                     }
                   },
