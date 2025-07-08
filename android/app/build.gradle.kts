@@ -32,10 +32,14 @@ android {
 
     buildTypes {
         release {
-            signingConfig = signingConfigs.getByName("debug")
-            isMinifyEnabled = true
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-        }
+	        debuggable false
+	        signingConfig signingConfigs.release
+	        minifyEnabled enableProguardInReleaseBuilds
+	        proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+	        firebaseCrashlytics { 
+	            mappingFileUploadEnabled true 
+	        }
+	    }
     }
 }
 
