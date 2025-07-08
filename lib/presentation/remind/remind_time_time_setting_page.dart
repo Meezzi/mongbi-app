@@ -136,7 +136,7 @@ class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage> {
                           await NotificationService().openAppSettingsIfNeeded();
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('알림 권한이 거부되었습니다.')),
+                            customSnackBar('알림 권한이 거부되었습니다.', 30, 3),
                           );
                         }
                         return;
