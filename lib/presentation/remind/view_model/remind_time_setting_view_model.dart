@@ -15,14 +15,9 @@ class NotificationService {
   NotificationService._internal();
   static final NotificationService _instance = NotificationService._internal();
 
-  bool _isTimezoneInitialized = false;
-
   Future<void> init() async {
-    if (!_isTimezoneInitialized) {
-      tz.initializeTimeZones();
-      tz.setLocalLocation(tz.getLocation('Asia/Seoul'));
-      _isTimezoneInitialized = true;
-    }
+    tz.initializeTimeZones();
+    tz.setLocalLocation(tz.getLocation('Asia/Seoul'));
 
     const androidInit = AndroidInitializationSettings('@mipmap/ic_launcher');
     const iosInit = DarwinInitializationSettings(
@@ -55,6 +50,32 @@ class NotificationService {
   }
 
   /// 알림 권한 요청
+  // Future<bool> requestNotificationPermission() async {
+  //   if (Platform.isIOS) {
+  //     final iosPlugin =
+  //         flutterLocalNotificationsPlugin
+  //             .resolvePlatformSpecificImplementation<
+  //               IOSFlutterLocalNotificationsPlugin
+  //             >();
+  //     await iosPlugin?.requestPermissions(
+  //       alert: true,
+  //       badge: true,
+  //       sound: true,
+  //     );
+  //     return true; // iOS는 권한 요청 후 바로 사용 가능
+  //   }
+
+  //   final status = await Permission.notification.request();
+
+  //   if (status.isGranted) {
+  //     return true;
+  //   } else if (status.isPermanentlyDenied) {
+  //     // 설정화면으로 이동 유도 필요
+  //     return false;
+  //   } else {
+  //     return false;
+  //   }
+  // }
   Future<bool> requestNotificationPermission() async {
     if (Platform.isIOS) {
       final status = await Permission.notification.status;
@@ -72,9 +93,6 @@ class NotificationService {
 
   /// 매일 알림 스케줄링
   Future<void> scheduleDailyReminder(TimeOfDay time) async {
-    // 👇 알림 예약 전에 init 보장
-    await init();
-
     final now = DateTime.now();
     final scheduledTime = DateTime(
       now.year,
