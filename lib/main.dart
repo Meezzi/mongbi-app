@@ -20,7 +20,7 @@ void main() async {
   
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  await setupFCM();
+  // await setupFCM();
   KakaoSdk.init(
     nativeAppKey: dotenv.env['KAKAO_NATIVE_APP_KEY'],
     javaScriptAppKey: dotenv.env['KAKAO_JAVA_SCRIPT_APP_KEY'],
