@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/analytics/analytics_helper.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/presentation/common/button_type.dart';
+import 'package:mongbi_app/presentation/common/custom_snack_bar.dart';
 import 'package:mongbi_app/presentation/common/filled_button_widget.dart';
 import 'package:mongbi_app/presentation/remind/view_model/remind_time_setting_view_model.dart';
 import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_text_widget.dart';
@@ -141,8 +142,6 @@ class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage> {
                         return;
                       }
 
-                      // ✅ 알림 설정 시간 저장 로그
-
                       await NotificationService().scheduleDailyReminder(
                         selectedTime,
                       );
@@ -160,7 +159,7 @@ class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage> {
                             .openExactAlarmSettingsIfNeeded();
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('알림 권한이 거부되었습니다.')),
+                          customSnackBar('알림 권한이 거부되었습니다.', 30, 3),
                         );
                       }
                     }
