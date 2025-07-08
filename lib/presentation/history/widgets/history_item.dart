@@ -42,7 +42,8 @@ class _HistoryItemState extends State<HistoryItem> {
     return MeasureSize(
       onStop: () {
         if (isExpansion) {
-          if (widget.nextItemKey != null) {
+          if (widget.nextItemKey != null &&
+              widget.nextItemKey?.currentContext != null) {
             Scrollable.ensureVisible(
               widget.nextItemKey!.currentContext!,
               duration: Duration(milliseconds: 300),
