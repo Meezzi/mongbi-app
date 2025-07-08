@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/analytics/analytics_helper.dart';
@@ -7,12 +8,13 @@ import 'package:mongbi_app/presentation/common/filled_button_widget.dart';
 import 'package:mongbi_app/presentation/onboarding/widgets/onbording_skip_button_widget.dart';
 import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_image_widget.dart';
 import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_text_widget.dart';
+import 'package:mongbi_app/providers/setting_provider.dart';
 
-class RemindTimeSettingPage extends StatelessWidget {
+class RemindTimeSettingPage extends ConsumerWidget {
   const RemindTimeSettingPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     AnalyticsHelper.logScreenView('리마인드_소개_페이지');
 
     return Scaffold(
@@ -81,7 +83,9 @@ class RemindTimeSettingPage extends StatelessWidget {
                       '리마인드_소개_확인',
                       '리마인드_소개_페이지',
                     );
-                    await context.push('/remindtime_time_setting', extra: {'isRemindEnabled': false});
+                    final alarmViewModel = ref.read(alarmSettingProvider.notifier);
+                    final isRemindEnabled = await alarmViewModel.toggleReminder();
+                    await context.push('/remindtime_time_setting', extra: {'isRemindEnabled': isRemindEnabled});
                   },
                 ),
               ),

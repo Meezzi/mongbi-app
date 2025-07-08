@@ -30,16 +30,22 @@ android {
         versionName = flutter.versionName
     }
 
+    signingConfigs {
+        create("release") {
+            storeFile = file("../" + (project.properties["MYAPP_UPLOAD_STORE_FILE"] as String))
+            storePassword = project.properties["MYAPP_UPLOAD_STORE_PASSWORD"] as String
+            keyAlias = project.properties["MYAPP_UPLOAD_KEY_ALIAS"] as String
+            keyPassword = project.properties["MYAPP_UPLOAD_KEY_PASSWORD"] as String
+        }
+    }
+
     buildTypes {
         release {
-	        debuggable false
-	        signingConfig signingConfigs.release
-	        minifyEnabled enableProguardInReleaseBuilds
-	        proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-	        firebaseCrashlytics { 
-	            mappingFileUploadEnabled true 
-	        }
-	    }
+            isDebuggable = false
+            signingConfig = signingConfigs.getByName("release")
+            isMinifyEnabled = true
+            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+        }
     }
 }
 
