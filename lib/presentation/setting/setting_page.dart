@@ -8,7 +8,7 @@ import 'package:mongbi_app/presentation/setting/widgets/setting_section_card.dar
 import 'package:mongbi_app/presentation/setting/widgets/setting_toggle_switch.dart';
 import 'package:mongbi_app/presentation/setting/widgets/setting_user_info_header.dart';
 import 'package:mongbi_app/providers/setting_provider.dart';
-import 'package:mongbi_app/presentation/auth/viewmodels/auth_view_model.dart';
+import 'package:mongbi_app/providers/user_info_provider.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -41,17 +41,16 @@ class _SettingPageState extends ConsumerState<SettingPage> {
   Widget build(BuildContext context) {
     final isBgmOn = ref.watch(bgmProvider);
     final bgmNotifier = ref.read(bgmProvider.notifier);
-    final currentUser = ref.watch(currentUserProvider);
+    final splashState = ref.watch(splashViewModelProvider);
 
     return ListView(
       padding: const EdgeInsets.symmetric(horizontal: 24),
       children: [
-        if (currentUser != null)
-          UserInfoHeader(
-            nickname: currentUser.userNickname!,
-            loginType: currentUser.userSocialType,
-            onTap: () => context.push('/profile_setting'),
-          ),
+        UserInfoHeader(
+          nickname: splashState.userList![0].userNickname!,
+          loginType: splashState.userList![0].userSocialType,
+          onTap: () => context.push('/profile_setting'),
+        ),
         const SizedBox(height: 24),
         SectionCard(
           title: '설정',
@@ -144,4 +143,3 @@ class _SettingPageState extends ConsumerState<SettingPage> {
     );
   }
 }
-

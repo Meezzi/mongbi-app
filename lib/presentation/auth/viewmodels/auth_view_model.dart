@@ -209,18 +209,3 @@ class AuthViewModel extends Notifier<User?> {
 Future<bool> handleLoginResult(bool hasAgreedLatestTerms) async {
   return hasAgreedLatestTerms;
 }
-
-final currentUserProvider = NotifierProvider<CurrentUserNotifier, User?>(
-  () => CurrentUserNotifier(),
-);
-
-class CurrentUserNotifier extends Notifier<User?> {
-  @override
-  User? build() {
-    return null; // Initial state is null (no user logged in)
-  }
-
-  void setUser(User? user) {
-    state = user;
-  }
-}

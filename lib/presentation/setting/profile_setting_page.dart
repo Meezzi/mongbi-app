@@ -7,7 +7,7 @@ import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/presentation/setting/widgets/logout_account_modal.dart';
 import 'package:mongbi_app/presentation/setting/widgets/remove_accont_modal.dart';
 import 'package:mongbi_app/presentation/setting/widgets/setting_rounded_list_tile_item.dart';
-import 'package:mongbi_app/presentation/auth/viewmodels/auth_view_model.dart';
+import 'package:mongbi_app/providers/user_info_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileSettingPage extends ConsumerWidget {
@@ -15,8 +15,9 @@ class ProfileSettingPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentUser = ref.watch(currentUserProvider);
-    final nickname = currentUser?.userNickname ?? '비회원';
+    final userInfo = ref.watch(splashViewModelProvider);
+    final userResult = userInfo.userList?.first;
+    final nickname = userResult?.userNickname ?? '비회원';
 
     AnalyticsHelper.logScreenView('프로필_설정_페이지');
 

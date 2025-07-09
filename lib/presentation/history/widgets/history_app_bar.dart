@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mongbi_app/presentation/auth/viewmodels/auth_view_model.dart';
+import 'package:mongbi_app/providers/user_info_provider.dart';
 
 class HistoryAppBar extends ConsumerWidget {
   const HistoryAppBar({
@@ -15,8 +15,8 @@ class HistoryAppBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentUser = ref.watch(currentUserProvider);
-    final nickname = currentUser?.userNickname ?? '몽비';
+    final splashState = ref.watch(splashViewModelProvider);
+    final nickname = splashState.userList?[0].userNickname ?? '몽비';
 
     return AnimatedContainer(
       duration: Duration(milliseconds: 200),

@@ -161,4 +161,10 @@ class NotificationService {
     await prefs.remove('reminder_hour');
     await prefs.remove('reminder_minute');
   }
+
+  Future<void> saveReminderTime(TimeOfDay time) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('reminder_hour', time.hour);
+    await prefs.setInt('reminder_minute', time.minute);
+  }
 }

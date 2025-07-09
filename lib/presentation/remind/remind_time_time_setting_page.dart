@@ -166,6 +166,9 @@ class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage>
                       await NotificationService().scheduleDailyReminder(
                         selectedTime,
                       );
+                      await NotificationService().saveReminderTime(
+                        selectedTime,
+                      );
 
                       ref.read(alarmSettingProvider.notifier).setReminder(true);
 
