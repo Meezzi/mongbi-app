@@ -13,7 +13,6 @@ import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_text_
 import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_widget.dart';
 import 'package:mongbi_app/providers/setting_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-
 class RemindTimePickerPage extends ConsumerStatefulWidget {
   const RemindTimePickerPage({super.key, required this.isRemindEnabled});
 
@@ -44,15 +43,14 @@ class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
-      _checkNotificationPermission();
+      _checkNotificationPermission(); // 예약은 하지 않고 권한만 체크
     }
   }
 
   Future<void> _checkNotificationPermission() async {
     final status = await Permission.notification.status;
     if (status.isGranted) {
-      // Permission is granted, schedule the notification
-      await NotificationService().scheduleDailyReminder(selectedTime);
+      // 권한이 있으면 UI를 업데이트하거나 상태 반영만
       ref.read(alarmSettingProvider.notifier).setReminder(true);
     }
   }
@@ -71,22 +69,18 @@ class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage>
         toolbarHeight: 56,
         title: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Consumer(
-            builder: (context, ref, child) {
-              return Row(
-                children: [
-                  GestureDetector(
-                    onTap: () => context.pop(),
-                    child: SvgPicture.asset(
-                      'assets/icons/back-arrow.svg',
-                      width: 24,
-                      height: 24,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ],
-              );
-            },
+          child: Row(
+            children: [
+              GestureDetector(
+                onTap: () => context.pop(),
+                child: SvgPicture.asset(
+                  'assets/icons/back-arrow.svg',
+                  width: 24,
+                  height: 24,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ],
           ),
         ),
       ),
@@ -115,7 +109,7 @@ class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage>
                   },
                 ),
               ),
-              Spacer(),
+              const Spacer(),
               Center(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8),
@@ -136,17 +130,15 @@ class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage>
                     try {
                       final status = await Permission.notification.status;
 
-                      final granted =
-                          await NotificationService()
-                              .requestNotificationPermission();
+                      final granted = await NotificationService()
+                          .requestNotificationPermission();
                       if (!granted) {
                         if (status.isPermanentlyDenied) {
-                          try {
-                            await AnalyticsHelper.logEvent('리마인드_권한_영구_거부', {
-                              '화면_이름': '리마인드_시간_설정_페이지',
-                              '영구_거부': true,
-                            });
-                          } catch (e) {}
+                          await AnalyticsHelper.logEvent('리마인드_권한_영구_거부', {
+                            '화면_이름': '리마인드_시간_설정_페이지',
+                            '영구_거부': true,
+                          });
+
                           ScaffoldMessenger.of(context).showSnackBar(
                             customSnackBar(
                               '알림 권한이 영구적으로 거부되었습니다. 설정 > 몽비 > 알림에서 직접 허용해주세요.',
@@ -154,14 +146,13 @@ class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage>
                               3,
                             ),
                           );
-                          await NotificationService().openAppSettingsIfNeeded();
+                          await NotificationService()
+                              .openAppSettingsIfNeeded();
                         } else {
-                          try {
-                            await AnalyticsHelper.logEvent('리마인드_권한_거부', {
-                              '화면_이름': '리마인드_시간_설정_페이지',
-                              '영구_거부': false,
-                            });
-                          } catch (e) {}
+                          await AnalyticsHelper.logEvent('리마인드_권한_거부', {
+                            '화면_이름': '리마인드_시간_설정_페이지',
+                            '영구_거부': false,
+                          });
 
                           ScaffoldMessenger.of(context).showSnackBar(
                             customSnackBar('알림 권한이 거부되었습니다.', 30, 3),
@@ -170,16 +161,19 @@ class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage>
                         return;
                       }
 
-                      await NotificationService().scheduleDailyReminder(
-                        selectedTime,
-                      );
-                      ref.read(alarmSettingProvider.notifier).setReminder(true);
+                      await NotificationService().cancelReminderNotification();
+                      await NotificationService()
+                          .scheduleDailyReminder(selectedTime);
+
+                      ref
+                          .read(alarmSettingProvider.notifier)
+                          .setReminder(true);
 
                       if (widget.isRemindEnabled ?? false) {
                         context.pop();
-                        return;
+                      } else {
+                        context.go('/onbording_page');
                       }
-                      context.go('/onbording_page');
                     } on PlatformException catch (e) {
                       if (e.code == 'exact_alarms_not_permitted') {
                         await NotificationService()

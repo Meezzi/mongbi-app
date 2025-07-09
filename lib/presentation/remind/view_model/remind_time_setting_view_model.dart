@@ -4,6 +4,7 @@ import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
@@ -32,9 +33,14 @@ class NotificationService {
     );
 
     await flutterLocalNotificationsPlugin.initialize(initSettings);
+
+    // 앱 시작 시 이전에 저장된 알림 시간으로 다시 예약
+    final savedTime = await loadReminderTime();
+    if (savedTime != null) {
+      await scheduleDailyReminder(savedTime);
+    }
   }
 
-  /// 정확한 알람 권한 설정 (Android 12+)
   Future<void> openExactAlarmSettingsIfNeeded() async {
     if (Platform.isAndroid) {
       final intent = AndroidIntent(
@@ -44,54 +50,22 @@ class NotificationService {
     }
   }
 
-  /// 앱 설정 화면으로 이동 (알림 영구 거부 시)
   Future<void> openAppSettingsIfNeeded() async {
     await AppSettings.openAppSettings();
   }
 
-  /// 알림 권한 요청
-  // Future<bool> requestNotificationPermission() async {
-  //   if (Platform.isIOS) {
-  //     final iosPlugin =
-  //         flutterLocalNotificationsPlugin
-  //             .resolvePlatformSpecificImplementation<
-  //               IOSFlutterLocalNotificationsPlugin
-  //             >();
-  //     await iosPlugin?.requestPermissions(
-  //       alert: true,
-  //       badge: true,
-  //       sound: true,
-  //     );
-  //     return true; // iOS는 권한 요청 후 바로 사용 가능
-  //   }
-
-  //   final status = await Permission.notification.request();
-
-  //   if (status.isGranted) {
-  //     return true;
-  //   } else if (status.isPermanentlyDenied) {
-  //     // 설정화면으로 이동 유도 필요
-  //     return false;
-  //   } else {
-  //     return false;
-  //   }
-  // }
   Future<bool> requestNotificationPermission() async {
     if (Platform.isIOS) {
       final status = await Permission.notification.status;
-
       if (status.isGranted) return true;
-
       final result = await Permission.notification.request();
       return result.isGranted;
     }
-
-    // Android
     final status = await Permission.notification.request();
     return status.isGranted;
   }
 
-  /// 매일 알림 스케줄링
+  /// 알림 스케줄 및 시간 저장
   Future<void> scheduleDailyReminder(TimeOfDay time) async {
     final now = DateTime.now();
     final scheduledTime = DateTime(
@@ -134,6 +108,8 @@ class NotificationService {
       matchDateTimeComponents: DateTimeComponents.time,
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
     );
+
+    await _saveReminderTime(time); // 시간 저장
   }
 
   tz.TZDateTime _nextInstanceOfTime(DateTime dateTime) {
@@ -156,9 +132,33 @@ class NotificationService {
 
   Future<void> cancelAllNotifications() async {
     await flutterLocalNotificationsPlugin.cancelAll();
+    await _clearReminderTime();
   }
 
   Future<void> cancelReminderNotification() async {
     await flutterLocalNotificationsPlugin.cancel(0);
+    await _clearReminderTime();
+  }
+
+  Future<void> _saveReminderTime(TimeOfDay time) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('reminder_hour', time.hour);
+    await prefs.setInt('reminder_minute', time.minute);
+  }
+
+  Future<TimeOfDay?> loadReminderTime() async {
+    final prefs = await SharedPreferences.getInstance();
+    final hour = prefs.getInt('reminder_hour');
+    final minute = prefs.getInt('reminder_minute');
+    if (hour != null && minute != null) {
+      return TimeOfDay(hour: hour, minute: minute);
+    }
+    return null;
+  }
+
+  Future<void> _clearReminderTime() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('reminder_hour');
+    await prefs.remove('reminder_minute');
   }
 }
