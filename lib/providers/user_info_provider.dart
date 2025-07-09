@@ -31,8 +31,6 @@ final userInfoDataSourceProvider = Provider<RemoteUserInfoGetDataSource>(
 
 final splashViewModelProvider =
     StateNotifierProvider<SplashViewModel, SplashState>((ref) {
-      ref.read(userInfoDataSourceProvider);
-      return SplashViewModel(ref.read(getUserInfoUseCaseProvider), ref);
+      final dataSource = ref.read(userInfoDataSourceProvider);
+      return SplashViewModel(dataSource);
     });
-
-
