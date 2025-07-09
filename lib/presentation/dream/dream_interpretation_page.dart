@@ -130,10 +130,4 @@ class _DreamInterpretationPageState
       ),
     );
   }
-
-  void showSnackBar(String message) {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text(message, style: Font.body14)));
-  }
 }
