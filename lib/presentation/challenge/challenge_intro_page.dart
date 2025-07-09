@@ -24,7 +24,7 @@ class ChallengeIntroPage extends ConsumerWidget {
                 leftText: '괜찮아',
                 rightText: '선물이 뭐야?',
                 onLeftPressed: () {
-                  context.pushReplacement('/home');
+                  context.go('/home');
                 },
                 onRightPressed: () async {
                   await ref

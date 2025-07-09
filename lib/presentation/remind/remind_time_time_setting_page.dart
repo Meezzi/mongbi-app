@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/analytics/analytics_helper.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/presentation/common/button_type.dart';
+import 'package:mongbi_app/presentation/common/custom_snack_bar.dart';
 import 'package:mongbi_app/presentation/common/filled_button_widget.dart';
 import 'package:mongbi_app/presentation/remind/view_model/remind_time_setting_view_model.dart';
 import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_text_widget.dart';
@@ -23,14 +24,37 @@ class RemindTimePickerPage extends ConsumerStatefulWidget {
       _RemindTimePickerPageState();
 }
 
-class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage> {
+class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage>
+    with WidgetsBindingObserver {
   TimeOfDay selectedTime = const TimeOfDay(hour: 8, minute: 0);
 
   @override
   void initState() {
     super.initState();
-
+    WidgetsBinding.instance.addObserver(this);
     AnalyticsHelper.logScreenView('리마인드_시간_설정_페이지');
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      _checkNotificationPermission();
+    }
+  }
+
+  Future<void> _checkNotificationPermission() async {
+    final status = await Permission.notification.status;
+    if (status.isGranted) {
+      // Permission is granted, schedule the notification
+      await NotificationService().scheduleDailyReminder(selectedTime);
+      ref.read(alarmSettingProvider.notifier).setReminder(true);
+    }
   }
 
   @override
@@ -49,17 +73,10 @@ class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage> {
           padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Consumer(
             builder: (context, ref, child) {
-              final alarmViewModel = ref.read(alarmSettingProvider.notifier);
-
               return Row(
                 children: [
                   GestureDetector(
-                    onTap: () async {
-                      if (widget.isRemindEnabled ?? false) {
-                        await alarmViewModel.toggleReminder();
-                      }
-                      context.pop();
-                    },
+                    onTap: () => context.pop(),
                     child: SvgPicture.asset(
                       'assets/icons/back-arrow.svg',
                       width: 24,
@@ -122,7 +139,6 @@ class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage> {
                       final granted =
                           await NotificationService()
                               .requestNotificationPermission();
-
                       if (!granted) {
                         if (status.isPermanentlyDenied) {
                           try {
@@ -130,15 +146,12 @@ class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage> {
                               '화면_이름': '리마인드_시간_설정_페이지',
                               '영구_거부': true,
                             });
-                          } catch (e) {
-                            print('Failed to log event: $e');
-                          }
-
+                          } catch (e) {}
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text(
-                                '알림 권한이 영구적으로 거부되었습니다. 설정 > 몽비 > 알림에서 직접 허용해주세요.',
-                              ),
+                            customSnackBar(
+                              '알림 권한이 영구적으로 거부되었습니다. 설정 > 몽비 > 알림에서 직접 허용해주세요.',
+                              30,
+                              3,
                             ),
                           );
                           await NotificationService().openAppSettingsIfNeeded();
@@ -148,22 +161,14 @@ class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage> {
                               '화면_이름': '리마인드_시간_설정_페이지',
                               '영구_거부': false,
                             });
-                          } catch (e) {
-                            print('Failed to log event: $e');
-                          }
+                          } catch (e) {}
 
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('알림 권한이 거부되었습니다.')),
+                            customSnackBar('알림 권한이 거부되었습니다.', 30, 3),
                           );
                         }
                         return;
                       }
-
-                      await AnalyticsHelper.logEvent('리마인드_시간_선택', {
-                        '시간': selectedTime.hour,
-                        '분': selectedTime.minute,
-                        '화면_이름': '리마인드_시간_설정_페이지',
-                      });
 
                       await NotificationService().scheduleDailyReminder(
                         selectedTime,
@@ -175,18 +180,23 @@ class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage> {
                         return;
                       }
                       context.go('/onbording_page');
-                    } catch (e) {
-                      if (e is PlatformException &&
-                          e.code == 'exact_alarms_not_permitted') {
+                    } on PlatformException catch (e) {
+                      if (e.code == 'exact_alarms_not_permitted') {
                         await NotificationService()
                             .openExactAlarmSettingsIfNeeded();
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('알림 예약 중 오류: ${e.toString()}'),
+                          customSnackBar(
+                            '알림 예약 중 오류가 발생했습니다: ${e.message}',
+                            30,
+                            3,
                           ),
                         );
                       }
+                    } catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        customSnackBar('알림 예약 중 오류가 발생했습니다: $e', 30, 3),
+                      );
                     }
                   },
                 ),
