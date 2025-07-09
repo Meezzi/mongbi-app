@@ -15,9 +15,8 @@ class ProfileSettingPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userInfo = ref.watch(splashViewModelProvider);
-    final userResult = userInfo.userList?.first;
-    final nickname = userResult?.userNickname ?? '비회원';
+    final currentUser = ref.watch(currentUserProvider);
+    final nickname = currentUser?.userNickname ?? '비회원';
 
     AnalyticsHelper.logScreenView('프로필_설정_페이지');
 

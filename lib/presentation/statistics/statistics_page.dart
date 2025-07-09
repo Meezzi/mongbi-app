@@ -41,8 +41,8 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage>
     final double tabBarHeight =
         48 + // TabBar 높이
         8 * 2; // Padding Vertical
-    final splashState = ref.watch(splashViewModelProvider);
-    final nickname = splashState.userList?[0].userNickname ?? '몽비';
+    final currentUser = ref.watch(currentUserProvider);
+    final nickname = currentUser?.userNickname ?? '몽비';
     final snackBarState = ref.watch(snackBarStatusProvider);
     final statisticsAsync = ref.watch(statisticsViewModelProvider);
 

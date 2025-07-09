@@ -57,6 +57,7 @@ class AuthViewModel extends Notifier<User?> {
         final getUserUseCase = ref.read(getUserInfoUseCaseProvider);
         final userInfo = await getUserUseCase.execute();
         state = userInfo[0];
+        ref.read(currentUserProvider.notifier).setUser(userInfo[0]);
         return result.hasAgreedLatestTerms;
       } else {
         throw const AuthFailedException('Apple identity_token 없음');
@@ -97,6 +98,7 @@ class AuthViewModel extends Notifier<User?> {
       final getUserUseCase = ref.read(getUserInfoUseCaseProvider);
       final userInfo = await getUserUseCase.execute();
       state = userInfo[0];
+      ref.read(currentUserProvider.notifier).setUser(userInfo[0]);
 
       return user.hasAgreedLatestTerms;
     } catch (e) {
@@ -135,6 +137,7 @@ class AuthViewModel extends Notifier<User?> {
       final userInfo = await getUserUseCase.execute();
 
       state = userInfo[0];
+      ref.read(currentUserProvider.notifier).setUser(userInfo[0]);
       return result.hasAgreedLatestTerms;
     } on PlatformException catch (e) {
       if (e.code == 'CANCELED') {
