@@ -5,10 +5,15 @@ import 'package:mongbi_app/presentation/splash/view_models/splash_state.dart';
 import 'package:mongbi_app/presentation/splash/view_models/splash_status.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SplashViewModel extends StateNotifier<SplashState> {
-  SplashViewModel(this._dataSource) : super(const SplashState());
+import 'package:mongbi_app/providers/user_info_provider.dart';
+import 'package:mongbi_app/presentation/remind/view_model/remind_time_setting_view_model.dart';
 
+
+class SplashViewModel extends StateNotifier<SplashState> {
   final RemoteUserInfoGetDataSource _dataSource;
+  final Ref ref;
+
+  SplashViewModel(this._dataSource, this.ref) : super(const SplashState());
 
   Future<void> checkLoginAndFetchUserInfo() async {
     state = state.copyWith(status: SplashStatus.loading);
@@ -23,7 +28,15 @@ class SplashViewModel extends StateNotifier<SplashState> {
       }
 
       final userList = await _dataSource.fetchGetUserInfo();
-      state = state.copyWith(status: SplashStatus.success, userList: userList);
+      ref.read(currentUserProvider.notifier).setUser(userList[0].toEntity());
+
+      // Check for reminder time
+      final reminderTime = await NotificationService().loadReminderTime();
+      if (reminderTime != null) {
+        state = state.copyWith(status: SplashStatus.successWithReminder, userList: userList);
+      } else {
+        state = state.copyWith(status: SplashStatus.successWithoutReminder, userList: userList);
+      }
     } catch (_) {
       state = state.copyWith(status: SplashStatus.error);
     }

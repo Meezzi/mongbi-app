@@ -30,12 +30,18 @@ class _SplashPageState extends ConsumerState<SplashPage>
 
       if (!context.mounted) return;
 
-      if (splashState.status == SplashStatus.success) {
+      if (splashState.status == SplashStatus.successWithReminder) {
         await AnalyticsHelper.logEvent(
           '스플래시_홈_이동',
-          {'상태': '성공'},
+          {'상태': '성공_리마인드_있음'},
         );
         context.go('/home');
+      } else if (splashState.status == SplashStatus.successWithoutReminder) {
+        await AnalyticsHelper.logEvent(
+          '스플래시_리마인드_설정_필요',
+          {'상태': '성공_리마인드_없음'},
+        );
+        context.go('/remindtime_setting');
       } else if (splashState.status == SplashStatus.needLogin) {
         await AnalyticsHelper.logEvent(
           '스플래시_로그인_필요',

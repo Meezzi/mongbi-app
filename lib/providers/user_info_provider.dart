@@ -32,5 +32,20 @@ final userInfoDataSourceProvider = Provider<RemoteUserInfoGetDataSource>(
 final splashViewModelProvider =
     StateNotifierProvider<SplashViewModel, SplashState>((ref) {
       final dataSource = ref.read(userInfoDataSourceProvider);
-      return SplashViewModel(dataSource);
+      return SplashViewModel(dataSource, ref);
     });
+
+final currentUserProvider = NotifierProvider<CurrentUserNotifier, User?>(
+  () => CurrentUserNotifier(),
+);
+
+class CurrentUserNotifier extends Notifier<User?> {
+  @override
+  User? build() {
+    return null; // Initial state is null (no user logged in)
+  }
+
+  void setUser(User? user) {
+    state = user;
+  }
+}

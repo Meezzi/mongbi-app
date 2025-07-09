@@ -1,1 +1,1 @@
-enum SplashStatus { initial, loading, success, needLogin, error }
+enum SplashStatus { initial, loading, success, successWithReminder, successWithoutReminder, needLogin, error }
