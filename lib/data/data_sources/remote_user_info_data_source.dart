@@ -9,14 +9,13 @@ class RemoteUserInfoGetDataSource implements GetUserInfoDataSource {
   final Dio dio;
 
   @override
-  Future<List<UserDto>> fetchGetUserInfo() async {
+  Future<UserDto> fetchGetUserInfo() async {
     try {
       final userId = await SecureStorageService().getUserIdx();
       final response = await dio.get('/users/$userId');
 
       if (response.statusCode == 200 && response.data != null) {
-        final userDto = UserDto.fromJson(response.data);
-        return [userDto];
+        return UserDto.fromJson(response.data);
       } else {
         final error = Exception(response.data['message'] ?? '사용자 정보 조회 실패');
         await Sentry.captureException(

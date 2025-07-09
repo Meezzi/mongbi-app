@@ -25,19 +25,19 @@ class SplashViewModel extends StateNotifier<SplashState> {
         return;
       }
 
-      final userList = await _dataSource.fetchGetUserInfo();
-      state = state.copyWith(status: SplashStatus.success, userList: userList);
-      ref.read(currentUserProvider.notifier).setUser(userList[0].toEntity());
+    final user = await _dataSource.fetchGetUserInfo();
+    state = state.copyWith(status: SplashStatus.success, user: user);
+    ref.read(currentUserProvider.notifier).setUser(user.toEntity());
     } catch (_) {
       state = state.copyWith(status: SplashStatus.error);
     }
   }
 
   void setUser(UserDto user) {
-    state = state.copyWith(status: SplashStatus.success, userList: [user]);
+    state = state.copyWith(status: SplashStatus.success, user: user);
   }
 
   void logout() {
-    state = state.copyWith(status: SplashStatus.needLogin, userList: null);
+    state = state.copyWith(status: SplashStatus.needLogin, user: null);
   }
 }
