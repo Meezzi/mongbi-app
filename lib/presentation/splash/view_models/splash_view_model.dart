@@ -4,11 +4,14 @@ import 'package:mongbi_app/data/dtos/user_dto.dart';
 import 'package:mongbi_app/presentation/splash/view_models/splash_state.dart';
 import 'package:mongbi_app/presentation/splash/view_models/splash_status.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:mongbi_app/providers/user_info_provider.dart';
+
 
 class SplashViewModel extends StateNotifier<SplashState> {
-  SplashViewModel(this._dataSource) : super(const SplashState());
-
   final RemoteUserInfoGetDataSource _dataSource;
+  final Ref ref;
+
+  SplashViewModel(this._dataSource, this.ref) : super(const SplashState());
 
   Future<void> checkLoginAndFetchUserInfo() async {
     state = state.copyWith(status: SplashStatus.loading);
@@ -24,6 +27,7 @@ class SplashViewModel extends StateNotifier<SplashState> {
 
       final userList = await _dataSource.fetchGetUserInfo();
       state = state.copyWith(status: SplashStatus.success, userList: userList);
+      ref.read(currentUserProvider.notifier).setUser(userList[0].toEntity());
     } catch (_) {
       state = state.copyWith(status: SplashStatus.error);
     }

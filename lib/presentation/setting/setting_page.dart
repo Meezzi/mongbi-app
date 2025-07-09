@@ -41,16 +41,17 @@ class _SettingPageState extends ConsumerState<SettingPage> {
   Widget build(BuildContext context) {
     final isBgmOn = ref.watch(bgmProvider);
     final bgmNotifier = ref.read(bgmProvider.notifier);
-    final splashState = ref.watch(splashViewModelProvider);
+    final currentUser = ref.watch(currentUserProvider);
 
     return ListView(
       padding: const EdgeInsets.symmetric(horizontal: 24),
       children: [
-        UserInfoHeader(
-          nickname: splashState.userList![0].userNickname!,
-          loginType: splashState.userList![0].userSocialType,
-          onTap: () => context.push('/profile_setting'),
-        ),
+        if (currentUser != null)
+          UserInfoHeader(
+            nickname: currentUser.userNickname!,
+            loginType: currentUser.userSocialType,
+            onTap: () => context.push('/profile_setting'),
+          ),
         const SizedBox(height: 24),
         SectionCard(
           title: '설정',
