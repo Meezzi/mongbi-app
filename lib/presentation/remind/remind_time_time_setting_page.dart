@@ -13,6 +13,7 @@ import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_text_
 import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_widget.dart';
 import 'package:mongbi_app/providers/setting_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+
 class RemindTimePickerPage extends ConsumerStatefulWidget {
   const RemindTimePickerPage({super.key, required this.isRemindEnabled});
 
@@ -130,8 +131,9 @@ class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage>
                     try {
                       final status = await Permission.notification.status;
 
-                      final granted = await NotificationService()
-                          .requestNotificationPermission();
+                      final granted =
+                          await NotificationService()
+                              .requestNotificationPermission();
                       if (!granted) {
                         if (status.isPermanentlyDenied) {
                           await AnalyticsHelper.logEvent('리마인드_권한_영구_거부', {
@@ -146,8 +148,7 @@ class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage>
                               3,
                             ),
                           );
-                          await NotificationService()
-                              .openAppSettingsIfNeeded();
+                          await NotificationService().openAppSettingsIfNeeded();
                         } else {
                           await AnalyticsHelper.logEvent('리마인드_권한_거부', {
                             '화면_이름': '리마인드_시간_설정_페이지',
@@ -162,12 +163,11 @@ class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage>
                       }
 
                       await NotificationService().cancelReminderNotification();
-                      await NotificationService()
-                          .scheduleDailyReminder(selectedTime);
+                      await NotificationService().scheduleDailyReminder(
+                        selectedTime,
+                      );
 
-                      ref
-                          .read(alarmSettingProvider.notifier)
-                          .setReminder(true);
+                      ref.read(alarmSettingProvider.notifier).setReminder(true);
 
                       if (widget.isRemindEnabled ?? false) {
                         context.pop();

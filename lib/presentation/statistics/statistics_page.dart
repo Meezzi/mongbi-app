@@ -6,7 +6,7 @@ import 'package:mongbi_app/presentation/statistics/widgets/month_statistics.dart
 import 'package:mongbi_app/presentation/statistics/widgets/tab_bar_title.dart';
 import 'package:mongbi_app/presentation/statistics/widgets/year_statistics.dart';
 import 'package:mongbi_app/providers/statistics_provider.dart';
-import 'package:mongbi_app/providers/user_info_provider.dart';
+import 'package:mongbi_app/presentation/auth/viewmodels/auth_view_model.dart';
 
 class StatisticsPage extends ConsumerStatefulWidget {
   const StatisticsPage({super.key});
@@ -41,8 +41,8 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage>
     final double tabBarHeight =
         48 + // TabBar 높이
         8 * 2; // Padding Vertical
-    final splashState = ref.watch(splashViewModelProvider);
-    final nickname = splashState.userList?[0].userNickname ?? '몽비';
+    final currentUser = ref.watch(currentUserProvider);
+    final nickname = currentUser?.userNickname ?? '몽비';
     final snackBarState = ref.watch(snackBarStatusProvider);
     final statisticsAsync = ref.watch(statisticsViewModelProvider);
 
