@@ -8,10 +8,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 
 class SplashViewModel extends StateNotifier<SplashState> {
-  final RemoteUserInfoGetDataSource _dataSource;
-  final Ref ref;
 
   SplashViewModel(this._dataSource, this.ref) : super(const SplashState());
+  final RemoteUserInfoGetDataSource _dataSource;
+  final Ref ref;
 
   Future<void> checkLoginAndFetchUserInfo() async {
     state = state.copyWith(status: SplashStatus.loading);
