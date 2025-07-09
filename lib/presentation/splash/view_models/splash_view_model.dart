@@ -3,8 +3,8 @@ import 'package:mongbi_app/data/data_sources/remote_user_info_data_source.dart';
 import 'package:mongbi_app/data/dtos/user_dto.dart';
 import 'package:mongbi_app/presentation/splash/view_models/splash_state.dart';
 import 'package:mongbi_app/presentation/splash/view_models/splash_status.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mongbi_app/providers/user_info_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class SplashViewModel extends StateNotifier<SplashState> {
