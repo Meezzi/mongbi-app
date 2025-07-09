@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/analytics/analytics_helper.dart';
 import 'package:mongbi_app/presentation/common/button_type.dart';
 import 'package:mongbi_app/presentation/common/filled_button_widget.dart';
+import 'package:mongbi_app/presentation/onboarding/widgets/onbording_skip_button_widget.dart';
 import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_image_widget.dart';
 import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_text_widget.dart';
 
@@ -40,6 +41,12 @@ class RemindTimeSettingPage extends StatelessWidget {
             ],
           ),
         ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(0, 16, 24, 16),
+            child: SkipButton(onTap: () => context.go('/onbording_page')),
+          ),
+        ],
       ),
       body: SafeArea(
         child: Padding(
@@ -74,7 +81,10 @@ class RemindTimeSettingPage extends StatelessWidget {
                       '리마인드_소개_확인',
                       '리마인드_소개_페이지',
                     );
-                    await context.push('/remindtime_time_setting');
+                    await context.push(
+                      '/remindtime_time_setting',
+                      extra: {'isRemindEnabled': false},
+                    );
                   },
                 ),
               ),

@@ -25,14 +25,25 @@ android {
     defaultConfig {
         applicationId = "com.codepoets.mongbi"
         minSdk = flutter.minSdkVersion
-        targetSdk = flutter.targetSdkVersion
+        targetSdk = 34
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }
 
+    signingConfigs {
+        create("release") {
+            storeFile = file("../" + (project.properties["MYAPP_UPLOAD_STORE_FILE"] as String))
+            storePassword = project.properties["MYAPP_UPLOAD_STORE_PASSWORD"] as String
+            keyAlias = project.properties["MYAPP_UPLOAD_KEY_ALIAS"] as String
+            keyPassword = project.properties["MYAPP_UPLOAD_KEY_PASSWORD"] as String
+        }
+    }
+
     buildTypes {
         release {
-            signingConfig = signingConfigs.getByName("debug")
+            isDebuggable = false
+            signingConfig = signingConfigs.getByName("release")
+            isMinifyEnabled = true
         }
     }
 }

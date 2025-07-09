@@ -38,9 +38,7 @@ class _NicknameInputPageState extends ConsumerState<NicknameInputPage> {
       nicknameChanged = changed;
     });
 
-    await AnalyticsHelper.logScreenView(
-      changed ? '별명_수정_페이지' : '별명_입력_페이지',
-    );
+    await AnalyticsHelper.logScreenView(changed ? '별명_수정_페이지' : '별명_입력_페이지');
   }
 
   @override
@@ -48,6 +46,7 @@ class _NicknameInputPageState extends ConsumerState<NicknameInputPage> {
     final isButtonEnabled = RegExp(r'^[가-힣]{2,10}$').hasMatch(nickname.trim());
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar:
           nicknameChanged
               ? AppBar(
@@ -116,13 +115,10 @@ class _NicknameInputPageState extends ConsumerState<NicknameInputPage> {
           .read(splashViewModelProvider.notifier)
           .checkLoginAndFetchUserInfo();
 
-      await AnalyticsHelper.logEvent(
-        '별명_저장_성공',
-        {
-          '별명': nickname,
-          '수정_여부': nicknameChanged.toString(),
-        },
-      );
+      await AnalyticsHelper.logEvent('별명_저장_성공', {
+        '별명': nickname,
+        '수정_여부': nicknameChanged.toString(),
+      });
 
       if (mounted) {
         if (nicknameChanged) {
@@ -134,13 +130,10 @@ class _NicknameInputPageState extends ConsumerState<NicknameInputPage> {
         }
       }
     } catch (e) {
-      await AnalyticsHelper.logEvent(
-        '별명_저장_실패',
-        {
-          '별명': nickname,
-          '수정_여부': nicknameChanged.toString(),
-        },
-      );
+      await AnalyticsHelper.logEvent('별명_저장_실패', {
+        '별명': nickname,
+        '수정_여부': nicknameChanged.toString(),
+      });
 
       if (mounted) {
         ScaffoldMessenger.of(

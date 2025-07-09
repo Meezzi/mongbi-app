@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/font.dart';
+import 'package:mongbi_app/presentation/common/custom_snack_bar.dart';
 import 'package:mongbi_app/presentation/common/floating_animation_widget.dart';
 import 'package:mongbi_app/providers/dream_provider.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 class DreamAnalysisLoadingPage extends ConsumerStatefulWidget {
   const DreamAnalysisLoadingPage({super.key, required this.isFirst});
@@ -76,11 +78,14 @@ class _DreamAnalysisLoadingPageState
           '/dream_analysis_result?isFirst=${widget.isFirst}',
         );
       }
-    } catch (e) {
+    } catch (e, s) {
       if (mounted) {
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(SnackBar(content: Text('꿈 해석 중 오류가 발생했어요: $e')));
+        ).showSnackBar(customSnackBar('꿈 해석 중 오류가 발생했어요.', 80, 2));
+
+        await Sentry.captureException(e, stackTrace: s);
+
         context.pop();
       }
     }

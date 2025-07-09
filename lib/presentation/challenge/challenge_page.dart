@@ -131,7 +131,7 @@ class ChallengePage extends ConsumerWidget {
                             content: '아앗, 아쉬워라\n꿈 잘먹었몽! 오늘도 힘내라몽',
                             buttonText: '고마워',
                             onSubmit: () {
-                              context.pushReplacement('/home');
+                              context.go('/home');
                             },
                           ),
                     );
@@ -174,7 +174,7 @@ class ChallengePage extends ConsumerWidget {
                                   .read(challengeViewModelProvider.notifier)
                                   .saveChallenge();
 
-                              context.pushReplacement('/home');
+                              context.go('/home');
                             },
                           ),
                     );

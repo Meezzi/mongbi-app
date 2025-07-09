@@ -2,8 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mongbi_app/core/secure_storage_service.dart';
 import 'package:mongbi_app/presentation/dream/models/dream_write_state.dart';
 import 'package:mongbi_app/providers/dream_provider.dart';
-import 'package:mongbi_app/providers/history_provider.dart';
-import 'package:mongbi_app/providers/statistics_provider.dart';
 
 class DreamWriteViewModel extends AutoDisposeNotifier<DreamWriteState> {
   @override
@@ -35,10 +33,5 @@ class DreamWriteViewModel extends AutoDisposeNotifier<DreamWriteState> {
         .execute(uid, state.dreamContent, state.selectedIndex + 1);
 
     ref.read(dreamInterpretationViewModelProvider.notifier).setDream(dream);
-
-    // 작성 후 기록, 통계 갱신
-    await ref.read(statisticsViewModelProvider.notifier).fetchMonthStatistics();
-    await ref.read(statisticsViewModelProvider.notifier).fetchYearStatistics();
-    await ref.read(historyViewModelProvider.notifier).fetchUserDreamsHistory();
   }
 }
