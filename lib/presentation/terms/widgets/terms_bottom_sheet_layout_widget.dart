@@ -6,11 +6,9 @@ import 'package:mongbi_app/data/dtos/terms_aggrement_dto.dart';
 import 'package:mongbi_app/domain/entities/terms.dart';
 import 'package:mongbi_app/presentation/common/button_type.dart';
 import 'package:mongbi_app/presentation/common/filled_button_widget.dart';
-import 'package:mongbi_app/presentation/terms/widgets/terms_button_widget.dart';
 import 'package:mongbi_app/presentation/terms/widgets/terms_checkbox_widget.dart';
 import 'package:mongbi_app/presentation/terms/widgets/terms_text_widget.dart';
 import 'package:mongbi_app/providers/terms_provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class TermsBottomSheet extends ConsumerStatefulWidget {
   const TermsBottomSheet({super.key});

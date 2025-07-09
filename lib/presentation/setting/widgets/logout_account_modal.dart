@@ -67,6 +67,7 @@ class LogoutAccontModal extends ConsumerWidget {
                           onPress: () async {
                             final prefs = await SharedPreferences.getInstance();
                             final loginType = prefs.getString('lastLoginType');
+                            await prefs.setBool('nicknameChangeState', false);
                             bool success = false;
 
                             try {
