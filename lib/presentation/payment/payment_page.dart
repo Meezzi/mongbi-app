@@ -7,6 +7,7 @@ import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/presentation/payment/widgets/premium_item_card.dart';
 import 'package:mongbi_app/presentation/payment/widgets/price_card.dart';
 import 'package:mongbi_app/presentation/payment/widgets/restore_button.dart';
+import 'package:mongbi_app/presentation/payment/widgets/terms_text_button.dart';
 import 'package:mongbi_app/providers/user_info_provider.dart';
 
 class PaymentPage extends ConsumerWidget {
@@ -90,6 +91,14 @@ class PaymentPage extends ConsumerWidget {
                   style: Font.body12.copyWith(color: const Color(0xFF76717A)),
                 ),
                 const SizedBox(height: 20),
+                TermsLinksRow(
+                  onServiceTermsPressed: () {
+                    print('서비스 이용약관 열기');
+                  },
+                  onPrivacyPolicyPressed: () {
+                    print('개인정보 처리방침 열기');
+                  },
+                ),
               ],
             ),
           ),
