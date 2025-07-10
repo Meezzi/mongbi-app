@@ -9,7 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:mongbi_app/core/router.dart';
-import 'package:mongbi_app/firebase_optiopns.dart';
+import 'package:mongbi_app/firebase_options.dart';
 import 'package:mongbi_app/presentation/remind/view_model/remind_time_setting_view_model.dart';
 import 'package:mongbi_app/providers/background_music_provider.dart';
 import 'package:mongbi_app/providers/setting_provider.dart';
