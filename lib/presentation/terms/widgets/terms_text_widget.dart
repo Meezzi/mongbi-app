@@ -12,10 +12,7 @@ class TermsHeaderText extends StatelessWidget {
       children: [
         Text(
           '몽비 이용을 위한\n이용약관 동의가 필요해몽',
-          style: Font.title18.copyWith(
-            fontSize: getResponsiveRatioByWidth(context, 18),
-            color: Colors.black,
-          ),
+          style: Font.title18.copyWith(color: Colors.black),
         ),
       ],
     );
