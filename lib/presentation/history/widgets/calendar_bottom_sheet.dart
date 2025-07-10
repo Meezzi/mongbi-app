@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mongbi_app/core/responsive_layout.dart';
 import 'package:mongbi_app/presentation/history/models/calendar_model.dart';
 import 'package:mongbi_app/presentation/history/widgets/calendar_bottom_sheet_month_selector.dart';
 import 'package:mongbi_app/presentation/history/widgets/calendar_bottom_sheet_year_selector.dart';
 import 'package:mongbi_app/providers/history_provider.dart';
 
-class MonthBottomSheet extends ConsumerStatefulWidget {
-  const MonthBottomSheet({super.key});
+class CalendarBottomSheet extends ConsumerStatefulWidget {
+  const CalendarBottomSheet({super.key});
 
   @override
-  ConsumerState<MonthBottomSheet> createState() => _MonthBottomSheetState();
+  ConsumerState<CalendarBottomSheet> createState() =>
+      _CalendarBottomSheetState();
 }
 
-class _MonthBottomSheetState extends ConsumerState<MonthBottomSheet> {
+class _CalendarBottomSheetState extends ConsumerState<CalendarBottomSheet> {
   late CalendarModel localCalendarState;
   late int minYear;
   late int maxYear;
@@ -59,7 +61,7 @@ class _MonthBottomSheetState extends ConsumerState<MonthBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: double.infinity,
+      width: ResponsiveLayout.getWidth(context),
       height: 282,
       padding: EdgeInsets.only(top: 24, bottom: 24 + 34, left: 24, right: 24),
       decoration: BoxDecoration(

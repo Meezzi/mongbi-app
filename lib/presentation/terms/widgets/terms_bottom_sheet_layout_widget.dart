@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mongbi_app/core/responsive_layout.dart';
 import 'package:mongbi_app/core/secure_storage_service.dart';
 import 'package:mongbi_app/data/dtos/terms_aggrement_dto.dart';
 import 'package:mongbi_app/domain/entities/terms.dart';
@@ -82,6 +83,7 @@ class _TermsBottomSheetState extends ConsumerState<TermsBottomSheet> {
     final isEssentialChecked = mandatoryIndexes.every((i) => isCheckedList[i]);
 
     return Container(
+      width: ResponsiveLayout.getWidth(context),
       padding: EdgeInsets.only(
         top: 24,
         left: 24,

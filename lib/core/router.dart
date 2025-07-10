@@ -3,6 +3,7 @@ import 'package:firebase_analytics/observer.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/custom_transition_page.dart';
 import 'package:mongbi_app/core/main_scaffold.dart';
+import 'package:mongbi_app/core/responsive_layout.dart';
 import 'package:mongbi_app/core/route_observer.dart';
 import 'package:mongbi_app/presentation/alarm/alarm_page.dart';
 import 'package:mongbi_app/presentation/auth/social_login_page.dart';
@@ -66,33 +67,37 @@ final GoRouter router = GoRouter(
     GoRoute(path: '/splash', builder: (context, state) => SplashPage()),
     GoRoute(
       path: '/social_login',
-      builder: (context, state) => SocialLoginPage(),
+      builder: (context, state) => ResponsiveLayout(child: SocialLoginPage()),
     ),
     GoRoute(
       path: '/nickname_input',
-      builder: (context, state) => NicknameInputPage(),
+      builder: (context, state) => ResponsiveLayout(child: NicknameInputPage()),
     ),
     GoRoute(
       path: '/remindtime_setting',
-      builder: (context, state) => RemindTimeSettingPage(),
+      builder:
+          (context, state) => ResponsiveLayout(child: RemindTimeSettingPage()),
     ),
 
     GoRoute(
       path: '/remindtime_time_setting',
       builder:
-          (context, state) => RemindTimePickerPage(
-            isRemindEnabled: bool.tryParse(
-              '${state.uri.queryParameters['isRemindEnabled']}',
+          (context, state) => ResponsiveLayout(
+            child: RemindTimePickerPage(
+              isRemindEnabled: bool.tryParse(
+                '${state.uri.queryParameters['isRemindEnabled']}',
+              ),
             ),
           ),
     ),
     GoRoute(
       path: '/onbording_page',
-      builder: (context, state) => OnboardingPage(),
+      builder: (context, state) => ResponsiveLayout(child: OnboardingPage()),
     ),
     GoRoute(
       path: '/onbording_exit_page',
-      builder: (context, state) => OnboardingExitPage(),
+      builder:
+          (context, state) => ResponsiveLayout(child: OnboardingExitPage()),
     ),
     GoRoute(
       path: '/dream_intro',
@@ -141,10 +146,12 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/dream_interpretation',
       builder:
-          (context, state) => DreamInterpretationPage(
-            isFirst:
-                bool.tryParse('${state.uri.queryParameters['isFirst']}') ??
-                true,
+          (context, state) => ResponsiveLayout(
+            child: DreamInterpretationPage(
+              isFirst:
+                  bool.tryParse('${state.uri.queryParameters['isFirst']}') ??
+                  true,
+            ),
           ),
     ),
     GoRoute(
@@ -165,16 +172,18 @@ final GoRouter router = GoRouter(
     ),
     GoRoute(
       path: '/profile_setting',
-      builder: (context, state) => ProfileSettingPage(),
+      builder:
+          (context, state) => ResponsiveLayout(child: ProfileSettingPage()),
     ),
     GoRoute(
       path: '/alarm_setting',
-      builder: (context, state) => AlarmSettingPage(),
+      builder: (context, state) => ResponsiveLayout(child: AlarmSettingPage()),
     ),
     GoRoute(path: '/alarm', builder: (context, state) => AlarmPage()),
     GoRoute(
       path: '/license_page',
-      builder: (context, state) => OpenSourceLicensePage(),
+      builder:
+          (context, state) => ResponsiveLayout(child: OpenSourceLicensePage()),
     ),
   ],
 );
