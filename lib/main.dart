@@ -17,7 +17,6 @@ void main() async {
   await dotenv.load(fileName: '.env');
   // 캘린더 한글화
   await initializeDateFormatting();
-  
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   KakaoSdk.init(
@@ -59,7 +58,9 @@ class _MyAppState extends ConsumerState<MyApp> with WidgetsBindingObserver {
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
-    ref.read(backgroundMusicProvider).dispose();
+    if (mounted) {
+      ref.read(backgroundMusicProvider).dispose();
+    }
     super.dispose();
   }
 
