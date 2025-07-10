@@ -9,6 +9,7 @@ import 'package:mongbi_app/presentation/payment/widgets/premium_item_card.dart';
 import 'package:mongbi_app/presentation/payment/widgets/price_card.dart';
 import 'package:mongbi_app/presentation/payment/widgets/restore_button.dart';
 import 'package:mongbi_app/presentation/payment/widgets/terms_text_button.dart';
+import 'package:mongbi_app/providers/inapp_provider.dart';
 import 'package:mongbi_app/providers/user_info_provider.dart';
 
 class PaymentPage extends ConsumerWidget {
@@ -17,7 +18,12 @@ class PaymentPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final userInfo = ref.watch(splashViewModelProvider);
+    final viewModel = ref.watch(subscriptionViewModelProvider);
+    final products = viewModel.products;
 
+    if (products.isEmpty) {
+      return const CircularProgressIndicator(); // or SizedBox.shrink()
+    }
     AnalyticsHelper.logScreenView('결제페이지');
 
     return Scaffold(
@@ -55,7 +61,12 @@ class PaymentPage extends ConsumerWidget {
                   style: Font.title14.copyWith(color: const Color(0xFF1A181B)),
                 ),
                 const SizedBox(height: 50),
-                const SubscriptionSelector(),
+                SubscriptionSelector(
+                  products: products,
+                  selectedIndex: viewModel.selectedIndex,
+                  onChanged: viewModel.select,
+                ),
+
                 const SizedBox(height: 15),
                 Text(
                   '*무료 구독은 첫 구매시에만 적용됩니다.',
