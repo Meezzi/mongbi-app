@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -17,7 +20,6 @@ void main() async {
   await dotenv.load(fileName: '.env');
   // 캘린더 한글화
   await initializeDateFormatting();
-  
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   KakaoSdk.init(
@@ -35,6 +37,15 @@ void main() async {
     appRunner:
         () => runApp(SentryWidget(child: const ProviderScope(child: MyApp()))),
   );
+
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+
+  runZonedGuarded(() => runApp(const ProviderScope(child: MyApp())), (
+    error,
+    stackTrace,
+  ) {
+    FirebaseCrashlytics.instance.recordError(error, stackTrace);
+  });
 }
 
 class MyApp extends ConsumerStatefulWidget {
