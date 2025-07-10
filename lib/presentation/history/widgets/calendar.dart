@@ -20,13 +20,10 @@ class Calendar extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final calendarState = ref.watch(calendarViewModelProvider);
     final calendarVm = ref.read(calendarViewModelProvider.notifier);
-    final deviceSize = MediaQuery.of(context).size;
-    final double calendarWidth = deviceSize.width - horizontalPadding * 2;
-    final double cellWidth = calendarWidth / 7; // 375기준 46.7
-    final double cellHeight = cellWidth * 1.63; // 375기준 76
-    final double circleWidth = cellWidth * 0.86; // 375기준 40
-    final double daysOfWeekHeight = cellHeight * 0.56;
-    final double fontViewWidth = deviceSize.width * 0.038;
+    final double cellWidth = 46.7; // 375기준 46.7
+    final double cellHeight = 76; // 375기준 76
+    final double circleWidth = 40; // 375기준 40
+    final double daysOfWeekHeight = 40; // 375기준 40
 
     return TableCalendar(
       locale: 'ko_KR',
@@ -67,16 +64,16 @@ class Calendar extends ConsumerWidget {
           return CalendarCell(
             day: day,
             isSelected: false,
+            cellWidth: cellWidth,
             circleWidth: circleWidth,
-            fontViewWidth: fontViewWidth,
           );
         },
         selectedBuilder: (context, day, focusedDay) {
           return CalendarCell(
             day: day,
             isSelected: true,
+            cellWidth: cellWidth,
             circleWidth: circleWidth,
-            fontViewWidth: fontViewWidth,
           );
         },
       ),

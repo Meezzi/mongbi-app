@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mongbi_app/core/font.dart';
-import 'package:mongbi_app/core/get_responsive_ratio_by_width.dart';
 import 'package:mongbi_app/domain/entities/terms.dart';
 import 'package:mongbi_app/presentation/terms/terms_inner_page.dart';
 import 'package:mongbi_app/presentation/terms/widgets/terms_custom_checkbox.widget.dart';
@@ -51,17 +50,9 @@ class TermsAgreementTile extends StatelessWidget {
                       style:
                           isAllAgree
                               ? Font.title16.copyWith(
-                                fontSize: getResponsiveRatioByWidth(
-                                  context,
-                                  16,
-                                ),
                                 color: const Color(0xFF1A181B),
                               )
                               : Font.body16.copyWith(
-                                fontSize: getResponsiveRatioByWidth(
-                                  context,
-                                  16,
-                                ),
                                 color: const Color(0xFF1A181B),
                               ),
                     ),

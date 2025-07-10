@@ -16,30 +16,33 @@ class UserInfoHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      behavior: HitTestBehavior.translucent,
-      onTap: onTap,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Text(
-            '$nickname 님',
-            style: Font.title20.copyWith(color: Color(0xFF6321B5)),
-          ),
-          SizedBox(width: 8),
-          Text(
-            '$loginType 로그인',
-            style: Font.subTitle12.copyWith(color: Color(0xFFCA9FFF)),
-          ),
-          Spacer(),
-          SvgPicture.asset(
-            'assets/icons/chevron-right.svg',
-            width: 24,
-            height: 24,
-            colorFilter: ColorFilter.mode(Color(0xFFA6A1AA), BlendMode.srcIn),
-          ),
-          SizedBox(width: 20),
-        ],
+    return Padding(
+      padding: const EdgeInsets.only(top: 16),
+      child: GestureDetector(
+        behavior: HitTestBehavior.translucent,
+        onTap: onTap,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Text(
+              '$nickname 님',
+              style: Font.title20.copyWith(color: Color(0xFF6321B5)),
+            ),
+            SizedBox(width: 8),
+            Text(
+              '$loginType 로그인',
+              style: Font.subTitle12.copyWith(color: Color(0xFFCA9FFF)),
+            ),
+            Spacer(),
+            SvgPicture.asset(
+              'assets/icons/chevron-right.svg',
+              width: 24,
+              height: 24,
+              colorFilter: ColorFilter.mode(Color(0xFFA6A1AA), BlendMode.srcIn),
+            ),
+            SizedBox(width: 20),
+          ],
+        ),
       ),
     );
   }

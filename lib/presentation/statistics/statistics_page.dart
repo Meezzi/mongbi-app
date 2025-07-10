@@ -47,6 +47,8 @@ class _StatisticsPageState extends ConsumerState<StatisticsPage>
     final statisticsAsync = ref.watch(statisticsViewModelProvider);
 
     return SafeArea(
+      left: false,
+      right: false,
       child: Stack(
         children: [
           NestedScrollView(
