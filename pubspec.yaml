@@ -64,6 +64,7 @@ dependencies:
   firebase_analytics: ^11.5.0
   firebase_messaging: ^15.2.7
   share_plus: ^11.0.0
+  firebase_crashlytics: ^4.3.9
 
 dev_dependencies:
   sentry_dart_plugin: ^3.1.0
