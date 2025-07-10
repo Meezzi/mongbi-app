@@ -18,6 +18,7 @@ import 'package:mongbi_app/presentation/history/history_page.dart';
 import 'package:mongbi_app/presentation/home/home_page.dart';
 import 'package:mongbi_app/presentation/onboarding/onbording_exit_page.dart';
 import 'package:mongbi_app/presentation/onboarding/onbording_page.dart';
+import 'package:mongbi_app/presentation/payment/payment_page.dart';
 import 'package:mongbi_app/presentation/remind/remind_time_setting_page.dart';
 import 'package:mongbi_app/presentation/remind/remind_time_time_setting_page.dart';
 import 'package:mongbi_app/presentation/setting/alarm_setting_page.dart';
@@ -36,7 +37,7 @@ final GoRouter router = GoRouter(
   ],
   initialLocation: '/',
   routes: [
-    GoRoute(path: '/', redirect: (_, __) => '/splash'),
+    GoRoute(path: '/', redirect: (_, __) => '/shop'),
 
     ShellRoute(
       builder: (context, state, child) {
@@ -184,6 +185,11 @@ final GoRouter router = GoRouter(
       path: '/license_page',
       builder:
           (context, state) => ResponsiveLayout(child: OpenSourceLicensePage()),
+    ),
+    GoRoute(
+      path: '/shop',
+      builder:
+          (context, state) => ResponsiveLayout(child: PaymentPage()),
     ),
   ],
 );

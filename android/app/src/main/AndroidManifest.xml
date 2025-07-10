@@ -115,13 +115,6 @@ package="com.codepoets.mongbi">
             android:name="com.naver.sdk.clientName"
             android:value="@string/client_name" />
     </application>
-    <supports-screens
-    android:smallScreens="true"
-    android:normalScreens="true"
-    android:largeScreens="false"
-    android:xlargeScreens="false"
-    android:resizeable="false"
-    android:anyDensity="true" />
     <!-- Required to query activities that can process text, see:
          https://developer.android.com/training/package-visibility and
          https://developer.android.com/reference/android/content/Intent#ACTION_PROCESS_TEXT.
