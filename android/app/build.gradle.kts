@@ -39,13 +39,15 @@ android {
         }
     }
 
-    buildTypes {
-        release {
-            isDebuggable = false
-            signingConfig = signingConfigs.getByName("release")
-            isMinifyEnabled = true
+        buildTypes {
+            getByName("release") {
+                isDebuggable = false
+                signingConfig = signingConfigs.getByName("release")
+                isMinifyEnabled = false
+                isShrinkResources = false
+            }
         }
-    }
+
 }
 
 flutter {
@@ -53,6 +55,8 @@ flutter {
 }
 
 dependencies {
+    implementation 'com.google.android.play:feature-delivery:2.1.0'
+    implementation 'com.google.android.play:feature-delivery-ktx:2.1.0'
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")
     implementation("org.jetbrains.kotlin:kotlin-stdlib:2.1.0")
 }
