@@ -29,7 +29,14 @@ class MainScaffold extends ConsumerWidget {
       backgroundColor: _buildScaffoldBackgroundColor(location),
       appBar: _buildAppBar(context, location),
       extendBodyBehindAppBar: location.startsWith('/home') ? true : false,
-      body: child,
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          if (constraints.maxWidth >= 480) {
+            return Center(child: SizedBox(width: 480, child: child));
+          }
+          return child;
+        },
+      ),
       bottomNavigationBar: BottomAppBar(
         height: 56,
         padding: EdgeInsets.symmetric(horizontal: 24),
@@ -125,9 +132,7 @@ class MainScaffold extends ConsumerWidget {
   }
 
   Color _buildScaffoldBackgroundColor(String location) {
-    if (location.startsWith('/setting')) {
-      return Color(0xFFFCF6FF);
-    } else if (location.startsWith('/statistics')) {
+    if (location.startsWith('/statistics')) {
       return Color(0xFFFFFFFF);
     }
     return Color(0xFFFAFAFA);
@@ -150,64 +155,69 @@ class MainScaffold extends ConsumerWidget {
   AppBar? _buildAppBar(BuildContext context, String location) {
     if (location.startsWith('/home')) {
       return AppBar(
-        title: Text(
-          'MONGBI',
-          style: Font.title24.copyWith(color: Colors.white),
+        title: Center(
+          child: SizedBox(
+            width:
+                MediaQuery.sizeOf(context).width >= 480 ? 480 : double.infinity,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Row(
+                children: [
+                  Text(
+                    'MONGBI',
+                    style: Font.title24.copyWith(color: Colors.white),
+                  ),
+                  // TODO : FCM 사용 전까지 숨김
+                  // actions: [
+                  //   IconButton(
+                  //     onPressed: () {
+                  //       context.push('/alarm');
+                  //     },
+                  //     padding: EdgeInsets.only(right: 24),
+                  //     icon: Consumer(
+                  //       builder: (context, ref, child) {
+                  //         final alarmState = ref.watch(alarmViewModelProvider);
+                  //         final alarmList = alarmState.alarmList;
+                  //         final isNotRead =
+                  //             alarmList?.any((e) => e.fcmIsRead == false) ?? false;
+
+                  //         return Stack(
+                  //           clipBehavior: Clip.none,
+                  //           children: [
+                  //             SvgPicture.asset(
+                  //               'assets/icons/bell.svg',
+                  //               width: 24,
+                  //               height: 24,
+                  //               fit: BoxFit.none,
+                  //             ),
+                  //             if (isNotRead)
+                  //               Positioned(
+                  //                 right: 0,
+                  //                 top: 0,
+                  //                 child: Container(
+                  //                   width: 6,
+                  //                   height: 6,
+                  //                   decoration: BoxDecoration(
+                  //                     color: Color(0xFFEA4D57),
+                  //                     shape: BoxShape.circle,
+                  //                   ),
+                  //                 ),
+                  //               ),
+                  //           ],
+                  //         );
+                  //       },
+                  //     ),
+                  //   ),
+                  // ],
+                ],
+              ),
+            ),
+          ),
         ),
         centerTitle: false,
         backgroundColor: Colors.transparent,
-        titleSpacing: 24,
         elevation: 0,
-        // TODO : FCM 사용 전까지 숨김
-        // actions: [
-        //   IconButton(
-        //     onPressed: () {
-        //       context.push('/alarm');
-        //     },
-        //     padding: EdgeInsets.only(right: 24),
-        //     icon: Consumer(
-        //       builder: (context, ref, child) {
-        //         final alarmState = ref.watch(alarmViewModelProvider);
-        //         final alarmList = alarmState.alarmList;
-        //         final isNotRead =
-        //             alarmList?.any((e) => e.fcmIsRead == false) ?? false;
-
-        //         return Stack(
-        //           clipBehavior: Clip.none,
-        //           children: [
-        //             SvgPicture.asset(
-        //               'assets/icons/bell.svg',
-        //               width: 24,
-        //               height: 24,
-        //               fit: BoxFit.none,
-        //             ),
-        //             if (isNotRead)
-        //               Positioned(
-        //                 right: 0,
-        //                 top: 0,
-        //                 child: Container(
-        //                   width: 6,
-        //                   height: 6,
-        //                   decoration: BoxDecoration(
-        //                     color: Color(0xFFEA4D57),
-        //                     shape: BoxShape.circle,
-        //                   ),
-        //                 ),
-        //               ),
-        //           ],
-        //         );
-        //       },
-        //     ),
-        //   ),
-        // ],
-      );
-    } else if (location.startsWith('/setting')) {
-      return AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        titleSpacing: 24,
-        title: Text('마이페이지', style: Font.title20),
-        centerTitle: false,
+        titleSpacing: 0,
       );
     }
 
