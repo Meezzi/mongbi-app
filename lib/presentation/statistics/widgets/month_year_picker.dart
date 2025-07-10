@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mongbi_app/core/get_widget_info.dart';
+import 'package:mongbi_app/presentation/statistics/statistics_key/statistics_key.dart';
 import 'package:mongbi_app/providers/statistics_provider.dart';
 
 class MonthYearPicker extends ConsumerStatefulWidget {
   const MonthYearPicker({
     super.key,
     required this.isMonth,
-    required this.left,
-    required this.top,
     required this.scrollController,
   });
 
   final bool isMonth;
-  final double left;
-  final double top;
   final ScrollController scrollController;
 
   @override
@@ -32,6 +30,12 @@ class MonthYearPickerState extends ConsumerState<MonthYearPicker> {
   void show() {
     if (_overlayEntry != null) return; // 이미 띄워져 있으면 무시
 
+    final buttonKey = widget.isMonth ? monthPickerButton : yearPickerButton;
+    final pickerButtonInfo = getWidgetInfo(buttonKey);
+    final positionX = pickerButtonInfo!.localToGlobal(Offset.zero).dx;
+    final positionY = pickerButtonInfo.localToGlobal(Offset.zero).dy;
+    final buttonHeight = pickerButtonInfo.size.height;
+
     _overlayEntry = OverlayEntry(
       builder:
           (context) => DefaultTextStyle(
@@ -46,8 +50,8 @@ class MonthYearPickerState extends ConsumerState<MonthYearPicker> {
                   child: Container(color: Colors.transparent),
                 ),
                 Positioned(
-                  left: widget.left,
-                  top: widget.top,
+                  left: positionX,
+                  top: positionY + buttonHeight,
                   child: Container(
                     padding: const EdgeInsets.only(right: 12),
                     width: 100,

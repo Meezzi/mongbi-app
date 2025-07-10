@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mongbi_app/core/get_widget_info.dart';
 import 'package:mongbi_app/data/dtos/statistics_dto.dart';
 import 'package:mongbi_app/presentation/statistics/statistics_key/statistics_key.dart';
 import 'package:mongbi_app/presentation/statistics/widgets/dream_frequency_card.dart';
@@ -24,23 +23,7 @@ class YearStatistics extends ConsumerStatefulWidget {
 class _YearStatisticsState extends ConsumerState<YearStatistics>
     with RouteAware {
   bool isMonth = false;
-  double? yearPickerButtonPosition;
   final ScrollController scrollController = ScrollController();
-
-  @override
-  void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      final yearPickerButtonInfo = getWidgetInfo(yearPickerButton);
-      final yearButtonPosition =
-          yearPickerButtonInfo!.localToGlobal(Offset.zero).dy;
-      final yearButtonHeight = yearPickerButtonInfo.size.height;
-      setState(() {
-        yearPickerButtonPosition = yearButtonPosition + yearButtonHeight;
-      });
-    });
-
-    super.initState();
-  }
 
   @override
   void dispose() {
@@ -65,7 +48,6 @@ class _YearStatisticsState extends ConsumerState<YearStatistics>
             MonthYearPickerButton(
               isMonth: isMonth,
               scrollController: scrollController,
-              pickerButtonPosition: yearPickerButtonPosition ?? 0,
               horizontalPadding: widget.horizontalPadding,
             ),
 
@@ -73,8 +55,6 @@ class _YearStatisticsState extends ConsumerState<YearStatistics>
               key: isMonth ? monthPickerKey : yearPickerKey,
               isMonth: isMonth,
               scrollController: scrollController,
-              top: yearPickerButtonPosition ?? 0,
-              left: widget.horizontalPadding,
             ),
 
             statisticsAsync.when(

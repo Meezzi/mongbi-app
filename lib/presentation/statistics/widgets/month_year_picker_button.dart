@@ -11,13 +11,11 @@ class MonthYearPickerButton extends ConsumerWidget {
     super.key,
     required this.isMonth,
     required this.scrollController,
-    required this.pickerButtonPosition,
     required this.horizontalPadding,
   });
 
   final bool isMonth;
   final ScrollController scrollController;
-  final double pickerButtonPosition;
   final double horizontalPadding;
 
   @override
