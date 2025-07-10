@@ -6,6 +6,7 @@ import 'package:mongbi_app/core/analytics/analytics_helper.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/presentation/payment/widgets/premium_item_card.dart';
 import 'package:mongbi_app/presentation/payment/widgets/price_card.dart';
+import 'package:mongbi_app/presentation/payment/widgets/restore_button.dart';
 import 'package:mongbi_app/providers/user_info_provider.dart';
 
 class PaymentPage extends ConsumerWidget {
@@ -73,6 +74,13 @@ class PaymentPage extends ConsumerWidget {
                 title: '심층 퍼스널 리포트',
                 description: '더욱 자세한 꿈 분석을 통해\n나의 심리를 더 자세히 알 수 있어요.',
                 assetImage: 'assets/images/ad.webp',
+              ),
+              SizedBox(height: 20),
+              RestorePurchaseButton(
+                onPressed: () {
+                  // TODO: 구매 복원 로직
+                  print('구매 복원 시도!');
+                },
               ),
             ],
           ),
