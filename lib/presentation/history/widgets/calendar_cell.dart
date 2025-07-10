@@ -10,14 +10,14 @@ class CalendarCell extends ConsumerWidget {
     super.key,
     required this.day,
     required this.isSelected,
+    required this.cellWidth,
     required this.circleWidth,
-    required this.fontViewWidth,
   });
 
   final DateTime day;
   final bool isSelected;
+  final double cellWidth;
   final double circleWidth;
-  final double fontViewWidth;
   final Map<String, String> iconPathMap = const {
     '1': 'assets/icons/very_bad.svg',
     '2': 'assets/icons/bad.svg',
@@ -35,7 +35,7 @@ class CalendarCell extends ConsumerWidget {
       iconPath = iconPathMap['${searchedHistory.first.dreamScore}'];
     }
     return Container(
-      width: double.infinity,
+      width: cellWidth,
       decoration: BoxDecoration(
         color: isSelected ? Color(0xFF3B136B) : null,
         borderRadius: isSelected ? BorderRadius.circular(999) : null,
@@ -59,7 +59,6 @@ class CalendarCell extends ConsumerWidget {
           Text(
             '${day.day}',
             style: Font.subTitle14.copyWith(
-              fontSize: fontViewWidth,
               color: isSelected ? Colors.white : Color(0xFFB273FF),
             ),
           ),
