@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mongbi_app/core/font.dart';
 
 class SubscriptionOption {
 
@@ -54,7 +55,7 @@ class _SubscriptionSelectorState extends State<SubscriptionSelector> {
             decoration: BoxDecoration(
               color: isSelected ? const Color(0xFFF8F1FF) : const Color(0xFFF9F6FD),
               border: Border.all(
-                color: isSelected ? const Color(0xFF8844FF) : const Color(0xFFDADADA),
+                color: isSelected ? const Color(0xFF6321B5) : const Color(0xFFDADADA),
                 width: 2,
               ),
               borderRadius: BorderRadius.circular(16),
@@ -72,21 +73,14 @@ class _SubscriptionSelectorState extends State<SubscriptionSelector> {
                     children: [
                       Text(
                         option.title,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15,
-                          color: Color(0xFF1A181B),
-                        ),
+                        style: Font.subTitle12.copyWith(color: const Color(0xFF29272A)),
                       ),
                       if (option.subtitle != null)
                         Padding(
                           padding: const EdgeInsets.only(top: 4),
                           child: Text(
                             option.subtitle!,
-                            style: TextStyle(
-                              fontSize: 13,
-                              color: isSelected ? const Color(0xFF8844FF) : Colors.grey,
-                            ),
+                            style: Font.subTitle12.copyWith(color: const Color(0xFF7F2AE8)),
                           ),
                         ),
                     ],
@@ -97,16 +91,12 @@ class _SubscriptionSelectorState extends State<SubscriptionSelector> {
                   children: [
                     Text(
                       option.price,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF1A181B),
-                      ),
+                      style: Font.subTitle12.copyWith(color: const Color(0xFF29272A)),
                     ),
                     if (option.subPrice != null)
                       Text(
                         option.subPrice!,
-                        style: const TextStyle(fontSize: 12, color: Colors.grey),
+                        style: Font.body12.copyWith(color: const Color(0xFF76717A)),
                       ),
                   ],
                 ),

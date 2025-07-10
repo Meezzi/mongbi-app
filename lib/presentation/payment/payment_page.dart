@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/analytics/analytics_helper.dart';
 import 'package:mongbi_app/core/font.dart';
+import 'package:mongbi_app/presentation/payment/widgets/bottom_button.dart';
 import 'package:mongbi_app/presentation/payment/widgets/premium_item_card.dart';
 import 'package:mongbi_app/presentation/payment/widgets/price_card.dart';
 import 'package:mongbi_app/presentation/payment/widgets/restore_button.dart';
@@ -103,6 +104,12 @@ class PaymentPage extends ConsumerWidget {
             ),
           ),
         ),
+      ),
+      bottomNavigationBar: PremiumBottomBar(
+        onPressed: () {
+          // TODO: 결제 시도
+          print('무료 체험 시작!');
+        },
       ),
     );
   }
