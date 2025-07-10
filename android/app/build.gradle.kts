@@ -5,6 +5,7 @@ plugins {
     id("org.jetbrains.kotlin.android") version "2.1.0"
     id("dev.flutter.flutter-gradle-plugin")
     id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 android {
@@ -45,6 +46,10 @@ android {
                 signingConfig = signingConfigs.getByName("release")
                 isMinifyEnabled = false
                 isShrinkResources = false
+                proguardFiles(
+                    getDefaultProguardFile("proguard-android-optimize.txt"),
+                    "proguard-rules.pro"
+                )
             }
         }
 
@@ -58,5 +63,6 @@ dependencies {
     implementation 'com.google.android.play:feature-delivery:2.1.0'
     implementation 'com.google.android.play:feature-delivery-ktx:2.1.0'
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")
+    implementation("com.google.firebase:firebase-crashlytics:18.6.1")
     implementation("org.jetbrains.kotlin:kotlin-stdlib:2.1.0")
 }
