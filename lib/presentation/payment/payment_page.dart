@@ -117,8 +117,8 @@ class PaymentPage extends ConsumerWidget {
         ),
       ),
       bottomNavigationBar: PremiumBottomBar(
-        onPressed: () {
-          // TODO: 결제 로직
+        onPressed: () async {
+          await viewModel.purchase();
         },
         buttonText:
             viewModel.selectedProduct.price.contains('₩33,000')
