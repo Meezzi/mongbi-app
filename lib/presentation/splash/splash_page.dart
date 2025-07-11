@@ -6,6 +6,7 @@ import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/presentation/common/floating_animation_widget.dart';
 import 'package:mongbi_app/presentation/splash/view_models/splash_status.dart';
 import 'package:mongbi_app/providers/user_info_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashPage extends ConsumerStatefulWidget {
   const SplashPage({super.key});
@@ -19,7 +20,6 @@ class _SplashPageState extends ConsumerState<SplashPage>
   @override
   void initState() {
     super.initState();
-
     AnalyticsHelper.logScreenView('스플래시_페이지');
 
     Future.delayed(const Duration(seconds: 3), () async {
@@ -31,26 +31,18 @@ class _SplashPageState extends ConsumerState<SplashPage>
       if (!context.mounted) return;
 
       if (splashState.status == SplashStatus.success) {
-        await AnalyticsHelper.logEvent(
-          '스플래시_홈_이동',
-          {'상태': '성공'},
-        );
+        await AnalyticsHelper.logEvent('스플래시_홈_이동', {'상태': '성공'});
         context.go('/home');
       } else if (splashState.status == SplashStatus.needLogin) {
-        await AnalyticsHelper.logEvent(
-          '스플래시_로그인_필요',
-          {'상태': '로그인_필요'},
-        );
+        await AnalyticsHelper.logEvent('스플래시_로그인_필요', {'상태': '로그인_필요'});
         context.go('/social_login');
       } else {
-        await AnalyticsHelper.logEvent(
-          '스플래시_에러',
-          {'상태': '에러'},
-        );
+        await AnalyticsHelper.logEvent('스플래시_에러', {'상태': '에러'});
         context.go('/social_login');
       }
     });
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -108,4 +100,3 @@ class _SplashPageState extends ConsumerState<SplashPage>
     );
   }
 }
-

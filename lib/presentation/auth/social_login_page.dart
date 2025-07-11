@@ -14,6 +14,7 @@ import 'package:mongbi_app/presentation/common/custom_snack_bar.dart';
 import 'package:mongbi_app/presentation/terms/widgets/terms_bottom_sheet_layout_widget.dart';
 import 'package:mongbi_app/providers/auth_provider.dart';
 import 'package:mongbi_app/providers/last_login_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SocialLoginPage extends ConsumerWidget {
   const SocialLoginPage({super.key});
@@ -21,6 +22,20 @@ class SocialLoginPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final asyncLastProvider = ref.watch(lastLoginProviderProvider);
+
+    Future<void> _navigateBasedOnReminderTime() async {
+      final prefs = await SharedPreferences.getInstance();
+      final hour = prefs.getInt('reminder_hour');
+      final minute = prefs.getInt('reminder_minute');
+
+      await Future.delayed(const Duration(milliseconds: 500)); // 스플래시 느낌 약간 주기
+
+      if (hour != null && minute != null) {
+        context.pushReplacement('/onbording_page'); // 알림 시간 있음
+      } else {
+        context.pushReplacement('/remindtime_setting'); // 없음
+      }
+    }
 
     return Scaffold(
       backgroundColor: const Color(0xFFFAFAFA),
@@ -104,11 +119,22 @@ class SocialLoginPage extends ConsumerWidget {
       '${provider}_login',
       'SocialLoginPage',
     );
+
     try {
       final isAgreed = await loginMethod();
+
       await AnalyticsHelper.logLogin(provider, 'SocialLoginPage');
+
       if (isAgreed) {
-        context.go('/home');
+        final prefs = await SharedPreferences.getInstance();
+        final hour = prefs.getInt('reminder_hour');
+        final minute = prefs.getInt('reminder_minute');
+
+        if (hour != null && minute != null) {
+          context.go('/onbording_page'); // 알림 시간 있음
+        } else {
+          context.go('/remindtime_setting'); // 알림 시간 없음
+        }
       } else {
         await showModalBottomSheet(
           context: context,
