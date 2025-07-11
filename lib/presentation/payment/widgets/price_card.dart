@@ -20,13 +20,17 @@ class SubscriptionSelector extends StatelessWidget {
               int.tryParse(a.price.replaceAll(RegExp(r'[^0-9]'), '')) ?? 0;
           final priceB =
               int.tryParse(b.price.replaceAll(RegExp(r'[^0-9]'), '')) ?? 0;
-
-          return priceB.compareTo(priceA); 
+          return priceB.compareTo(priceA);
         });
+
     return Column(
       children: List.generate(filteredProducts.length, (index) {
         final isSelected = selectedIndex == index;
         final product = filteredProducts[index];
+
+        final title = index == 0 ? '연간 구독' : '월간 구독';
+        final subtitle = index == 0 ? '첫 구독 시 7일간 무료' : null;
+        final subPrice = index == 0 ? '월 ₩3,200' : null;
 
         return GestureDetector(
           onTap: () => onChanged(index),
@@ -58,18 +62,45 @@ class SubscriptionSelector extends StatelessWidget {
                 ),
                 const SizedBox(width: 12),
                 Expanded(
-                  child: Text(
-                    product.title,
-                    style: Font.subTitle12.copyWith(
-                      color: const Color(0xFF29272A),
-                    ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: Font.subTitle12.copyWith(
+                          color: const Color(0xFF29272A),
+                        ),
+                      ),
+                      if (subtitle != null)
+                        Padding(
+                          padding: const EdgeInsets.only(top: 4),
+                          child: Text(
+                            subtitle,
+                            style: Font.subTitle12.copyWith(
+                              color: const Color(0xFF7F2AE8),
+                            ),
+                          ),
+                        ),
+                    ],
                   ),
                 ),
-                Text(
-                  product.price,
-                  style: Font.subTitle12.copyWith(
-                    color: const Color(0xFF29272A),
-                  ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      product.price,
+                      style: Font.subTitle12.copyWith(
+                        color: const Color(0xFF29272A),
+                      ),
+                    ),
+                    if (subPrice != null)
+                      Text(
+                        subPrice,
+                        style: Font.body12.copyWith(
+                          color: const Color(0xFF76717A),
+                        ),
+                      ),
+                  ],
                 ),
               ],
             ),
