@@ -3,7 +3,6 @@ import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/domain/entities/subscriptionproduct.dart';
 
 class SubscriptionSelector extends StatelessWidget {
-
   const SubscriptionSelector({
     super.key,
     required this.products,
@@ -13,13 +12,21 @@ class SubscriptionSelector extends StatelessWidget {
   final List<SubscriptionProduct> products;
   final int selectedIndex;
   final void Function(int) onChanged;
-
   @override
   Widget build(BuildContext context) {
+    final filteredProducts =
+        products.where((p) => p.price != '무료').toList()..sort((a, b) {
+          final priceA =
+              int.tryParse(a.price.replaceAll(RegExp(r'[^0-9]'), '')) ?? 0;
+          final priceB =
+              int.tryParse(b.price.replaceAll(RegExp(r'[^0-9]'), '')) ?? 0;
+
+          return priceB.compareTo(priceA); 
+        });
     return Column(
-      children: List.generate(products.length, (index) {
+      children: List.generate(filteredProducts.length, (index) {
         final isSelected = selectedIndex == index;
-        final product = products[index];
+        final product = filteredProducts[index];
 
         return GestureDetector(
           onTap: () => onChanged(index),
