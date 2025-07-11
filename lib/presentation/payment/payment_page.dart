@@ -118,9 +118,16 @@ class PaymentPage extends ConsumerWidget {
       ),
       bottomNavigationBar: PremiumBottomBar(
         onPressed: () {
-          // TODO: 결제 시도
-          print('무료 체험 시작!');
+          // TODO: 결제 로직
         },
+        buttonText:
+            viewModel.selectedProduct.price.contains('₩33,000')
+                ? '무료 체험 시작하기'
+                : '프리미엄 패스 결제하기',
+        description:
+            viewModel.selectedProduct.price.contains('₩33,000')
+                ? '무료 체험 종료 후 연간 ₩33,000원이 결제되며,\n언제든 취소가 가능해요.' // 월간이면 설명문구 숨김
+                : null,
       ),
     );
   }
