@@ -11,6 +11,7 @@ class SubscriptionRepositoryImpl implements SubscriptionRepository {
   Future<List<SubscriptionProduct>> getAvailableProducts() async {
     final products = await dataSource.fetchProducts([
       'premium_plan',
+      'preminum_plan_year',
     ]);
 
     return products.map((p) => SubscriptionProduct(

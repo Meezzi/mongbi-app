@@ -25,16 +25,17 @@ class SubscriptionViewModel extends ChangeNotifier {
   }
 
   SubscriptionProduct get selectedProduct {
-    final filtered =
-        products.where((p) => p.price != '무료').toList()..sort((a, b) {
-          final priceA =
-              int.tryParse(a.price.replaceAll(RegExp(r'[^0-9]'), '')) ?? 0;
-          final priceB =
-              int.tryParse(b.price.replaceAll(RegExp(r'[^0-9]'), '')) ?? 0;
-          return priceB.compareTo(priceA);
-        });
-
-    return filtered[selectedIndex];
+    if (selectedIndex == 0) {
+      return products.firstWhere(
+        (p) => p.id == 'preminum_plan_year',
+        orElse: () => throw Exception('연간 구독 상품이 없습니다'),
+      );
+    } else {
+      return products.firstWhere(
+        (p) => p.id != 'preminum_plan_year',
+        orElse: () => throw Exception('월간 구독 상품이 없습니다'),
+      );
+    }
   }
 
   Future<void> purchase() async {
