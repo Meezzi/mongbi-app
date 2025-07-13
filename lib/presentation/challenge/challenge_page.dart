@@ -19,6 +19,9 @@ class ChallengePage extends ConsumerWidget {
     final selectedIndex =
         ref.watch(challengeViewModelProvider.notifier).selectedChallengeIndex;
 
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       backgroundColor: const Color(0xFFFAFAFA),
       body: SafeArea(
@@ -50,8 +53,8 @@ class ChallengePage extends ConsumerWidget {
                             children: [
                               if (challenges.length >= 3) ...[
                                 Positioned(
-                                  top: 44,
-                                  left: 0,
+                                  top: screenHeight * 0.05,
+                                  left: screenWidth * 0.0,
                                   child: GestureDetector(
                                     onTap: () {
                                       ref
@@ -75,8 +78,8 @@ class ChallengePage extends ConsumerWidget {
                                   ),
                                 ),
                                 Positioned(
-                                  top: 220,
-                                  right: 10,
+                                  top: screenHeight * 0.27,
+                                  right: screenWidth * 0.03,
                                   child: GestureDetector(
                                     onTap: () {
                                       ref
@@ -100,8 +103,8 @@ class ChallengePage extends ConsumerWidget {
                                   ),
                                 ),
                                 Positioned(
-                                  top: 410,
-                                  left: 10,
+                                  top: screenHeight * 0.5,
+                                  left: screenWidth * 0.03,
                                   child: GestureDetector(
                                     onTap: () {
                                       ref
