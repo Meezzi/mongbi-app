@@ -19,8 +19,8 @@ class ChallengePage extends ConsumerWidget {
     final selectedIndex =
         ref.watch(challengeViewModelProvider.notifier).selectedChallengeIndex;
 
-    final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.sizeOf(context).width;
+    final screenHeight = MediaQuery.sizeOf(context).height;
 
     return Scaffold(
       backgroundColor: const Color(0xFFFAFAFA),
