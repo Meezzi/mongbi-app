@@ -7,11 +7,13 @@ import 'package:mongbi_app/presentation/dream/widgets/custom_button.dart';
 class MongbiDialog extends StatelessWidget {
   const MongbiDialog({
     super.key,
+    required this.title,
     required this.content,
     required this.buttonText,
     required this.onSubmit,
   });
 
+  final String title;
   final String content;
   final String buttonText;
   final VoidCallback onSubmit;
@@ -33,8 +35,14 @@ class MongbiDialog extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                content,
+                title,
                 style: Font.title18.copyWith(color: Color(0xFF1A181B)),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 2),
+              Text(
+                content,
+                style: Font.subTitle12.copyWith(color: Color(0xFF76717A)),
                 textAlign: TextAlign.center,
               ),
               MongbiCharacter(size: 144),

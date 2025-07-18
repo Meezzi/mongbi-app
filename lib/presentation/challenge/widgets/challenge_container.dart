@@ -25,9 +25,10 @@ class ChallengeContainer extends StatelessWidget {
       scale: isSelected ? 1.1 : 1.0,
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
-      child: Transform(
-        alignment: Alignment.center,
-        transform: Matrix4.identity()..rotateZ(rotationAngle),
+      child: AnimatedRotation(
+        turns: (isSelected ? 0.0 : rotationAngle) / (2 * 3.14159),
+        duration: Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
         child: Container(
           width: screenHeight * 0.23,
           height: screenHeight * 0.23,

@@ -19,6 +19,9 @@ class ChallengePage extends ConsumerWidget {
     final selectedIndex =
         ref.watch(challengeViewModelProvider.notifier).selectedChallengeIndex;
 
+    final screenWidth = MediaQuery.sizeOf(context).width;
+    final screenHeight = MediaQuery.sizeOf(context).height;
+
     return Scaffold(
       backgroundColor: const Color(0xFFFAFAFA),
       body: SafeArea(
@@ -50,8 +53,8 @@ class ChallengePage extends ConsumerWidget {
                             children: [
                               if (challenges.length >= 3) ...[
                                 Positioned(
-                                  top: 44,
-                                  left: 0,
+                                  top: screenHeight * 0.05,
+                                  left: screenWidth * 0.0,
                                   child: GestureDetector(
                                     onTap: () {
                                       ref
@@ -75,8 +78,8 @@ class ChallengePage extends ConsumerWidget {
                                   ),
                                 ),
                                 Positioned(
-                                  top: 220,
-                                  right: 10,
+                                  top: screenHeight * 0.27,
+                                  right: screenWidth * 0.03,
                                   child: GestureDetector(
                                     onTap: () {
                                       ref
@@ -100,8 +103,8 @@ class ChallengePage extends ConsumerWidget {
                                   ),
                                 ),
                                 Positioned(
-                                  top: 410,
-                                  left: 10,
+                                  top: screenHeight * 0.5,
+                                  left: screenWidth * 0.03,
                                   child: GestureDetector(
                                     onTap: () {
                                       ref
@@ -144,7 +147,8 @@ class ChallengePage extends ConsumerWidget {
                           context: context,
                           builder:
                               (context) => MongbiDialog(
-                                content: '아앗, 아쉬워라\n꿈 잘먹었몽! 오늘도 힘내라몽',
+                                title: '홈으로 돌아갈래몽?',
+                                content: '선물을 선택하지 않아도,\n오늘 꿈은 더 이상 먹지 못해!',
                                 buttonText: '고마워',
                                 onSubmit: () {
                                   context.go('/home');
@@ -183,7 +187,8 @@ class ChallengePage extends ConsumerWidget {
                           context: context,
                           builder:
                               (context) => MongbiDialog(
-                                content: '꿈 잘먹었몽!\n선물 완료하고, 오늘도 힘내라몽',
+                                title: '꿈 잘먹었어몽!',
+                                content: '선물을 완료해서\n더 행복한 하루 보내자!',
                                 buttonText: '고마워',
                                 onSubmit: () async {
                                   await ref
