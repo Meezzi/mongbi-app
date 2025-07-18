@@ -19,7 +19,7 @@ final dioProvider = Provider<Dio>((ref) {
   final dio = Dio(
     BaseOptions(
       baseUrl: dotenv.env['MONGBI_BASE_URL']!,
-      headers: {'Content-Type': 'application/json'},
+      headers: {'Content-Type': 'application/json', 'connection': 'keep-alive'},
     ),
   );
 
