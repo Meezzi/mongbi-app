@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mongbi_app/data/data_sources/remote_statistics_data_source.dart';
 import 'package:mongbi_app/data/data_sources/statistics_data_source.dart';
@@ -13,7 +15,8 @@ import 'package:mongbi_app/providers/core_providers.dart';
 
 final _statisticsDataSourceProvider = Provider<StatisticsDataSource>((ref) {
   final dio = ref.read(dioProvider);
-  return RemoteStatisticsDataSource(dio);
+  final secureStorageService = ref.read(secureStorageServiceProvider);
+  return RemoteStatisticsDataSource(dio, secureStorageService);
 });
 
 final _statisticsRepositoryProvider = Provider<StatisticsRepository>((ref) {

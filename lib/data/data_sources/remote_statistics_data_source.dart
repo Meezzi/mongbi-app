@@ -5,9 +5,10 @@ import 'package:mongbi_app/data/dtos/statistics_dto.dart';
 import 'package:sentry_flutter/sentry_flutter.dart'; // ✅ Sentry 추가
 
 class RemoteStatisticsDataSource implements StatisticsDataSource {
-  RemoteStatisticsDataSource(this.dio);
+  RemoteStatisticsDataSource(this._dio, this._secureStorageService);
 
-  final Dio dio;
+  final Dio _dio;
+  final SecureStorageService _secureStorageService;
 
   final keyChanges = {
     '1': 'VERY_BAD',
@@ -20,11 +21,13 @@ class RemoteStatisticsDataSource implements StatisticsDataSource {
   @override
   Future<StatisticsDto?> fetchMonthStatistics(DateTime dateTime) async {
     try {
-      final userIndex = await SecureStorageService().getUserIdx();
+      final userIndex = await _secureStorageService.getUserIdx();
       final year = dateTime.year;
       final month = dateTime.month.toString().padLeft(2, '0');
 
-      final response = await dio.get('/dreams/statistics/monthly/$userIndex/$year/$month');
+      final response = await _dio.get(
+        '/dreams/statistics/monthly/$userIndex/$year/$month',
+      );
 
       if (response.data['code'] == 201 && response.data['success']) {
         final results = response.data['data'];
@@ -53,10 +56,12 @@ class RemoteStatisticsDataSource implements StatisticsDataSource {
   @override
   Future<StatisticsDto?> fetchYearStatistics(DateTime dateTime) async {
     try {
-      final userIndex = await SecureStorageService().getUserIdx();
+      final userIndex = await _secureStorageService.getUserIdx();
       final year = dateTime.year.toString();
 
-      final response = await dio.get('/dreams/statistics/year/$userIndex/$year');
+      final response = await _dio.get(
+        '/dreams/statistics/year/$userIndex/$year',
+      );
 
       if (response.data['code'] == 201 && response.data['success']) {
         final results = response.data['data'];
