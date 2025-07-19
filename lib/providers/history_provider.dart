@@ -12,7 +12,8 @@ import 'package:mongbi_app/providers/core_providers.dart';
 
 final _historyDataSourceProvider = Provider<HistoryDataSource>((ref) {
   final dio = ref.read(dioProvider);
-  return RemoteHistoryDataSource(dio);
+  final secureStorageService = ref.read(secureStorageServiceProvider);
+  return RemoteHistoryDataSource(dio, secureStorageService);
 });
 
 final _historyRepositoryProvider = Provider<HistoryRepository>((ref) {
