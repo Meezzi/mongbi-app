@@ -5,15 +5,16 @@ import 'package:mongbi_app/data/dtos/alarm_dto.dart';
 import 'package:sentry_flutter/sentry_flutter.dart'; // ✅ 추가
 
 class RemoteAlarmDataSource implements AlarmDataSource {
-  const RemoteAlarmDataSource(this.dio);
+  const RemoteAlarmDataSource(this._dio, this._secureStorageService);
 
-  final Dio dio;
+  final Dio _dio;
+  final SecureStorageService _secureStorageService;
 
   @override
   Future<List<AlarmDto>?> fetchAlarms() async {
     try {
-      final userIndex = await SecureStorageService().getUserIdx();
-      final response = await dio.get('/api/fcm-logs/user/$userIndex');
+      final userIndex = await _secureStorageService.getUserIdx();
+      final response = await _dio.get('/api/fcm-logs/user/$userIndex');
 
       if ((response.data['code'] == 201 || response.data['code'] == 200) &&
           response.data['success']) {
@@ -32,7 +33,7 @@ class RemoteAlarmDataSource implements AlarmDataSource {
   @override
   Future<bool> updateIsReadStatus(int id) async {
     try {
-      final response = await dio.put(
+      final response = await _dio.put(
         '/api/fcm-logs/$id/read',
         data: {'isRead': true},
         options: Options(headers: {'Content-Type': 'application/json'}),

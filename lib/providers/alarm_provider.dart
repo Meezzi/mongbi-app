@@ -11,7 +11,8 @@ import 'package:mongbi_app/providers/core_providers.dart';
 
 final _alarmDataSourceProvider = Provider<AlarmDataSource>((ref) {
   final dio = ref.read(adminDioProvider);
-  return RemoteAlarmDataSource(dio);
+  final secureStorageService = ref.read(secureStorageServiceProvider);
+  return RemoteAlarmDataSource(dio, secureStorageService);
 });
 
 final _alarmRepositoryProvider = Provider<AlarmRepository>((ref) {
