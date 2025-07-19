@@ -5,14 +5,15 @@ import 'package:mongbi_app/data/dtos/history_dto.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 class RemoteHistoryDataSource implements HistoryDataSource {
-  RemoteHistoryDataSource(this._dio);
+  RemoteHistoryDataSource(this._dio, this._secureStorageService);
 
   final Dio _dio;
+  final SecureStorageService _secureStorageService;
 
   @override
   Future<List<HistoryDto>> feachUserDreamsHistory() async {
     try {
-      final userIndex = await SecureStorageService().getUserIdx();
+      final userIndex = await _secureStorageService.getUserIdx();
       final response = await _dio.get('/dreams/$userIndex');
 
       if (response.data['code'] == 201 && response.data['success']) {
@@ -21,7 +22,9 @@ class RemoteHistoryDataSource implements HistoryDataSource {
             results.map((e) => HistoryDto.fromJson(e)).toList();
         return historyDtoList;
       } else {
-        final error = Exception(response.data['message'] ?? '알 수 없는 오류가 발생하였습니다.');
+        final error = Exception(
+          response.data['message'] ?? '알 수 없는 오류가 발생하였습니다.',
+        );
         await Sentry.captureException(
           error,
           withScope: (scope) {
