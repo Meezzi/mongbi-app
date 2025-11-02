@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:mongbi_app/data/data_sources/dream_analysis_data_source.dart';
+import 'package:mongbi_app/data/data_sources/dream_check_data_source.dart';
 import 'package:mongbi_app/data/data_sources/dream_save_data_source.dart';
 import 'package:mongbi_app/data/dtos/dream_dto.dart';
 import 'package:mongbi_app/data/repositories/remote_dream_repository.dart';
@@ -12,6 +13,7 @@ void main() {
   DreamSaveDataSource? dreamSaveDataSource;
   RemoteDreamRepository? remoteDreamRepository;
   MockDreamAnalysisDataSource? dreamAnalysisDataSource;
+  MockDreamCheckDataSource? dreamCheckDataSource;
 
   setUpAll(() {
     registerFallbackValue(FakeDreamDto());
@@ -21,9 +23,11 @@ void main() {
     setUp(() {
       dreamSaveDataSource = MockDreamDataSource();
       dreamAnalysisDataSource = MockDreamAnalysisDataSource();
+      dreamCheckDataSource = MockDreamCheckDataSource();
       remoteDreamRepository = RemoteDreamRepository(
         dreamSaveDataSource!,
         dreamAnalysisDataSource!,
+        dreamCheckDataSource!,
       );
     });
 
@@ -31,13 +35,13 @@ void main() {
       // Arrange
       when(
         () => dreamSaveDataSource!.saveDream(any()),
-      ).thenAnswer((_) async => true);
+      ).thenAnswer((_) async => 123);
 
       // Act
       final response = await remoteDreamRepository?.saveDream(dream);
 
       // Assert
-      expect(response, isTrue);
+      expect(response, 123);
       verify(() => dreamSaveDataSource!.saveDream(any())).called(1);
     });
 
@@ -61,14 +65,17 @@ void main() {
     setUp(() {
       dreamSaveDataSource = MockDreamDataSource();
       dreamAnalysisDataSource = MockDreamAnalysisDataSource();
+      dreamCheckDataSource = MockDreamCheckDataSource();
       remoteDreamRepository = RemoteDreamRepository(
         dreamSaveDataSource!,
         dreamAnalysisDataSource!,
+        dreamCheckDataSource!,
       );
     });
 
     test('DreamAnalysisDataSource에서 결과를 받아서 반환해야 한다', () async {
       // Arrange
+      final uid = 1;
       final dreamContent = '';
       final dreamScore = 4;
 
@@ -89,6 +96,7 @@ void main() {
 
       // Act
       final response = await remoteDreamRepository!.analyzeDream(
+        uid,
         dreamContent,
         dreamScore,
       );
@@ -103,6 +111,7 @@ void main() {
 
     test('DreamAnalysisDataSource에서 오류가 전달되면 호출한 곳에 오류를 전달한다.', () async {
       // Arrange
+      final uid = 1;
       final dreamContent = '';
       final dreamScore = 4;
 
@@ -112,7 +121,8 @@ void main() {
 
       // Act & Assert
       expect(
-        () => remoteDreamRepository!.analyzeDream(dreamContent, dreamScore),
+        () =>
+            remoteDreamRepository!.analyzeDream(uid, dreamContent, dreamScore),
         throwsA(isA<Exception>()),
       );
     });
@@ -123,6 +133,8 @@ class MockDreamDataSource extends Mock implements DreamSaveDataSource {}
 
 class MockDreamAnalysisDataSource extends Mock
     implements DreamAnalysisDataSource {}
+
+class MockDreamCheckDataSource extends Mock implements DreamCheckDataSource {}
 
 final dream = Dream(
   id: 1,

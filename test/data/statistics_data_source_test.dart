@@ -1,22 +1,34 @@
 import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:mongbi_app/core/secure_storage_service.dart';
 import 'package:mongbi_app/data/data_sources/remote_statistics_data_source.dart';
 import 'package:mongbi_app/data/data_sources/statistics_data_source.dart';
 import 'package:mongbi_app/data/dtos/statistics_dto.dart';
 
 class MockDio extends Mock implements Dio {}
 
+class MockSecureStorageService extends Mock implements SecureStorageService {}
+
 void main() {
   MockDio? mockDio;
+  MockSecureStorageService? mockSecureStorageService;
   StatisticsDataSource? remoteStatisticsDataSource;
 
   setUp(() {
     mockDio = MockDio();
-    remoteStatisticsDataSource = RemoteStatisticsDataSource(mockDio!);
+    mockSecureStorageService = MockSecureStorageService();
+    remoteStatisticsDataSource = RemoteStatisticsDataSource(
+      mockDio!,
+      mockSecureStorageService!,
+    );
   });
   test('StatisticsDataSource test', () async {
+    when(
+      () => mockSecureStorageService!.getUserIdx(),
+    ).thenAnswer((_) async => 1);
     final json = '''
 {
 "code": 201,
@@ -32,21 +44,21 @@ void main() {
       "5": 50
     },
     "MOOD_STATE": {
-      "GOOD_DREAM": {
+      "길몽": {
         "1": 0,
         "2": 3,
         "3": 4,
         "4": 2,
         "5": 7
       },
-      "ORDINARY_DREAM": {
+      "일상몽": {
         "1": 1,
         "2": 3,
         "3": 0,
         "4": 2,
         "5": 7
       },
-      "BAD_DREAM": {
+      "흉몽": {
         "1": 1,
         "2": 3,
         "3": 4,
@@ -80,18 +92,14 @@ void main() {
 }
 ''';
 
-    final map = jsonDecode(json);
-    final response = Response<Map<String, dynamic>>(
-      data: map,
+    final jsonMap = jsonDecode(json);
+    final response = Response(
+      data: jsonMap,
       statusCode: 201,
       requestOptions: RequestOptions(path: '/statistics'),
     );
 
-    when(() {
-      return mockDio!.get(any());
-    }).thenAnswer((invocation) async {
-      return response;
-    });
+    when(() => mockDio!.get(any())).thenAnswer((_) async => response);
 
     final statisticsDto = await remoteStatisticsDataSource!
         .fetchMonthStatistics(DateTime.now());

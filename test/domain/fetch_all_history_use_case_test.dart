@@ -26,6 +26,9 @@ void main() {
           psychologicalStateKeywords: ['꿈1'],
           mongbiComment: '꿈1',
           dreamRegDate: DateTime.now(),
+          challengeDesc: '챌린지 설명',
+          challengeType: '챌린지 타입',
+          challengeStatus: 'ACTIVE',
         ),
       ];
     });

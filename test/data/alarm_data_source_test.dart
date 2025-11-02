@@ -1,23 +1,35 @@
 import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:mongbi_app/core/secure_storage_service.dart';
 import 'package:mongbi_app/data/data_sources/alarm_data_source.dart';
 import 'package:mongbi_app/data/data_sources/remote_alarm_data_source.dart';
 import 'package:mongbi_app/data/dtos/alarm_dto.dart';
 
 class MockDio extends Mock implements Dio {}
 
+class MockSecureStorageService extends Mock implements SecureStorageService {}
+
 void main() {
   MockDio? mockDio;
+  MockSecureStorageService? mockSecureStorageService;
   AlarmDataSource? alarmDataSource;
 
   setUp(() {
     mockDio = MockDio();
-    alarmDataSource = RemoteAlarmDataSource(mockDio!);
+    mockSecureStorageService = MockSecureStorageService();
+    alarmDataSource = RemoteAlarmDataSource(
+      mockDio!,
+      mockSecureStorageService!,
+    );
   });
 
   test('AlarmDataSource test', () async {
+    when(
+      () => mockSecureStorageService!.getUserIdx(),
+    ).thenAnswer((_) async => 1);
     final json = '''
 {
   "code": 201,
