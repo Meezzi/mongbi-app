@@ -22,6 +22,7 @@ class AuthViewModel extends Notifier<User?> {
   late final LoginWithApple _loginWithApple;
   final _secureStorage = const FlutterSecureStorage();
   late final Future<SharedPreferences> _prefsFuture;
+
   @override
   User? build() {
     _loginWithNaver = ref.read(loginWithNaverUseCaseProvider);
@@ -29,11 +30,33 @@ class AuthViewModel extends Notifier<User?> {
     _loginWithApple = ref.read(loginWithAppleUseCaseProvider);
 
     _prefsFuture = SharedPreferences.getInstance();
+
+    _restoreUserFromStorage();
+
     return null;
+  }
+
+  /// 앱 시작 시 Storage에서 사용자 정보 복원
+  Future<void> _restoreUserFromStorage() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final isLogined = prefs.getBool('isLogined') ?? false;
+
+      if (isLogined) {
+        final getUserUseCase = ref.read(getUserInfoUseCaseProvider);
+        final userInfo = await getUserUseCase.execute();
+        if (userInfo.isNotEmpty) {
+          state = userInfo[0];
+        }
+      }
+    } catch (e) {
+      // 에러 발생 시 무시 (로그인 안 된 상태로 유지)
+    }
   }
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
+  int? get userId => state?.userIdx;
 
   Future<bool> loginWithApple() async {
     _isLoading = true;
