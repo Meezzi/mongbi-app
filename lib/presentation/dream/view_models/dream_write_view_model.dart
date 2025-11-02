@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mongbi_app/core/secure_storage_service.dart';
 import 'package:mongbi_app/presentation/dream/models/dream_write_state.dart';
+import 'package:mongbi_app/providers/auth_provider.dart';
 import 'package:mongbi_app/providers/dream_provider.dart';
 
 class DreamWriteViewModel extends AutoDisposeNotifier<DreamWriteState> {
@@ -25,7 +25,7 @@ class DreamWriteViewModel extends AutoDisposeNotifier<DreamWriteState> {
   Future<void> submitDream({bool isReInterpretation = false}) async {
     if (state.dreamContent.trim().length < 10) return;
     if (state.selectedIndex == -1) return;
-    final uid = await SecureStorageService().getUserIdx();
+    final uid = ref.read(authViewModelProvider.notifier).userId;
     if (uid == null) return;
 
     final dream = await ref

@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mongbi_app/core/secure_storage_service.dart';
 import 'package:mongbi_app/presentation/home/models/home_state.dart';
+import 'package:mongbi_app/providers/auth_provider.dart';
 import 'package:mongbi_app/providers/challenge_provider.dart';
 
 class HomeViewModel extends AutoDisposeNotifier<HomeState> {
@@ -11,7 +11,7 @@ class HomeViewModel extends AutoDisposeNotifier<HomeState> {
 
   Future<void> fetchActiveChallenge() async {
     state = state.copyWith(isLoading: true, error: null);
-    final uid = await SecureStorageService().getUserIdx();
+    final uid = ref.read(authViewModelProvider.notifier).userId;
 
     if (uid == null) {
       return;
@@ -33,7 +33,7 @@ class HomeViewModel extends AutoDisposeNotifier<HomeState> {
 
     state = state.copyWith(isCompleting: true);
 
-    final uid = await SecureStorageService().getUserIdx();
+    final uid = ref.read(authViewModelProvider.notifier).userId;
     final challengeId = state.challenge!.id;
     final challengeStatus = isComplete ? 'COMPLETED' : 'ABANDONED';
 
