@@ -1,4 +1,4 @@
-import 'dart:async';
+import 'dart:ui';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -16,38 +16,53 @@ import 'package:mongbi_app/providers/setting_provider.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await NotificationService().init();
-  await dotenv.load(fileName: '.env');
-  // 캘린더 한글화
-  await initializeDateFormatting();
-  // 아이폰, 안드로이드 세로 모드 고정
-  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  KakaoSdk.init(
-    nativeAppKey: dotenv.env['KAKAO_NATIVE_APP_KEY'],
-    javaScriptAppKey: dotenv.env['KAKAO_JAVA_SCRIPT_APP_KEY'],
-  );
+  // Sentry와 Firebase Crashlytics를 함께 사용
   await SentryFlutter.init(
     (options) {
       options.dsn =
           'https://8d16495c497563cc341db965785f3374@o4509553500422144.ingest.de.sentry.io/4509553530830928';
-
       options.tracesSampleRate = 1.0;
       options.profilesSampleRate = 1.0;
+
+      // Flutter 에러를 Sentry와 Crashlytics 모두에 전달
+      options.beforeSend = (event, hint) {
+        return event;
+      };
     },
-    appRunner:
-        () => runApp(SentryWidget(child: const ProviderScope(child: MyApp()))),
+    appRunner: () async {
+      // Sentry의 바인딩 초기화
+      await NotificationService().init();
+      await dotenv.load(fileName: '.env');
+      // 캘린더 한글화
+      await initializeDateFormatting();
+      // 아이폰, 안드로이드 세로 모드 고정
+      await SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+      ]);
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
+
+      KakaoSdk.init(
+        nativeAppKey: dotenv.env['KAKAO_NATIVE_APP_KEY'],
+        javaScriptAppKey: dotenv.env['KAKAO_JAVA_SCRIPT_APP_KEY'],
+      );
+
+      // Flutter 에러 핸들러: Sentry와 Crashlytics 모두에게 전달
+      FlutterError.onError = (details) {
+        FirebaseCrashlytics.instance.recordFlutterFatalError(details);
+        // Sentry는 자동으로 처리
+      };
+
+      // PlatformDispatcher 에러 핸들러 (Crashlytics로 전송)
+      PlatformDispatcher.instance.onError = (error, stack) {
+        FirebaseCrashlytics.instance.recordError(error, stack);
+        return true;
+      };
+
+      runApp(const ProviderScope(child: MyApp()));
+    },
   );
-
-  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
-
-  runZonedGuarded(() => runApp(const ProviderScope(child: MyApp())), (
-    error,
-    stackTrace,
-  ) {
-    FirebaseCrashlytics.instance.recordError(error, stackTrace);
-  });
 }
 
 class MyApp extends ConsumerStatefulWidget {
