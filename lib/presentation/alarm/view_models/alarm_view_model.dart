@@ -25,7 +25,7 @@ class AlarmViewModel extends Notifier<AlarmModel> {
       final newAlarmList =
           state.alarmList?.map((e) {
             if (e.fcmId == id) {
-              e.updateIsReadStatus();
+              return e.copyWith(fcmIsRead: true);
             }
 
             return e;
