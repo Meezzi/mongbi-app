@@ -52,3 +52,7 @@ sentry.properties
 google-services.json
 firebase_options.dart
 firebase.json
+
+# Code generation
+*.g.dart
+*.freezed.dart
