@@ -1,21 +1,15 @@
-class Alarm {
-  Alarm({
-    required this.fcmId,
-    required this.fcmSendFromUserId,
-    required this.fcmContent,
-    required this.fcmType,
-    required this.fcmSendAt,
-    required this.fcmIsRead,
-  });
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  final int fcmId;
-  final int fcmSendFromUserId;
-  final String fcmContent;
-  final String fcmType;
-  final DateTime fcmSendAt;
-  bool fcmIsRead;
+part 'alarm.freezed.dart';
 
-  void updateIsReadStatus() {
-    fcmIsRead = true;
-  }
+@freezed
+abstract class Alarm with _$Alarm {
+  const factory Alarm({
+    @Default(0) int fcmId,
+    @Default(0) int fcmSendFromUserId,
+    @Default('') String fcmContent,
+    @Default('') String fcmType,
+    required DateTime fcmSendAt,
+    @Default(false) bool fcmIsRead,
+  }) = _Alarm;
 }
