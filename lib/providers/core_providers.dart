@@ -29,6 +29,20 @@ final dioProvider = Provider<Dio>((ref) {
   return dio;
 });
 
+/// Claude API 전용 Dio Provider
+final claudeDioProvider = Provider<Dio>((ref) {
+  return Dio(
+    BaseOptions(
+      baseUrl: dotenv.env['CLAUDE_URL']!,
+      headers: {
+        'x-api-key': dotenv.env['CLAUDE_API_KEY']!,
+        'anthropic-version': 'claude-3-5-sonnet-20241022',
+        'Content-Type': 'application/json',
+      },
+    ),
+  );
+});
+
 final secureStorageServiceProvider = Provider<SecureStorageService>((ref) {
   return SecureStorageService();
 });

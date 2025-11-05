@@ -1,18 +1,13 @@
 import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:mongbi_app/data/data_sources/dream_analysis_data_source.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 class RemoteDreamAnalysisDataSource implements DreamAnalysisDataSource {
-  RemoteDreamAnalysisDataSource({
-    required this.dio,
-    required this.apiKey,
-    required this.baseUrl,
-  });
+  RemoteDreamAnalysisDataSource({required this.dio});
 
   final Dio dio;
-  final String apiKey;
-  final String baseUrl;
 
   @override
   Future<Map<String, dynamic>> analyzeDream(
@@ -78,17 +73,7 @@ class RemoteDreamAnalysisDataSource implements DreamAnalysisDataSource {
         ],
       };
 
-      final response = await dio.post(
-        baseUrl,
-        options: Options(
-          headers: {
-            'x-api-key': apiKey,
-            'anthropic-version': '2023-06-01',
-            'Content-Type': 'application/json',
-          },
-        ),
-        data: requestBody,
-      );
+      final response = await dio.post('', data: requestBody);
 
       if (response.statusCode == 200) {
         final text = response.data['content'][0]['text'] as String;

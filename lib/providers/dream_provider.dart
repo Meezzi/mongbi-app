@@ -1,4 +1,3 @@
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mongbi_app/data/data_sources/dream_analysis_data_source.dart';
 import 'package:mongbi_app/data/data_sources/dream_check_data_source.dart';
@@ -23,11 +22,7 @@ final _dreamDataSourceProvider = Provider<DreamSaveDataSource>(
 );
 
 final _dreamAnalysisDataSource = Provider<DreamAnalysisDataSource>(
-  (ref) => RemoteDreamAnalysisDataSource(
-    dio: ref.read(dioProvider),
-    apiKey: dotenv.env['CLAUDE_API_KEY']!,
-    baseUrl: dotenv.env['CLAUDE_URL']!,
-  ),
+  (ref) => RemoteDreamAnalysisDataSource(dio: ref.read(claudeDioProvider)),
 );
 
 final _dreamCheckDataSource = Provider<DreamCheckDataSource>(
