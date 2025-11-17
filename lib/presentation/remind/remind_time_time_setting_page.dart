@@ -13,6 +13,7 @@ import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_text_
 import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_widget.dart';
 import 'package:mongbi_app/providers/setting_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 class RemindTimePickerPage extends ConsumerStatefulWidget {
   const RemindTimePickerPage({super.key, required this.isRemindEnabled});
@@ -49,11 +50,15 @@ class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage>
   }
 
   Future<void> _checkNotificationPermission() async {
-    final status = await Permission.notification.status;
-    if (status.isGranted) {
-      // Permission is granted, schedule the notification
-      await NotificationService().scheduleDailyReminder(selectedTime);
-      ref.read(alarmSettingProvider.notifier).setReminder(true);
+    try {
+      final status = await Permission.notification.status;
+      if (status.isGranted) {
+        // Permission is granted, schedule the notification
+        await NotificationService().scheduleDailyReminder(selectedTime);
+        ref.read(alarmSettingProvider.notifier).setReminder(true);
+      }
+    } catch (e, stackTrace) {
+      await Sentry.captureException(e, stackTrace: stackTrace);
     }
   }
 
@@ -180,7 +185,8 @@ class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage>
                         return;
                       }
                       context.go('/onbording_page');
-                    } on PlatformException catch (e) {
+                    } on PlatformException catch (e, stackTrace) {
+                      await Sentry.captureException(e, stackTrace: stackTrace);
                       if (e.code == 'exact_alarms_not_permitted') {
                         await NotificationService()
                             .openExactAlarmSettingsIfNeeded();
@@ -193,7 +199,8 @@ class _RemindTimePickerPageState extends ConsumerState<RemindTimePickerPage>
                           ),
                         );
                       }
-                    } catch (e) {
+                    } catch (e, stackTrace) {
+                      await Sentry.captureException(e, stackTrace: stackTrace);
                       ScaffoldMessenger.of(context).showSnackBar(
                         customSnackBar('알림 예약 중 오류가 발생했습니다: $e', 30, 3),
                       );
