@@ -51,8 +51,6 @@ class DreamDto {
   }
 
   Map<String, dynamic> toJson() => {
-        'DREAM_IDX': dreamIdx,
-        'DREAM_REG_DATE': dreamRegDate.toIso8601String(),
         'USER_IDX': userIdx,
         'CHALLENGE_IDX': challengeIdx,
         'DREAM_CONTENT': dreamContent,

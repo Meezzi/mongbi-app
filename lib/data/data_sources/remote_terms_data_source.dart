@@ -3,8 +3,8 @@ import 'package:mongbi_app/data/data_sources/terms_data_soure.dart';
 import 'package:mongbi_app/data/dtos/terms_aggrement_dto.dart';
 import 'package:mongbi_app/data/dtos/terms_dto.dart';
 import 'package:mongbi_app/domain/entities/terms.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sentry_flutter/sentry_flutter.dart'; 
 
 class RemoteTermsDataSource implements TermsDataSource {
   RemoteTermsDataSource(this.dio);
@@ -14,7 +14,7 @@ class RemoteTermsDataSource implements TermsDataSource {
   Future<List<Terms>> fetchLatestTerms() async {
     try {
       final response = await dio.get('/api/terms/latest-terms');
-      final dataList = response.data as List;
+      final dataList = response.data['data'] as List;
       return dataList.map((e) => TermsDto.fromJson(e).toEntity()).toList();
     } catch (e, s) {
       await Sentry.captureException(
