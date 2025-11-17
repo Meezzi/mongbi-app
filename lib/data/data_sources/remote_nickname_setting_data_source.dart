@@ -15,13 +15,13 @@ class RemoteNicknameSettingDataSource implements NicknameSettingDataSource {
     try {
       final response = await dio.put(
         '/users/$userId/nickname',
-        data: {'nickname': nickname},
+        data: {'USER_NICKNAME': nickname},
       );
 
-      if (response.statusCode == 200 && response.data['user'] != null) {
-        return UserDto.fromJson(response.data['user']);
+      if (response.statusCode == 200 && response.data['data'] != null) {
+        return UserDto.fromJson(response.data['data']);
       } else {
-        final error = Exception('닉네임 수정 실패: 응답에 user가 없습니다.');
+        final error = Exception('닉네임 수정 실패: 응답에 data가 없습니다.');
         await Sentry.captureException(
           error,
           withScope: (scope) {

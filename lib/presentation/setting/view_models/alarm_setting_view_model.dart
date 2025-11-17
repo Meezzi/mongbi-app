@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mongbi_app/presentation/remind/view_model/remind_time_setting_view_model.dart';
 import 'package:mongbi_app/presentation/setting/models/alarm_setting_state.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AlarmSettingViewModel extends AsyncNotifier<AlarmSettingState> {
@@ -23,48 +24,58 @@ class AlarmSettingViewModel extends AsyncNotifier<AlarmSettingState> {
   }
 
   Future<void> toggleAll() async {
-    final prev = state.value!;
-    final next = !prev.isAll;
+    try {
+      final prev = state.value!;
+      final next = !prev.isAll;
 
-    final nextState = AlarmSettingState(
-      isAll: next,
-      isReminder: next,
-      isChallenge: next,
-      isInitialized: true,
-    );
-
-    state = AsyncValue.data(nextState);
-    _saveState(nextState);
-
-    final notificationService = NotificationService();
-    if (next) {
-      await notificationService.scheduleDailyReminder(
-        const TimeOfDay(hour: 8, minute: 0),
+      final nextState = AlarmSettingState(
+        isAll: next,
+        isReminder: next,
+        isChallenge: next,
+        isInitialized: true,
       );
-    } else {
-      await notificationService.cancelReminderNotification();
+
+      state = AsyncValue.data(nextState);
+      _saveState(nextState);
+
+      final notificationService = NotificationService();
+      if (next) {
+        await notificationService.scheduleDailyReminder(
+          const TimeOfDay(hour: 8, minute: 0),
+        );
+      } else {
+        await notificationService.cancelReminderNotification();
+      }
+    } catch (e, stackTrace) {
+      await Sentry.captureException(e, stackTrace: stackTrace);
+      rethrow;
     }
   }
 
   Future<bool> toggleReminder() async {
-    final prev = state.value!;
-    final next = !prev.isReminder;
+    try {
+      final prev = state.value!;
+      final next = !prev.isReminder;
 
-    final nextState = prev.copyWith(isReminder: next).recalculateIsAll();
+      final nextState = prev.copyWith(isReminder: next).recalculateIsAll();
 
-    state = AsyncValue.data(nextState);
-    _saveState(nextState);
+      state = AsyncValue.data(nextState);
+      _saveState(nextState);
 
-    final notificationService = NotificationService();
-    if (next) {
-      await notificationService.scheduleDailyReminder(
-        const TimeOfDay(hour: 8, minute: 0),
-      );
-    } else {
-      await notificationService.cancelReminderNotification();
+      final notificationService = NotificationService();
+      if (next) {
+        await notificationService.scheduleDailyReminder(
+          const TimeOfDay(hour: 8, minute: 0),
+        );
+      } else {
+        await notificationService.cancelReminderNotification();
+      }
+
+      return next;
+    } catch (e, stackTrace) {
+      await Sentry.captureException(e, stackTrace: stackTrace);
+      rethrow;
     }
-
-    return next;
   }
 
   Future<void> toggleChallenge() async {
@@ -77,7 +88,8 @@ class AlarmSettingViewModel extends AsyncNotifier<AlarmSettingState> {
   }
 
   void setReminder(bool value) {
-    final prev = state.requireValue;
+    final prev = state.valueOrNull;
+    if (prev == null) return;
 
     final newState = prev.copyWith(isReminder: value).recalculateIsAll();
     state = AsyncValue.data(newState);
