@@ -36,7 +36,7 @@ final claudeDioProvider = Provider<Dio>((ref) {
       baseUrl: dotenv.env['CLAUDE_URL']!,
       headers: {
         'x-api-key': dotenv.env['CLAUDE_API_KEY']!,
-        'anthropic-version': 'claude-3-5-sonnet-20241022',
+        'anthropic-version': '2023-06-01',
         'Content-Type': 'application/json',
       },
     ),

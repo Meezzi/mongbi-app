@@ -66,7 +66,7 @@ class RemoteDreamAnalysisDataSource implements DreamAnalysisDataSource {
 ''';
 
       final requestBody = {
-        'model': 'claude-3-5-sonnet-20241022',
+        'model': 'claude-sonnet-4-20250514',
         'max_tokens': 4024,
         'messages': [
           {'role': 'user', 'content': prompt},
@@ -76,7 +76,18 @@ class RemoteDreamAnalysisDataSource implements DreamAnalysisDataSource {
       final response = await dio.post('', data: requestBody);
 
       if (response.statusCode == 200) {
-        final text = response.data['content'][0]['text'] as String;
+        var text = response.data['content'][0]['text'] as String;
+
+        // 마크다운 코드 블록 제거 (```json ... ``` 또는 ``` ... ```)
+        text = text.trim();
+        if (text.startsWith('```json')) {
+          text = text.substring(7).trim();
+        } else if (text.startsWith('```')) {
+          text = text.substring(3).trim();
+        }
+        if (text.endsWith('```')) {
+          text = text.substring(0, text.length - 3).trim();
+        }
 
         // 응답받은 꿈 해석 JSON String을 파싱해서 Map으로 변환
         final jsonResponse = jsonDecode(text) as Map<String, dynamic>;
@@ -90,6 +101,7 @@ class RemoteDreamAnalysisDataSource implements DreamAnalysisDataSource {
       }
     } on DioException catch (e, s) {
       final message = switch (e.response?.statusCode) {
+        400 => 'API 요청 형식이 잘못되었습니다. 요청 데이터를 확인해주세요.',
         401 => 'API Key가 잘못되었습니다. 다시 확인해주세요.',
         404 => 'API 엔드포인트를 찾을 수 없습니다. URL 또는 모델명을 확인해주세요.',
         _ => '네트워크 오류: ${e.message}',
