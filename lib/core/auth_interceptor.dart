@@ -73,6 +73,30 @@ class AuthInterceptor extends Interceptor {
           await storageService.clearAll();
           return handler.reject(err);
         }
+      } else {
+        // refreshToken이 없으면 로그아웃 처리
+        await storageService.clearAll();
+
+        await Sentry.captureMessage(
+          'RefreshToken이 없어서 로그아웃 처리',
+          level: SentryLevel.warning,
+          withScope: (scope) {
+            scope.setTag('error_type', 'no_refresh_token');
+            scope.setContexts('auth_error', {
+              'original_error': err.toString(),
+              'status_code': err.response?.statusCode,
+            });
+          },
+        );
+
+        return handler.reject(
+          DioException(
+            requestOptions: err.requestOptions,
+            error: 'RefreshToken이 없습니다. 다시 로그인해주세요.',
+            type: DioExceptionType.badResponse,
+            response: err.response,
+          ),
+        );
       }
     }
 
