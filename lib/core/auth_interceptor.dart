@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:mongbi_app/core/secure_storage_service.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 class AuthInterceptor extends Interceptor {
   AuthInterceptor(this.dio);
@@ -21,10 +22,8 @@ class AuthInterceptor extends Interceptor {
     return handler.next(options);
   }
 
-
-
   @override
-  void onError(DioException err, ErrorInterceptorHandler handler) async { 
+  void onError(DioException err, ErrorInterceptorHandler handler) async {
     if (err.requestOptions.path.contains('/auth/refresh')) {
       return handler.reject(err);
     }
@@ -40,14 +39,37 @@ class AuthInterceptor extends Interceptor {
           );
 
           final newAccessToken = response.data['accessToken'];
+          final newRefreshToken = response.data['refreshToken'];
+
+          if (newAccessToken == null) {
+            throw Exception('AccessToken이 응답에 없습니다.');
+          }
+
           await storageService.saveAccessToken(newAccessToken);
+
+          if (newRefreshToken != null) {
+            await storageService.saveRefreshToken(newRefreshToken);
+          }
 
           final retryRequest = err.requestOptions;
           retryRequest.headers['Authorization'] = 'Bearer $newAccessToken';
 
           final clonedResponse = await dio.fetch(retryRequest);
           return handler.resolve(clonedResponse);
-        } catch (e) {
+        } catch (e, stackTrace) {
+          await Sentry.captureException(
+            e,
+            stackTrace: stackTrace,
+            withScope: (scope) {
+              scope.setTag('error_type', 'token_refresh_failed');
+              scope.setContexts('token_refresh_error', {
+                'original_error': err.toString(),
+                'error_message': e.toString(),
+                'status_code': err.response?.statusCode,
+              });
+            },
+          );
+
           await storageService.clearAll();
           return handler.reject(err);
         }
