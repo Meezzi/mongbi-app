@@ -1,8 +1,8 @@
-import 'package:mongbi_app/domain/repositories/auth_repository.dart';
 import 'package:mongbi_app/features/auth/data/data_sources/remote_apple_auth_data_source.dart';
 import 'package:mongbi_app/features/auth/data/data_sources/remote_kakao_auth_data_source.dart';
 import 'package:mongbi_app/features/auth/data/data_sources/remote_naver_auth_data_source.dart';
 import 'package:mongbi_app/features/auth/domain/entities/user.dart';
+import 'package:mongbi_app/features/auth/domain/repositories/auth_repository.dart';
 
 class RemoteAuthRepository implements AuthRepository {
   RemoteAuthRepository({

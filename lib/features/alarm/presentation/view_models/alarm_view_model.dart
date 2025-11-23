@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mongbi_app/features/alarm/presentation/models/alarm_model.dart';
 import 'package:mongbi_app/features/alarm/providers/alarm_provider.dart';
-import 'package:mongbi_app/presentation/alarm/models/alarm_model.dart';
 
 class AlarmViewModel extends Notifier<AlarmModel> {
   @override

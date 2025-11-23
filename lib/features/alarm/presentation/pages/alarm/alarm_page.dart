@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mongbi_app/presentation/alarm/widgets/alarm_app_bar.dart';
-import 'package:mongbi_app/presentation/alarm/widgets/alarm_body.dart';
+import 'package:mongbi_app/features/alarm/presentation/pages/alarm/widgets/alarm_app_bar.dart';
+import 'package:mongbi_app/features/alarm/presentation/pages/alarm/widgets/alarm_body.dart';
 
 class AlarmPage extends StatelessWidget {
   const AlarmPage({super.key});

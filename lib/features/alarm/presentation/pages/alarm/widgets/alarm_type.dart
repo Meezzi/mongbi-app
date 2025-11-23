@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mongbi_app/core/font.dart';
+import 'package:mongbi_app/features/alarm/presentation/models/alarm_model.dart';
 import 'package:mongbi_app/features/alarm/providers/alarm_provider.dart';
-import 'package:mongbi_app/presentation/alarm/models/alarm_model.dart';
 
 class AlarmType extends ConsumerStatefulWidget {
   const AlarmType({super.key});
