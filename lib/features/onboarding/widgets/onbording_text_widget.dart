@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mongbi_app/core/font.dart';
+import 'package:mongbi_app/core/theme/font.dart';
 
 enum OnboardingTextType { title, description }
 

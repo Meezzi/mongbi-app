@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/analytics/analytics_helper.dart';
-import 'package:mongbi_app/core/font.dart';
+import 'package:mongbi_app/core/theme/font.dart';
 import 'package:mongbi_app/features/setting/presentation/pages/widgets/logout_account_modal.dart';
 import 'package:mongbi_app/features/setting/presentation/pages/widgets/remove_accont_modal.dart';
 import 'package:mongbi_app/features/setting/presentation/pages/widgets/setting_rounded_list_tile_item.dart';

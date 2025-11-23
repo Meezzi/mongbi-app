@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/core/licenses.dart';
+import 'package:mongbi_app/core/theme/font.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class OpenSourceLicensePage extends StatelessWidget {

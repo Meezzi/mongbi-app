@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:mongbi_app/core/secure_storage_service.dart';
+import 'package:mongbi_app/core/services/secure_storage_service.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 class AuthInterceptor extends Interceptor {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mongbi_app/core/font.dart';
+import 'package:mongbi_app/core/theme/font.dart';
 
 class RoundedListTileItem extends StatelessWidget {
   const RoundedListTileItem({

@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mongbi_app/core/auth_interceptor.dart';
-import 'package:mongbi_app/core/secure_storage_service.dart';
+import 'package:mongbi_app/core/network/auth_interceptor.dart';
+import 'package:mongbi_app/core/services/secure_storage_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final sharedPreferencesProvider = FutureProvider<SharedPreferences>((

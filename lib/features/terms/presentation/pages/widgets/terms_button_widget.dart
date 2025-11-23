@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mongbi_app/core/font.dart';
-import 'package:mongbi_app/core/get_responsive_ratio_by_width.dart';
+import 'package:mongbi_app/core/theme/font.dart';
+import 'package:mongbi_app/core/utils/get_responsive_ratio_by_width.dart';
 
 class ConfirmButton extends StatelessWidget {
   const ConfirmButton({

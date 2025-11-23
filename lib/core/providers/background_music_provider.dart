@@ -1,6 +1,6 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mongbi_app/core/background_music_player.dart';
+import 'package:mongbi_app/core/services/background_music_player.dart';
 
 final backgroundMusicProvider = Provider<BackgroundMusicPlayer>((ref) {
   final audioPlayer = AudioPlayer();

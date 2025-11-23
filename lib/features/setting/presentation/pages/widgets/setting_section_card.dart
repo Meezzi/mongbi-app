@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mongbi_app/core/font.dart';
+import 'package:mongbi_app/core/theme/font.dart';
 
 class SectionCard extends StatelessWidget {
   const SectionCard({super.key, required this.title, required this.children});

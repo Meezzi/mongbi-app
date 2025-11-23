@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/analytics/analytics_helper.dart';
-import 'package:mongbi_app/core/font.dart';
+import 'package:mongbi_app/core/theme/font.dart';
 import 'package:mongbi_app/features/common/floating_animation_widget.dart';
 import 'package:mongbi_app/features/setting/providers/user_info_provider.dart';
 import 'package:mongbi_app/features/splash/view_models/splash_status.dart';

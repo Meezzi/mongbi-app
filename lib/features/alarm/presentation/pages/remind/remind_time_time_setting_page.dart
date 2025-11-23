@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/analytics/analytics_helper.dart';
-import 'package:mongbi_app/core/font.dart';
+import 'package:mongbi_app/core/theme/font.dart';
 import 'package:mongbi_app/features/alarm/presentation/pages/remind/widgets/remind_time_setting_text_widget.dart';
 import 'package:mongbi_app/features/alarm/presentation/pages/remind/widgets/remind_time_setting_widget.dart';
 import 'package:mongbi_app/features/alarm/presentation/view_models/remind_time_setting_view_model.dart';

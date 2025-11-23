@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mongbi_app/core/font.dart';
+import 'package:mongbi_app/core/theme/font.dart';
 import 'package:mongbi_app/features/dream/providers/dream_provider.dart';
 
 class DreamContentInput extends ConsumerWidget {

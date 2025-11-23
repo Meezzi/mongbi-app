@@ -1,9 +1,9 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mongbi_app/core/custom_transition_page.dart';
-import 'package:mongbi_app/core/main_scaffold.dart';
-import 'package:mongbi_app/core/responsive_layout.dart';
-import 'package:mongbi_app/core/route_observer.dart';
+import 'package:mongbi_app/core/routing/custom_transition_page.dart';
+import 'package:mongbi_app/core/routing/route_observer.dart';
+import 'package:mongbi_app/core/widgets/main_scaffold.dart';
+import 'package:mongbi_app/core/widgets/responsive_layout.dart';
 import 'package:mongbi_app/features/alarm/presentation/pages/alarm/alarm_page.dart';
 import 'package:mongbi_app/features/alarm/presentation/pages/remind/remind_time_setting_page.dart';
 import 'package:mongbi_app/features/alarm/presentation/pages/remind/remind_time_time_setting_page.dart';

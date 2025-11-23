@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mongbi_app/core/responsive_layout.dart';
+import 'package:mongbi_app/core/widgets/responsive_layout.dart';
 import 'package:mongbi_app/features/auth/providers/auth_provider.dart';
 import 'package:mongbi_app/features/common/button_type.dart';
 import 'package:mongbi_app/features/common/custom_snack_bar.dart';

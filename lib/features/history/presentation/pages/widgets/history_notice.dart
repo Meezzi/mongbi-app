@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mongbi_app/core/date_formatter.dart';
-import 'package:mongbi_app/core/font.dart';
-import 'package:mongbi_app/core/remove_html_tags.dart';
+import 'package:mongbi_app/core/theme/font.dart';
+import 'package:mongbi_app/core/utils/date_formatter.dart';
+import 'package:mongbi_app/core/utils/remove_html_tags.dart';
 import 'package:mongbi_app/features/history/presentation/models/calendar_model.dart';
 import 'package:mongbi_app/features/history/presentation/pages/widgets/history_item.dart';
 

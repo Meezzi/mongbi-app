@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mongbi_app/core/font.dart';
+import 'package:mongbi_app/core/theme/font.dart';
 
 class SkipButton extends StatelessWidget {
   const SkipButton({super.key, required this.onTap, this.text = '건너뛰기'});

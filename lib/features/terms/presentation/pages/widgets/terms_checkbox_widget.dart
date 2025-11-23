@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mongbi_app/core/font.dart';
+import 'package:mongbi_app/core/theme/font.dart';
 import 'package:mongbi_app/features/terms/domain/entities/terms.dart';
 import 'package:mongbi_app/features/terms/presentation/pages/terms_inner_page.dart';
 import 'package:mongbi_app/features/terms/presentation/pages/widgets/terms_custom_checkbox.widget.dart';

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mongbi_app/core/font.dart';
-import 'package:mongbi_app/core/secure_storage_service.dart';
+import 'package:mongbi_app/core/services/secure_storage_service.dart';
+import 'package:mongbi_app/core/theme/font.dart';
 import 'package:mongbi_app/features/common/custom_snack_bar.dart';
 import 'package:mongbi_app/features/dream/providers/dream_provider.dart';
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mongbi_app/core/font.dart';
+import 'package:mongbi_app/core/theme/font.dart';
 import 'package:mongbi_app/features/common/button_type.dart';
 import 'package:mongbi_app/features/common/filled_button_widget.dart';
 

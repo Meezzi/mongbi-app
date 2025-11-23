@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mongbi_app/core/font.dart';
-import 'package:mongbi_app/core/responsive_layout.dart';
+import 'package:mongbi_app/core/theme/font.dart';
+import 'package:mongbi_app/core/widgets/responsive_layout.dart';
 
 class MoodStateInfoModal {
   OverlayEntry? _overlayEntry;

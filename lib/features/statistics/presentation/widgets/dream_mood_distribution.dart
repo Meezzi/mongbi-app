@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mongbi_app/core/font.dart';
+import 'package:mongbi_app/core/theme/font.dart';
 import 'package:mongbi_app/features/statistics/data/dtos/statistics_dto.dart';
 import 'package:mongbi_app/features/statistics/presentation/widgets/common_box.dart';
 import 'package:mongbi_app/features/statistics/presentation/widgets/dream_mood_distribution_percent.dart';

@@ -1,4 +1,4 @@
-import 'package:mongbi_app/core/remove_html_tags.dart';
+import 'package:mongbi_app/core/utils/remove_html_tags.dart';
 import 'package:mongbi_app/features/challenge/domain/entities/challenge.dart';
 
 class ChallengeDto {
