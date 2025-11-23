@@ -2,8 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter_naver_login/flutter_naver_login.dart';
 import 'package:mongbi_app/core/exceptions/auth_custom_exception.dart';
 import 'package:mongbi_app/core/secure_storage_service.dart';
-import 'package:mongbi_app/data/dtos/user_dto.dart';
 import 'package:mongbi_app/features/auth/data/dtos/login_response_dto.dart';
+import 'package:mongbi_app/features/setting/data/dtos/user_dto.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 class RemoteNaverAuthDataSource {

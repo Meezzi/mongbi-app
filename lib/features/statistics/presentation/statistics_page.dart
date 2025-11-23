@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mongbi_app/core/font.dart';
+import 'package:mongbi_app/features/setting/providers/user_info_provider.dart';
 import 'package:mongbi_app/features/statistics/presentation/widgets/custom_snack_bar.dart';
 import 'package:mongbi_app/features/statistics/presentation/widgets/month_statistics.dart';
 import 'package:mongbi_app/features/statistics/presentation/widgets/tab_bar_title.dart';
 import 'package:mongbi_app/features/statistics/presentation/widgets/year_statistics.dart';
 import 'package:mongbi_app/features/statistics/providers/statistics_provider.dart';
-import 'package:mongbi_app/providers/user_info_provider.dart';
 
 class StatisticsPage extends ConsumerStatefulWidget {
   const StatisticsPage({super.key});

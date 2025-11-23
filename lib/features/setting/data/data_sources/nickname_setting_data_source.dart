@@ -1,4 +1,4 @@
-import 'package:mongbi_app/data/dtos/user_dto.dart';
+import 'package:mongbi_app/features/setting/data/dtos/user_dto.dart';
 
 abstract interface class NicknameSettingDataSource {
   Future<UserDto> updateNickname({

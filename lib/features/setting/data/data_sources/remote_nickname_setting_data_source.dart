@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:mongbi_app/data/data_sources/nickname_setting_data_source.dart';
-import 'package:mongbi_app/data/dtos/user_dto.dart';
+import 'package:mongbi_app/features/setting/data/data_sources/nickname_setting_data_source.dart';
+import 'package:mongbi_app/features/setting/data/dtos/user_dto.dart';
 import 'package:sentry_flutter/sentry_flutter.dart'; // ✅ Sentry 추가
 
 class RemoteNicknameSettingDataSource implements NicknameSettingDataSource {

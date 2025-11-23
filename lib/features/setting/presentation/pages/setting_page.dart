@@ -3,12 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/analytics/analytics_helper.dart';
 import 'package:mongbi_app/core/font.dart';
-import 'package:mongbi_app/presentation/setting/widgets/setting_rounded_list_tile_item.dart';
-import 'package:mongbi_app/presentation/setting/widgets/setting_section_card.dart';
-import 'package:mongbi_app/presentation/setting/widgets/setting_toggle_switch.dart';
-import 'package:mongbi_app/presentation/setting/widgets/setting_user_info_header.dart';
-import 'package:mongbi_app/providers/setting_provider.dart';
-import 'package:mongbi_app/providers/user_info_provider.dart';
+import 'package:mongbi_app/features/setting/presentation/pages/widgets/setting_rounded_list_tile_item.dart';
+import 'package:mongbi_app/features/setting/presentation/pages/widgets/setting_section_card.dart';
+import 'package:mongbi_app/features/setting/presentation/pages/widgets/setting_toggle_switch.dart';
+import 'package:mongbi_app/features/setting/presentation/pages/widgets/setting_user_info_header.dart';
+import 'package:mongbi_app/features/setting/providers/setting_provider.dart';
+import 'package:mongbi_app/features/setting/providers/user_info_provider.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 

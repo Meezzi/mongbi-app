@@ -10,9 +10,9 @@ import 'package:mongbi_app/features/auth/domain/entities/user.dart';
 import 'package:mongbi_app/features/auth/domain/use_cases/login_with_apple.dart';
 import 'package:mongbi_app/features/auth/domain/use_cases/login_with_kakao.dart';
 import 'package:mongbi_app/features/auth/domain/use_cases/login_with_naver.dart';
+import 'package:mongbi_app/features/setting/providers/user_info_provider.dart';
 import 'package:mongbi_app/providers/account_provider.dart';
 import 'package:mongbi_app/providers/auth_provider.dart';
-import 'package:mongbi_app/providers/user_info_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 

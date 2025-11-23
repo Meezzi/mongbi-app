@@ -4,10 +4,10 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/analytics/analytics_helper.dart';
 import 'package:mongbi_app/core/font.dart';
-import 'package:mongbi_app/presentation/setting/widgets/logout_account_modal.dart';
-import 'package:mongbi_app/presentation/setting/widgets/remove_accont_modal.dart';
-import 'package:mongbi_app/presentation/setting/widgets/setting_rounded_list_tile_item.dart';
-import 'package:mongbi_app/providers/user_info_provider.dart';
+import 'package:mongbi_app/features/setting/presentation/pages/widgets/logout_account_modal.dart';
+import 'package:mongbi_app/features/setting/presentation/pages/widgets/remove_accont_modal.dart';
+import 'package:mongbi_app/features/setting/presentation/pages/widgets/setting_rounded_list_tile_item.dart';
+import 'package:mongbi_app/features/setting/providers/user_info_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileSettingPage extends ConsumerWidget {

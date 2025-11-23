@@ -15,17 +15,17 @@ import 'package:mongbi_app/features/dream/presentation/pages/dream_analysis/drea
 import 'package:mongbi_app/features/dream/presentation/pages/dream_write/dream_intro_page.dart';
 import 'package:mongbi_app/features/dream/presentation/pages/dream_write/dream_write_page.dart';
 import 'package:mongbi_app/features/history/presentation/pages/history_page.dart';
+import 'package:mongbi_app/features/setting/presentation/pages/alarm_setting_page.dart';
+import 'package:mongbi_app/features/setting/presentation/pages/nickname_input_page.dart';
+import 'package:mongbi_app/features/setting/presentation/pages/profile_setting_page.dart';
+import 'package:mongbi_app/features/setting/presentation/pages/setting_page.dart';
+import 'package:mongbi_app/features/setting/presentation/pages/widgets/open_source_license_page.dart';
+import 'package:mongbi_app/features/statistics/presentation/statistics_page.dart';
 import 'package:mongbi_app/presentation/alarm/alarm_page.dart';
 import 'package:mongbi_app/presentation/home/home_page.dart';
 import 'package:mongbi_app/presentation/onboarding/onbording_exit_page.dart';
 import 'package:mongbi_app/presentation/onboarding/onbording_page.dart';
-import 'package:mongbi_app/presentation/setting/alarm_setting_page.dart';
-import 'package:mongbi_app/presentation/setting/nickname_input_page.dart';
-import 'package:mongbi_app/presentation/setting/profile_setting_page.dart';
-import 'package:mongbi_app/presentation/setting/setting_page.dart';
-import 'package:mongbi_app/presentation/setting/widgets/open_source_license_page.dart';
 import 'package:mongbi_app/presentation/splash/splash_page.dart';
-import 'package:mongbi_app/features/statistics/presentation/statistics_page.dart';
 
 final FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.instance;
 final GoRouter router = GoRouter(

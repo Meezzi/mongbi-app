@@ -9,9 +9,9 @@ import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/analytics/analytics_helper.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/features/alarm/presentation/view_models/remind_time_setting_view_model.dart';
-import 'package:mongbi_app/presentation/setting/widgets/setting_rounded_list_tile_item.dart';
-import 'package:mongbi_app/presentation/setting/widgets/setting_toggle_switch.dart';
-import 'package:mongbi_app/providers/setting_provider.dart';
+import 'package:mongbi_app/features/setting/presentation/pages/widgets/setting_rounded_list_tile_item.dart';
+import 'package:mongbi_app/features/setting/presentation/pages/widgets/setting_toggle_switch.dart';
+import 'package:mongbi_app/features/setting/providers/setting_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class AlarmSettingPage extends ConsumerWidget {

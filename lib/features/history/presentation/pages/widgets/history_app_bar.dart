@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mongbi_app/providers/user_info_provider.dart';
+import 'package:mongbi_app/features/setting/providers/user_info_provider.dart';
 
 class HistoryAppBar extends ConsumerWidget {
   const HistoryAppBar({
