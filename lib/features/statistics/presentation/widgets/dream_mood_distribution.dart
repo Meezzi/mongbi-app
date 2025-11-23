@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mongbi_app/core/font.dart';
-import 'package:mongbi_app/data/dtos/statistics_dto.dart';
-import 'package:mongbi_app/presentation/statistics/widgets/common_box.dart';
-import 'package:mongbi_app/presentation/statistics/widgets/dream_mood_distribution_percent.dart';
-import 'package:mongbi_app/presentation/statistics/widgets/dream_mood_distribution_pie_chart.dart';
+import 'package:mongbi_app/features/statistics/data/dtos/statistics_dto.dart';
+import 'package:mongbi_app/features/statistics/presentation/widgets/common_box.dart';
+import 'package:mongbi_app/features/statistics/presentation/widgets/dream_mood_distribution_percent.dart';
+import 'package:mongbi_app/features/statistics/presentation/widgets/dream_mood_distribution_pie_chart.dart';
 
 class DreamMoodDistribution extends StatelessWidget {
   const DreamMoodDistribution({

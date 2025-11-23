@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mongbi_app/presentation/statistics/models/statistics_model.dart';
-import 'package:mongbi_app/providers/statistics_provider.dart';
+import 'package:mongbi_app/features/statistics/presentation/models/statistics_model.dart';
+import 'package:mongbi_app/features/statistics/providers/statistics_provider.dart';
 
 class StatisticsViewModel extends AutoDisposeAsyncNotifier<StatisticsModel?> {
   bool _isMounted = true;

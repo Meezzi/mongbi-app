@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:mongbi_app/core/secure_storage_service.dart';
-import 'package:mongbi_app/data/data_sources/statistics_data_source.dart';
-import 'package:mongbi_app/data/dtos/statistics_dto.dart';
+import 'package:mongbi_app/features/statistics/data/data_sources/statistics_data_source.dart';
+import 'package:mongbi_app/features/statistics/data/dtos/statistics_dto.dart';
 import 'package:sentry_flutter/sentry_flutter.dart'; // ✅ Sentry 추가
 
 class RemoteStatisticsDataSource implements StatisticsDataSource {

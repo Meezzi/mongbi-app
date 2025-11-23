@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mongbi_app/core/font.dart';
-import 'package:mongbi_app/data/dtos/statistics_dto.dart';
-import 'package:mongbi_app/presentation/statistics/widgets/common_box.dart';
-import 'package:mongbi_app/presentation/statistics/widgets/dream_type_mood_state_row.dart';
-import 'package:mongbi_app/presentation/statistics/widgets/mood_state_info_modal.dart';
+import 'package:mongbi_app/features/statistics/data/dtos/statistics_dto.dart';
+import 'package:mongbi_app/features/statistics/presentation/widgets/common_box.dart';
+import 'package:mongbi_app/features/statistics/presentation/widgets/dream_type_mood_state_row.dart';
+import 'package:mongbi_app/features/statistics/presentation/widgets/mood_state_info_modal.dart';
 
 class DreamTypeMoodState extends StatelessWidget {
   DreamTypeMoodState({

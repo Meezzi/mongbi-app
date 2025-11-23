@@ -4,9 +4,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:mongbi_app/core/secure_storage_service.dart';
-import 'package:mongbi_app/data/data_sources/remote_statistics_data_source.dart';
-import 'package:mongbi_app/data/data_sources/statistics_data_source.dart';
-import 'package:mongbi_app/data/dtos/statistics_dto.dart';
+import 'package:mongbi_app/features/statistics/data/data_sources/remote_statistics_data_source.dart';
+import 'package:mongbi_app/features/statistics/data/data_sources/statistics_data_source.dart';
+import 'package:mongbi_app/features/statistics/data/dtos/statistics_dto.dart';
 
 class MockDio extends Mock implements Dio {}
 

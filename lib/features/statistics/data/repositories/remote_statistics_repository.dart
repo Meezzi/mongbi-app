@@ -1,6 +1,7 @@
-import 'package:mongbi_app/data/data_sources/statistics_data_source.dart';
-import 'package:mongbi_app/domain/entities/statistics.dart';
-import 'package:mongbi_app/domain/repositories/statistics_repository.dart';
+
+import 'package:mongbi_app/features/statistics/data/data_sources/statistics_data_source.dart';
+import 'package:mongbi_app/features/statistics/domain/entities/statistics.dart';
+import 'package:mongbi_app/features/statistics/domain/repositories/statistics_repository.dart';
 
 class RemoteStatisticsRepository implements StatisticsRepository {
   RemoteStatisticsRepository(this.dataSource);

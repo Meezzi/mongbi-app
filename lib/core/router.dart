@@ -25,7 +25,7 @@ import 'package:mongbi_app/presentation/setting/profile_setting_page.dart';
 import 'package:mongbi_app/presentation/setting/setting_page.dart';
 import 'package:mongbi_app/presentation/setting/widgets/open_source_license_page.dart';
 import 'package:mongbi_app/presentation/splash/splash_page.dart';
-import 'package:mongbi_app/presentation/statistics/statistics_page.dart';
+import 'package:mongbi_app/features/statistics/presentation/statistics_page.dart';
 
 final FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.instance;
 final GoRouter router = GoRouter(

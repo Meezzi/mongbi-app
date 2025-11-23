@@ -1,28 +1,29 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mongbi_app/data/dtos/statistics_dto.dart';
-import 'package:mongbi_app/presentation/statistics/statistics_key/statistics_key.dart';
-import 'package:mongbi_app/presentation/statistics/widgets/dream_frequency_card.dart';
-import 'package:mongbi_app/presentation/statistics/widgets/dream_mood_distribution.dart';
-import 'package:mongbi_app/presentation/statistics/widgets/dream_type_mood_state.dart';
-import 'package:mongbi_app/presentation/statistics/widgets/gift_frequency_card.dart';
-import 'package:mongbi_app/presentation/statistics/widgets/month_year_picker.dart';
-import 'package:mongbi_app/presentation/statistics/widgets/month_year_picker_button.dart';
-import 'package:mongbi_app/presentation/statistics/widgets/psychology_keyword_chart.dart';
-import 'package:mongbi_app/providers/statistics_provider.dart';
+import 'package:mongbi_app/features/statistics/data/dtos/statistics_dto.dart';
+import 'package:mongbi_app/features/statistics/presentation/statistics_key/statistics_key.dart';
+import 'package:mongbi_app/features/statistics/presentation/widgets/dream_frequency_card.dart';
+import 'package:mongbi_app/features/statistics/presentation/widgets/dream_mood_distribution.dart';
+import 'package:mongbi_app/features/statistics/presentation/widgets/dream_type_mood_state.dart';
+import 'package:mongbi_app/features/statistics/presentation/widgets/gift_frequency_card.dart';
+import 'package:mongbi_app/features/statistics/presentation/widgets/month_year_picker.dart';
+import 'package:mongbi_app/features/statistics/presentation/widgets/month_year_picker_button.dart';
+import 'package:mongbi_app/features/statistics/presentation/widgets/psychology_keyword_chart.dart';
+import 'package:mongbi_app/features/statistics/providers/statistics_provider.dart';
 
-class YearStatistics extends ConsumerStatefulWidget {
-  const YearStatistics({super.key, required this.horizontalPadding});
+class MonthStatistics extends ConsumerStatefulWidget {
+  const MonthStatistics({super.key, required this.horizontalPadding});
 
   final double horizontalPadding;
 
   @override
-  ConsumerState<YearStatistics> createState() => _YearStatisticsState();
+  ConsumerState<MonthStatistics> createState() => _MonthStatisticsState();
 }
 
-class _YearStatisticsState extends ConsumerState<YearStatistics>
+class _MonthStatisticsState extends ConsumerState<MonthStatistics>
     with RouteAware {
-  bool isMonth = false;
+  bool isMonth = true;
   final ScrollController scrollController = ScrollController();
 
   @override
@@ -62,21 +63,26 @@ class _YearStatisticsState extends ConsumerState<YearStatistics>
                 return SizedBox();
               },
               data: (data) {
-                final yearStatistics = data?.year;
+                final monthStatistics = data?.month;
                 final now = DateTime.now();
-                final year =
-                    yearStatistics?.year ??
-                    pickerState.focusedYear.year.toString(); // "2025"
-                final frequency = yearStatistics?.frequency ?? 0;
+                final yearMonth =
+                    monthStatistics?.month?.split('-') ??
+                    [
+                      pickerState.focusedMonth.year.toString(),
+                      pickerState.focusedMonth.month.toString(),
+                    ]; // "2025-06"
+                final frequency = monthStatistics?.frequency ?? 0;
                 final challengeSuccessRate =
-                    yearStatistics?.challengeSuccessRate ?? 0;
-                final totalDays = yearStatistics?.totalDays ?? 0;
+                    monthStatistics?.challengeSuccessRate ?? 0;
+                final totalDays = monthStatistics?.totalDays ?? 0;
                 final distribution =
-                    yearStatistics?.distribution ?? DreamScore();
-                final moodState = yearStatistics?.moodState;
-                final keywordList = yearStatistics?.keywords;
+                    monthStatistics?.distribution ?? DreamScore();
+                final moodState = monthStatistics?.moodState;
+                final keywordList = monthStatistics?.keywords;
                 final isFirst = frequency == 0;
-                final isCurrent = now.year == int.parse(year);
+                final isCurrent =
+                    now.year == int.parse(yearMonth[0]) &&
+                    now.month == int.parse(yearMonth[1]);
 
                 WidgetsBinding.instance.addPostFrameCallback((_) {
                   if (isFirst && isCurrent) {
@@ -118,7 +124,7 @@ class _YearStatisticsState extends ConsumerState<YearStatistics>
                 );
               },
               error: (error, stackTrace) {
-                return Center(child: Text('예기치 못한 오류가 발생했습니다.'));
+                return Center(child: Text('예기치 못한 오류가 발생했다몽'));
               },
             ),
           ],

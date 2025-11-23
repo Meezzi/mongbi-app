@@ -1,4 +1,4 @@
-import 'package:mongbi_app/data/dtos/statistics_dto.dart';
+import 'package:mongbi_app/features/statistics/data/dtos/statistics_dto.dart';
 
 abstract interface class StatisticsDataSource {
   Future<StatisticsDto?> fetchMonthStatistics(DateTime dateTime);

@@ -1,9 +1,9 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:mongbi_app/core/font.dart';
-import 'package:mongbi_app/data/dtos/statistics_dto.dart';
-import 'package:mongbi_app/presentation/statistics/widgets/common_box.dart';
-import 'package:mongbi_app/presentation/statistics/widgets/custom_fl_dot_painter.dart';
+import 'package:mongbi_app/features/statistics/data/dtos/statistics_dto.dart';
+import 'package:mongbi_app/features/statistics/presentation/widgets/common_box.dart';
+import 'package:mongbi_app/features/statistics/presentation/widgets/custom_fl_dot_painter.dart';
 
 class PsychologyKeywordChart extends StatelessWidget {
   const PsychologyKeywordChart({

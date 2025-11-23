@@ -1,7 +1,8 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mongbi_app/core/font.dart';
-import 'package:mongbi_app/providers/statistics_provider.dart';
+import 'package:mongbi_app/features/statistics/providers/statistics_provider.dart';
 
 class TabBarTitle extends StatelessWidget {
   const TabBarTitle({

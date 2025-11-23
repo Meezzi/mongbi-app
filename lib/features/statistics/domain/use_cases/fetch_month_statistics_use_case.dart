@@ -1,5 +1,5 @@
-import 'package:mongbi_app/domain/entities/statistics.dart';
-import 'package:mongbi_app/domain/repositories/statistics_repository.dart';
+import 'package:mongbi_app/features/statistics/domain/entities/statistics.dart';
+import 'package:mongbi_app/features/statistics/domain/repositories/statistics_repository.dart';
 
 class FetchMonthStatisticsUseCase {
   FetchMonthStatisticsUseCase(this.repository);
