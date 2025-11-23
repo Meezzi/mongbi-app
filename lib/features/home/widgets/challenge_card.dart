@@ -5,8 +5,8 @@ import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/challenge_dead_line_manager.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/features/challenge/providers/challenge_provider.dart';
-import 'package:mongbi_app/presentation/home/widgets/completion_bottom_sheet.dart';
-import 'package:mongbi_app/presentation/home/widgets/give_up_confirm_bottom_sheet.dart';
+import 'package:mongbi_app/features/home/widgets/completion_bottom_sheet.dart';
+import 'package:mongbi_app/features/home/widgets/give_up_confirm_bottom_sheet.dart';
 
 class ChallengeCard extends ConsumerWidget {
   const ChallengeCard({super.key});

@@ -10,7 +10,7 @@ import 'package:mongbi_app/features/challenge/domain/use_cases/fetch_active_chal
 import 'package:mongbi_app/features/challenge/domain/use_cases/fetch_challenge_use_case.dart';
 import 'package:mongbi_app/features/challenge/domain/use_cases/save_challenge_use_case.dart';
 import 'package:mongbi_app/features/challenge/presentation/view_models/challenge_view_model.dart';
-import 'package:mongbi_app/presentation/home/view_models/home_view_model.dart';
+import 'package:mongbi_app/features/home/view_models/home_view_model.dart';
 import 'package:mongbi_app/providers/core_providers.dart';
 
 final _fetchChallengeDataSourceProvider = Provider(

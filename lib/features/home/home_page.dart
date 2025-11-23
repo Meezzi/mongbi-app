@@ -5,11 +5,11 @@ import 'package:mongbi_app/core/analytics/analytics_helper.dart';
 import 'package:mongbi_app/core/challenge_dead_line_manager.dart';
 import 'package:mongbi_app/core/constants/mongbi_constants.dart';
 import 'package:mongbi_app/features/challenge/providers/challenge_provider.dart';
-import 'package:mongbi_app/presentation/common/custom_snack_bar.dart';
-import 'package:mongbi_app/presentation/common/floating_animation_widget.dart';
-import 'package:mongbi_app/presentation/common/touch_scale_widget.dart';
-import 'package:mongbi_app/presentation/home/widgets/challenge_card.dart';
-import 'package:mongbi_app/presentation/home/widgets/speech_bubble.dart';
+import 'package:mongbi_app/features/common/custom_snack_bar.dart';
+import 'package:mongbi_app/features/common/floating_animation_widget.dart';
+import 'package:mongbi_app/features/common/touch_scale_widget.dart';
+import 'package:mongbi_app/features/home/widgets/challenge_card.dart';
+import 'package:mongbi_app/features/home/widgets/speech_bubble.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});

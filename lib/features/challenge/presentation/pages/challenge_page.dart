@@ -7,8 +7,8 @@ import 'package:mongbi_app/core/responsive_layout.dart';
 import 'package:mongbi_app/features/challenge/presentation/pages/widgets/challenge_container.dart';
 import 'package:mongbi_app/features/challenge/presentation/pages/widgets/mongbi_dialog.dart';
 import 'package:mongbi_app/features/challenge/providers/challenge_provider.dart';
-import 'package:mongbi_app/presentation/common/action_button_row.dart';
-import 'package:mongbi_app/presentation/common/custom_snack_bar.dart';
+import 'package:mongbi_app/features/common/action_button_row.dart';
+import 'package:mongbi_app/features/common/custom_snack_bar.dart';
 
 class ChallengePage extends ConsumerWidget {
   const ChallengePage({super.key});

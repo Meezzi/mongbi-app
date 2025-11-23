@@ -1,23 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:mongbi_app/core/font.dart';
-import 'package:mongbi_app/presentation/common/button_type.dart';
-import 'package:mongbi_app/presentation/common/filled_button_widget.dart';
+import 'package:mongbi_app/features/common/action_button_row.dart';
 
-class CompletionBottomSheet extends StatelessWidget {
-  const CompletionBottomSheet({
+class GiveUpConfirmBottomSheet extends StatelessWidget {
+  const GiveUpConfirmBottomSheet({
     super.key,
     required this.title,
     required this.subTitle,
-    required this.buttonText,
-    required this.mongbiImagePath,
-    required this.onButtonPressed,
+    required this.onContinue,
+    required this.onGiveUp,
   });
 
   final String title;
   final String subTitle;
-  final String buttonText;
-  final String mongbiImagePath;
-  final VoidCallback onButtonPressed;
+  final VoidCallback onContinue;
+  final VoidCallback onGiveUp;
 
   @override
   Widget build(BuildContext context) {
@@ -37,13 +34,22 @@ class CompletionBottomSheet extends StatelessWidget {
             style: Font.subTitle12.copyWith(color: Color(0xFF76717A)),
           ),
           SizedBox(height: 8),
-          Image.asset(mongbiImagePath, width: 144, height: 144),
+          Image.asset(
+            'assets/images/mongbi_sad.webp',
+            width: 144,
+            height: 144,
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: FilledButtonWidget(
-              type: ButtonType.primary,
-              text: buttonText,
-              onPress: onButtonPressed,
+            child: ActionButtonRow(
+              leftText: '계속할래',
+              rightText: '포기할래',
+              onLeftPressed: () {
+                onContinue();
+              },
+              onRightPressed: () {
+                onGiveUp();
+              },
             ),
           ),
           SizedBox(height: 48),

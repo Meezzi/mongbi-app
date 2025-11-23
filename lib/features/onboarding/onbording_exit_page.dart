@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mongbi_app/presentation/onboarding/widgets/onbording_exit_button_widget.dart';
-import 'package:mongbi_app/presentation/onboarding/widgets/onbording_exit_image_widget.dart';
-import 'package:mongbi_app/presentation/onboarding/widgets/onbording_exit_text_widget.dart';
+import 'package:mongbi_app/features/onboarding/widgets/onbording_exit_button_widget.dart';
+import 'package:mongbi_app/features/onboarding/widgets/onbording_exit_image_widget.dart';
+import 'package:mongbi_app/features/onboarding/widgets/onbording_exit_text_widget.dart';
 
 class OnboardingExitPage extends StatelessWidget {
   const OnboardingExitPage({super.key});

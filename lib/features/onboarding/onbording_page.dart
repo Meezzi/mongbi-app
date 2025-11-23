@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/analytics/analytics_helper.dart';
-import 'package:mongbi_app/presentation/common/button_type.dart';
-import 'package:mongbi_app/presentation/common/filled_button_widget.dart';
-import 'package:mongbi_app/presentation/onboarding/data/onboarding_data.dart';
-import 'package:mongbi_app/presentation/onboarding/widgets/onbording_exit_image_widget.dart';
-import 'package:mongbi_app/presentation/onboarding/widgets/onbording_exit_text_widget.dart';
-import 'package:mongbi_app/presentation/onboarding/widgets/onbording_image_widget.dart';
-import 'package:mongbi_app/presentation/onboarding/widgets/onbording_indicator_widget.dart';
-import 'package:mongbi_app/presentation/onboarding/widgets/onbording_skip_button_widget.dart';
-import 'package:mongbi_app/presentation/onboarding/widgets/onbording_text_widget.dart';
+import 'package:mongbi_app/features/common/button_type.dart';
+import 'package:mongbi_app/features/common/filled_button_widget.dart';
+import 'package:mongbi_app/features/onboarding/data/onboarding_data.dart';
+import 'package:mongbi_app/features/onboarding/widgets/onbording_exit_image_widget.dart';
+import 'package:mongbi_app/features/onboarding/widgets/onbording_exit_text_widget.dart';
+import 'package:mongbi_app/features/onboarding/widgets/onbording_image_widget.dart';
+import 'package:mongbi_app/features/onboarding/widgets/onbording_indicator_widget.dart';
+import 'package:mongbi_app/features/onboarding/widgets/onbording_skip_button_widget.dart';
+import 'package:mongbi_app/features/onboarding/widgets/onbording_text_widget.dart';
 
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({super.key});

@@ -5,12 +5,12 @@ import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/analytics/analytics_helper.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/core/secure_storage_service.dart';
+import 'package:mongbi_app/features/common/button_type.dart';
+import 'package:mongbi_app/features/common/filled_button_widget.dart';
 import 'package:mongbi_app/features/setting/presentation/pages/widgets/nickname_text_field.dart';
 import 'package:mongbi_app/features/setting/presentation/pages/widgets/nickname_title.dart';
 import 'package:mongbi_app/features/setting/providers/nickname_provider.dart';
 import 'package:mongbi_app/features/setting/providers/user_info_provider.dart';
-import 'package:mongbi_app/presentation/common/button_type.dart';
-import 'package:mongbi_app/presentation/common/filled_button_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class NicknameInputPage extends ConsumerStatefulWidget {

@@ -5,8 +5,8 @@ import 'package:mongbi_app/features/auth/presentation/view_models/auth_view_mode
 import 'package:mongbi_app/features/setting/data/data_sources/remote_user_info_data_source.dart';
 import 'package:mongbi_app/features/setting/data/repositoreis/remote_user_info_reposiotory.dart';
 import 'package:mongbi_app/features/setting/domain/repositories/user_info_repository.dart';
-import 'package:mongbi_app/presentation/splash/view_models/splash_state.dart';
-import 'package:mongbi_app/presentation/splash/view_models/splash_view_model.dart';
+import 'package:mongbi_app/features/splash/view_models/splash_state.dart';
+import 'package:mongbi_app/features/splash/view_models/splash_view_model.dart';
 import 'package:mongbi_app/providers/core_providers.dart';
 
 final _userInfoDataSourceProvider = Provider<RemoteUserInfoGetDataSource>(

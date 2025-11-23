@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mongbi_app/features/challenge/providers/challenge_provider.dart';
-import 'package:mongbi_app/presentation/home/models/home_state.dart';
+import 'package:mongbi_app/features/home/models/home_state.dart';
 import 'package:mongbi_app/providers/auth_provider.dart';
 
 class HomeViewModel extends AutoDisposeNotifier<HomeState> {

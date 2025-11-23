@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mongbi_app/presentation/common/button_type.dart';
+import 'package:mongbi_app/features/common/button_type.dart';
 
-class FilledButtonWidget extends StatelessWidget {
-  const FilledButtonWidget({
+class GhostButtonWidget extends StatelessWidget {
+  const GhostButtonWidget({
     super.key,
     required this.type,
     required this.text,
@@ -20,19 +20,12 @@ class FilledButtonWidget extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(999),
         boxShadow: [
-          onPress != null
-              ? BoxShadow(
-                color: Color(0x331A181B),
-                blurRadius: 10,
-                offset: Offset(2, 2),
-                spreadRadius: 0,
-              )
-              : BoxShadow(
-                color: Color(0x191A181B),
-                blurRadius: 10,
-                offset: Offset(2, 2),
-                spreadRadius: 0,
-              ),
+          BoxShadow(
+            color: Color(0x191A181B),
+            blurRadius: 10,
+            offset: Offset(2, 2),
+            spreadRadius: 0,
+          ),
         ],
       ),
       child: ElevatedButton(
@@ -54,8 +47,8 @@ class FilledButtonWidget extends StatelessWidget {
           ),
           overlayColor: WidgetStatePropertyAll(
             type == ButtonType.primary
-                ? Color.fromRGBO(77, 25, 140, 1)
-                : Color.fromRGBO(13, 105, 94, 1),
+                ? Color.fromRGBO(219, 190, 255, 1)
+                : Color.fromRGBO(183, 235, 229, 1),
           ),
           backgroundColor: WidgetStateProperty.resolveWith((states) {
             switch (type) {
@@ -64,22 +57,32 @@ class FilledButtonWidget extends StatelessWidget {
                   return Color.fromRGBO(245, 244, 245, 0.96);
                 }
 
-                return Color.fromRGBO(140, 46, 255, 1);
+                return Color.fromRGBO(244, 234, 255, 1);
 
               case ButtonType.secondary:
                 if (states.contains(WidgetState.disabled)) {
                   return Color.fromRGBO(245, 244, 245, 0.96);
                 }
 
-                return Color.fromRGBO(23, 191, 171, 1);
+                return Color.fromRGBO(232, 249, 247, 1);
             }
           }),
           foregroundColor: WidgetStateProperty.resolveWith((states) {
-            if (states.contains(WidgetState.disabled)) {
-              return Color.fromRGBO(214, 212, 216, 1);
-            }
+            switch (type) {
+              case ButtonType.primary:
+                if (states.contains(WidgetState.disabled)) {
+                  return Color.fromRGBO(214, 212, 216, 1);
+                }
 
-            return Colors.white;
+                return Color.fromRGBO(178, 115, 255, 1);
+
+              case ButtonType.secondary:
+                if (states.contains(WidgetState.disabled)) {
+                  return Color.fromRGBO(214, 212, 216, 1);
+                }
+
+                return Color.fromRGBO(23, 191, 171, 1);
+            }
           }),
         ),
         child: Text(text),

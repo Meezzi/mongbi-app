@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mongbi_app/features/setting/data/data_sources/remote_user_info_data_source.dart';
 import 'package:mongbi_app/features/setting/data/dtos/user_dto.dart';
-import 'package:mongbi_app/presentation/splash/view_models/splash_state.dart';
-import 'package:mongbi_app/presentation/splash/view_models/splash_status.dart';
+import 'package:mongbi_app/features/splash/view_models/splash_state.dart';
+import 'package:mongbi_app/features/splash/view_models/splash_status.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashViewModel extends StateNotifier<SplashState> {

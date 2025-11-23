@@ -3,11 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/font.dart';
+import 'package:mongbi_app/features/common/action_button_row.dart';
 import 'package:mongbi_app/features/dream/presentation/pages/dream_analysis/widgets/dream_section_card.dart';
 import 'package:mongbi_app/features/dream/presentation/pages/dream_analysis/widgets/mongbi_comment_card.dart';
 import 'package:mongbi_app/features/dream/presentation/widgets/custom_button.dart';
-import 'package:mongbi_app/presentation/common/action_button_row.dart';
-import 'package:mongbi_app/presentation/home/widgets/completion_bottom_sheet.dart';
+import 'package:mongbi_app/features/home/widgets/completion_bottom_sheet.dart';
 import 'package:mongbi_app/providers/dream_provider.dart';
 
 class DreamInterpretationPage extends ConsumerStatefulWidget {

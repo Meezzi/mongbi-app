@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/core/responsive_layout.dart';
-import 'package:mongbi_app/presentation/common/custom_snack_bar.dart';
-import 'package:mongbi_app/presentation/common/floating_animation_widget.dart';
+import 'package:mongbi_app/features/common/custom_snack_bar.dart';
+import 'package:mongbi_app/features/common/floating_animation_widget.dart';
 import 'package:mongbi_app/providers/dream_provider.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
