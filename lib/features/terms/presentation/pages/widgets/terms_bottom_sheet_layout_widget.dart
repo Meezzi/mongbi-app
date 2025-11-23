@@ -3,15 +3,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/responsive_layout.dart';
 import 'package:mongbi_app/core/secure_storage_service.dart';
-import 'package:mongbi_app/data/dtos/terms_aggrement_dto.dart';
-import 'package:mongbi_app/domain/entities/terms.dart';
+import 'package:mongbi_app/features/terms/data/dtos/terms_aggrement_dto.dart';
+import 'package:mongbi_app/features/terms/domain/entities/terms.dart';
+import 'package:mongbi_app/features/terms/presentation/pages/widgets/terms_checkbox_widget.dart';
+import 'package:mongbi_app/features/terms/presentation/pages/widgets/terms_text_widget.dart';
+import 'package:mongbi_app/features/terms/providers/terms_provider.dart';
 import 'package:mongbi_app/presentation/common/button_type.dart';
 import 'package:mongbi_app/presentation/common/filled_button_widget.dart';
-import 'package:mongbi_app/presentation/terms/widgets/terms_button_widget.dart';
-import 'package:mongbi_app/presentation/terms/widgets/terms_checkbox_widget.dart';
-import 'package:mongbi_app/presentation/terms/widgets/terms_text_widget.dart';
-import 'package:mongbi_app/providers/terms_provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class TermsBottomSheet extends ConsumerStatefulWidget {
   const TermsBottomSheet({super.key});

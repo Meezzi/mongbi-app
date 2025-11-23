@@ -1,4 +1,4 @@
-import 'package:mongbi_app/domain/entities/terms.dart';
+import 'package:mongbi_app/features/terms/domain/entities/terms.dart';
 
 enum TermsStateStatus { loading, success, error }
 

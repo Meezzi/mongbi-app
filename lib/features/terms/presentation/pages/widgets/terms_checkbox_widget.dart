@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mongbi_app/core/font.dart';
-import 'package:mongbi_app/domain/entities/terms.dart';
-import 'package:mongbi_app/presentation/terms/terms_inner_page.dart';
-import 'package:mongbi_app/presentation/terms/widgets/terms_custom_checkbox.widget.dart';
+import 'package:mongbi_app/features/terms/domain/entities/terms.dart';
+import 'package:mongbi_app/features/terms/presentation/pages/terms_inner_page.dart';
+import 'package:mongbi_app/features/terms/presentation/pages/widgets/terms_custom_checkbox.widget.dart';
 
 class TermsAgreementTile extends StatelessWidget {
   const TermsAgreementTile({

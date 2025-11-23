@@ -1,5 +1,5 @@
-import 'package:mongbi_app/domain/entities/terms.dart';
-import 'package:mongbi_app/domain/repositories/terms_repository.dart';
+import 'package:mongbi_app/features/terms/domain/entities/terms.dart';
+import 'package:mongbi_app/features/terms/domain/repositories/terms_repository.dart';
 
 class GetLatestTerms {
   GetLatestTerms(this.repository);

@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
-import 'package:mongbi_app/data/data_sources/terms_data_soure.dart';
-import 'package:mongbi_app/data/dtos/terms_aggrement_dto.dart';
-import 'package:mongbi_app/data/dtos/terms_dto.dart';
-import 'package:mongbi_app/domain/entities/terms.dart';
+import 'package:mongbi_app/features/terms/data/data_sources/terms_data_soure.dart';
+import 'package:mongbi_app/features/terms/data/dtos/terms_aggrement_dto.dart';
+import 'package:mongbi_app/features/terms/data/dtos/terms_dto.dart';
+import 'package:mongbi_app/features/terms/domain/entities/terms.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

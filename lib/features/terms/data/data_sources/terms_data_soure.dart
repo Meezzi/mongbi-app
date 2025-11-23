@@ -1,5 +1,5 @@
-import 'package:mongbi_app/data/dtos/terms_aggrement_dto.dart';
-import 'package:mongbi_app/domain/entities/terms.dart';
+import 'package:mongbi_app/features/terms/data/dtos/terms_aggrement_dto.dart';
+import 'package:mongbi_app/features/terms/domain/entities/terms.dart';
 
 abstract interface class TermsDataSource {
   Future<List<Terms>> fetchLatestTerms();

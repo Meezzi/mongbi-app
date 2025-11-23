@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -10,8 +11,8 @@ import 'package:mongbi_app/features/auth/presentation/pages/widgets/last_login_s
 import 'package:mongbi_app/features/auth/presentation/pages/widgets/mongbi_image_widget.dart';
 import 'package:mongbi_app/features/auth/presentation/pages/widgets/naver_login_button_widget.dart';
 import 'package:mongbi_app/features/auth/presentation/pages/widgets/text_widgets.dart';
+import 'package:mongbi_app/features/terms/presentation/pages/widgets/terms_bottom_sheet_layout_widget.dart';
 import 'package:mongbi_app/presentation/common/custom_snack_bar.dart';
-import 'package:mongbi_app/presentation/terms/widgets/terms_bottom_sheet_layout_widget.dart';
 import 'package:mongbi_app/providers/auth_provider.dart';
 import 'package:mongbi_app/providers/last_login_provider.dart';
 

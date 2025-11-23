@@ -1,8 +1,7 @@
-import 'package:mongbi_app/data/data_sources/remote_terms_data_source.dart';
-import 'package:mongbi_app/data/dtos/terms_aggrement_dto.dart';
-
-import 'package:mongbi_app/domain/entities/terms.dart';
-import 'package:mongbi_app/domain/repositories/terms_repository.dart';
+import 'package:mongbi_app/features/terms/data/data_sources/remote_terms_data_source.dart';
+import 'package:mongbi_app/features/terms/data/dtos/terms_aggrement_dto.dart';
+import 'package:mongbi_app/features/terms/domain/entities/terms.dart';
+import 'package:mongbi_app/features/terms/domain/repositories/terms_repository.dart';
 
 class RemoteTermsRepository implements TermsRepository {
   RemoteTermsRepository(this.remote);

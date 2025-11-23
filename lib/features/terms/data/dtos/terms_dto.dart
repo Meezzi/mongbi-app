@@ -1,4 +1,5 @@
-import 'package:mongbi_app/domain/entities/terms.dart';
+
+import 'package:mongbi_app/features/terms/domain/entities/terms.dart';
 
 class TermsDto {
   factory TermsDto.fromJson(Map<String, dynamic> json) => TermsDto(

@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mongbi_app/data/dtos/terms_aggrement_dto.dart';
-import 'package:mongbi_app/domain/entities/terms.dart';
-import 'package:mongbi_app/domain/use_cases/agree_to_terms_usecase.dart';
-import 'package:mongbi_app/domain/use_cases/fetch_terms_use_case.dart';
+import 'package:mongbi_app/features/terms/data/dtos/terms_aggrement_dto.dart';
+import 'package:mongbi_app/features/terms/domain/entities/terms.dart';
+import 'package:mongbi_app/features/terms/domain/use_cases/agree_to_terms_usecase.dart';
+import 'package:mongbi_app/features/terms/domain/use_cases/fetch_terms_use_case.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TermsState {

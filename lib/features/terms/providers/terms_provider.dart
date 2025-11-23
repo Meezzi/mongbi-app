@@ -1,10 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mongbi_app/data/data_sources/remote_terms_data_source.dart';
 import 'package:mongbi_app/data/repositories/remote_terms_repository.dart';
-import 'package:mongbi_app/domain/repositories/terms_repository.dart';
-import 'package:mongbi_app/domain/use_cases/agree_to_terms_usecase.dart';
-import 'package:mongbi_app/domain/use_cases/fetch_terms_use_case.dart';
-import 'package:mongbi_app/presentation/terms/viewmodels/terms_viewmodels.dart';
+import 'package:mongbi_app/features/terms/data/data_sources/remote_terms_data_source.dart';
+import 'package:mongbi_app/features/terms/domain/repositories/terms_repository.dart';
+import 'package:mongbi_app/features/terms/domain/use_cases/agree_to_terms_usecase.dart';
+import 'package:mongbi_app/features/terms/domain/use_cases/fetch_terms_use_case.dart';
+import 'package:mongbi_app/features/terms/presentation/view_models/terms_viewmodels.dart';
 import 'package:mongbi_app/providers/core_providers.dart';
 
 /// 🔹 RemoteDataSource Provider

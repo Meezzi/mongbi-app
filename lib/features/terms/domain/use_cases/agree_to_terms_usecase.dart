@@ -1,5 +1,5 @@
-import 'package:mongbi_app/data/dtos/terms_aggrement_dto.dart';
-import 'package:mongbi_app/domain/repositories/terms_repository.dart';
+import 'package:mongbi_app/features/terms/data/dtos/terms_aggrement_dto.dart';
+import 'package:mongbi_app/features/terms/domain/repositories/terms_repository.dart';
 
 class AgreeToTermsUseCase {
   AgreeToTermsUseCase(this.repository);
