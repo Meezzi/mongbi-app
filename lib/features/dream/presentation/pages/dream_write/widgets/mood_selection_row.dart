@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mongbi_app/providers/dream_provider.dart';
+import 'package:mongbi_app/features/dream/providers/dream_provider.dart';
 
 class MoodSelectionRow extends ConsumerWidget {
   const MoodSelectionRow({super.key});

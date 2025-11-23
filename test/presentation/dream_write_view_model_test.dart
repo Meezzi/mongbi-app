@@ -4,7 +4,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:mongbi_app/features/dream/domain/entity/dream.dart';
 import 'package:mongbi_app/features/dream/domain/use_cases/analyze_and_save_dream_use_case.dart';
 import 'package:mongbi_app/features/dream/presentation/view_models/dream_write_view_model.dart';
-import 'package:mongbi_app/providers/dream_provider.dart';
+import 'package:mongbi_app/features/dream/providers/dream_provider.dart';
 
 void main() {
   late ProviderContainer container;

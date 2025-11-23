@@ -7,7 +7,7 @@ import 'package:mongbi_app/features/common/button_type.dart';
 import 'package:mongbi_app/features/common/filled_button_widget.dart';
 import 'package:mongbi_app/features/dream/presentation/pages/dream_write/widgets/dream_content_input.dart';
 import 'package:mongbi_app/features/dream/presentation/pages/dream_write/widgets/mood_selection_row.dart';
-import 'package:mongbi_app/providers/dream_provider.dart';
+import 'package:mongbi_app/features/dream/providers/dream_provider.dart';
 
 class DreamWritePage extends ConsumerStatefulWidget {
   const DreamWritePage({super.key, required this.isFirst});

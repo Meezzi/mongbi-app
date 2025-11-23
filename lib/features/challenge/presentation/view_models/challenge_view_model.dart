@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mongbi_app/features/auth/providers/auth_provider.dart';
 import 'package:mongbi_app/features/challenge/domain/entities/challenge.dart';
 import 'package:mongbi_app/features/challenge/providers/challenge_provider.dart';
-import 'package:mongbi_app/providers/dream_provider.dart';
+import 'package:mongbi_app/features/dream/providers/dream_provider.dart';
 
 class ChallengeViewModel extends AsyncNotifier<List<Challenge>> {
   int? selectedChallengeIndex;

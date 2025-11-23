@@ -5,7 +5,7 @@ import 'package:mongbi_app/core/responsive_layout.dart';
 import 'package:mongbi_app/features/challenge/presentation/pages/widgets/challenge_intro_mongbi_message_view.dart';
 import 'package:mongbi_app/features/challenge/providers/challenge_provider.dart';
 import 'package:mongbi_app/features/common/action_button_row.dart';
-import 'package:mongbi_app/providers/dream_provider.dart';
+import 'package:mongbi_app/features/dream/providers/dream_provider.dart';
 
 class ChallengeIntroPage extends ConsumerWidget {
   const ChallengeIntroPage({super.key});
