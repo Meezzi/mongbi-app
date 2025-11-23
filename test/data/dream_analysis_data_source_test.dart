@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:mongbi_app/data/data_sources/remote_dream_analysis_data_source.dart';
+import 'package:mongbi_app/features/dream/data/data_sources/remote_dream_analysis_data_source.dart';
 
 void main() {
   late RemoteDreamAnalysisDataSource dataSource;

@@ -1,0 +1,23 @@
+import 'package:mongbi_app/features/statistics/data/dtos/statistics_dto.dart';
+
+class Statistics {
+  Statistics({
+    this.month,
+    this.year,
+    this.totalDays,
+    required this.frequency,
+    required this.distribution,
+    required this.moodState,
+    required this.keywords,
+    required this.challengeSuccessRate,
+  });
+
+  final String? month;
+  final String? year;
+  final int? totalDays;
+  final int frequency;
+  final DreamScore distribution;
+  final MoodState moodState;
+  final List<Keyword> keywords;
+  final int challengeSuccessRate;
+}

@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:mongbi_app/data/data_sources/alarm_data_source.dart';
-import 'package:mongbi_app/data/dtos/alarm_dto.dart';
-import 'package:mongbi_app/data/repositories/remote_alarm_repository.dart';
-import 'package:mongbi_app/domain/entities/alarm.dart';
+import 'package:mongbi_app/features/alarm/data/data_sources/alarm_data_source.dart';
+import 'package:mongbi_app/features/alarm/data/dtos/alarm_dto.dart';
+import 'package:mongbi_app/features/alarm/data/repositories/remote_alarm_repository.dart';
+import 'package:mongbi_app/features/alarm/domain/entities/alarm.dart';
 
 class MockAlarmDataSource extends Mock implements AlarmDataSource {}
 

@@ -1,0 +1,48 @@
+import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mongbi_app/core/network/auth_interceptor.dart';
+import 'package:mongbi_app/core/services/secure_storage_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+final sharedPreferencesProvider = FutureProvider<SharedPreferences>((
+  ref,
+) async {
+  return await SharedPreferences.getInstance();
+});
+
+final adminDioProvider = Provider<Dio>(
+  (ref) => Dio(BaseOptions(baseUrl: dotenv.env['ADMIN_MONGBI_BASE_URL']!)),
+);
+
+final dioProvider = Provider<Dio>((ref) {
+  final dio = Dio(
+    BaseOptions(
+      baseUrl: dotenv.env['MONGBI_BASE_URL']!,
+      headers: {'Content-Type': 'application/json', 'connection': 'keep-alive'},
+    ),
+  );
+
+  /// AuthInterceptor 등록 (자동 accessToken 갱신 등)
+  dio.interceptors.add(AuthInterceptor(dio));
+
+  return dio;
+});
+
+/// Claude API 전용 Dio Provider
+final claudeDioProvider = Provider<Dio>((ref) {
+  return Dio(
+    BaseOptions(
+      baseUrl: dotenv.env['CLAUDE_URL']!,
+      headers: {
+        'x-api-key': dotenv.env['CLAUDE_API_KEY']!,
+        'anthropic-version': '2023-06-01',
+        'Content-Type': 'application/json',
+      },
+    ),
+  );
+});
+
+final secureStorageServiceProvider = Provider<SecureStorageService>((ref) {
+  return SecureStorageService();
+});

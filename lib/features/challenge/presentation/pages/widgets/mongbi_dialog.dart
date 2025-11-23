@@ -1,0 +1,57 @@
+import 'package:flutter/material.dart';
+import 'package:mongbi_app/core/theme/font.dart';
+import 'package:mongbi_app/core/widgets/responsive_layout.dart';
+import 'package:mongbi_app/features/auth/presentation/pages/widgets/mongbi_image_widget.dart';
+import 'package:mongbi_app/features/dream/presentation/widgets/custom_button.dart';
+
+class MongbiDialog extends StatelessWidget {
+  const MongbiDialog({
+    super.key,
+    required this.title,
+    required this.content,
+    required this.buttonText,
+    required this.onSubmit,
+  });
+
+  final String title;
+  final String content;
+  final String buttonText;
+  final VoidCallback onSubmit;
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      insetPadding: EdgeInsets.zero,
+      backgroundColor: Colors.transparent,
+      child: Container(
+        width: ResponsiveLayout.getWidth(context),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(24),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                title,
+                style: Font.title18.copyWith(color: Color(0xFF1A181B)),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 2),
+              Text(
+                content,
+                style: Font.subTitle12.copyWith(color: Color(0xFF76717A)),
+                textAlign: TextAlign.center,
+              ),
+              MongbiCharacter(size: 144),
+              SizedBox(height: 8),
+              CustomButton(text: buttonText, onSubmit: onSubmit),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
