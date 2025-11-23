@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mongbi_app/core/date_formatter.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/core/remove_html_tags.dart';
-import 'package:mongbi_app/presentation/history/models/calendar_model.dart';
-import 'package:mongbi_app/presentation/history/widgets/history_item.dart';
+import 'package:mongbi_app/features/history/presentation/models/calendar_model.dart';
+import 'package:mongbi_app/features/history/presentation/pages/widgets/history_item.dart';
 
 class HistoryNotice extends StatefulWidget {
   const HistoryNotice({

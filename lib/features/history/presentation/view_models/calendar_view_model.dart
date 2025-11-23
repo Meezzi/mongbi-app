@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mongbi_app/presentation/history/models/calendar_model.dart';
-import 'package:mongbi_app/providers/history_provider.dart';
+import 'package:mongbi_app/features/history/presentation/models/calendar_model.dart';
+import 'package:mongbi_app/features/history/providers/history_provider.dart';
 
 class CalendarViewModel extends AutoDisposeNotifier<CalendarModel> {
   @override

@@ -12,8 +12,8 @@ import 'package:mongbi_app/features/dream/presentation/pages/dream_analysis/drea
 import 'package:mongbi_app/features/dream/presentation/pages/dream_analysis/dream_interpretation_page.dart';
 import 'package:mongbi_app/features/dream/presentation/pages/dream_write/dream_intro_page.dart';
 import 'package:mongbi_app/features/dream/presentation/pages/dream_write/dream_write_page.dart';
+import 'package:mongbi_app/features/history/presentation/pages/history_page.dart';
 import 'package:mongbi_app/presentation/alarm/alarm_page.dart';
-import 'package:mongbi_app/presentation/history/history_page.dart';
 import 'package:mongbi_app/presentation/home/home_page.dart';
 import 'package:mongbi_app/presentation/onboarding/onbording_exit_page.dart';
 import 'package:mongbi_app/presentation/onboarding/onbording_page.dart';

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mongbi_app/presentation/history/history_key/history_key.dart';
-import 'package:mongbi_app/presentation/history/models/calendar_model.dart';
-import 'package:mongbi_app/presentation/history/widgets/calendar.dart';
-import 'package:mongbi_app/presentation/history/widgets/calendar_change_button.dart';
-import 'package:mongbi_app/presentation/history/widgets/history_list.dart';
+import 'package:mongbi_app/features/history/presentation/models/calendar_model.dart';
+import 'package:mongbi_app/features/history/presentation/pages/history_key/history_key.dart';
+import 'package:mongbi_app/features/history/presentation/pages/widgets/calendar.dart';
+import 'package:mongbi_app/features/history/presentation/pages/widgets/calendar_change_button.dart';
+import 'package:mongbi_app/features/history/presentation/pages/widgets/history_list.dart';
 
 class HistoryBody extends StatelessWidget {
   const HistoryBody({

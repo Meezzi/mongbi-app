@@ -1,13 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mongbi_app/data/data_sources/history_data_source.dart';
-import 'package:mongbi_app/data/data_sources/remote_history_data_source.dart';
-import 'package:mongbi_app/data/repositories/remote_history_repository.dart';
-import 'package:mongbi_app/domain/entities/history.dart';
-import 'package:mongbi_app/domain/repositories/history_repository.dart';
-import 'package:mongbi_app/domain/use_cases/fetch_user_dreams_history_use_case.dart';
-import 'package:mongbi_app/presentation/history/models/calendar_model.dart';
-import 'package:mongbi_app/presentation/history/view_models/calendar_view_model.dart';
-import 'package:mongbi_app/presentation/history/view_models/history_view_model.dart';
+import 'package:mongbi_app/features/history/data/data_sources/history_data_source.dart';
+import 'package:mongbi_app/features/history/data/data_sources/remote_history_data_source.dart';
+import 'package:mongbi_app/features/history/data/repositories/remote_history_repository.dart';
+import 'package:mongbi_app/features/history/domain/entities/history.dart';
+import 'package:mongbi_app/features/history/domain/repositories/history_repository.dart';
+import 'package:mongbi_app/features/history/domain/use_cases/fetch_user_dreams_history_use_case.dart';
+import 'package:mongbi_app/features/history/presentation/models/calendar_model.dart';
+import 'package:mongbi_app/features/history/presentation/view_models/calendar_view_model.dart';
+import 'package:mongbi_app/features/history/presentation/view_models/history_view_model.dart';
 import 'package:mongbi_app/providers/core_providers.dart';
 
 final _historyDataSourceProvider = Provider<HistoryDataSource>((ref) {

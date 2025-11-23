@@ -1,5 +1,5 @@
-import 'package:mongbi_app/domain/entities/history.dart';
-import 'package:mongbi_app/domain/repositories/history_repository.dart';
+import 'package:mongbi_app/features/history/domain/entities/history.dart';
+import 'package:mongbi_app/features/history/domain/repositories/history_repository.dart';
 
 class FetchUserDreamsHistoryUseCase {
   FetchUserDreamsHistoryUseCase(this._repository);

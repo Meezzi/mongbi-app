@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:mongbi_app/domain/entities/history.dart';
-import 'package:mongbi_app/domain/repositories/history_repository.dart';
-import 'package:mongbi_app/domain/use_cases/fetch_user_dreams_history_use_case.dart';
+import 'package:mongbi_app/features/history/domain/entities/history.dart';
+import 'package:mongbi_app/features/history/domain/repositories/history_repository.dart';
+import 'package:mongbi_app/features/history/domain/use_cases/fetch_user_dreams_history_use_case.dart';
 
 class MockHistoryRepository extends Mock implements HistoryRepository {}
 

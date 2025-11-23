@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mongbi_app/core/get_widget_info.dart';
-import 'package:mongbi_app/presentation/history/history_key/history_key.dart';
-import 'package:mongbi_app/presentation/history/widgets/history_app_bar.dart';
-import 'package:mongbi_app/presentation/history/widgets/history_body.dart';
-import 'package:mongbi_app/providers/history_provider.dart';
+import 'package:mongbi_app/features/history/presentation/pages/history_key/history_key.dart';
+import 'package:mongbi_app/features/history/presentation/pages/widgets/history_app_bar.dart';
+import 'package:mongbi_app/features/history/presentation/pages/widgets/history_body.dart';
+import 'package:mongbi_app/features/history/providers/history_provider.dart';
 
 class HistoryPage extends ConsumerStatefulWidget {
   const HistoryPage({super.key});

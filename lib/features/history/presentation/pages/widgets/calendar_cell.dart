@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mongbi_app/core/font.dart';
-import 'package:mongbi_app/domain/entities/history.dart';
-import 'package:mongbi_app/providers/history_provider.dart';
+import 'package:mongbi_app/features/history/domain/entities/history.dart';
+import 'package:mongbi_app/features/history/providers/history_provider.dart';
 
 class CalendarCell extends ConsumerWidget {
   const CalendarCell({
