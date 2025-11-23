@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/font.dart';
 import 'package:mongbi_app/core/secure_storage_service.dart';
 import 'package:mongbi_app/presentation/common/custom_snack_bar.dart';
-import 'package:mongbi_app/providers/alarm_provider.dart';
 import 'package:mongbi_app/providers/dream_provider.dart';
 
 class MainScaffold extends ConsumerWidget {

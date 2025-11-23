@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mongbi_app/presentation/remind/view_model/remind_time_setting_view_model.dart';
+import 'package:mongbi_app/features/alarm/presentation/view_models/remind_time_setting_view_model.dart';
 import 'package:mongbi_app/presentation/setting/models/alarm_setting_state.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';

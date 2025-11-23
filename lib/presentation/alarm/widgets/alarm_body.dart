@@ -3,11 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/date_formatter.dart';
 import 'package:mongbi_app/core/font.dart';
-import 'package:mongbi_app/domain/entities/alarm.dart';
+import 'package:mongbi_app/features/alarm/domain/entities/alarm.dart';
+import 'package:mongbi_app/features/alarm/providers/alarm_provider.dart';
 import 'package:mongbi_app/presentation/alarm/models/alarm_model.dart';
 import 'package:mongbi_app/presentation/alarm/widgets/alarm_item.dart';
 import 'package:mongbi_app/presentation/alarm/widgets/alarm_type.dart';
-import 'package:mongbi_app/providers/alarm_provider.dart';
 
 class AlarmBody extends ConsumerWidget {
   const AlarmBody({super.key});

@@ -1,6 +1,6 @@
-import 'package:mongbi_app/data/data_sources/alarm_data_source.dart';
-import 'package:mongbi_app/domain/entities/alarm.dart';
-import 'package:mongbi_app/domain/repositories/alarm_repository.dart';
+import 'package:mongbi_app/features/alarm/data/data_sources/alarm_data_source.dart';
+import 'package:mongbi_app/features/alarm/domain/entities/alarm.dart';
+import 'package:mongbi_app/features/alarm/domain/repositories/alarm_repository.dart';
 
 class RemoteAlarmRepository implements AlarmRepository {
   const RemoteAlarmRepository(this.dataSource);

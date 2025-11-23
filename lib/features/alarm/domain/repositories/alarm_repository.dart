@@ -1,4 +1,4 @@
-import 'package:mongbi_app/domain/entities/alarm.dart';
+import 'package:mongbi_app/features/alarm/domain/entities/alarm.dart';
 
 abstract interface class AlarmRepository {
   Future<List<Alarm>?> fetchAlarms();

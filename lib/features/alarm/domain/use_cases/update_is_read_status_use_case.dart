@@ -1,4 +1,4 @@
-import 'package:mongbi_app/domain/repositories/alarm_repository.dart';
+import 'package:mongbi_app/features/alarm/domain/repositories/alarm_repository.dart';
 
 class UpdateIsReadStatusUseCase {
   UpdateIsReadStatusUseCase(this.repository);

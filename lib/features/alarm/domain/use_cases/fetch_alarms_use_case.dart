@@ -1,5 +1,5 @@
-import 'package:mongbi_app/domain/entities/alarm.dart';
-import 'package:mongbi_app/domain/repositories/alarm_repository.dart';
+import 'package:mongbi_app/features/alarm/domain/entities/alarm.dart';
+import 'package:mongbi_app/features/alarm/domain/repositories/alarm_repository.dart';
 
 class FetchAlarmsUseCase {
   FetchAlarmsUseCase(this.repository);

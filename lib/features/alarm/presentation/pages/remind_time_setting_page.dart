@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/analytics/analytics_helper.dart';
+import 'package:mongbi_app/features/alarm/presentation/pages/widgets/remind_time_setting_image_widget.dart';
+import 'package:mongbi_app/features/alarm/presentation/pages/widgets/remind_time_setting_text_widget.dart';
 import 'package:mongbi_app/presentation/common/button_type.dart';
 import 'package:mongbi_app/presentation/common/filled_button_widget.dart';
 import 'package:mongbi_app/presentation/onboarding/widgets/onbording_skip_button_widget.dart';
-import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_image_widget.dart';
-import 'package:mongbi_app/presentation/remind/widgets/remind_time_setting_text_widget.dart';
 
 class RemindTimeSettingPage extends StatelessWidget {
   const RemindTimeSettingPage({super.key});
