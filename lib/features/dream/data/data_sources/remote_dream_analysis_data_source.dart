@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
-import 'package:mongbi_app/data/data_sources/dream_analysis_data_source.dart';
+import 'package:mongbi_app/features/dream/data/data_sources/dream_analysis_data_source.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 class RemoteDreamAnalysisDataSource implements DreamAnalysisDataSource {

@@ -1,4 +1,4 @@
-import 'package:mongbi_app/domain/entities/dream.dart';
+import 'package:mongbi_app/features/dream/domain/entity/dream.dart';
 
 abstract interface class DreamRepository {
   Future<int> saveDream(Dream dream);

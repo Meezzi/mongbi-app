@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:mongbi_app/domain/entities/dream.dart';
-import 'package:mongbi_app/domain/use_cases/analyze_and_save_dream_use_case.dart';
-import 'package:mongbi_app/domain/use_cases/analyze_dream_use_case.dart';
-import 'package:mongbi_app/domain/use_cases/save_dream_use_case.dart';
+import 'package:mongbi_app/features/dream/domain/entity/dream.dart';
+import 'package:mongbi_app/features/dream/domain/use_cases/analyze_and_save_dream_use_case.dart';
+import 'package:mongbi_app/features/dream/domain/use_cases/analyze_dream_use_case.dart';
+import 'package:mongbi_app/features/dream/domain/use_cases/save_dream_use_case.dart';
 
 void main() {
   late MockAnalyzeDreamUseCase mockAnalyzeDreamUseCase;

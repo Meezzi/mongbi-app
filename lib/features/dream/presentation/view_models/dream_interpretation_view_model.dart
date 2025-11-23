@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mongbi_app/core/constants/deep_link.dart';
-import 'package:mongbi_app/domain/entities/dream.dart';
-import 'package:mongbi_app/presentation/dream/models/dream_interpretation_state.dart';
+import 'package:mongbi_app/features/dream/domain/entity/dream.dart';
+import 'package:mongbi_app/features/dream/presentation/models/dream_interpretation_state.dart';
 import 'package:share_plus/share_plus.dart';
 
 class DreamInterpretationViewModel extends Notifier<DreamInterpretationState> {

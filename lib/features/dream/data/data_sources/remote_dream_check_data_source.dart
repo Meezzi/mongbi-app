@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:mongbi_app/data/data_sources/dream_check_data_source.dart';
+import 'package:mongbi_app/features/dream/data/data_sources/dream_check_data_source.dart';
 
 class RemoteDreamCheckDataSource implements DreamCheckDataSource {
   RemoteDreamCheckDataSource({required this.dio});

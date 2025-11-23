@@ -1,5 +1,5 @@
-import 'package:mongbi_app/domain/entities/dream.dart';
-import 'package:mongbi_app/domain/repositories/dream_repository.dart';
+import 'package:mongbi_app/features/dream/domain/entity/dream.dart';
+import 'package:mongbi_app/features/dream/domain/repositoreis/dream_repository.dart';
 
 class SaveDreamUseCase {
   SaveDreamUseCase(this.dreamRepository);

@@ -1,4 +1,4 @@
-import 'package:mongbi_app/domain/entities/dream.dart';
+import 'package:mongbi_app/features/dream/domain/entity/dream.dart';
 
 class DreamDto {
   DreamDto({
@@ -37,31 +37,34 @@ class DreamDto {
       challengeIdx: json['CHALLENGE_IDX'],
       dreamContent: json['DREAM_CONTENT'],
       dreamScore: json['DREAM_SCORE'],
-      dreamKeywords: (json['DREAM_KEYWORDS'] as List<dynamic>)
-          .map((e) => e as String)
-          .toList(),
+      dreamKeywords:
+          (json['DREAM_KEYWORDS'] as List<dynamic>)
+              .map((e) => e as String)
+              .toList(),
       dreamInterpretation: json['DREAM_INTERPRETATION'],
-      psychologicalStateInterpretation: json['PSYCHOLOGICAL_STATE_INTERPRETATION'],
-      psychologicalStateKeywords: (json['PSYCHOLOGICALSTATE_KEYWORDS'] as List<dynamic>)
-          .map((e) => e as String)
-          .toList(),
+      psychologicalStateInterpretation:
+          json['PSYCHOLOGICAL_STATE_INTERPRETATION'],
+      psychologicalStateKeywords:
+          (json['PSYCHOLOGICALSTATE_KEYWORDS'] as List<dynamic>)
+              .map((e) => e as String)
+              .toList(),
       mongbiComment: json['MONGBI_COMMENT'],
       dreamCategory: json['DREAM_CATEGORY'],
     );
   }
 
   Map<String, dynamic> toJson() => {
-        'USER_IDX': userIdx,
-        'CHALLENGE_IDX': challengeIdx,
-        'DREAM_CONTENT': dreamContent,
-        'DREAM_SCORE': dreamScore,
-        'DREAM_KEYWORDS': dreamKeywords,
-        'DREAM_INTERPRETATION': dreamInterpretation,
-        'PSYCHOLOGICAL_STATE_INTERPRETATION': psychologicalStateInterpretation,
-        'PSYCHOLOGICALSTATE_KEYWORDS': psychologicalStateKeywords,
-        'MONGBI_COMMENT': mongbiComment,
-        'DREAM_CATEGORY': dreamCategory,
-      };
+    'USER_IDX': userIdx,
+    'CHALLENGE_IDX': challengeIdx,
+    'DREAM_CONTENT': dreamContent,
+    'DREAM_SCORE': dreamScore,
+    'DREAM_KEYWORDS': dreamKeywords,
+    'DREAM_INTERPRETATION': dreamInterpretation,
+    'PSYCHOLOGICAL_STATE_INTERPRETATION': psychologicalStateInterpretation,
+    'PSYCHOLOGICALSTATE_KEYWORDS': psychologicalStateKeywords,
+    'MONGBI_COMMENT': mongbiComment,
+    'DREAM_CATEGORY': dreamCategory,
+  };
 
   factory DreamDto.fromEntity(Dream dream) {
     return DreamDto(

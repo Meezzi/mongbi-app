@@ -1,4 +1,4 @@
-import 'package:mongbi_app/domain/repositories/dream_repository.dart';
+import 'package:mongbi_app/features/dream/domain/repositoreis/dream_repository.dart';
 
 class CanWriteDreamTodayUseCase {
   CanWriteDreamTodayUseCase({required this.repository});

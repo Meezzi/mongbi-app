@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:mongbi_app/data/data_sources/remote_dream_data_source.dart';
-import 'package:mongbi_app/data/dtos/dream_dto.dart';
+import 'package:mongbi_app/features/dream/data/data_sources/remote_dream_data_source.dart';
+import 'package:mongbi_app/features/dream/data/dtos/dream_dto.dart';
 
 class MockDio extends Mock implements Dio {}
 

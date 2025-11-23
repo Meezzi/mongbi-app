@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:mongbi_app/domain/entities/dream.dart';
-import 'package:mongbi_app/domain/use_cases/analyze_and_save_dream_use_case.dart';
-import 'package:mongbi_app/presentation/dream/view_models/dream_interpretation_view_model.dart';
+import 'package:mongbi_app/features/dream/domain/entity/dream.dart';
+import 'package:mongbi_app/features/dream/domain/use_cases/analyze_and_save_dream_use_case.dart';
+import 'package:mongbi_app/features/dream/presentation/view_models/dream_interpretation_view_model.dart';
 import 'package:mongbi_app/providers/dream_provider.dart';
 
 void main() {
