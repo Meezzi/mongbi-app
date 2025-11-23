@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mongbi_app/features/auth/providers/auth_provider.dart';
 import 'package:mongbi_app/features/dream/presentation/models/dream_write_state.dart';
-import 'package:mongbi_app/providers/auth_provider.dart';
 import 'package:mongbi_app/providers/dream_provider.dart';
 
 class DreamWriteViewModel extends AutoDisposeNotifier<DreamWriteState> {
