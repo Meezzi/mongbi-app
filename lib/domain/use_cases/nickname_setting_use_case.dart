@@ -1,5 +1,5 @@
-import 'package:mongbi_app/domain/entities/user.dart';
 import 'package:mongbi_app/domain/repositories/nickname_repository.dart';
+import 'package:mongbi_app/features/auth/domain/entities/user.dart';
 
 class UpdateNicknameUseCase {
   UpdateNicknameUseCase(this.repository);

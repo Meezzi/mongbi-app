@@ -1,12 +1,11 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_analytics/observer.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mongbi_app/core/custom_transition_page.dart';
 import 'package:mongbi_app/core/main_scaffold.dart';
 import 'package:mongbi_app/core/responsive_layout.dart';
 import 'package:mongbi_app/core/route_observer.dart';
+import 'package:mongbi_app/features/auth/presentation/pages/social_login_page.dart';
 import 'package:mongbi_app/presentation/alarm/alarm_page.dart';
-import 'package:mongbi_app/presentation/auth/social_login_page.dart';
 import 'package:mongbi_app/presentation/challenge/challenge_intro_page.dart';
 import 'package:mongbi_app/presentation/challenge/challenge_page.dart';
 import 'package:mongbi_app/presentation/dream/dream_analysis_loading_page.dart';

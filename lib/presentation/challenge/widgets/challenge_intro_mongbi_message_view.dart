@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mongbi_app/core/font.dart';
-import 'package:mongbi_app/presentation/auth/widgets/mongbi_image_widget.dart';
+import 'package:mongbi_app/features/auth/presentation/pages/widgets/mongbi_image_widget.dart';
 import 'package:mongbi_app/presentation/common/floating_animation_widget.dart';
 
 class MongbiMessageView extends StatelessWidget {

@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mongbi_app/domain/entities/user.dart';
+import 'package:mongbi_app/features/auth/domain/entities/user.dart';
 import 'package:mongbi_app/providers/nickname_provider.dart';
 import 'package:mongbi_app/providers/user_info_provider.dart';
 

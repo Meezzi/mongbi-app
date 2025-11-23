@@ -1,6 +1,6 @@
 import 'package:mongbi_app/data/data_sources/nickname_setting_data_source.dart';
-import 'package:mongbi_app/domain/entities/user.dart';
 import 'package:mongbi_app/domain/repositories/nickname_repository.dart';
+import 'package:mongbi_app/features/auth/domain/entities/user.dart';
 
 class RemoteNicknameSettingRepository implements NicknameSettingRepository {
   RemoteNicknameSettingRepository(this.dataSource);

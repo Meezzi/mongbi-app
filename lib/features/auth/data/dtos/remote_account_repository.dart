@@ -1,5 +1,5 @@
-import 'package:mongbi_app/data/data_sources/account_data_source.dart';
-import 'package:mongbi_app/domain/repositories/account_repository.dart';
+import 'package:mongbi_app/features/auth/data/data_sources/account_data_source.dart';
+import 'package:mongbi_app/features/auth/domain/repositories/account_repository.dart';
 
 class RemoteAccountRepository implements AccountRepository {
   RemoteAccountRepository(this.dataSource);

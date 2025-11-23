@@ -1,4 +1,4 @@
-import 'package:mongbi_app/domain/entities/user.dart';
+import 'package:mongbi_app/features/auth/domain/entities/user.dart';
 
 class UserDto {
   factory UserDto.fromJson(Map<String, dynamic> json) {

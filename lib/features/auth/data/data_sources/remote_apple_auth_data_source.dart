@@ -1,34 +1,29 @@
 import 'dart:convert';
+
 import 'package:dio/dio.dart';
-import 'package:flutter/services.dart';
 import 'package:mongbi_app/core/exceptions/auth_custom_exception.dart';
 import 'package:mongbi_app/core/secure_storage_service.dart';
-import 'package:mongbi_app/data/dtos/login_response_dto.dart';
 import 'package:mongbi_app/data/dtos/user_dto.dart';
+import 'package:mongbi_app/features/auth/data/dtos/login_response_dto.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
-class RemoteKakaoAuthDataSource {
-  RemoteKakaoAuthDataSource(this.dio);
+class RemoteAppleAuthDataSource {
+  RemoteAppleAuthDataSource(this.dio);
   final Dio dio;
   final storageService = SecureStorageService();
 
-  Future<LoginResponseDto> login(String accessToken) async {
+  Future<LoginResponseDto> login(String identity_token) async {
     try {
       final response = await dio.post(
-        '/users/kakao-login',
-        data: jsonEncode({'access_token': accessToken}),
+        '/users/apple-login',
+        data: jsonEncode({'identity_token': identity_token}),
         options: Options(headers: {'Content-Type': 'application/json'}),
       );
 
       if (response.statusCode != 201 || response.data['token'] == null) {
         final error = Exception('서버 로그인 실패: ${response.data}');
-        await Sentry.captureException(
-          error,
-          withScope: (scope) {
-            scope.setExtra('accessToken', accessToken);
-            scope.setExtra('response', response.data);
-          },
-        );
+        await Sentry.captureException(error);
         throw const AuthFailedException('로그인에 실패했습니다.');
       }
 
@@ -51,7 +46,7 @@ class RemoteKakaoAuthDataSource {
         e,
         stackTrace: s,
         withScope: (scope) {
-          scope.setTag('auth', 'kakao');
+          scope.setTag('auth', 'apple');
           scope.setExtra('code', errorCode);
           scope.setExtra('message', errorMessage);
         },
@@ -62,13 +57,20 @@ class RemoteKakaoAuthDataSource {
       }
 
       throw const AuthFailedException('로그인에 실패했습니다.');
-    } on PlatformException catch (e) {
-      if (e.code == 'CANCELED') {
-        throw const AuthCancelledException('로그인이 취소되었습니다.');
-      }
-      throw const AuthFailedException('로그인에 실패했습니다.');
     } catch (e, s) {
-      await Sentry.captureException(e, stackTrace: s);
+      if (e is SignInWithAppleAuthorizationException) {
+        if (e.code == AuthorizationErrorCode.canceled) {
+          throw const AuthCancelledException('로그인이 취소되었습니다.');
+        }
+      }
+
+      await Sentry.captureException(
+        e,
+        stackTrace: s,
+        withScope: (scope) {
+          scope.setExtra('context', '🚨 애플 로그인 에러 발생');
+        },
+      );
       throw const AuthFailedException('로그인에 실패했습니다.');
     }
   }
