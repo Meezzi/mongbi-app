@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mongbi_app/core/providers/core_providers.dart';
 import 'package:mongbi_app/features/alarm/data/data_sources/alarm_data_source.dart';
 import 'package:mongbi_app/features/alarm/data/data_sources/remote_alarm_data_source.dart';
 import 'package:mongbi_app/features/alarm/data/repositories/remote_alarm_repository.dart';
@@ -7,7 +8,6 @@ import 'package:mongbi_app/features/alarm/domain/use_cases/fetch_alarms_use_case
 import 'package:mongbi_app/features/alarm/domain/use_cases/update_is_read_status_use_case.dart';
 import 'package:mongbi_app/features/alarm/presentation/models/alarm_model.dart';
 import 'package:mongbi_app/features/alarm/presentation/view_models/alarm_view_model.dart';
-import 'package:mongbi_app/providers/core_providers.dart';
 
 final _alarmDataSourceProvider = Provider<AlarmDataSource>((ref) {
   final dio = ref.read(adminDioProvider);

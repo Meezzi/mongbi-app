@@ -1,6 +1,5 @@
-import 'dart:io';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mongbi_app/core/providers/core_providers.dart';
 import 'package:mongbi_app/features/statistics/data/data_sources/remote_statistics_data_source.dart';
 import 'package:mongbi_app/features/statistics/data/data_sources/statistics_data_source.dart';
 import 'package:mongbi_app/features/statistics/data/repositories/remote_statistics_repository.dart';
@@ -11,7 +10,6 @@ import 'package:mongbi_app/features/statistics/presentation/models/picker_model.
 import 'package:mongbi_app/features/statistics/presentation/models/statistics_model.dart';
 import 'package:mongbi_app/features/statistics/presentation/view_models/picker_view_model.dart';
 import 'package:mongbi_app/features/statistics/presentation/view_models/statistics_view_model.dart';
-import 'package:mongbi_app/providers/core_providers.dart';
 
 final _statisticsDataSourceProvider = Provider<StatisticsDataSource>((ref) {
   final dio = ref.read(dioProvider);

@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mongbi_app/core/providers/core_providers.dart';
 import 'package:mongbi_app/features/auth/domain/entities/user.dart';
 import 'package:mongbi_app/features/auth/domain/use_cases/get_user_info_use_case.dart';
 import 'package:mongbi_app/features/auth/presentation/view_models/auth_view_model.dart';
@@ -7,7 +8,6 @@ import 'package:mongbi_app/features/setting/data/repositoreis/remote_user_info_r
 import 'package:mongbi_app/features/setting/domain/repositories/user_info_repository.dart';
 import 'package:mongbi_app/features/splash/view_models/splash_state.dart';
 import 'package:mongbi_app/features/splash/view_models/splash_view_model.dart';
-import 'package:mongbi_app/providers/core_providers.dart';
 
 final _userInfoDataSourceProvider = Provider<RemoteUserInfoGetDataSource>(
   (ref) => RemoteUserInfoGetDataSource(ref.read(dioProvider)),

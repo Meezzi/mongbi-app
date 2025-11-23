@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mongbi_app/core/providers/core_providers.dart';
 import 'package:mongbi_app/features/challenge/data/data_sources/remote_active_challenge_data_source.dart';
 import 'package:mongbi_app/features/challenge/data/data_sources/remote_challenge_detail_data_source.dart';
 import 'package:mongbi_app/features/challenge/data/data_sources/remote_complete_challenge_data_source.dart';
@@ -11,7 +12,6 @@ import 'package:mongbi_app/features/challenge/domain/use_cases/fetch_challenge_u
 import 'package:mongbi_app/features/challenge/domain/use_cases/save_challenge_use_case.dart';
 import 'package:mongbi_app/features/challenge/presentation/view_models/challenge_view_model.dart';
 import 'package:mongbi_app/features/home/view_models/home_view_model.dart';
-import 'package:mongbi_app/providers/core_providers.dart';
 
 final _fetchChallengeDataSourceProvider = Provider(
   (ref) => RemoteFetchChallengeDataSource(dio: ref.read(adminDioProvider)),

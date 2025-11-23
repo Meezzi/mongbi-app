@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mongbi_app/core/providers/core_providers.dart';
 import 'package:mongbi_app/features/auth/data/data_sources/remote_apple_auth_data_source.dart';
 import 'package:mongbi_app/features/auth/data/data_sources/remote_kakao_auth_data_source.dart';
 import 'package:mongbi_app/features/auth/data/data_sources/remote_naver_auth_data_source.dart';
@@ -9,7 +10,6 @@ import 'package:mongbi_app/features/auth/domain/use_cases/login_with_apple.dart'
 import 'package:mongbi_app/features/auth/domain/use_cases/login_with_kakao.dart';
 import 'package:mongbi_app/features/auth/domain/use_cases/login_with_naver.dart';
 import 'package:mongbi_app/features/auth/presentation/view_models/auth_view_model.dart';
-import 'package:mongbi_app/providers/core_providers.dart';
 
 final _remoteNaverAuthDataSourceProvider = Provider<RemoteNaverAuthDataSource>(
   (ref) => RemoteNaverAuthDataSource(ref.read(dioProvider)),
