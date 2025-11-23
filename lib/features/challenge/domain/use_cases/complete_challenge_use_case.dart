@@ -1,4 +1,4 @@
-import 'package:mongbi_app/domain/repositories/challenge_repository.dart';
+import 'package:mongbi_app/features/challenge/domain/repositories/challenge_repository.dart';
 
 class CompleteChallengeUseCase {
   CompleteChallengeUseCase({required this.repository});

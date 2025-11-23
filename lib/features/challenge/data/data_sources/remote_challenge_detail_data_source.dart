@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:mongbi_app/data/data_sources/challenge_detail_data_source.dart';
-import 'package:mongbi_app/data/dtos/challenge_dto.dart';
+import 'package:mongbi_app/features/challenge/data/data_sources/challenge_detail_data_source.dart';
+import 'package:mongbi_app/features/challenge/data/dtos/challenge_dto.dart';
 
 class RemoteChallengeDetailDataSource implements ChallengeDetailDataSource {
   RemoteChallengeDetailDataSource({required this.dio});

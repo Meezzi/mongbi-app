@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:mongbi_app/data/data_sources/fetch_challenge_data_source.dart';
-import 'package:mongbi_app/data/dtos/challenge_dto.dart';
+import 'package:mongbi_app/features/challenge/data/data_sources/fetch_challenge_data_source.dart';
+import 'package:mongbi_app/features/challenge/data/dtos/challenge_dto.dart';
 import 'package:sentry_flutter/sentry_flutter.dart'; // ✅ 추가
 
 class RemoteFetchChallengeDataSource implements FetchChallengeDataSource {

@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:mongbi_app/data/data_sources/active_challenge_data_source.dart';
+import 'package:mongbi_app/features/challenge/data/data_sources/active_challenge_data_source.dart';
 
 class RemoteActiveChallengeDataSource implements ActiveChallengeDataSource {
   RemoteActiveChallengeDataSource({required this.dio});

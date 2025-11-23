@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:mongbi_app/data/data_sources/save_challenge_data_source.dart';
+import 'package:mongbi_app/features/challenge/data/data_sources/save_challenge_data_source.dart';
 import 'package:sentry_flutter/sentry_flutter.dart'; // ✅ 추가
 
 class RemoteSaveChallengeDataSource implements SaveChallengeDataSource {

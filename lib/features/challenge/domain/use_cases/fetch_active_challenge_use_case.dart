@@ -1,5 +1,5 @@
-import 'package:mongbi_app/domain/entities/challenge.dart';
-import 'package:mongbi_app/domain/repositories/challenge_repository.dart';
+import 'package:mongbi_app/features/challenge/domain/entities/challenge.dart';
+import 'package:mongbi_app/features/challenge/domain/repositories/challenge_repository.dart';
 
 class FetchActiveChallengeUseCase {
   FetchActiveChallengeUseCase({required this.challengeRepository});

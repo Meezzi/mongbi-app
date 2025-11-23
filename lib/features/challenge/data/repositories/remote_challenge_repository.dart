@@ -1,10 +1,10 @@
-import 'package:mongbi_app/data/data_sources/active_challenge_data_source.dart';
-import 'package:mongbi_app/data/data_sources/challenge_detail_data_source.dart';
-import 'package:mongbi_app/data/data_sources/complete_challenge_data_source.dart';
-import 'package:mongbi_app/data/data_sources/fetch_challenge_data_source.dart';
-import 'package:mongbi_app/data/data_sources/save_challenge_data_source.dart';
-import 'package:mongbi_app/domain/entities/challenge.dart';
-import 'package:mongbi_app/domain/repositories/challenge_repository.dart';
+import 'package:mongbi_app/features/challenge/data/data_sources/active_challenge_data_source.dart';
+import 'package:mongbi_app/features/challenge/data/data_sources/challenge_detail_data_source.dart';
+import 'package:mongbi_app/features/challenge/data/data_sources/complete_challenge_data_source.dart';
+import 'package:mongbi_app/features/challenge/data/data_sources/fetch_challenge_data_source.dart';
+import 'package:mongbi_app/features/challenge/data/data_sources/save_challenge_data_source.dart';
+import 'package:mongbi_app/features/challenge/domain/entities/challenge.dart';
+import 'package:mongbi_app/features/challenge/domain/repositories/challenge_repository.dart';
 
 class RemoteChallengeRepository implements ChallengeRepository {
   RemoteChallengeRepository({

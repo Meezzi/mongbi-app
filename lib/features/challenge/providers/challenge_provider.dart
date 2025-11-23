@@ -1,15 +1,15 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mongbi_app/data/data_sources/remote_active_challenge_data_source.dart';
-import 'package:mongbi_app/data/data_sources/remote_challenge_detail_data_source.dart';
-import 'package:mongbi_app/data/data_sources/remote_complete_challenge_data_source.dart';
-import 'package:mongbi_app/data/data_sources/remote_fetch_challenge_data_source.dart';
-import 'package:mongbi_app/data/data_sources/remote_save_challenge_data_source.dart';
-import 'package:mongbi_app/data/repositories/remote_challenge_repository.dart';
-import 'package:mongbi_app/domain/use_cases/complete_challenge_use_case.dart';
-import 'package:mongbi_app/domain/use_cases/fetch_active_challenge_use_case.dart';
-import 'package:mongbi_app/domain/use_cases/fetch_challenge_use_case.dart';
-import 'package:mongbi_app/domain/use_cases/save_challenge_use_case.dart';
-import 'package:mongbi_app/presentation/challenge/view_models/challenge_view_model.dart';
+import 'package:mongbi_app/features/challenge/data/data_sources/remote_active_challenge_data_source.dart';
+import 'package:mongbi_app/features/challenge/data/data_sources/remote_challenge_detail_data_source.dart';
+import 'package:mongbi_app/features/challenge/data/data_sources/remote_complete_challenge_data_source.dart';
+import 'package:mongbi_app/features/challenge/data/data_sources/remote_fetch_challenge_data_source.dart';
+import 'package:mongbi_app/features/challenge/data/data_sources/remote_save_challenge_data_source.dart';
+import 'package:mongbi_app/features/challenge/data/repositories/remote_challenge_repository.dart';
+import 'package:mongbi_app/features/challenge/domain/use_cases/complete_challenge_use_case.dart';
+import 'package:mongbi_app/features/challenge/domain/use_cases/fetch_active_challenge_use_case.dart';
+import 'package:mongbi_app/features/challenge/domain/use_cases/fetch_challenge_use_case.dart';
+import 'package:mongbi_app/features/challenge/domain/use_cases/save_challenge_use_case.dart';
+import 'package:mongbi_app/features/challenge/presentation/view_models/challenge_view_model.dart';
 import 'package:mongbi_app/presentation/home/view_models/home_view_model.dart';
 import 'package:mongbi_app/providers/core_providers.dart';
 
