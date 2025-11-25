@@ -16,6 +16,8 @@ import 'package:mongbi_app/firebase_options.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   // Sentry와 Firebase Crashlytics를 함께 사용
   await SentryFlutter.init(
     (options) {
